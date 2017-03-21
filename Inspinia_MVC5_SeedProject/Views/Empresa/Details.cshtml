@@ -1,0 +1,58 @@
+﻿@model PissanoApp.Models.Empresa
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Empresa</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ruc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ruc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.agenteRetenedor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.agenteRetenedor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.empresaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

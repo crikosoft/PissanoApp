@@ -1,0 +1,621 @@
+﻿
+@{
+    ViewBag.Title = "ProductsList";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Ingreso a Almacén de Ordenes de Compra de Materiales</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Dashboard_1", "Dashboards")">Inicio</a>
+            </li>
+            <li>
+                <a>Ingreso</a>
+            </li>
+            <li class="active">
+                <strong>Materiales</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="control-label" for="product_name">Orden de Compra</label>
+                    <input type="text" id="orden_compra_search" name="orden_compra_search" value="OC 100" placeholder="Orden de Compra" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+
+                <div class="ibox-content">
+
+                        <button class="btn btn-primary pull-right"><i class="fa fa-cloud-upload"></i> Cargar</button>
+
+
+                </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+    </div>
+
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" for="product_name">Orden de Compra</label>
+                    <input type="text" id="product_name" name="product_name" value="OC 100" placeholder="Orden de Compra" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group"><label class="control-label" for="date_added"># De Referencia</label>
+                    <input type="text" id="referencia" name="referencia" value="FAC 100" placeholder="" class="form-control">
+                </div>
+            </div>
+@*            <div class="col-sm-2">
+                <div class="form-group">
+                    <label class="control-label" for="quantity">Quantity</label>
+                    <input type="text" id="quantity" name="quantity" value="" placeholder="Quantity" class="form-control">
+                </div>
+            </div>*@
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" for="status">Estado</label>
+                    <select name="status" id="status" class="form-control">
+                        <option value="1">Parcial</option>
+                        <option value="2">Finalizado</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">Código Material</th>
+                                <th data-toggle="true">Nombre Material</th>
+                                <th data-hide="phone">Unidad de Medida</th>                                
+                                <th data-hide="phone">Precio</th>
+                                <th data-hide="phone">Estado</th>
+                                <th data-hide="phone,tablet">Cantidad Solicitada</th>
+                                <th data-hide="phone,tablet">Cantidad Pendiente</th>                                
+                                <th data-hide="all">Cantidad Entregada</th>
+                                
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    01
+                                </td>
+                                <td>
+                                    Material 1
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 50.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                                
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    02
+                                </td>
+                                <td>
+                                    Material 2
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 70.00
+                                </td>
+                                <td>
+                                    <span class="label label-warning">Parcial</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    50
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad2" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                                
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    03
+                                </td>
+                                <td>
+                                    Material 3
+                                </td>                                
+                                <td>
+                                    Und
+                                </td>                                
+                                <td>
+                                    S/. 90.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad3" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                                
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    04
+                                </td>
+                                <td>
+                                    Material 4
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 150.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad4" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                               
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    05
+                                </td>
+                                <td>
+                                    Material 5
+                                </td>                                
+                                <td>
+                                    Ml
+                                </td>                                
+                                <td>
+                                    S/. 30.00
+                                </td>
+                                <td>
+                                    <span class="label label-warning">Parcial</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    70
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad5" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                                 
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    06
+                                </td>
+                                <td>
+                                    Material 6
+                                </td>                                
+                                <td>
+                                    Kg
+                                </td>                                
+                                <td>
+                                    S/. 40.00
+                                </td>
+                                <td>
+                                    <span class="label label-primary">Nuevo</span>
+                                </td>
+                                <td>
+                                    100
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    <input type="text" id="product_cantidad6" name="product_name" value="" placeholder="Cantidad" class="form-control">
+                                </td>                            
+                            </tr>
+
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6">
+                                    <ul class="pagination pull-right"></ul>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+                <div class="ibox-content">
+
+                    <button class="btn btn-primary pull-right"><i class="fa fa  fa-arrow-circle-o-right"></i> Enviar</button>
+                    <button class="btn btn-white"> Guardar </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+@section Styles {
+    @Styles.Render("~/plugins/footableStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/footable")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.footable').footable();
+
+        });
+    </script>
+}
+

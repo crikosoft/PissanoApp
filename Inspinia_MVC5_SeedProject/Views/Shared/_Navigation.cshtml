@@ -1,0 +1,197 @@
+﻿-<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <img alt="image" class="img-circle" src="../img/profile_small.jpg">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">Christian</strong>
+                            </span><span class="text-muted text-xs block">Administrador <b class="caret"></b></span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-laptop"></i><span class="nav-label">Principal</span> </a>
+            </li>
+
+
+
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-desktop"></i><span class="nav-label" data-i18n="nav.empresa">Configuración</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">                    
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Empresa")">Empresas<span class="label label-primary pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Obra")">Obras<span class="label label-primary pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "FormaPago")">Formas Pago<span class="label label-primary pull-right">Nuevo</span></a></li>
+                </ul>                
+            </li>
+
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-pie-chart"></i><span class="nav-label" data-i18n="nav.empresa">Planificacion</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Categoria")">Partidas<span class="label label-primary pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Create", "MaterialPresupuestoViewModel")">Materiales<span class="label label-info pull-right">Protot</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Presupuesto")">Presupuesto<span class="label label-primary pull-right">Nuevo</span></a></li>
+                    @*<li class="@Html.IsSelected(action: "Edit/1")"><a href="@Url.Action("Edit/1", "PresupuestoViewModel")">Det Presup<span class="label label-warning pull-right">Parcial</span></a></li>*@
+                    @*<li class="@Html.IsSelected(action: "Presupuesto")"><a href="@Url.Action("Index", "Metricas")">Avance<span class="label label-info pull-right">Protot</span></a></li>*@                    
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-flask"></i><span class="nav-label" data-i18n="nav.empresa">Logística</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li ><a href="@Url.Action("Index", "Home")"><span class="nav-label" data-i18n="nav.empresa">Proveedores</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
+                            <li class="@Html.IsSelected(action: "")">
+
+                                <a href="@Url.Action("Index", "TipoMaterial")">Categoria<span class="label label-primary pull-right">Nuevo</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("Filter", "Proveedor")">Proveedor<span class="label label-primary pull-right">Nuevo</span></a>
+                            </li>
+                        </ul>                    
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("Index", "Home")"><span class="nav-label" data-i18n="nav.empresa">Materiales</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("EmptyPage", "Pages")">Categoria</a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("Index", "TipoMaterial")">Tipo Material<span class="label label-primary pull-right">Nuevo</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("Index", "UnidadMedida")">Unidad Medida<span class="label label-primary pull-right">Nuevo</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("Filter", "Material")">Material<span class="label label-primary pull-right">Nuevo</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    
+                    <li>
+                        <a href="@Url.Action("Index", "Home")"><span class="nav-label" data-i18n="nav.empresa">Ordenes de Compra</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("Create", "OrdenCompra")">Registro<span class="label label-primary pull-right">Nuevo</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("Approve", "OrdenCompra")">Aprobación<span class="label label-primary pull-right">Nuevo</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("Index", "Home")"><span class="nav-label" data-i18n="nav.empresa">Almacén</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("RegistroFactura", "Ecommerce")">Ingreso<span class="label label-info pull-right">Protot</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("Index", "TipoMaterial")">Salida</a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("Index", "TipoMaterial")">Stock - Inventario</a>
+                            </li>
+                            <li class="@Html.IsSelected(action: "")">
+                                <a href="@Url.Action("Index", "TipoMaterial")">Nuevo Almacén</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            
+
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-building"></i><span class="nav-label" data-i18n="nav.empresa">Obra-Producción</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Requerimiento")"><a href="@Url.Action("EmptyPage", "Pages")">Requerimiento</a></li>
+                    <li class="@Html.IsSelected(action: "Pago")"><a href="@Url.Action("Cart", "Ecommerce")">Valorizaciones<span class="label label-info pull-right">Protot</span></a></li>
+                    <li class="@Html.IsSelected(action: "Requerimiento")"><a href="@Url.Action("EmptyPage", "Pages")">Partidas de Control</a></li>
+                    @*<li class="@Html.IsSelected(action: "Requerimiento")"><a href="@Url.Action("EmptyPage", "Pages")">SPI</a></li>
+                    <li class="@Html.IsSelected(action: "Requerimiento")"><a href="@Url.Action("EmptyPage", "Pages")">CPI</a></li>*@
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-calculator"></i><span class="nav-label" data-i18n="nav.empresa">Contabilidad</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Pago")"><a href="@Url.Action("ProductsList", "Ecommerce")">Ingreso Factura<span class="label label-info pull-right">Protot</span></a></li>
+                    <li class="@Html.IsSelected(action: "Pago")"><a href="@Url.Action("EmptyPage", "Pages")">Pago</a></li>
+                    <li class="@Html.IsSelected(action: "Pago")"><a href="@Url.Action("EmptyPage", "Pages")">Cuentas Contables</a></li>
+                </ul>
+            </li>
+
+
+
+            @*<li class="@Html.IsSelected(controller: "Ecommerce")">
+                <a href="#"><i class="fa fa-shopping-cart"></i> <span class="nav-label" data-i18n="nav.ecommerce">E-commerce</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Ecommerce", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "ProductsGrid")"><a href="@Url.Action("ProductsGrid", "Ecommerce")">Products grid</a></li>
+                    <li class="@Html.IsSelected(action: "ProductsList")"><a href="@Url.Action("ProductsList", "Ecommerce")">Products list</a></li>
+                    <li class="@Html.IsSelected(action: "ProductEdit")"><a href="@Url.Action("ProductEdit", "Ecommerce")">Product edit</a></li>
+                    <li class="@Html.IsSelected(action: "ProductDetail")"><a href="@Url.Action("ProductDetail", "Ecommerce")">Product detail</a></li>
+                    <li class="@Html.IsSelected(action: "Cart")"><a href="@Url.Action("Cart", "Ecommerce")">Cart</a></li>
+                    <li class="@Html.IsSelected(action: "Orders")"><a href="@Url.Action("Orders", "Ecommerce")">Orders</a></li>
+                    <li class="@Html.IsSelected(action: "Payments")"><a href="@Url.Action("Payments", "Ecommerce")">Credit Card form</a></li>
+                </ul>
+            </li>*@
+
+            
+            @*<li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "Especialidad")"><i class="fa fa-table"></i><span class="nav-label">Especialidad</span></a>
+            </li>
+            <li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "PartidaPresupuestaria")"><i class="fa fa-table"></i><span class="nav-label">Partida Presupuestaria</span></a>
+            </li>
+            <li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "Material")"><i class="fa fa-table"></i><span class="nav-label">Material</span></a>
+            </li>
+            <li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "PresupuestoAvanceA")"><i class="fa fa-money"></i><span class="nav-label">Presupuesto</span></a>
+            </li>
+            <li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "Metricas")"><i class="fa fa-area-chart"></i><span class="nav-label">Avance Presupuestario</span></a>
+            </li>*@
+
+            
+            @*<li class="@Html.IsSelected(controller: "AppViews")">
+                <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label" data-i18n="nav.appviews">Seguimiento</span>  <span class="pull-right label label-primary">SPECIAL</span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "AppViews", cssClass: "in")">
+@*                    <li class="@Html.IsSelected(action: "Contacts")"><a href="@Url.Action("Contacts", "AppViews")">Contacts</a></li>
+                    <li class="@Html.IsSelected(action: "Profile")"><a href="@Url.Action("Profile", "AppViews")">Profile</a></li>
+                    <li class="@Html.IsSelected(action: "Profile2")"><a href="@Url.Action("Profile2", "AppViews")">Profile v.2</a></li>
+                    <li class="@Html.IsSelected(action: "Contacts2")"><a href="@Url.Action("Contacts2", "AppViews")">Contacts v.2</a></li>
+                    <li class="@Html.IsSelected(action: "Projects")"><a href="@Url.Action("Projects", "AppViews")">Projects</a></li>
+                    <li class="@Html.IsSelected(action: "ProjectDetail")"><a href="@Url.Action("ProjectDetail", "AppViews")">Project detail</a></li>
+                    <li class="@Html.IsSelected(action: "TeamsBoard")"><a href="@Url.Action("TeamsBoard", "AppViews")">Teams board</a></li>
+                    <li class="@Html.IsSelected(action: "SocialFeed")"><a href="@Url.Action("SocialFeed", "AppViews")">Social feed</a></li>*@
+                    @*<li class="@Html.IsSelected(action: "Clients")"><a href="@Url.Action("Clients", "AppViews")">Ordenes de Compra</a></li>*@
+
+@*                    <li class="@Html.IsSelected(action: "VoteList")"><a href="@Url.Action("VoteList", "AppViews")">Vote list</a></li>
+                    <li class="@Html.IsSelected(action: "FileManager")"><a href="@Url.Action("FileManager", "AppViews")">File manager</a></li>
+                    <li class="@Html.IsSelected(action: "Calendar")"><a href="@Url.Action("Calendar", "AppViews")">Calendar</a></li>
+                    <li class="@Html.IsSelected(action: "IssueTracker")"><a href="@Url.Action("IssueTracker", "AppViews")">Issue tracker</a></li>
+                    <li class="@Html.IsSelected(action: "Blog")"><a href="@Url.Action("Blog", "AppViews")">Blog</a></li>
+                    <li class="@Html.IsSelected(action: "Article")"><a href="@Url.Action("Article", "AppViews")">Article</a></li>
+                    <li class="@Html.IsSelected(action: "FAQ")"><a href="@Url.Action("FAQ", "AppViews")">FAQ</a></li>
+                    <li class="@Html.IsSelected(action: "Timeline")"><a href="@Url.Action("Timeline", "AppViews")">Timeline</a></li>
+                    <li class="@Html.IsSelected(action: "PinBoard")"><a href="@Url.Action("PinBoard", "AppViews")">Pin board</a></li>
+                </ul>
+            </li>*@
+
+
+        </ul>
+    </div>
+</nav>

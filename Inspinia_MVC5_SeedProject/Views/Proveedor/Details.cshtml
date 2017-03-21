@@ -1,0 +1,106 @@
+﻿@model PissanoApp.Models.Proveedor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Proveedor</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoriaProveedor.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoriaProveedor.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormaPago.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormaPago.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.razonSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.razonSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.representanteVentas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.representanteVentas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.movil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.movil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numeroCuenta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numeroCuenta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ruc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ruc)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.proveedorId }) |
+    @Html.ActionLink("Back to List", "Filter")
+</p>

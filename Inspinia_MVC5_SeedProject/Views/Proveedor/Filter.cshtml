@@ -1,0 +1,88 @@
+﻿@model IEnumerable<PissanoApp.Models.Proveedor>
+
+@{
+    ViewBag.Title = "Filter";
+}
+
+<h2>Proveedores</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <div class="col-sm-1">
+            Buscar por Razón Social:
+        </div>
+        <div class="col-sm-9">
+            @Html.TextBox("searchText", null, new { @class = "form-control" })
+        </div>
+        <div class="col-sm-2">
+            <input type="submit" value="Buscar" class="btn btn-primary btn-sm" />
+        </div>
+    </div>
+}
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            Tipo de Proveedor
+        </th>
+        <th>
+            Forma de Pago
+        </th>
+        <th>
+            Razón Social
+        </th>
+
+        <th>
+            Representante de Ventas
+        </th>
+
+        <th>
+            Celular contacto
+        </th>
+
+        <th>
+            Estado
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoriaProveedor.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormaPago.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.razonSocial)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.representanteVentas)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.movil)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.estado)
+            </td>
+
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.proveedorId }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.proveedorId }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.proveedorId })
+            </td>
+        </tr>
+    }
+
+</table>

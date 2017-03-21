@@ -1,0 +1,58 @@
+﻿@model PissanoApp.Models.Material
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Material</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaterialPadre.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaterialPadre.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoMaterial.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoMaterial.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnidadMedida.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnidadMedida.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codigo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.materialId }) |
+    @Html.ActionLink("Back to List", "Filter")
+</p>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<PissanoApp.Models.Material>
+
+@{
+    ViewBag.Title = "Filter";
+}
+
+<h2>Materiales</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <div class="col-sm-1">
+            Buscar por Nombre:
+        </div>
+        <div class="col-sm-9">
+            @Html.TextBox("searchText", null, new { @class = "form-control" })
+        </div>
+        <div class="col-sm-2">
+            <input type="submit" value="Buscar" class="btn btn-primary btn-sm" />
+        </div>
+    </div>
+}
+
+<table class="table table-striped table-bordered table-hover dataTables-example">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Tipo Material
+            </th>
+            <th>
+                Unidad de Medida
+            </th>
+
+            <th>
+                Código
+            </th>
+            <th>
+               Material Padre
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoMaterial.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnidadMedida.nombre)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaterialPadre.nombre)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.materialId }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.materialId }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.materialId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

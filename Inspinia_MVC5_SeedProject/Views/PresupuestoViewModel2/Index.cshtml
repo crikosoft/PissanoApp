@@ -1,0 +1,27 @@
+﻿@model IEnumerable<PissanoApp.ViewModels.PresupuestoViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.presupuestoViewModelId }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.presupuestoViewModelId }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.presupuestoViewModelId })
+        </td>
+    </tr>
+}
+
+</table>

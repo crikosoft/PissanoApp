@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PissanoApp.Models.Categoria>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoriaPadre.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.codigo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoriaPadre.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.codigo)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.categoriaId }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.categoriaId }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.categoriaId })
+            </td>
+        </tr>
+    }
+
+</table>

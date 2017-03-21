@@ -1,0 +1,66 @@
+﻿@model PissanoApp.Models.Presupuesto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Presupuesto</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Moneda.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Moneda.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Obra.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Obra.direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoPresupuesto.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoPresupuesto.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.presupuestoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

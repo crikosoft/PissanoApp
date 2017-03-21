@@ -1,0 +1,18 @@
+﻿@model PissanoApp.ViewModels.PresupuestoViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PresupuestoViewModel</h4>
+	<hr />
+    <dl class="dl-horizontal">
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.presupuestoViewModelId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

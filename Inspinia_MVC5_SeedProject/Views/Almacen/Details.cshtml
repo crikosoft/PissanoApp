@@ -1,0 +1,26 @@
+﻿@model PissanoApp.Models.Almacen
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Almacen</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Obra.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Obra.direccion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.almacenId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
