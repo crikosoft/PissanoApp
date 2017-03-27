@@ -26,14 +26,16 @@ namespace PissanoApp.Models
 
         [DisplayName("Unidad de Medida")]
         public virtual UnidadMedida UnidadMedida { get; set; }
+
         public int tipoMaterialId { get; set; }
+
         [DisplayName("Tipo de Material")]
         public virtual TipoMaterial TipoMaterial { get; set; }
 
         public int? materialPadreId { get; set; }
 
         [DisplayName("Familia")]
-        public Material MaterialPadre { get; set; }
+        public virtual Material MaterialPadre { get; set; }
 
 
 //        public virtual MaterialNivelStock MaterialNivelStock { get; set; }

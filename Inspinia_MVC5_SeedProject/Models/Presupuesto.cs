@@ -26,6 +26,9 @@ namespace PissanoApp.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime fecha { get; set; }
 
+        [DisplayName("Plazo")]
+        public int plazo { get; set; }
+
         [Required(ErrorMessage = "Moneda es requerida")]
         [DisplayName("Moneda")]
         public int monedaId { get; set; }

@@ -48,17 +48,7 @@
             <li class="@Html.IsSelected(controller: "")">
                 <a href="#"><i class="fa fa-flask"></i><span class="nav-label" data-i18n="nav.empresa">Logística</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li ><a href="@Url.Action("Index", "Home")"><span class="nav-label" data-i18n="nav.empresa">Proveedores</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level">
-                            <li class="@Html.IsSelected(action: "")">
-
-                                <a href="@Url.Action("Index", "TipoMaterial")">Categoria<span class="label label-primary pull-right">Nuevo</span></a>
-                            </li>
-                            <li class="@Html.IsSelected(action: "")">
-                                <a href="@Url.Action("Filter", "Proveedor")">Proveedor<span class="label label-primary pull-right">Nuevo</span></a>
-                            </li>
-                        </ul>                    
-                    </li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Filter", "Proveedor")">Proveedores<span class="label label-primary pull-right">Nuevo</span></a></li>
 
                     <li>
                         <a href="@Url.Action("Index", "Home")"><span class="nav-label" data-i18n="nav.empresa">Materiales</span><span class="fa arrow"></span></a>

@@ -45,6 +45,8 @@
             @Html.DisplayNameFor(model => model.ruc)
         </th>
         <th></th>
+
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -87,6 +89,12 @@
                 @Html.ActionLink("Editar", "Edit", new { id = item.proveedorId }) |
                 @Html.ActionLink("Detalles", "Details", new { id = item.proveedorId }) |
                 @Html.ActionLink("Eliminar", "Delete", new { id = item.proveedorId })
+            </td>
+
+            <td class="project-actions">
+                @*<a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Crear Items </a>*@
+                <a href="MaterialPresupuestoViewModel/Create/@Html.DisplayFor(modelItem => item.proveedorId)" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Materiales </a>
+                @*<a href="@Url.Action("Edit/1", "PresupuestoViewModel")" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Crear Items </a>*@
             </td>
         </tr>
     }

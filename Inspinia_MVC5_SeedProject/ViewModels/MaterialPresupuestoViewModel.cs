@@ -12,11 +12,14 @@ namespace PissanoApp.ViewModels
 
         public List<Categoria> CategoriasPadres { get; set; }
 
+        public List<TipoMaterial> TipoMateriales { get; set; }
 
-        public MaterialPresupuestoViewModel(List<Material> materialesPadres, List<Categoria> categoriasPadres)
+
+        public MaterialPresupuestoViewModel(List<Material> materialesPadres, List<Categoria> categoriasPadres, List<TipoMaterial> tipoMateriales)
         {
             MaterialesPadres = materialesPadres;
             CategoriasPadres = categoriasPadres;
+            TipoMateriales = tipoMateriales;
         }
 
     }

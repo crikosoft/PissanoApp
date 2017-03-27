@@ -27,12 +27,12 @@
 
 <table class="table table-striped">
     <tr>
-        <th>
+            
+           
+        @*<th>
             Tipo de Proveedor
-        </th>
-        <th>
-            Forma de Pago
-        </th>
+        </th>*@
+
         <th>
             Razón Social
         </th>
@@ -50,17 +50,17 @@
         </th>
 
         <th></th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+
+            @*<td>
                 @Html.DisplayFor(modelItem => item.CategoriaProveedor.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FormaPago.nombre)
-            </td>
+            </td>*@
+
             <td>
                 @Html.DisplayFor(modelItem => item.razonSocial)
             </td>
@@ -73,14 +73,20 @@
                 @Html.DisplayFor(modelItem => item.movil)
             </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.estado)
+            <td class="project-status">
+                <span class="label label-primary">Activo</span>
             </td>
 
             <td>
                 @Html.ActionLink("Editar", "Edit", new { id = item.proveedorId }) |
                 @Html.ActionLink("Detalles", "Details", new { id = item.proveedorId }) |
                 @Html.ActionLink("Eliminar", "Delete", new { id = item.proveedorId })
+            </td>
+
+            <td class="project-actions">
+
+                <a href="../MaterialPresupuestoViewModel/Create/" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Materiales </a>
+               
             </td>
         </tr>
     }

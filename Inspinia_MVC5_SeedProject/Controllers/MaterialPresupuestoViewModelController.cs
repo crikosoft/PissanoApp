@@ -25,10 +25,12 @@ namespace PissanoApp.Controllers
 
             var categoriasPadres = db.Categoria.Where(p => p.categoriaPadreId == null);
 
+            var tipoMateriales = db.TipoMateriales.Where(p => p.tipoMaterialId == null);
+
 
             //var materiales = db.Materiales.Include(m => m.TipoMaterial).Include(m => m.UnidadMedida).Where(p => p.nombre.ToLower().Contains(searchText));
 
-            var presupuestoViewModel = new MaterialPresupuestoViewModel(materialesPadres.ToList(), categoriasPadres.ToList());
+            var presupuestoViewModel = new MaterialPresupuestoViewModel(materialesPadres.ToList(), categoriasPadres.ToList(), tipoMateriales.ToList());
 
 
             return View(presupuestoViewModel);
