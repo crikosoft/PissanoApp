@@ -40,6 +40,9 @@
             </th>
             <th></th>
             <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
 
         @foreach (var item in Model)
@@ -79,6 +82,18 @@
                     @Html.ActionLink("Detalles", "Details", new { id = item.presupuestoId }) |
                     @Html.ActionLink("Eliminar", "Delete", new { id = item.presupuestoId })
                 </td>
+                <td class="project-actions">                    
+                    <a href="PresupuestoTitulosViewModel/Create/@Html.DisplayFor(modelItem => item.presupuestoId)" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Organizar Títulos </a>                    
+                </td>
+
+                <td class="project-actions">
+                    <a href="PresupuestoTitulosViewModel/Create/@Html.DisplayFor(modelItem => item.presupuestoId)" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Organizar Partidas </a>
+                </td>
+
+                <td class="project-actions">
+                    <a href="PresupuestoTitulosViewModel/Create/@Html.DisplayFor(modelItem => item.presupuestoId)" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> APU </a>
+                </td>
+
                 <td class="project-actions">
                     @*<a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Crear Items </a>*@
                     <a href="PresupuestoViewModel/Edit/@Html.DisplayFor(modelItem => item.presupuestoId)" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Crear Items </a>

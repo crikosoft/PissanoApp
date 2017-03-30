@@ -62,6 +62,10 @@ namespace PissanoApp
                       "~/Scripts/plugins/switchery/switchery.js"));
 
 
+            // codeEditor 
+            bundles.Add(new ScriptBundle("~/plugins/nestable").Include(
+                      "~/Scripts/plugins/nestable/jquery.nestable.js"));
+
         }
     }
 }

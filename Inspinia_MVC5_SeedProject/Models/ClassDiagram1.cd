@@ -1,24 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="PissanoApp.Models.Material">
-    <Position X="6.5" Y="1.25" Width="1.5" />
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABQACAAAAgAACAAAAAEgAEAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Models\Material.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PissanoApp.Models.Titulo">
-    <Position X="1" Y="1.25" Width="1.5" />
+    <Position X="1.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAACAAAEAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Titulo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PissanoApp.Models.Partida">
-    <Position X="3.25" Y="1.25" Width="1.5" />
+    <Position X="2.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAAEAAAAAAAAAEAAAAAIAAAAAAAA=</HashCode>
       <FileName>Models\Partida.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PissanoApp.Models.Presupuesto">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCAgAAAAQQAAIAIAAAEAAAAAAAAEAAAAAEAAAAAgAAA=</HashCode>
+      <FileName>Models\Presupuesto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PissanoApp.Models.PresupuestoDetalle">
+    <Position X="7.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AdAgAAAIAAAAAAAAAAAAAAAEAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PresupuestoDetalle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9.05" />

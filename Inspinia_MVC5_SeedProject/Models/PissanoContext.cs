@@ -88,6 +88,8 @@ namespace PissanoApp.Models
 
         public DbSet<Partida> Partida { get; set; }
 
+        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.PresupuestoTitulosViewModel> PresupuestoTitulosViewModels { get; set; }
+
     }
 
 

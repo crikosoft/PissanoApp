@@ -482,10 +482,48 @@ namespace PissanoApp.Migrations
                 new Titulo {  nombre ="EQUIPAMIENTO (incluye accesorios, instalación y todo lo requerido para su correcto funcionamiento)", descripcion = "EQUIPAMIENTO (incluye accesorios, instalación y todo lo requerido para su correcto funcionamiento)" },
 
                 
+                //4. ITEM IIEE
+                new Titulo {  nombre ="SALIDAS", descripcion = "SALIDAS" },
+                new Titulo {  nombre ="ALIMENTADORES ELECTRICOS  (CON CABLE LIBRE HALOGENOS NH 80)", descripcion = "ALIMENTADORES ELECTRICOS  (CON CABLE LIBRE HALOGENOS NH 80)" },
+                new Titulo {  nombre ="TUBERÍAS, BANDEJAS, INST. LUMINARIAS ", descripcion = "TUBERÍAS, BANDEJAS, INST. LUMINARIAS " },
+                new Titulo {  nombre ="CAJAS DE PASE", descripcion = "CAJAS DE PASE" },
+                new Titulo {  nombre ="ARTEFACTOS DE TOMACORRIENTE E INTERRUPTORES", descripcion = "ARTEFACTOS DE TOMACORRIENTE E INTERRUPTORES" },
+                new Titulo {  nombre ="TABLEROS", descripcion = "TABLEROS" },
+                new Titulo {  nombre ="SALIDAS PARA COMUNICACIONES ", descripcion = "SALIDAS PARA COMUNICACIONES " },
+                new Titulo {  nombre ="TUBOS PARA MONTANTES DE COMUNICACIONES (TELEFONO TV. INTER.,SCI)", descripcion = "TUBOS PARA MONTANTES DE COMUNICACIONES (TELEFONO TV. INTER.,SCI)" },
+                new Titulo {  nombre ="POZO DE TIERRA", descripcion = "POZO DE TIERRA" },
+                new Titulo {  nombre ="SISTEMAS, GE Y VARIOS", descripcion = "SISTEMAS, GE Y VARIOS" },
+                
+                //5.ITEM INST MECAN
+                new Titulo {  nombre ="SISTEMA DE GAS", descripcion = "SISTEMA DE GAS" },
+                new Titulo {  nombre ="SISTEMA DE EXTRACCIÓN DE CO", descripcion = "SISTEMA DE EXTRACCIÓN DE CO" },
+                new Titulo {  nombre ="SISTEMA DE VENTILACIÓN", descripcion = "SISTEMA DE VENTILACIÓN" },
+                new Titulo {  nombre ="EQUIPOS ", descripcion = "EQUIPOS " },
 
-
-                 
+                //6. ITEM. GAST.GRLS
+                new Titulo {  nombre ="OFICINA CENTRAL/OBRA", descripcion = "OFICINA CENTRAL/OBRA" },
+                new Titulo {  nombre ="OBRA", descripcion = "OBRA" },
+                new Titulo {  nombre ="EQUIPO DE OFICINA DE LA OBRA", descripcion = "EQUIPO DE OFICINA DE LA OBRA" },
+                new Titulo {  nombre ="VARIOS", descripcion = "VARIOS" },
+                new Titulo {  nombre ="GASTOS FINANCIEROS", descripcion = "GASTOS FINANCIEROS" }
+                                 
             };
+
+
+            titulo.ForEach(s => context.Titulo.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
+
+
+            var empresa = new List<Empresa>
+            {
+                new Empresa {  nombre= "PISSANO SAC", ruc= "" },
+                new Empresa { nombre= "SubContratos"}
+
+            };
+
+            tipoMaterial.ForEach(s => context.TipoMateriales.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
 
 
 
