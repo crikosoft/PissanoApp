@@ -439,6 +439,56 @@ namespace PissanoApp.Migrations
             materialhijos.ForEach(s => context.Materiales.AddOrUpdate(p => p.codigo, s));
             context.SaveChanges();
 
+
+            var titulo = new List<Titulo>
+            {
+                new Titulo {  nombre ="OBRAS PRELIMINARES", descripcion = "OBRAS PRELIMINARES" },
+                new Titulo {  nombre ="DEMOLICIONES", descripcion = "DEMOLICIONES" },
+                new Titulo {  nombre ="MOVIMIENTO DE TIERRAS (INCL. RELLENOS Y AFIRMADOS)", descripcion = "MOVIMIENTO DE TIERRAS (INCL. RELLENOS Y AFIRMADOS)" },
+                new Titulo {  nombre ="OBRAS DE CONCRETO SIMPLE", descripcion = "OBRAS DE CONCRETO SIMPLE" },
+                new Titulo {  nombre ="ESTABILIZACION DE TALUDES (MURO PANTALLA)", descripcion = "ESTABILIZACION DE TALUDES (MURO PANTALLA)" },
+                new Titulo {  nombre ="ENCOFRADO Y DESENCOFRADO", descripcion = "ENCOFRADO Y DESENCOFRADO" },
+                new Titulo {  nombre ="ACERO CORRUGADO f'y=4200 Kg/cm2", descripcion = "ACERO CORRUGADO f'y=4200 Kg/cm2" },
+                new Titulo {  nombre ="CONCRETO", descripcion = "CONCRETO" },
+                new Titulo {  nombre ="LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )", descripcion = "LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )" },
+                new Titulo {  nombre ="JUNTAS y DINTELES", descripcion = "JUNTAS y DINTELES" },
+                //2. ITEM ARQUI
+                new Titulo {  nombre ="ALBAÑILERIA", descripcion = "ALBAÑILERIA" },
+                new Titulo {  nombre ="REVOQUES ENLUCIDOS Y MOLDURAS", descripcion = "REVOQUES ENLUCIDOS Y MOLDURAS" },
+                new Titulo {  nombre ="SOLAQUEOS", descripcion = "SOLAQUEOS" },
+                new Titulo {  nombre ="PISOS Y PAVIMENTOS", descripcion = "PISOS Y PAVIMENTOS" },
+                new Titulo {  nombre ="ZOCALOS Y CONTRAZOCALOS", descripcion = "ZOCALOS Y CONTRAZOCALOS" },
+                new Titulo {  nombre ="CARPINTERIA DE MADERA", descripcion = "CARPINTERIA DE MADERA" },
+                new Titulo {  nombre ="MUEBLES ", descripcion = "MUEBLES " },
+                new Titulo {  nombre ="CLOSETS", descripcion = "CLOSETS" },
+                new Titulo {  nombre ="TABLEROS", descripcion = "TABLEROS" },
+                new Titulo {  nombre ="CARPINTERIA METALICA", descripcion = "CARPINTERIA METALICA" },
+                new Titulo {  nombre ="CERRAJERIA", descripcion = "CERRAJERIA" },
+                new Titulo {  nombre ="VIDRIOS CRISTALES Y SIMILARES", descripcion = "VIDRIOS CRISTALES Y SIMILARES" },
+                new Titulo {  nombre ="PINTURA", descripcion = "PINTURA" },
+                new Titulo {  nombre ="APARATOS SANITARIOS", descripcion = "APARATOS SANITARIOS" },
+                new Titulo {  nombre ="ACCESORIOS PARA BAÑOS", descripcion = "ACCESORIOS PARA BAÑOS" },
+                new Titulo {  nombre ="SEÑALES", descripcion = "SEÑALES" },
+                new Titulo {  nombre ="LUMINARIAS", descripcion = "LUMINARIAS" },
+                new Titulo {  nombre ="CUBIERTAS", descripcion = "CUBIERTAS" },
+                new Titulo {  nombre ="OBRAS EXTERIORES", descripcion = "OBRAS EXTERIORES" },
+                new Titulo {  nombre ="VARIOS", descripcion = "VARIOS" },
+                //3. ITEM IISS
+                new Titulo {  nombre ="SISTEMA DE AGUA FRIA", descripcion = "SISTEMA DE AGUA FRIA" },
+                new Titulo {  nombre ="SISTEMA DE AGUA CALIENTE", descripcion = "SISTEMA DE AGUA CALIENTE" },
+                new Titulo {  nombre ="SISTEMA DE DESAGÜE", descripcion = "SISTEMA DE DESAGÜE" },
+                new Titulo {  nombre ="SISTEMA AGUA CONTRA INCENDIO (ACI)", descripcion = "SISTEMA AGUA CONTRA INCENDIO (ACI)" },
+                new Titulo {  nombre ="CUARTO DE BOMBAS", descripcion = "CUARTO DE BOMBAS" },
+                new Titulo {  nombre ="EQUIPAMIENTO (incluye accesorios, instalación y todo lo requerido para su correcto funcionamiento)", descripcion = "EQUIPAMIENTO (incluye accesorios, instalación y todo lo requerido para su correcto funcionamiento)" },
+
+                
+
+
+                 
+            };
+
+
+
         }
     }
 }

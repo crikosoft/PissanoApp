@@ -15,7 +15,7 @@ namespace PissanoApp.Models
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
-
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Categoria>().
               HasOptional(e => e.CategoriaPadre).
@@ -83,8 +83,10 @@ namespace PissanoApp.Models
 
         //public System.Data.Entity.DbSet<PissanoApp.ViewModels.PresupuestoViewModel> PresupuestoViewModels { get; set; }
 
-        
 
+        public DbSet<Titulo> Titulo { get; set; }
+
+        public DbSet<Partida> Partida { get; set; }
 
     }
 

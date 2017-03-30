@@ -54,6 +54,7 @@ namespace PissanoApp.Migrations
                         descripcion = c.String(nullable: false, maxLength: 200),
                         obraId = c.Int(nullable: false),
                         fecha = c.DateTime(nullable: false),
+                        plazo = c.Int(nullable: false),
                         monedaId = c.Int(nullable: false),
                         total = c.Double(nullable: false),
                         tipoPresupuestoId = c.Int(nullable: false),

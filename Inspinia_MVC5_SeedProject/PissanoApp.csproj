@@ -192,9 +192,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201703241513216_db-create.cs" />
-    <Compile Include="Migrations\201703241513216_db-create.Designer.cs">
-      <DependentUpon>201703241513216_db-create.cs</DependentUpon>
+    <Compile Include="Migrations\201703282257070_db-create.cs" />
+    <Compile Include="Migrations\201703282257070_db-create.Designer.cs">
+      <DependentUpon>201703282257070_db-create.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703282300226_db-update.cs" />
+    <Compile Include="Migrations\201703282300226_db-update.Designer.cs">
+      <DependentUpon>201703282300226_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -215,6 +219,7 @@
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\OrdenCompra.cs" />
     <Compile Include="Models\OrdenCompraDetalle.cs" />
+    <Compile Include="Models\Partida.cs" />
     <Compile Include="Models\PissanoContext.cs" />
     <Compile Include="Models\Presupuesto.cs" />
     <Compile Include="Models\PresupuestoAndPresupuestoDetalle.cs" />
@@ -225,6 +230,7 @@
     <Compile Include="Models\TipoDocumento.cs" />
     <Compile Include="Models\TipoMaterial.cs" />
     <Compile Include="Models\TipoPresupuesto.cs" />
+    <Compile Include="Models\Titulo.cs" />
     <Compile Include="Models\UnidadMedida.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -396,6 +402,7 @@
     <Content Include="Content\plugins\slick\fonts\slick.svg" />
     <Content Include="Content\plugins\slick\fonts\slick.ttf" />
     <Content Include="Content\plugins\slick\fonts\slick.woff" />
+    <Content Include="Models\ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\HostDemo.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -961,8 +968,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703241513216_db-create.resx">
-      <DependentUpon>201703241513216_db-create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703282257070_db-create.resx">
+      <DependentUpon>201703282257070_db-create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703282300226_db-update.resx">
+      <DependentUpon>201703282300226_db-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
