@@ -27,6 +27,17 @@ namespace PissanoApp.Models
               WithMany().
               HasForeignKey(m => m.materialPadreId);
 
+            modelBuilder.Entity<Presupuesto>()
+                        .HasMany<Titulo>(s => s.Titulos)
+                        .WithMany(c => c.Presupuestos)
+                        .Map(cs =>
+                        {
+                            cs.MapLeftKey("presupuestoId");
+                            cs.MapRightKey("tituloId");
+                            cs.ToTable("PresupuestoTitulo");
+                        });
+
+
         }
 
         public PissanoContext() : base("DefaultConnection") { }
@@ -88,7 +99,11 @@ namespace PissanoApp.Models
 
         public DbSet<Partida> Partida { get; set; }
 
+        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.PresupuestoPartidaViewModel> PresupuestoPartidaViewModels { get; set; }
+
         //public System.Data.Entity.DbSet<PissanoApp.ViewModels.PresupuestoTitulosViewModel> PresupuestoTitulosViewModels { get; set; }
+
+        //public DbSet<PresupuestoTitulo> PresupuestoTitulo { get; set; }
 
     }
 

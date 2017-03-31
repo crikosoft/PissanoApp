@@ -184,6 +184,7 @@
     <Compile Include="Controllers\OrdenCompraController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\PresupuestoController.cs" />
+    <Compile Include="Controllers\PresupuestoPartidaViewModelController.cs" />
     <Compile Include="Controllers\PresupuestoTitulosViewModelController.cs" />
     <Compile Include="Controllers\PresupuestoViewModelController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
@@ -193,9 +194,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201703302056288_db-create.cs" />
-    <Compile Include="Migrations\201703302056288_db-create.Designer.cs">
-      <DependentUpon>201703302056288_db-create.cs</DependentUpon>
+    <Compile Include="Migrations\201703311926419_db-create.cs" />
+    <Compile Include="Migrations\201703311926419_db-create.Designer.cs">
+      <DependentUpon>201703311926419_db-create.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703312254288_db-update.cs" />
+    <Compile Include="Migrations\201703312254288_db-update.Designer.cs">
+      <DependentUpon>201703312254288_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -232,6 +237,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\MaterialPresupuestoViewModel.cs" />
+    <Compile Include="ViewModels\PresupuestoPartidaViewModel.cs" />
     <Compile Include="ViewModels\PresupuestoTitulosViewModel.cs" />
     <Compile Include="ViewModels\PresupuestoViewModel.cs" />
     <Compile Include="ViewModels\StatesDictionary.cs" />
@@ -956,6 +962,7 @@
     <Content Include="Views\Presupuesto\Index.cshtml" />
     <Content Include="Views\MaterialPresupuestoViewModel\Create.cshtml" />
     <Content Include="Views\PresupuestoTitulosViewModel\Create.cshtml" />
+    <Content Include="Views\PresupuestoPartidaViewModel\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -967,8 +974,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703302056288_db-create.resx">
-      <DependentUpon>201703302056288_db-create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703311926419_db-create.resx">
+      <DependentUpon>201703311926419_db-create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703312254288_db-update.resx">
+      <DependentUpon>201703312254288_db-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

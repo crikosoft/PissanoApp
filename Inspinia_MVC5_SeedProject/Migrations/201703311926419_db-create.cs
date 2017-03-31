@@ -345,8 +345,11 @@ namespace PissanoApp.Migrations
                         partidaId = c.Int(nullable: false, identity: true),
                         nombre = c.String(),
                         descripcion = c.String(),
+                        unidadMedidaId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.partidaId);
+                .PrimaryKey(t => t.partidaId)
+                .ForeignKey("dbo.UnidadMedidas", t => t.unidadMedidaId)
+                .Index(t => t.unidadMedidaId);
             
             CreateTable(
                 "dbo.Tituloes",
@@ -392,6 +395,7 @@ namespace PissanoApp.Migrations
         {
             DropForeignKey("dbo.RequerimientoDetalles", "requerimientoId", "dbo.Requerimientoes");
             DropForeignKey("dbo.RequerimientoDetalles", "materialId", "dbo.Materials");
+            DropForeignKey("dbo.Partidas", "unidadMedidaId", "dbo.UnidadMedidas");
             DropForeignKey("dbo.TituloPartidas", "Partida_partidaId", "dbo.Partidas");
             DropForeignKey("dbo.TituloPartidas", "Titulo_tituloId", "dbo.Tituloes");
             DropForeignKey("dbo.MaterialNivelStocks", "materialId", "dbo.Materials");
@@ -427,6 +431,7 @@ namespace PissanoApp.Migrations
             DropIndex("dbo.TituloPartidas", new[] { "Titulo_tituloId" });
             DropIndex("dbo.RequerimientoDetalles", new[] { "materialId" });
             DropIndex("dbo.RequerimientoDetalles", new[] { "requerimientoId" });
+            DropIndex("dbo.Partidas", new[] { "unidadMedidaId" });
             DropIndex("dbo.MaterialNivelStocks", new[] { "materialId" });
             DropIndex("dbo.MaterialNivelStocks", new[] { "almacenId" });
             DropIndex("dbo.Ingresoes", new[] { "DocumentoPago_documentoPagoId" });

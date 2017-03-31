@@ -1,4 +1,4 @@
-﻿@model PissanoApp.ViewModels.PresupuestoTitulosViewModel
+﻿@model PissanoApp.ViewModels.PresupuestoPartidaViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -44,45 +44,45 @@
                     <div class="dd" id="nestable">
                         <ol class="dd-list">
 
-                            @foreach (var item in Model.Titulos)
+                            @foreach (var item in Model.Partidas)
                             {
                                 <li class="dd-item" data-id="1">
-                                    <div class="dd-handle">@Html.DisplayFor(modelItem => item.nombre)</div>                                   
+                                    <div class="dd-handle">@Html.DisplayFor(modelItem => item.nombre)</div>
                                 </li>
 
                             }
 
                             @*<li class="dd-item" data-id="1">
-                                <div class="dd-handle">1 - Lorem ipsum</div>
-                            </li>
-                            <li class="dd-item" data-id="2">
-                                <div class="dd-handle">2 - Dolor sit</div>
-                                <ol class="dd-list">
-                                    <li class="dd-item" data-id="3">
-                                        <div class="dd-handle">3 - Adipiscing elit</div>
-                                    </li>
-                                    <li class="dd-item" data-id="4">
-                                        <div class="dd-handle">4 - Nonummy nibh</div>
-                                    </li>
-                                </ol>
-                            </li>
-                            <li class="dd-item" data-id="5">
-                                <div class="dd-handle">5 - Consectetuer</div>
-                                <ol class="dd-list">
-                                    <li class="dd-item" data-id="6">
-                                        <div class="dd-handle">6 - Aliquam erat</div>
-                                    </li>
-                                    <li class="dd-item" data-id="7">
-                                        <div class="dd-handle">7 - Veniam quis</div>
-                                    </li>
-                                </ol>
-                            </li>
-                            <li class="dd-item" data-id="8">
-                                <div class="dd-handle">8 - Tation ullamcorper</div>
-                            </li>
-                            <li class="dd-item" data-id="9">
-                                <div class="dd-handle">9 - Ea commodo</div>
-                            </li>*@
+                                    <div class="dd-handle">1 - Lorem ipsum</div>
+                                </li>
+                                <li class="dd-item" data-id="2">
+                                    <div class="dd-handle">2 - Dolor sit</div>
+                                    <ol class="dd-list">
+                                        <li class="dd-item" data-id="3">
+                                            <div class="dd-handle">3 - Adipiscing elit</div>
+                                        </li>
+                                        <li class="dd-item" data-id="4">
+                                            <div class="dd-handle">4 - Nonummy nibh</div>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="dd-item" data-id="5">
+                                    <div class="dd-handle">5 - Consectetuer</div>
+                                    <ol class="dd-list">
+                                        <li class="dd-item" data-id="6">
+                                            <div class="dd-handle">6 - Aliquam erat</div>
+                                        </li>
+                                        <li class="dd-item" data-id="7">
+                                            <div class="dd-handle">7 - Veniam quis</div>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="dd-item" data-id="8">
+                                    <div class="dd-handle">8 - Tation ullamcorper</div>
+                                </li>
+                                <li class="dd-item" data-id="9">
+                                    <div class="dd-handle">9 - Ea commodo</div>
+                                </li>*@
                         </ol>
                     </div>
 
@@ -113,25 +113,25 @@
                                     <span class="label label-info"><i class="fa fa-users"></i></span>ESTRUCTURAS
                                 </div>
                                 @*<ol class="dd-list">
-                                    <li class="dd-item" data-id="2">
-                                        <div class="dd-handle">
-                                            <span class="pull-right"> 12:00 pm </span>
-                                            <span class="label label-info"><i class="fa fa-cog"></i></span> Vivamus vestibulum nulla nec ante.
-                                        </div>
-                                    </li>
-                                    <li class="dd-item" data-id="3">
-                                        <div class="dd-handle">
-                                            <span class="pull-right"> 11:00 pm </span>
-                                            <span class="label label-info"><i class="fa fa-bolt"></i></span> Nunc dignissim risus id metus.
-                                        </div>
-                                    </li>
-                                    <li class="dd-item" data-id="4">
-                                        <div class="dd-handle">
-                                            <span class="pull-right"> 11:00 pm </span>
-                                            <span class="label label-info"><i class="fa fa-laptop"></i></span> Vestibulum commodo
-                                        </div>
-                                    </li>
-                                </ol>*@
+                                        <li class="dd-item" data-id="2">
+                                            <div class="dd-handle">
+                                                <span class="pull-right"> 12:00 pm </span>
+                                                <span class="label label-info"><i class="fa fa-cog"></i></span> Vivamus vestibulum nulla nec ante.
+                                            </div>
+                                        </li>
+                                        <li class="dd-item" data-id="3">
+                                            <div class="dd-handle">
+                                                <span class="pull-right"> 11:00 pm </span>
+                                                <span class="label label-info"><i class="fa fa-bolt"></i></span> Nunc dignissim risus id metus.
+                                            </div>
+                                        </li>
+                                        <li class="dd-item" data-id="4">
+                                            <div class="dd-handle">
+                                                <span class="pull-right"> 11:00 pm </span>
+                                                <span class="label label-info"><i class="fa fa-laptop"></i></span> Vestibulum commodo
+                                            </div>
+                                        </li>
+                                    </ol>*@
                             </li>
 
                             <li class="dd-item" data-id="5">
@@ -139,25 +139,25 @@
                                     <span class="label label-warning"><i class="fa fa-cog"></i></span>ARQUITECTURA
                                 </div>
                                 @*<ol class="dd-list">
-                                    <li class="dd-item" data-id="6">
-                                        <div class="dd-handle">
-                                            <span class="pull-right"> 15:00 pm </span>
-                                            <span class="label label-warning"><i class="fa fa-bolt"></i></span> Nam convallis pellentesque nisl.
-                                        </div>
-                                    </li>
-                                    <li class="dd-item" data-id="7">
-                                        <div class="dd-handle">
-                                            <span class="pull-right"> 16:00 pm </span>
-                                            <span class="label label-warning"><i class="fa fa-bomb"></i></span> Vivamus molestie gravida turpis
-                                        </div>
-                                    </li>
-                                    <li class="dd-item" data-id="8">
-                                        <div class="dd-handle">
-                                            <span class="pull-right"> 21:00 pm </span>
-                                            <span class="label label-warning"><i class="fa fa-child"></i></span> Ut aliquam sollicitudin leo.
-                                        </div>
-                                    </li>
-                                </ol>*@
+                                        <li class="dd-item" data-id="6">
+                                            <div class="dd-handle">
+                                                <span class="pull-right"> 15:00 pm </span>
+                                                <span class="label label-warning"><i class="fa fa-bolt"></i></span> Nam convallis pellentesque nisl.
+                                            </div>
+                                        </li>
+                                        <li class="dd-item" data-id="7">
+                                            <div class="dd-handle">
+                                                <span class="pull-right"> 16:00 pm </span>
+                                                <span class="label label-warning"><i class="fa fa-bomb"></i></span> Vivamus molestie gravida turpis
+                                            </div>
+                                        </li>
+                                        <li class="dd-item" data-id="8">
+                                            <div class="dd-handle">
+                                                <span class="pull-right"> 21:00 pm </span>
+                                                <span class="label label-warning"><i class="fa fa-child"></i></span> Ut aliquam sollicitudin leo.
+                                            </div>
+                                        </li>
+                                    </ol>*@
                             </li>
 
 
@@ -166,7 +166,7 @@
                                 <div class="dd-handle">
                                     <span class="label label-info"><i class="fa fa-bolt"></i></span>IISS (Instalaciones Sanitarias)
                                 </div>
-                               
+
                             </li>
 
                             <li class="dd-item" data-id="13">
@@ -250,7 +250,6 @@
         });
     </script>
 }
-
 
 
 

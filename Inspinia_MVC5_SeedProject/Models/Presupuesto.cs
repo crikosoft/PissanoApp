@@ -43,6 +43,10 @@ namespace PissanoApp.Models
         public int tipoPresupuestoId { get; set; }
         public virtual TipoPresupuesto TipoPresupuesto { get; set; }
 
+        public virtual ICollection<Titulo> Titulos { get; set; }
+        
+
+
         //public ICollection<string> Skills { get; set; }
         //public virtual ICollection<PresupuestoDetalle> PresupuestoDetalles { get; set; }
     }

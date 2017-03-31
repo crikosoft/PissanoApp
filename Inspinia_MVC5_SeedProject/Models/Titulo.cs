@@ -11,5 +11,7 @@ namespace PissanoApp.Models
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public virtual ICollection<Partida> Partidas { get; set; }
+
+        public virtual ICollection<Presupuesto> Presupuestos { get; set; }
     }
 }
