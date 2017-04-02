@@ -194,13 +194,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201703311926419_db-create.cs" />
-    <Compile Include="Migrations\201703311926419_db-create.Designer.cs">
-      <DependentUpon>201703311926419_db-create.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703312254288_db-update.cs" />
-    <Compile Include="Migrations\201703312254288_db-update.Designer.cs">
-      <DependentUpon>201703312254288_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201704021704254_db-create.cs" />
+    <Compile Include="Migrations\201704021704254_db-create.Designer.cs">
+      <DependentUpon>201704021704254_db-create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -226,6 +222,7 @@
     <Compile Include="Models\Presupuesto.cs" />
     <Compile Include="Models\PresupuestoAndPresupuestoDetalle.cs" />
     <Compile Include="Models\PresupuestoDetalle.cs" />
+    <Compile Include="Models\PresupuestoTitulo.cs" />
     <Compile Include="Models\Proveedor.cs" />
     <Compile Include="Models\Requerimiento.cs" />
     <Compile Include="Models\RequerimientoDetalle.cs" />
@@ -974,11 +971,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703311926419_db-create.resx">
-      <DependentUpon>201703311926419_db-create.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703312254288_db-update.resx">
-      <DependentUpon>201703312254288_db-update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704021704254_db-create.resx">
+      <DependentUpon>201704021704254_db-create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

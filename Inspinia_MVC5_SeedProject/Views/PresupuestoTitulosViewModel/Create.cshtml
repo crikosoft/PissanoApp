@@ -45,12 +45,12 @@
                         <ol class="dd-list">
 
                             @foreach (var item in Model.Titulos)
-                            {
-                                <li class="dd-item" data-id="1">
-                                    <div class="dd-handle">@Html.DisplayFor(modelItem => item.nombre)</div>                                   
-                                </li>
+                                {
+                                    <li class="dd-item" data-id=@Html.DisplayFor(modelItem => item.tituloId)>
+                                        <div class="dd-handle">@Html.DisplayFor(modelItem => item.nombre)</div>
+                                    </li>
 
-                            }
+                                }
 
                             @*<li class="dd-item" data-id="1">
                                 <div class="dd-handle">1 - Lorem ipsum</div>
@@ -218,6 +218,9 @@
                         output = list.data('output');
                 if (window.JSON) {
                     output.val(window.JSON.stringify(list.nestable('serialize')));//, null, 2));
+
+                    alert(window.JSON.stringify(list.nestable('serialize')));
+
                 } else {
                     output.val('JSON browser support required for this demo.');
                 }
@@ -246,6 +249,32 @@
                     $('.dd').nestable('collapseAll');
                 }
             });
+
+
+            //Save Nestable
+
+
+
+
+
+            // Save Nestable List 2
+
+            @*$(".updateSort").click(function (e) {
+                var json = $('.dd').nestable('serialize');
+                var ids = $(json).map(function () {
+                    return this.id;
+                }).get();
+                $.ajax({
+                    type: 'PUT',
+                    url: '@Url.Action("UpdateOrder")',
+                    data: { ids: ids }
+                })
+                .done(function (result) {
+                    alert(result.success);
+                });
+            });*@
+
+
 
         });
     </script>

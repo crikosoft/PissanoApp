@@ -27,6 +27,16 @@ namespace PissanoApp.Migrations
             tipoMaterial.ForEach(s => context.TipoMateriales.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
 
+            var monedas = new List<Moneda>
+            {
+                new Moneda { nombre= "Soles"},
+                new Moneda { nombre= "Dolares"}
+
+            };
+
+            monedas.ForEach(s => context.Monedas.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
             var unidadMedida = new List<UnidadMedida>
             {
                 new UnidadMedida { nombre= "bls", sigla="bls"},
@@ -57,6 +67,56 @@ namespace PissanoApp.Migrations
 
             unidadMedida.ForEach(s => context.UnidadMedidas.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
+
+
+
+            var empresas = new List<Empresa>
+            {
+                new Empresa { nombre= "PISSANO SAC", ruc= "20251059749", agenteRetenedor = true, telefono="346-2454 / 346-1989", direccion="Av. San Luis 1369 - San luis"},
+                new Empresa { nombre= "Consorcio PISSANO S.A.C.", ruc="20600375602", agenteRetenedor=false, telefono = "346-2454 / 346-1989", direccion="Av. San Luis 1363 - San Luis"}
+
+            };
+
+            empresas.ForEach(s => context.Empresas.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
+
+            var obras = new List<Obra>
+            {
+                new Obra { direccion= "EDIFICIO MULTIFAMILIAR SUCRE - MIRAFLORES", fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12, 
+                    empresaId = empresas.Single(s => s.nombre == "PISSANO SAC" ).empresaId},
+                new Obra { direccion= "RESIDENCIAL  SAN BORJA NORTE" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
+                    empresaId = empresas.Single(s => s.nombre == "PISSANO SAC" ).empresaId},
+                new Obra { direccion= "BARCELONA" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
+                    empresaId = empresas.Single(s => s.nombre == "PISSANO SAC" ).empresaId},
+
+            };
+
+            obras.ForEach(s => context.Obras.AddOrUpdate(p => p.direccion, s));
+            context.SaveChanges();
+
+
+            var tiposPresupuesto = new List<TipoPresupuesto>
+            {
+                new TipoPresupuesto { descripcion = "Presupuesto Itemizado"},
+                new TipoPresupuesto { descripcion = "Presupuesto con Partidas de Control"}
+
+            };
+
+            tiposPresupuesto.ForEach(s => context.TipoPresupuestoes.AddOrUpdate(p => p.descripcion, s));
+            context.SaveChanges();
+
+            var presupuestos = new List<Presupuesto>
+            {
+                new Presupuesto { descripcion = "Presupuesto Itemizado de Obra San Borja Norte", plazo=12, fecha = DateTime.Today, 
+                    obraId = obras.Single(s => s.direccion =="RESIDENCIAL  SAN BORJA NORTE").id,
+                    tipoPresupuestoId  =  tiposPresupuesto.Single(s => s.descripcion =="Presupuesto Itemizado").tipoPresupuestoId,
+                    monedaId = monedas.Single(s => s.nombre == "Soles").monedaId}
+             };
+
+            presupuestos.ForEach(s => context.Presupuestos.AddOrUpdate(p => p.descripcion, s));
+            context.SaveChanges();
+
 
             var materialpadres = new List<Material>
             {

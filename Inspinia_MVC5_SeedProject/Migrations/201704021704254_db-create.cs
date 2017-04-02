@@ -256,6 +256,29 @@ namespace PissanoApp.Migrations
                 .PrimaryKey(t => t.tipoPresupuestoId);
             
             CreateTable(
+                "dbo.Tituloes",
+                c => new
+                    {
+                        tituloId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(),
+                        descripcion = c.String(),
+                    })
+                .PrimaryKey(t => t.tituloId);
+            
+            CreateTable(
+                "dbo.Partidas",
+                c => new
+                    {
+                        partidaId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(),
+                        descripcion = c.String(),
+                        unidadMedidaId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.partidaId)
+                .ForeignKey("dbo.UnidadMedidas", t => t.unidadMedidaId)
+                .Index(t => t.unidadMedidaId);
+            
+            CreateTable(
                 "dbo.Categorias",
                 c => new
                     {
@@ -339,27 +362,18 @@ namespace PissanoApp.Migrations
                 .Index(t => t.materialId);
             
             CreateTable(
-                "dbo.Partidas",
+                "dbo.PresupuestoTituloes",
                 c => new
                     {
-                        partidaId = c.Int(nullable: false, identity: true),
-                        nombre = c.String(),
-                        descripcion = c.String(),
-                        unidadMedidaId = c.Int(nullable: false),
+                        presupuestoId = c.Int(nullable: false),
+                        tituloId = c.Int(nullable: false),
+                        orden = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.partidaId)
-                .ForeignKey("dbo.UnidadMedidas", t => t.unidadMedidaId)
-                .Index(t => t.unidadMedidaId);
-            
-            CreateTable(
-                "dbo.Tituloes",
-                c => new
-                    {
-                        tituloId = c.Int(nullable: false, identity: true),
-                        nombre = c.String(),
-                        descripcion = c.String(),
-                    })
-                .PrimaryKey(t => t.tituloId);
+                .PrimaryKey(t => new { t.presupuestoId, t.tituloId })
+                .ForeignKey("dbo.Presupuestoes", t => t.presupuestoId)
+                .ForeignKey("dbo.Tituloes", t => t.tituloId)
+                .Index(t => t.presupuestoId)
+                .Index(t => t.tituloId);
             
             CreateTable(
                 "dbo.RequerimientoDetalles",
@@ -377,17 +391,30 @@ namespace PissanoApp.Migrations
                 .Index(t => t.materialId);
             
             CreateTable(
-                "dbo.TituloPartidas",
+                "dbo.PartidaTituloes",
+                c => new
+                    {
+                        Partida_partidaId = c.Int(nullable: false),
+                        Titulo_tituloId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Partida_partidaId, t.Titulo_tituloId })
+                .ForeignKey("dbo.Partidas", t => t.Partida_partidaId, cascadeDelete: true)
+                .ForeignKey("dbo.Tituloes", t => t.Titulo_tituloId, cascadeDelete: true)
+                .Index(t => t.Partida_partidaId)
+                .Index(t => t.Titulo_tituloId);
+            
+            CreateTable(
+                "dbo.TituloPresupuestoes",
                 c => new
                     {
                         Titulo_tituloId = c.Int(nullable: false),
-                        Partida_partidaId = c.Int(nullable: false),
+                        Presupuesto_presupuestoId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Titulo_tituloId, t.Partida_partidaId })
+                .PrimaryKey(t => new { t.Titulo_tituloId, t.Presupuesto_presupuestoId })
                 .ForeignKey("dbo.Tituloes", t => t.Titulo_tituloId, cascadeDelete: true)
-                .ForeignKey("dbo.Partidas", t => t.Partida_partidaId, cascadeDelete: true)
+                .ForeignKey("dbo.Presupuestoes", t => t.Presupuesto_presupuestoId, cascadeDelete: true)
                 .Index(t => t.Titulo_tituloId)
-                .Index(t => t.Partida_partidaId);
+                .Index(t => t.Presupuesto_presupuestoId);
             
         }
         
@@ -395,9 +422,8 @@ namespace PissanoApp.Migrations
         {
             DropForeignKey("dbo.RequerimientoDetalles", "requerimientoId", "dbo.Requerimientoes");
             DropForeignKey("dbo.RequerimientoDetalles", "materialId", "dbo.Materials");
-            DropForeignKey("dbo.Partidas", "unidadMedidaId", "dbo.UnidadMedidas");
-            DropForeignKey("dbo.TituloPartidas", "Partida_partidaId", "dbo.Partidas");
-            DropForeignKey("dbo.TituloPartidas", "Titulo_tituloId", "dbo.Tituloes");
+            DropForeignKey("dbo.PresupuestoTituloes", "tituloId", "dbo.Tituloes");
+            DropForeignKey("dbo.PresupuestoTituloes", "presupuestoId", "dbo.Presupuestoes");
             DropForeignKey("dbo.MaterialNivelStocks", "materialId", "dbo.Materials");
             DropForeignKey("dbo.MaterialNivelStocks", "almacenId", "dbo.Almacens");
             DropForeignKey("dbo.IngresoDetalles", "ordenCompradetalleId", "dbo.OrdenCompraDetalles");
@@ -407,6 +433,11 @@ namespace PissanoApp.Migrations
             DropForeignKey("dbo.DocumentoPagoes", "tipoDocumentoId", "dbo.TipoDocumentoes");
             DropForeignKey("dbo.Categorias", "categoriaPadreId", "dbo.Categorias");
             DropForeignKey("dbo.Almacens", "obraId", "dbo.Obras");
+            DropForeignKey("dbo.TituloPresupuestoes", "Presupuesto_presupuestoId", "dbo.Presupuestoes");
+            DropForeignKey("dbo.TituloPresupuestoes", "Titulo_tituloId", "dbo.Tituloes");
+            DropForeignKey("dbo.Partidas", "unidadMedidaId", "dbo.UnidadMedidas");
+            DropForeignKey("dbo.PartidaTituloes", "Titulo_tituloId", "dbo.Tituloes");
+            DropForeignKey("dbo.PartidaTituloes", "Partida_partidaId", "dbo.Partidas");
             DropForeignKey("dbo.Presupuestoes", "tipoPresupuestoId", "dbo.TipoPresupuestoes");
             DropForeignKey("dbo.PresupuestoDetalles", "presupuestoId", "dbo.Presupuestoes");
             DropForeignKey("dbo.PresupuestoDetalles", "materialId", "dbo.Materials");
@@ -427,11 +458,14 @@ namespace PissanoApp.Migrations
             DropForeignKey("dbo.Presupuestoes", "obraId", "dbo.Obras");
             DropForeignKey("dbo.Presupuestoes", "monedaId", "dbo.Monedas");
             DropForeignKey("dbo.Obras", "empresaId", "dbo.Empresas");
-            DropIndex("dbo.TituloPartidas", new[] { "Partida_partidaId" });
-            DropIndex("dbo.TituloPartidas", new[] { "Titulo_tituloId" });
+            DropIndex("dbo.TituloPresupuestoes", new[] { "Presupuesto_presupuestoId" });
+            DropIndex("dbo.TituloPresupuestoes", new[] { "Titulo_tituloId" });
+            DropIndex("dbo.PartidaTituloes", new[] { "Titulo_tituloId" });
+            DropIndex("dbo.PartidaTituloes", new[] { "Partida_partidaId" });
             DropIndex("dbo.RequerimientoDetalles", new[] { "materialId" });
             DropIndex("dbo.RequerimientoDetalles", new[] { "requerimientoId" });
-            DropIndex("dbo.Partidas", new[] { "unidadMedidaId" });
+            DropIndex("dbo.PresupuestoTituloes", new[] { "tituloId" });
+            DropIndex("dbo.PresupuestoTituloes", new[] { "presupuestoId" });
             DropIndex("dbo.MaterialNivelStocks", new[] { "materialId" });
             DropIndex("dbo.MaterialNivelStocks", new[] { "almacenId" });
             DropIndex("dbo.Ingresoes", new[] { "DocumentoPago_documentoPagoId" });
@@ -440,6 +474,7 @@ namespace PissanoApp.Migrations
             DropIndex("dbo.IngresoDetalles", new[] { "ordenCompradetalleId" });
             DropIndex("dbo.DocumentoPagoes", new[] { "tipoDocumentoId" });
             DropIndex("dbo.Categorias", new[] { "categoriaPadreId" });
+            DropIndex("dbo.Partidas", new[] { "unidadMedidaId" });
             DropIndex("dbo.Requerimientoes", new[] { "obraId" });
             DropIndex("dbo.OrdenCompraDetalles", new[] { "estadoOrdenDetalleId" });
             DropIndex("dbo.OrdenCompraDetalles", new[] { "materialId" });
@@ -461,16 +496,18 @@ namespace PissanoApp.Migrations
             DropIndex("dbo.Presupuestoes", new[] { "obraId" });
             DropIndex("dbo.Obras", new[] { "empresaId" });
             DropIndex("dbo.Almacens", new[] { "obraId" });
-            DropTable("dbo.TituloPartidas");
+            DropTable("dbo.TituloPresupuestoes");
+            DropTable("dbo.PartidaTituloes");
             DropTable("dbo.RequerimientoDetalles");
-            DropTable("dbo.Tituloes");
-            DropTable("dbo.Partidas");
+            DropTable("dbo.PresupuestoTituloes");
             DropTable("dbo.MaterialNivelStocks");
             DropTable("dbo.Ingresoes");
             DropTable("dbo.IngresoDetalles");
             DropTable("dbo.TipoDocumentoes");
             DropTable("dbo.DocumentoPagoes");
             DropTable("dbo.Categorias");
+            DropTable("dbo.Partidas");
+            DropTable("dbo.Tituloes");
             DropTable("dbo.TipoPresupuestoes");
             DropTable("dbo.UnidadMedidas");
             DropTable("dbo.Requerimientoes");
