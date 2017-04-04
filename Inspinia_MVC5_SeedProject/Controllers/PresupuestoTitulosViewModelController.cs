@@ -34,5 +34,51 @@ namespace PissanoApp.Controllers
 
             return View(PresupuestoTitulosViewModel);
         }
+
+
+        [HttpPost]
+        public ActionResult Crear(PresupuestoTitulo presupuestoTitulo)
+        {
+            if (ModelState.IsValid)
+            {
+                db.PresupuestoTitulo.Add(presupuestoTitulo);
+                db.SaveChanges();
+                return RedirectToAction("Create/1");
+            }
+
+            return View(presupuestoTitulo);
+        }
+
+        [HttpPost]
+        public ActionResult CrearLista(List<PresupuestoTitulo> presupuestoTitulos)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                //var presupuestoTits = new List<PresupuestoTitulo>();
+                //foreach (var presupuestoTitulo in presupuestoTitulos)
+                //{
+                //    var presupuestoTit = new PresupuestoTitulo
+                //    {
+                //        presupuestoId = presupuestoTitulo.presupuestoId,
+                //        tituloId = presupuestoTitulo.tituloId,
+                //        orden = presupuestoTitulo.orden
+                //    };
+
+                //}
+
+                foreach (var item in presupuestoTitulos)
+                {
+                    db.PresupuestoTitulo.Add(item);
+                }
+  
+                db.SaveChanges();
+
+
+                return RedirectToAction("Create/1");
+            }
+
+            return View(presupuestoTitulos);
+        }
 	}
 }

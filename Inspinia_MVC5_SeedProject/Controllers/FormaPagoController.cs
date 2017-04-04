@@ -58,6 +58,9 @@ namespace PissanoApp.Controllers
             return View(formapago);
         }
 
+
+
+
         // GET: /FormaPago/Edit/5
         public ActionResult Edit(int? id)
         {

@@ -14,11 +14,13 @@ namespace PissanoApp.ViewModels
 
         public Presupuesto Presupuesto { get; set; }
 
+        public PresupuestoTitulo PresupuestoTitulo { get; set; }
+
 
         public PresupuestoTitulosViewModel(List<Titulo> titulos, Presupuesto presupuesto)
         {
             Titulos = titulos;
-            Presupuesto = presupuesto;            
+            Presupuesto = presupuesto;
         }
 
     }

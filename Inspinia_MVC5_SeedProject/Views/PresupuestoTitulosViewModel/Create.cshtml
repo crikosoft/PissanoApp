@@ -26,6 +26,7 @@
             <div id="nestable-menu">
                 <button type="button" data-action="expand-all" class="btn btn-white btn-sm">Expandir Todo</button>
                 <button type="button" data-action="collapse-all" class="btn btn-white btn-sm">Minimizar Todo</button>
+                <button type="button" class="btn" id="execute">Guardar Datos</button>
             </div>
         </div>
     </div>
@@ -216,10 +217,13 @@
             var updateOutput = function (e) {
                 var list = e.length ? e : $(e.target),
                         output = list.data('output');
+                
                 if (window.JSON) {
                     output.val(window.JSON.stringify(list.nestable('serialize')));//, null, 2));
 
-                    alert(window.JSON.stringify(list.nestable('serialize')));
+                    //alert(window.JSON.stringify(list.nestable('serialize')));
+
+
 
                 } else {
                     output.val('JSON browser support required for this demo.');
@@ -276,7 +280,62 @@
 
 
 
+
+
+            $('#execute').click(function(){
+                
+
+                var data = $.parseJSON($('#nestable2-output').val());
+
+                //alert(data);
+                                
+                var titulos = [];
+               
+                for (var i = 0; i < data.length; i++) {
+
+                    var titulo = new Object();
+                    
+                    titulo.tituloId = data[i].id;
+                    titulo.presupuestoId = 1;
+                    titulo.orden = i + 1;
+
+                    //alert(titulo.orden);
+                    //var val = 1;
+                    titulos.push(titulo);
+                    
+                }
+
+                //alert(titulos);
+                //alert(JSON.stringify(options));
+
+                //alert(titulos.length);
+
+                //var PresupuestoTitulo = { presupuestoId: 1, tituloId:1, orden:1 };
+                //var PresupuestoTitulos = [{ presupuestoId: 1, tituloId: 1, orden: 1 }, { presupuestoId: 1, tituloId: 2, orden: 2 }];
+
+                PresupuestoTitulos = JSON.stringify({ 'presupuestoTitulos': titulos });
+                
+                alert(titulos.length);
+                alert(titulos[0].tituloId);
+
+                //return;
+
+                //alert($('#nestable2-output').val());
+
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '@Url.Action("CrearLista")',
+                    data: PresupuestoTitulos
+                })
+                .done(function (result) {
+                    alert("pasó");
+                });               
+            });
+
         });
+
     </script>
 }
 
