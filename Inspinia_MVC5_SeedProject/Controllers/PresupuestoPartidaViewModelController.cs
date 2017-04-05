@@ -31,8 +31,12 @@ namespace PissanoApp.Controllers
 
             var presupuesto = db.Presupuestos.Single(p => p.presupuestoId == id);
 
+            var subPresupuestos = db.SubPresupuesto;
 
-            var PresupuestoPartidaViewModels = new PresupuestoPartidaViewModel(partidas.ToList(), presupuesto);
+            var presupuestoTitulos = db.PresupuestoTitulo.Where(p => p.presupuestoId == id).OrderBy(p => p.subPresupuestoId).OrderBy(p => p.orden);
+
+
+            var PresupuestoPartidaViewModels = new PresupuestoPartidaViewModel(subPresupuestos.ToList(), partidas.ToList(), presupuesto, presupuestoTitulos.ToList());
 
 
             return View(PresupuestoPartidaViewModels);

@@ -10,6 +10,8 @@ namespace PissanoApp.ViewModels
     {
         public int? presupuestoTitulosViewModelId { get; set; }
 
+        public List<SubPresupuesto> SubPresupuestos { get; set; }
+
         public List<Titulo> Titulos { get; set; }
 
         public Presupuesto Presupuesto { get; set; }
@@ -17,8 +19,11 @@ namespace PissanoApp.ViewModels
         public PresupuestoTitulo PresupuestoTitulo { get; set; }
 
 
-        public PresupuestoTitulosViewModel(List<Titulo> titulos, Presupuesto presupuesto)
+
+
+        public PresupuestoTitulosViewModel(List<SubPresupuesto> subPresupuestos, List<Titulo> titulos, Presupuesto presupuesto)
         {
+            SubPresupuestos = subPresupuestos;
             Titulos = titulos;
             Presupuesto = presupuesto;
         }

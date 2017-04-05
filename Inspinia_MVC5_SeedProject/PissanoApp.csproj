@@ -194,9 +194,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201704021704254_db-create.cs" />
-    <Compile Include="Migrations\201704021704254_db-create.Designer.cs">
-      <DependentUpon>201704021704254_db-create.cs</DependentUpon>
+    <Compile Include="Migrations\201704051934198_db-create.cs" />
+    <Compile Include="Migrations\201704051934198_db-create.Designer.cs">
+      <DependentUpon>201704051934198_db-create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -226,6 +226,7 @@
     <Compile Include="Models\Proveedor.cs" />
     <Compile Include="Models\Requerimiento.cs" />
     <Compile Include="Models\RequerimientoDetalle.cs" />
+    <Compile Include="Models\SubPresupuesto.cs" />
     <Compile Include="Models\TipoDocumento.cs" />
     <Compile Include="Models\TipoMaterial.cs" />
     <Compile Include="Models\TipoPresupuesto.cs" />
@@ -971,8 +972,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704021704254_db-create.resx">
-      <DependentUpon>201704021704254_db-create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704051934198_db-create.resx">
+      <DependentUpon>201704051934198_db-create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -993,7 +994,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59911</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:59328/</IISUrl>
+          <IISUrl>http://localhost:59327/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

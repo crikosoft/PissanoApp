@@ -103,7 +103,22 @@ namespace PissanoApp.Migrations
 
             };
 
+
             tiposPresupuesto.ForEach(s => context.TipoPresupuestoes.AddOrUpdate(p => p.descripcion, s));
+            context.SaveChanges();
+
+            var subPresupuesto = new List<SubPresupuesto>
+            {
+                new SubPresupuesto { nombre = "Estructuras"},
+                new SubPresupuesto { nombre = "Arquitectura"},
+                new SubPresupuesto { nombre = "IISS (Instalaciones Sanitarias)"},
+                new SubPresupuesto { nombre = "IIEE (Instalaciones Eléctricas)"},
+                new SubPresupuesto { nombre = "Instalaciones Mecánicas"},
+                new SubPresupuesto { nombre = "Gastos Generales"},
+
+            };
+
+            subPresupuesto.ForEach(s => context.SubPresupuesto.AddOrUpdate(p => p.nombre,s));
             context.SaveChanges();
 
             var presupuestos = new List<Presupuesto>

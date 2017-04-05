@@ -26,10 +26,12 @@ namespace PissanoApp.Controllers
 
             var titulos = db.Titulo;
 
+            var subPresupuestos = db.SubPresupuesto;
+
             var presupuesto = db.Presupuestos.Single(p => p.presupuestoId == id);
 
 
-            var PresupuestoTitulosViewModel = new PresupuestoTitulosViewModel(titulos.ToList(), presupuesto);
+            var PresupuestoTitulosViewModel = new PresupuestoTitulosViewModel(subPresupuestos.ToList(), titulos.ToList(), presupuesto);
 
 
             return View(PresupuestoTitulosViewModel);
@@ -40,7 +42,8 @@ namespace PissanoApp.Controllers
         public ActionResult Crear(PresupuestoTitulo presupuestoTitulo)
         {
             if (ModelState.IsValid)
-            {
+            {                
+
                 db.PresupuestoTitulo.Add(presupuestoTitulo);
                 db.SaveChanges();
                 return RedirectToAction("Create/1");
@@ -55,17 +58,11 @@ namespace PissanoApp.Controllers
             if (ModelState.IsValid)
             {
                 
-                //var presupuestoTits = new List<PresupuestoTitulo>();
-                //foreach (var presupuestoTitulo in presupuestoTitulos)
-                //{
-                //    var presupuestoTit = new PresupuestoTitulo
-                //    {
-                //        presupuestoId = presupuestoTitulo.presupuestoId,
-                //        tituloId = presupuestoTitulo.tituloId,
-                //        orden = presupuestoTitulo.orden
-                //    };
 
-                //}
+                var presupuestoTitulosExistentes = db.PresupuestoTitulo.Where(p => p.presupuestoId == 1);
+                db.PresupuestoTitulo.RemoveRange(presupuestoTitulosExistentes);
+                db.SaveChanges();
+
 
                 foreach (var item in presupuestoTitulos)
                 {

@@ -20,5 +20,12 @@ namespace PissanoApp.Models
         public virtual Titulo Titulo { get; set; }
 
         public int orden { get; set; }
+
+        public int subPresupuestoId { get; set; }
+
+        public virtual SubPresupuesto SubPresupuesto { get; set; }
+
+        public int tituloIdPadre { get; set; }
+   
     }
 }

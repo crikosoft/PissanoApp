@@ -108,89 +108,37 @@
 
                     <div class="dd" id="nestable2">
                         <ol class="dd-list">
-                            <li class="dd-item" data-id="1">
-                                <div class="dd-handle">
-                                    <span class="label label-info"><i class="fa fa-users"></i></span>ESTRUCTURAS
-                                </div>
-                                @*<ol class="dd-list">
-                                        <li class="dd-item" data-id="2">
-                                            <div class="dd-handle">
-                                                <span class="pull-right"> 12:00 pm </span>
-                                                <span class="label label-info"><i class="fa fa-cog"></i></span> Vivamus vestibulum nulla nec ante.
-                                            </div>
-                                        </li>
-                                        <li class="dd-item" data-id="3">
-                                            <div class="dd-handle">
-                                                <span class="pull-right"> 11:00 pm </span>
-                                                <span class="label label-info"><i class="fa fa-bolt"></i></span> Nunc dignissim risus id metus.
-                                            </div>
-                                        </li>
-                                        <li class="dd-item" data-id="4">
-                                            <div class="dd-handle">
-                                                <span class="pull-right"> 11:00 pm </span>
-                                                <span class="label label-info"><i class="fa fa-laptop"></i></span> Vestibulum commodo
-                                            </div>
-                                        </li>
-                                    </ol>*@
-                            </li>
-
-                            <li class="dd-item" data-id="5">
-                                <div class="dd-handle">
-                                    <span class="label label-warning"><i class="fa fa-cog"></i></span>ARQUITECTURA
-                                </div>
-                                @*<ol class="dd-list">
-                                        <li class="dd-item" data-id="6">
-                                            <div class="dd-handle">
-                                                <span class="pull-right"> 15:00 pm </span>
-                                                <span class="label label-warning"><i class="fa fa-bolt"></i></span> Nam convallis pellentesque nisl.
-                                            </div>
-                                        </li>
-                                        <li class="dd-item" data-id="7">
-                                            <div class="dd-handle">
-                                                <span class="pull-right"> 16:00 pm </span>
-                                                <span class="label label-warning"><i class="fa fa-bomb"></i></span> Vivamus molestie gravida turpis
-                                            </div>
-                                        </li>
-                                        <li class="dd-item" data-id="8">
-                                            <div class="dd-handle">
-                                                <span class="pull-right"> 21:00 pm </span>
-                                                <span class="label label-warning"><i class="fa fa-child"></i></span> Ut aliquam sollicitudin leo.
-                                            </div>
-                                        </li>
-                                    </ol>*@
-                            </li>
 
 
+                            @foreach (var item in Model.SubPresupuestos)
+                            {
+                                                               
+                                <li class="dd-item" data-id=@Html.DisplayFor(modelItem => item.subPresupuestoId)>
+                                    <div class="dd-handle">
+                                        <span class="label label-warning"><i class="fa fa-cog"></i></span>@Html.DisplayFor(modelItem => item.nombre)
 
-                            <li class="dd-item" data-id="9">
-                                <div class="dd-handle">
-                                    <span class="label label-info"><i class="fa fa-bolt"></i></span>IISS (Instalaciones Sanitarias)
-                                </div>
-
-                            </li>
-
-                            <li class="dd-item" data-id="13">
-                                <div class="dd-handle">
-                                    <span class="label label-warning"><i class="fa fa-bomb"></i></span>IIEE (Instalaciones Eléctricas)
-                                </div>
-
-                            </li>
+                                    </div>
+                                </li>
 
 
-                            <li class="dd-item" data-id="17">
-                                <div class="dd-handle">
-                                    <span class="label label-info"><i class="fa fa-laptop"></i></span>Instalaciones Mecánicas
-                                </div>
+                                foreach (var item2 in Model.PresupuestoTitulos)
+                                {
 
-                            </li>
+                                    if (item.subPresupuestoId == item2.subPresupuestoId)
+                                    {
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="1">
+                                                <div class="dd-handle">@Html.DisplayFor(modelItem => item2.Titulo.nombre)</div>
+                                            </li>
+                                        </ol>                                                                                                                                        
+                                    }
 
+                                }
 
-                            <li class="dd-item" data-id="21">
-                                <div class="dd-handle">
-                                    <span class="label label-warning"><i class="fa fa-child"></i></span>Gastos Generales
-                                </div>
+                            }
 
-                            </li>
+                            
+
 
                         </ol>
                     </div>

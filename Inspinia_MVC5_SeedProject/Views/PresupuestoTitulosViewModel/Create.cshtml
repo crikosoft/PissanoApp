@@ -108,12 +108,27 @@
                     </p>
 
                     <div class="dd" id="nestable2">
+
+
                         <ol class="dd-list">
-                            <li class="dd-item" data-id="1">
+
+                            @foreach (var item in Model.SubPresupuestos)
+                            {
+                                <li class="dd-item" data-id=@Html.DisplayFor(modelItem => item.subPresupuestoId)>
+                                    <div class="dd-handle">
+                                    <span class="label label-warning"><i class="fa fa-cog"></i></span>@Html.DisplayFor(modelItem => item.nombre)
+                                    
+                                    </div>
+                                </li>
+
+                            }
+
+
+                            @*<li class="dd-item" data-id="1">
                                 <div class="dd-handle">
                                     <span class="label label-info"><i class="fa fa-users"></i></span>ESTRUCTURAS
                                 </div>
-                                @*<ol class="dd-list">
+                                <ol class="dd-list">
                                     <li class="dd-item" data-id="2">
                                         <div class="dd-handle">
                                             <span class="pull-right"> 12:00 pm </span>
@@ -132,14 +147,14 @@
                                             <span class="label label-info"><i class="fa fa-laptop"></i></span> Vestibulum commodo
                                         </div>
                                     </li>
-                                </ol>*@
+                                </ol>
                             </li>
 
                             <li class="dd-item" data-id="5">
                                 <div class="dd-handle">
                                     <span class="label label-warning"><i class="fa fa-cog"></i></span>ARQUITECTURA
                                 </div>
-                                @*<ol class="dd-list">
+                                <ol class="dd-list">
                                     <li class="dd-item" data-id="6">
                                         <div class="dd-handle">
                                             <span class="pull-right"> 15:00 pm </span>
@@ -158,7 +173,7 @@
                                             <span class="label label-warning"><i class="fa fa-child"></i></span> Ut aliquam sollicitudin leo.
                                         </div>
                                     </li>
-                                </ol>*@
+                                </ol>
                             </li>
 
 
@@ -191,7 +206,7 @@
                                     <span class="label label-warning"><i class="fa fa-child"></i></span>Gastos Generales
                                 </div>
 
-                            </li>
+                            </li>*@
 
                         </ol>
                     </div>
@@ -294,17 +309,49 @@
                 for (var i = 0; i < data.length; i++) {
 
                     var titulo = new Object();
-                    
-                    titulo.tituloId = data[i].id;
-                    titulo.presupuestoId = 1;
-                    titulo.orden = i + 1;
+                                        
+                    if (data[i].children)
+                    {
+
+                        for (var j = 0; j < data[i].children.length; j++) {
+                            var titulo = new Object();
+
+                            titulo.tituloId = data[i].children[j].id;
+                            titulo.subpresupuestoId = data[i].id;
+                            titulo.presupuestoId = 1;
+                            titulo.orden = j + 1;
+                            titulos.push(titulo);
+
+                            if (data[i].children[j].children) {
+
+                                //alert("reconoció children para :" + (data[i].id) + ", la cantidad de: " + data[i].children.length);
+                                for (var x = 0; x < data[i].children[j].children.length; x++) {
+                                    var titulo = new Object();
+
+                                    titulo.tituloId = data[i].children[j].children[x].id;
+                                    titulo.subpresupuestoId = data[i].id;
+                                    titulo.presupuestoId = 1;
+                                    titulo.orden = j + 1;
+                                    titulo.tituloIdPadre = data[i].children[j].id;
+                                    titulos.push(titulo);
+
+                                }
+
+                            }
+                        }
+
+                    }
+
+                    //titulo.tituloId = data[i].id;
+                    //titulo.presupuestoId = 1;
+                    //titulo.orden = i + 1;
 
                     //alert(titulo.orden);
                     //var val = 1;
-                    titulos.push(titulo);
+                    //titulos.push(titulo);
                     
                 }
-
+               
                 //alert(titulos);
                 //alert(JSON.stringify(options));
 
@@ -315,8 +362,8 @@
 
                 PresupuestoTitulos = JSON.stringify({ 'presupuestoTitulos': titulos });
                 
-                alert(titulos.length);
-                alert(titulos[0].tituloId);
+                //alert(titulos.length);
+                //alert(titulos[0].tituloId);
 
                 //return;
 
@@ -338,6 +385,7 @@
 
     </script>
 }
+
 
 
 

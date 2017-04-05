@@ -27,6 +27,7 @@ namespace PissanoApp.Models
               WithMany().
               HasForeignKey(m => m.materialPadreId);
 
+
             //modelBuilder.Entity<Presupuesto>()
             //            .HasMany<Titulo>(s => s.Titulos)
             //            .WithMany(c => c.Presupuestos)
@@ -105,6 +106,7 @@ namespace PissanoApp.Models
 
         public DbSet<PresupuestoTitulo> PresupuestoTitulo { get; set; }
 
+        public DbSet<SubPresupuesto> SubPresupuesto { get; set; }
     }
 
 
