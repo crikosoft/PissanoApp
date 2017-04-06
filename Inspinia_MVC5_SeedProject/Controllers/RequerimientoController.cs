@@ -10,112 +10,116 @@ using PissanoApp.Models;
 
 namespace PissanoApp.Controllers
 {
-    public class ObraController : Controller
+    public class RequerimientoController : Controller
     {
         private PissanoContext db = new PissanoContext();
 
-        // GET: /Obra/
+        // GET: /Requerimiento/
         public ActionResult Index()
         {
-            var obras = db.Obras.Include(o => o.empresa);
-            return View(obras.ToList());
+            var requerimientos = db.Requerimientos.Include(r => r.Obra).Include(r => r.Prioridad);
+            return View(requerimientos.ToList());
         }
 
-        // GET: /Obra/Details/5
+        // GET: /Requerimiento/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Obra obra = db.Obras.Find(id);
-            if (obra == null)
+            Requerimiento requerimiento = db.Requerimientos.Find(id);
+            if (requerimiento == null)
             {
                 return HttpNotFound();
             }
-            return View(obra);
+            return View(requerimiento);
         }
 
-        // GET: /Obra/Create
+        // GET: /Requerimiento/Create
         public ActionResult Create()
         {
-            ViewBag.empresaId = new SelectList(db.Empresas, "empresaId", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "id", "nombre");
+            ViewBag.prioridadId = new SelectList(db.Prioridad, "prioridadId", "nombre");
             return View();
         }
 
-        // POST: /Obra/Create
+        // POST: /Requerimiento/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="id,nombre,direccion,fechaInicio,fechaFin,tiempoEjecucion,empresaId")] Obra obra)
+        public ActionResult Create([Bind(Include="requerimientoId,fecha,numero,comentario,obraId,prioridadId")] Requerimiento requerimiento)
         {
             if (ModelState.IsValid)
             {
-                db.Obras.Add(obra);
+                db.Requerimientos.Add(requerimiento);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.empresaId = new SelectList(db.Empresas, "empresaId", "nombre", obra.empresaId);
-            return View(obra);
+            ViewBag.obraId = new SelectList(db.Obras, "id", "nombre", requerimiento.obraId);
+            ViewBag.prioridadId = new SelectList(db.Prioridad, "prioridadId", "nombre", requerimiento.prioridadId);
+            return View(requerimiento);
         }
 
-        // GET: /Obra/Edit/5
+        // GET: /Requerimiento/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Obra obra = db.Obras.Find(id);
-            if (obra == null)
+            Requerimiento requerimiento = db.Requerimientos.Find(id);
+            if (requerimiento == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.empresaId = new SelectList(db.Empresas, "empresaId", "nombre", obra.empresaId);
-            return View(obra);
+            ViewBag.obraId = new SelectList(db.Obras, "id", "nombre", requerimiento.obraId);
+            ViewBag.prioridadId = new SelectList(db.Prioridad, "prioridadId", "nombre", requerimiento.prioridadId);
+            return View(requerimiento);
         }
 
-        // POST: /Obra/Edit/5
+        // POST: /Requerimiento/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="id,nombre,direccion,fechaInicio,fechaFin,tiempoEjecucion,empresaId")] Obra obra)
+        public ActionResult Edit([Bind(Include="requerimientoId,fecha,numero,comentario,obraId,prioridadId")] Requerimiento requerimiento)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(obra).State = EntityState.Modified;
+                db.Entry(requerimiento).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.empresaId = new SelectList(db.Empresas, "empresaId", "nombre", obra.empresaId);
-            return View(obra);
+            ViewBag.obraId = new SelectList(db.Obras, "id", "nombre", requerimiento.obraId);
+            ViewBag.prioridadId = new SelectList(db.Prioridad, "prioridadId", "nombre", requerimiento.prioridadId);
+            return View(requerimiento);
         }
 
-        // GET: /Obra/Delete/5
+        // GET: /Requerimiento/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Obra obra = db.Obras.Find(id);
-            if (obra == null)
+            Requerimiento requerimiento = db.Requerimientos.Find(id);
+            if (requerimiento == null)
             {
                 return HttpNotFound();
             }
-            return View(obra);
+            return View(requerimiento);
         }
 
-        // POST: /Obra/Delete/5
+        // POST: /Requerimiento/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Obra obra = db.Obras.Find(id);
-            db.Obras.Remove(obra);
+            Requerimiento requerimiento = db.Requerimientos.Find(id);
+            db.Requerimientos.Remove(requerimiento);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

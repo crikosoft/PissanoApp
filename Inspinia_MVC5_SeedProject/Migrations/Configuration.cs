@@ -70,6 +70,18 @@ namespace PissanoApp.Migrations
 
 
 
+            var prioridades = new List<Prioridad>
+            {
+                new Prioridad { nombre= "Urgencia", plazoDias = 2},
+                new Prioridad { nombre= "Emergencia", plazoDias = 1},
+                new Prioridad { nombre= "Regular", plazoDias = 4}
+
+            };
+
+            prioridades.ForEach(s => context.Prioridad.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
+
             var empresas = new List<Empresa>
             {
                 new Empresa { nombre= "PISSANO SAC", ruc= "20251059749", agenteRetenedor = true, telefono="346-2454 / 346-1989", direccion="Av. San Luis 1369 - San luis"},
@@ -83,11 +95,11 @@ namespace PissanoApp.Migrations
 
             var obras = new List<Obra>
             {
-                new Obra { direccion= "EDIFICIO MULTIFAMILIAR SUCRE - MIRAFLORES", fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12, 
+                new Obra { nombre= "Sucre", direccion= "EDIFICIO MULTIFAMILIAR SUCRE - MIRAFLORES", fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12, 
                     empresaId = empresas.Single(s => s.nombre == "PISSANO SAC" ).empresaId},
-                new Obra { direccion= "RESIDENCIAL  SAN BORJA NORTE" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
+                new Obra { nombre= "San Borja Norte", direccion= "RESIDENCIAL  SAN BORJA NORTE" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
                     empresaId = empresas.Single(s => s.nombre == "PISSANO SAC" ).empresaId},
-                new Obra { direccion= "BARCELONA" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
+                new Obra { nombre= "Barcelona", direccion= "BARCELONA" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
                     empresaId = empresas.Single(s => s.nombre == "PISSANO SAC" ).empresaId},
 
             };
@@ -105,6 +117,32 @@ namespace PissanoApp.Migrations
 
 
             tiposPresupuesto.ForEach(s => context.TipoPresupuestoes.AddOrUpdate(p => p.descripcion, s));
+            context.SaveChanges();
+
+
+            var formaPagos = new List<FormaPago>
+            {
+                new FormaPago { nombre = "Contado"},
+                new FormaPago { nombre = "Crédito"},
+                new FormaPago { nombre = "Crédito a 20 días"},
+                new FormaPago { nombre = "Crédito 30 días"},
+                new FormaPago { nombre = "Crédito a 45 días"},
+                new FormaPago { nombre = "Factura a 7 días"},
+                new FormaPago { nombre = "Factura a 15 días"},
+                new FormaPago { nombre = "Factura a 20 días"},
+                new FormaPago { nombre = "Factura a 30 días"},
+                new FormaPago { nombre = "Factura a 45 días"},
+                new FormaPago { nombre = "Letra a 30 días"},
+                new FormaPago { nombre = "Letra a 35 días"},
+                new FormaPago { nombre = "Letra a 45 días"},
+                new FormaPago { nombre = "Cheque diferido a 15 días"},
+                new FormaPago { nombre = "Cheque diferido a 30 días"},
+                new FormaPago { nombre = "En proceso"}
+
+            };
+
+
+            formaPagos.ForEach(s => context.FormaPagos.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
 
             var subPresupuesto = new List<SubPresupuesto>

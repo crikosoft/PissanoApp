@@ -12,6 +12,10 @@ namespace PissanoApp.Models
     {
         public int id { get; set; }
 
+        [Display(Name = "Nombre de Obra")]
+        public string nombre { get; set; }
+
+
         [Required()]
         [Display(Name = "Dirección de la Obra")]
         public string direccion { get; set; }

@@ -107,6 +107,8 @@ namespace PissanoApp.Models
         public DbSet<PresupuestoTitulo> PresupuestoTitulo { get; set; }
 
         public DbSet<SubPresupuesto> SubPresupuesto { get; set; }
+
+        public DbSet<Prioridad> Prioridad { get; set; }
     }
 
 
