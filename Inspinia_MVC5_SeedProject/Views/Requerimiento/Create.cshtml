@@ -49,6 +49,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.ordenGenerada, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ordenGenerada)
+                @Html.ValidationMessageFor(model => model.ordenGenerada)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.prioridadId, "prioridadId", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("prioridadId", String.Empty)

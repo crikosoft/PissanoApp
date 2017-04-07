@@ -49,7 +49,7 @@ namespace PissanoApp.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="requerimientoId,fecha,numero,comentario,obraId,prioridadId")] Requerimiento requerimiento)
+        public ActionResult Create([Bind(Include="requerimientoId,fecha,numero,comentario,obraId,ordenGenerada,prioridadId")] Requerimiento requerimiento)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace PissanoApp.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="requerimientoId,fecha,numero,comentario,obraId,prioridadId")] Requerimiento requerimiento)
+        public ActionResult Edit([Bind(Include="requerimientoId,fecha,numero,comentario,obraId,ordenGenerada,prioridadId")] Requerimiento requerimiento)
         {
             if (ModelState.IsValid)
             {

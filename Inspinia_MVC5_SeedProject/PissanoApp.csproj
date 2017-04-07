@@ -175,6 +175,7 @@
     <Compile Include="Controllers\EcommerceController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\FormaPagoController.cs" />
+    <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\MaterialPresupuestoViewModelController.cs" />
@@ -189,6 +190,8 @@
     <Compile Include="Controllers\PresupuestoViewModelController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\RequerimientoController.cs" />
+    <Compile Include="Controllers\RequerimientoViewModelController.cs" />
+    <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\TipoMaterialController.cs" />
     <Compile Include="Controllers\UnidadMedidaController.cs" />
     <Compile Include="Global.asax.cs">
@@ -199,9 +202,9 @@
     <Compile Include="Migrations\201704051934198_db-create.Designer.cs">
       <DependentUpon>201704051934198_db-create.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704061714483_db-update.cs" />
-    <Compile Include="Migrations\201704061714483_db-update.Designer.cs">
-      <DependentUpon>201704061714483_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201704062351193_db-update.cs" />
+    <Compile Include="Migrations\201704062351193_db-update.Designer.cs">
+      <DependentUpon>201704062351193_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -968,11 +971,22 @@
     <Content Include="Views\Obra\Details.cshtml" />
     <Content Include="Views\Obra\Edit.cshtml" />
     <Content Include="Views\Obra\Index.cshtml" />
+    <Content Include="Views\Forms\Advanced.cshtml" />
+    <Content Include="Views\Forms\BasicFroms.cshtml" />
+    <Content Include="Views\Forms\FileUpload.cshtml" />
+    <Content Include="Views\Forms\Markdown.cshtml" />
+    <Content Include="Views\Forms\TextEditor.cshtml" />
+    <Content Include="Views\Forms\Wizard.cshtml" />
+    <Content Include="Views\Tables\DataTables.cshtml" />
+    <Content Include="Views\Tables\FooTables.cshtml" />
+    <Content Include="Views\Tables\jqGrid.cshtml" />
+    <Content Include="Views\Tables\StaticTables.cshtml" />
     <Content Include="Views\Requerimiento\Create.cshtml" />
     <Content Include="Views\Requerimiento\Delete.cshtml" />
     <Content Include="Views\Requerimiento\Details.cshtml" />
     <Content Include="Views\Requerimiento\Edit.cshtml" />
     <Content Include="Views\Requerimiento\Index.cshtml" />
+    <Content Include="Views\RequerimientoViewModel\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -987,8 +1001,8 @@
     <EmbeddedResource Include="Migrations\201704051934198_db-create.resx">
       <DependentUpon>201704051934198_db-create.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704061714483_db-update.resx">
-      <DependentUpon>201704061714483_db-update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704062351193_db-update.resx">
+      <DependentUpon>201704062351193_db-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

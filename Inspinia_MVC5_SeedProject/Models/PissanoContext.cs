@@ -109,6 +109,8 @@ namespace PissanoApp.Models
         public DbSet<SubPresupuesto> SubPresupuesto { get; set; }
 
         public DbSet<Prioridad> Prioridad { get; set; }
+
+        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.RequerimientoViewModel> RequerimientoViewModels { get; set; }
     }
 
 

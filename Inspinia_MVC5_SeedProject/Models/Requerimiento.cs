@@ -30,6 +30,9 @@ namespace PissanoApp.Models
         [DisplayName("Obra")]
         public virtual Obra Obra { get; set; }
 
+        [DisplayName("Estado")]
+        public bool ordenGenerada { get; set; }
+
         [DisplayName("Prioridad")]
         public int prioridadId { get; set; }
 
