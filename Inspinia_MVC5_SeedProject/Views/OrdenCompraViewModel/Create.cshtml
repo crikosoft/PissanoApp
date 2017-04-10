@@ -637,7 +637,11 @@
                     type: 'POST',
           //          param: RequerimientoFinal,
                     url: '@Url.Action("CrearOrdenCompra")',
-                    data: OrdenCompraFinal
+                    data: OrdenCompraFinal,
+                    error: function () {
+                        window.location = '@Url.Action("Index")';
+                        //alert("hola");
+                    }
                 })
                 .done(function (result) {
                 //alert("pasó");

@@ -543,17 +543,23 @@
 
 
 
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            }
-            else {
-                table2.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-            }
+            //if ($(this).hasClass('selected')) {
+            //    $(this).removeClass('selected');
+            //}
+            //else {
+            //    table2.$('tr.selected').removeClass('selected');
+            //    $(this).addClass('selected');
+            //}
+            //var row = $(this);
 
-            
+            table2
+                    .row($(this).parents('tr'))
+                    .remove()
+                    .draw();
+
+            //alert(row);
             //Pendiente
-            table2.row('.selected').remove().draw(false);
+            //table2.row(row).remove().draw(false);
 
         });
 
@@ -618,22 +624,18 @@
                     type: 'POST',
           //          param: RequerimientoFinal,
                     url: '@Url.Action("CrearRequerimiento")',
-                    data: RequerimientoFinal
-                })
-                .done(function (result) {
-                //alert("pasó");
+                    data: RequerimientoFinal,
+                    error: function () {
+                        window.location = '@Url.Action("Index")';
+                        //alert("hola");
+                    }
+                });
+            //.done(function (result) {
+            //    //alert("pasó");
+            //});
             });
 
         });
-
-
-
-
-
-        });
-
-
-
 
 
         var config = {

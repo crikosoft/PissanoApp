@@ -74,8 +74,7 @@ namespace PissanoApp.Controllers
 
                 db.Ordenes.Add(ordenCompra);
                 //db.SaveChanges();
-
-                var igv=0.0;
+                
                 var total=0.0;
 
                 foreach (var item in ordenCompra.OrdenesCompraDetalles)

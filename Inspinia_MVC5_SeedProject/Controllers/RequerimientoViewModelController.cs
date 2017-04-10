@@ -82,6 +82,10 @@ namespace PissanoApp.Controllers
                 }
 
                 db.SaveChanges();
+
+
+
+                //return View("Index");  
                 return RedirectToAction("Index");
             }
 
