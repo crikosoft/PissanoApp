@@ -10,6 +10,5 @@ namespace PissanoApp.Models
         public int tipoMaterialId { get; set; }
         public string nombre { get; set; }
         public virtual List<Material> Materiales { get; set; }
-        public virtual List<Proveedor> Proveedores { get; set; }
     }
 }

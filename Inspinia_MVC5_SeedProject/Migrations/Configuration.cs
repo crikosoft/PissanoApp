@@ -120,6 +120,31 @@ namespace PissanoApp.Migrations
             context.SaveChanges();
 
 
+            var estadosOrden = new List<EstadoOrden>
+            {
+                new EstadoOrden { descripcion = "Pendiente de Aprobación", nombre = "Pendiente de Aprobación"},
+                new EstadoOrden { descripcion = "Aprobado y Enviado", nombre = "Aprobado y Enviado"},
+                new EstadoOrden { descripcion = "Orden Recibida Parcial", nombre = "Orden Recibida Parcial"},
+                new EstadoOrden { descripcion = "Orden Recibida Total", nombre = "Orden Recibida Total"}
+
+            };
+
+            estadosOrden.ForEach(s => context.EstadoOrdenes.AddOrUpdate(p => p.descripcion, s));
+            context.SaveChanges();
+
+            var estadosOrdenDetalle = new List<EstadoOrdenDetalle>
+            {
+                new EstadoOrdenDetalle { descripcion = "Pendiente Atención", nombre = "Pendiente Atención"},
+                new EstadoOrdenDetalle { descripcion = "Atendido Parcial", nombre = "Atendido Parcial"},
+                new EstadoOrdenDetalle { descripcion = "Atendido Total", nombre = "Atendido Total"}
+
+            };
+
+            estadosOrdenDetalle.ForEach(s => context.EstadoOrdenDetalles.AddOrUpdate(p => p.descripcion, s));
+            context.SaveChanges();
+
+
+
             var formaPagos = new List<FormaPago>
             {
                 new FormaPago { nombre = "Contado"},
@@ -144,6 +169,9 @@ namespace PissanoApp.Migrations
 
             formaPagos.ForEach(s => context.FormaPagos.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
+
+
+
 
             var subPresupuesto = new List<SubPresupuesto>
             {

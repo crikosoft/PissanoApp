@@ -39,6 +39,9 @@ namespace PissanoApp.Models
         [DisplayName("Prioridad")]
         public virtual Prioridad Prioridad { get; set; }
 
+        [DisplayName("Detalles")]
+        public virtual List<RequerimientoDetalle> Detalles { get; set; }
+
         public virtual List<OrdenCompra> OrdenCompras { get; set; }
 
 

@@ -17,25 +17,8 @@ namespace PissanoApp.Controllers
         // GET: /Proveedor/
         public ActionResult Index()
         {
-            var proveedores = db.Proveedores.Include(p => p.CategoriaProveedor).Include(p => p.FormaPago);
-            return View(proveedores.ToList());
+            return View(db.Proveedores.ToList());
         }
-
-
-        // GET: /Material/
-        public ActionResult Filter(string searchText)
-        {
-            if (String.IsNullOrEmpty(searchText))
-                searchText = "";
-            else
-                searchText = searchText.ToLower();
-
-            var proveedores = db.Proveedores.Include(m => m.CategoriaProveedor).Include(m => m.FormaPago).Where(p => p.razonSocial.ToLower().Contains(searchText));
-
-            return View(proveedores.ToList());
-
-        }
-
 
         // GET: /Proveedor/Details/5
         public ActionResult Details(int? id)
@@ -55,8 +38,6 @@ namespace PissanoApp.Controllers
         // GET: /Proveedor/Create
         public ActionResult Create()
         {
-            ViewBag.tipoMaterialId = new SelectList(db.TipoMateriales, "tipoMaterialId", "nombre");
-            ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre");
             return View();
         }
 
@@ -65,17 +46,15 @@ namespace PissanoApp.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="proveedorId,razonSocial,direccion,representanteVentas,email,telefono,movil,numeroCuenta,formaPagoId,tipoMaterialId,estado,ruc")] Proveedor proveedor)
+        public ActionResult Create([Bind(Include="proveedorId,razonSocial,direccion,representanteVentas,email,telefono,movil,numeroCuenta,estado,ruc")] Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {
                 db.Proveedores.Add(proveedor);
                 db.SaveChanges();
-                return RedirectToAction("Filter");
+                return RedirectToAction("Index");
             }
 
-            ViewBag.tipoMaterialId = new SelectList(db.TipoMateriales, "tipoMaterialId", "nombre", proveedor.tipoMaterialId);
-            ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", proveedor.formaPagoId);
             return View(proveedor);
         }
 
@@ -91,8 +70,6 @@ namespace PissanoApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.tipoMaterialId = new SelectList(db.TipoMateriales, "tipoMaterialId", "nombre", proveedor.tipoMaterialId);
-            ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", proveedor.formaPagoId);
             return View(proveedor);
         }
 
@@ -101,16 +78,14 @@ namespace PissanoApp.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="proveedorId,razonSocial,direccion,representanteVentas,email,telefono,movil,numeroCuenta,formaPagoId,tipoMaterialId,estado,ruc")] Proveedor proveedor)
+        public ActionResult Edit([Bind(Include="proveedorId,razonSocial,direccion,representanteVentas,email,telefono,movil,numeroCuenta,estado,ruc")] Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(proveedor).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Filter");
+                return RedirectToAction("Index");
             }
-            ViewBag.tipoMaterialId = new SelectList(db.TipoMateriales, "tipoMaterialId", "nombre", proveedor.tipoMaterialId);
-            ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", proveedor.formaPagoId);
             return View(proveedor);
         }
 
@@ -137,7 +112,7 @@ namespace PissanoApp.Controllers
             Proveedor proveedor = db.Proveedores.Find(id);
             db.Proveedores.Remove(proveedor);
             db.SaveChanges();
-            return RedirectToAction("Filter");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

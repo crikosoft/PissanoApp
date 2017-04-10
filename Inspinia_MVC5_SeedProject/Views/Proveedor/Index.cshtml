@@ -7,16 +7,10 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Crear Nuevo", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table table-striped">
+<table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoriaProveedor.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FormaPago.nombre)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.razonSocial)
         </th>
@@ -45,58 +39,43 @@
             @Html.DisplayNameFor(model => model.ruc)
         </th>
         <th></th>
-
-        <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoriaProveedor.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FormaPago.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.razonSocial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.representanteVentas)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.movil)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.numeroCuenta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ruc)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.proveedorId }) |
-                @Html.ActionLink("Detalles", "Details", new { id = item.proveedorId }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.proveedorId })
-            </td>
-
-            <td class="project-actions">
-                @*<a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Crear Items </a>*@
-                <a href="MaterialPresupuestoViewModel/Create/@Html.DisplayFor(modelItem => item.proveedorId)" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Materiales </a>
-                @*<a href="@Url.Action("Edit/1", "PresupuestoViewModel")" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Crear Items </a>*@
-            </td>
-        </tr>
-    }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.razonSocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.representanteVentas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.movil)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numeroCuenta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ruc)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.proveedorId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.proveedorId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.proveedorId })
+        </td>
+    </tr>
+}
 
 </table>

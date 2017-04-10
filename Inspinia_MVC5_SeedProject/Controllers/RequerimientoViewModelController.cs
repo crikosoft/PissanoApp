@@ -18,7 +18,19 @@ namespace PissanoApp.Controllers
         // GET: /RequerimientoViewModel/
         public ActionResult Index()
         {
-            return View();
+            var obras = db.Obras;
+
+            var materiales = db.Materiales;
+
+            var prioridades = db.Prioridad;
+
+            var requerimientos = db.Requerimientos.OrderByDescending(p => p.requerimientoId);
+
+
+            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList());
+
+
+            return View(RequerimientoViewModels);
         }
 
         // GET: /RequerimientoViewModel/Details/5
@@ -39,67 +51,57 @@ namespace PissanoApp.Controllers
 
             var prioridades = db.Prioridad;
 
+            var requerimientos = db.Requerimientos;
 
-            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList());
+
+            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList());
 
 
             return View(RequerimientoViewModels);
 
         }
 
-        // POST: /RequerimientoViewModel/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="requerimientoViewModelId")] RequerimientoViewModel requerimientoviewmodel)
+        public ActionResult CrearRequerimiento(Requerimiento requerimiento)
         {
-
-
-            return View(requerimientoviewmodel);
-        }
-
-        // GET: /RequerimientoViewModel/Edit/5
-        public ActionResult Edit(int? id)
-        {
-
-            return View();
-        }
-
-        // POST: /RequerimientoViewModel/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="requerimientoViewModelId")] RequerimientoViewModel requerimientoviewmodel)
-        {
-           
-            return View(requerimientoviewmodel);
-        }
-
-        // GET: /RequerimientoViewModel/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            
-            return View();
-        }
-
-        // POST: /RequerimientoViewModel/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (ModelState.IsValid)
             {
-                db.Dispose();
+
+                requerimiento.ordenGenerada = false;
+                requerimiento.fecha = DateTime.Today;
+
+
+                db.Requerimientos.Add(requerimiento);
+                //db.SaveChanges();
+
+
+                foreach (var item in requerimiento.Detalles)
+                {
+                    db.RequerimientoDetalles.Add(item);
+                }
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            base.Dispose(disposing);
+
+            return View();
         }
+
+
+        [HttpPost]
+        public ActionResult CrearReq()
+        {
+            if (ModelState.IsValid)
+            {
+
+
+               
+            }
+
+            return View();
+        }
+
+        
     }
 }

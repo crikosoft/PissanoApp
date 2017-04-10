@@ -72,22 +72,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.formaPagoId, "formaPagoId", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("formaPagoId", String.Empty)
-                @Html.ValidationMessageFor(model => model.formaPagoId)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tipoMaterialId, "tipoMaterialId", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("tipoMaterialId", String.Empty)
-                @Html.ValidationMessageFor(model => model.tipoMaterialId)
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.estado, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.estado)

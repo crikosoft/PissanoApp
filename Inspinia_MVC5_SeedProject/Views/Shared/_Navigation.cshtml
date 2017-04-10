@@ -38,7 +38,7 @@
                 <a href="#"><i class="fa fa-pie-chart"></i><span class="nav-label" data-i18n="nav.empresa">Planificacion</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
                     <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Categoria")">Partidas<span class="label label-primary pull-right">Nuevo</span></a></li>
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Create", "MaterialPresupuestoViewModel")">Materiales<span class="label label-info pull-right">Protot</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Material")">Materiales<span class="label label-info pull-right">Protot</span></a></li>
                     <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Presupuesto")">Presupuesto<span class="label label-primary pull-right">Nuevo</span></a></li>
                     @*<li class="@Html.IsSelected(action: "Edit/1")"><a href="@Url.Action("Edit/1", "PresupuestoViewModel")">Det Presup<span class="label label-warning pull-right">Parcial</span></a></li>*@
                     @*<li class="@Html.IsSelected(action: "Presupuesto")"><a href="@Url.Action("Index", "Metricas")">Avance<span class="label label-info pull-right">Protot</span></a></li>*@                    
@@ -73,7 +73,7 @@
                         <a href="@Url.Action("Index", "Home")"><span class="nav-label" data-i18n="nav.empresa">Ordenes de Compra</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-third-level">
                             <li class="@Html.IsSelected(action: "")">
-                                <a href="@Url.Action("Create", "OrdenCompra")">Registro<span class="label label-primary pull-right">Nuevo</span></a>
+                                <a href="@Url.Action("Index", "OrdenCompraViewModel")">Registro<span class="label label-primary pull-right">Nuevo</span></a>
                             </li>
                             <li class="@Html.IsSelected(action: "")">
                                 <a href="@Url.Action("Approve", "OrdenCompra")">Aprobación<span class="label label-primary pull-right">Nuevo</span></a>
@@ -106,7 +106,7 @@
             <li class="@Html.IsSelected(controller: "")">
                 <a href="#"><i class="fa fa-building"></i><span class="nav-label" data-i18n="nav.empresa">Obra-Producción</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
-                    <li class="@Html.IsSelected(action: "Requerimiento")"><a href="@Url.Action("EmptyPage", "Pages")">Requerimiento</a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "RequerimientoViewModel")">Requerimiento</a></li>
                     <li class="@Html.IsSelected(action: "Pago")"><a href="@Url.Action("Cart", "Ecommerce")">Valorizaciones<span class="label label-info pull-right">Protot</span></a></li>
                     <li class="@Html.IsSelected(action: "Requerimiento")"><a href="@Url.Action("EmptyPage", "Pages")">Partidas de Control</a></li>
                     @*<li class="@Html.IsSelected(action: "Requerimiento")"><a href="@Url.Action("EmptyPage", "Pages")">SPI</a></li>
