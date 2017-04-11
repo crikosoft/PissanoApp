@@ -110,6 +110,8 @@ namespace PissanoApp.Models
 
         public DbSet<Prioridad> Prioridad { get; set; }
 
+        public DbSet<TipoCompra> TipoCompra { get; set; }
+
         //public System.Data.Entity.DbSet<PissanoApp.ViewModels.RequerimientoViewModel> RequerimientoViewModels { get; set; }
     }
 

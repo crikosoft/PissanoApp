@@ -70,7 +70,7 @@ namespace PissanoApp.Controllers
             {
                 db.Materiales.Add(material);
                 db.SaveChanges();
-                return RedirectToAction("Filter");
+                return RedirectToAction("Index");
             }
 
             ViewBag.materialPadreId = new SelectList(db.Materiales, "materialId", "nombre", material.materialPadreId);
@@ -108,7 +108,7 @@ namespace PissanoApp.Controllers
             {
                 db.Entry(material).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Filter");
+                return RedirectToAction("Index");
             }
             ViewBag.materialPadreId = new SelectList(db.Materiales, "materialId", "nombre", material.materialPadreId);
             ViewBag.tipoMaterialId = new SelectList(db.TipoMateriales, "tipoMaterialId", "nombre", material.tipoMaterialId);
@@ -139,7 +139,7 @@ namespace PissanoApp.Controllers
             Material material = db.Materiales.Find(id);
             db.Materiales.Remove(material);
             db.SaveChanges();
-            return RedirectToAction("Filter");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

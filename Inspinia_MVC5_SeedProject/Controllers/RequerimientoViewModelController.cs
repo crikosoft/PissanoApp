@@ -20,6 +20,8 @@ namespace PissanoApp.Controllers
         {
             var obras = db.Obras;
 
+           
+
             var materiales = db.Materiales;
 
             var prioridades = db.Prioridad;
@@ -40,14 +42,16 @@ namespace PissanoApp.Controllers
             return View();
         }
 
-        // GET: /RequerimientoViewModel/Create
-        public ActionResult Create()
+        // GET: /RequerimientoViewModel/Create/1
+        public ActionResult Create(int? id)
         {
 
 
             var obras = db.Obras;
 
-            var materiales = db.Materiales;
+            var materiales = db.Materiales.Where(p => p.tipoMaterialId == id);
+
+   
 
             var prioridades = db.Prioridad;
 

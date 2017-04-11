@@ -31,6 +31,22 @@ namespace PissanoApp.Controllers
             return View(OrdenCompraViewModels);
         }
 
+
+        public ActionResult IndexApprove()
+        {
+            var formasPago = db.FormaPagos;
+
+            var proveedores = db.Proveedores;
+
+            var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == 1);
+
+            var ordenesCompra = db.Ordenes;
+
+            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList());
+
+
+            return View(OrdenCompraViewModels);
+        }
         // GET: /RequerimientoViewModel/Create
         public ActionResult Create(int? id)
         {

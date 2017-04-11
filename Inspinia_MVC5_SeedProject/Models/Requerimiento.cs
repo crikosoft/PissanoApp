@@ -39,6 +39,12 @@ namespace PissanoApp.Models
         [DisplayName("Prioridad")]
         public virtual Prioridad Prioridad { get; set; }
 
+        [DisplayName("TipoCompra")]
+        public int? tipoCompraId { get; set; }
+
+        [DisplayName("Obra")]
+        public virtual TipoCompra TipoCompra { get; set; }
+
         [DisplayName("Detalles")]
         public virtual List<RequerimientoDetalle> Detalles { get; set; }
 

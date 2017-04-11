@@ -9,50 +9,110 @@
 <p>
     @Html.ActionLink("Crear Nuevo", "Create")
 </p>
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MaterialPadre.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TipoMaterial.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnidadMedida.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.codigo)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table table-striped table-bordered table-hover dataTables-example" >
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaterialPadre.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoMaterial.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnidadMedida.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.codigo)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.materialId }) |
-                @Html.ActionLink("Detalles", "Details", new { id = item.materialId }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.materialId })
-            </td>
-        </tr>
-    }
+            <th>
+                Nombre Material
+                @*@Html.DisplayNameFor(model => model.MaterialPadre.nombre)*@
+            </th>
+            <th>
+                codigo
+                @*@Html.DisplayNameFor(model => model.codigo)*@
+            </th>
+            <th>
+                Tipo de Material
+                @*@Html.DisplayNameFor(model => model.TipoMaterial.nombre)*@
+            </th>
+            <th>
+                Unidad de Medida
+                @*@Html.DisplayNameFor(model => model.UnidadMedida.nombre)*@
+            </th>
+            <th>
+                Familia
+                @*@Html.DisplayNameFor(model => model.nombre)*@
+            </th>
 
+            <th></th>
+        </tr>
+        </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoMaterial.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnidadMedida.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaterialPadre.nombre)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.materialId }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.materialId }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.materialId })
+                </td>
+            </tr>
+        }
+        </tbody>
 </table>
+
+
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+
+                "order": [[0, "desc"]]
+
+            });
+
+
+
+
+        });
+
+    </script>
+}

@@ -27,6 +27,16 @@ namespace PissanoApp.Migrations
             tipoMaterial.ForEach(s => context.TipoMateriales.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
 
+            var tipoCompras = new List<TipoCompra>
+            {
+                new TipoCompra { nombre= "Materiales"},
+                new TipoCompra { nombre= "SubContratos"}
+
+            };
+
+            tipoCompras.ForEach(s => context.TipoCompra.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
             var monedas = new List<Moneda>
             {
                 new Moneda { nombre= "Soles"},
