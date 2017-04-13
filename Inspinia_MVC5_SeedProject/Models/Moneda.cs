@@ -12,5 +12,7 @@ namespace PissanoApp.Models
         public string descripcion { get; set; }
 
         public virtual List<Presupuesto> Presupuestos { get; set; }
+
+        public virtual List<OrdenCompra> OrdenesCompra { get; set; }
     }
 }

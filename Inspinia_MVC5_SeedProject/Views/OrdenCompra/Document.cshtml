@@ -1,0 +1,280 @@
+﻿@model PissanoApp.Models.OrdenCompra
+
+@{
+    ViewBag.Title = "Document";
+}
+
+@*<h2>Documento de Orden de Compra</h2>*@
+
+@*<div>
+    <h4>OrdenCompra</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoOrden.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoOrden.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormaPago.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormaPago.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Moneda.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Moneda.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Obra.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Obra.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.razonSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Requerimiento.numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Requerimiento.numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.incluyeIgv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.incluyeIgv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.igv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.igv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adelanto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adelanto)
+        </dd>
+
+    </dl>
+</div>*@
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-8">
+        <h2>Documento de Orden de Compra</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+            </li>
+            <li>
+                Other Pages
+            </li>
+            <li class="active">
+                <strong>Invoice</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-4">
+        <div class="title-action">
+            <a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Editar </a>
+            <a href="#" class="btn btn-white"><i class="fa fa-check "></i> Guardar </a>
+            <a href="@Url.Action("invoicePrint", "Pages")" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir Documento </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox-content p-xl">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>From:</h5>
+                        <address>
+                            <strong>@Html.DisplayFor(model => model.Obra.empresa.nombre)</strong><br>
+                           @Html.DisplayFor(model => model.Obra.empresa.direccion)<br>
+                            Lima, Perú<br>
+                            <abbr title="Phone">P:</abbr> @Html.DisplayFor(model => model.Obra.empresa.telefono)
+                        </address>
+                    </div>
+
+                    <div class="col-sm-6 text-right">
+                        <h4>Invoice No.</h4>
+                        <h4 class="text-navy">@Html.DisplayFor(model => model.numero)</h4>
+                        <span>To:</span>
+                        <address>
+                            <strong>@Html.DisplayFor(model => model.Proveedor.razonSocial)</strong><br>
+                            @Html.DisplayFor(model => model.Proveedor.direccion)<br>
+                            Lima, Perú<br>
+                            <abbr title="Phone">P:</abbr> @Html.DisplayFor(model => model.Proveedor.telefono)
+                        </address>
+                        <p>
+                            <span><strong>Invoice Date:</strong> @Html.DisplayFor(model => model.fecha) Marh 18, 2014</span><br />
+                            <span><strong>Due Date:</strong> March 24, 2014</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="table-responsive m-t">
+                    <table class="table invoice-table">
+                        <thead>
+                            <tr>
+                                <th>Item List</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>IGV</th>
+                                <th>Precio Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @*<tr>
+                                <td>
+                                    <div><strong>Admin Theme with psd project layouts</strong></div>
+                                    <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+                                </td>
+                                <td>1</td>
+                                <td>$26.00</td>
+                                <td>$5.98</td>
+                                <td>$31,98</td>
+                            </tr>*@
+
+
+                            @foreach (var item in Model.OrdenesCompraDetalles)
+                            {
+                                <tr>
+                                    <td>
+                                        <div><strong>@Html.DisplayFor(modelItem => item.Material.nombre)</strong></div>
+                                        <small>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</small>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.precioUnitario)</td>
+                                    <td>falta calcular</td>
+                                    <td>@Html.DisplayFor(modelItem => item.precioTotal)</td>
+                                </tr>
+                            }
+
+
+                            @*<tr>
+                                <td>
+                                    <div><strong>Wodpress Them customization</strong></div>
+                                    <small>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        Eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    </small>
+                                </td>
+                                <td>2</td>
+                                <td>$80.00</td>
+                                <td>$36.80</td>
+                                <td>$196.80</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div><strong>Angular JS & Node JS Application</strong></div>
+                                    <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+                                </td>
+                                <td>3</td>
+                                <td>$420.00</td>
+                                <td>$193.20</td>
+                                <td>$1033.20</td>
+                            </tr>*@
+
+                        </tbody>
+                    </table>
+                </div><!-- /table-responsive -->
+
+                <table class="table invoice-total">
+                    <tbody>
+                        <tr>
+                            <td><strong>Sub Total :</strong></td>
+                            <td>$0.00 falta calcular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IGV :</strong></td>
+                            <td>$@Html.DisplayFor(model => model.igv)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL :</strong></td>
+                            <td>$@Html.DisplayFor(model => model.total)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button class="btn btn-primary"><i class="fa fa-dollar"></i> Realizar Pago!</button>
+                </div>
+
+                <div class="well m-t">
+                    <strong>Comentario</strong>
+                    @Html.DisplayFor(model => model.comentario)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ordenCompraId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -25,7 +25,9 @@ namespace PissanoApp.Controllers
 
             var ordenesCompra = db.Ordenes;
 
-            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList());
+            var monedas = db.Monedas;
+
+            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList());
 
 
             return View(OrdenCompraViewModels);
@@ -42,11 +44,16 @@ namespace PissanoApp.Controllers
 
             var ordenesCompra = db.Ordenes;
 
-            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList());
+            var monedas = db.Monedas;
+
+            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList());
 
 
             return View(OrdenCompraViewModels);
         }
+
+
+
         // GET: /RequerimientoViewModel/Create
         public ActionResult Create(int? id)
         {
@@ -61,7 +68,9 @@ namespace PissanoApp.Controllers
 
             var ordenesCompra = db.Ordenes;
 
-            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList());
+            var monedas = db.Monedas;
+
+            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList());
 
 
             return View(OrdenCompraViewModels);

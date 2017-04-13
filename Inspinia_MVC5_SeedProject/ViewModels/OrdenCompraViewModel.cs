@@ -13,13 +13,15 @@ namespace PissanoApp.ViewModels
         public List<Proveedor> Proveedores { get; set; }
         public Requerimiento Requerimiento { get; set; }
         public List<OrdenCompra> Ordenes { get; set; }
+        public List<Moneda> Monedas { get; set; }
 
-        public OrdenCompraViewModel(List<FormaPago> formasPago, List<Proveedor> proveedores,  Requerimiento requerimiento, List<OrdenCompra> ordenes)
+        public OrdenCompraViewModel(List<FormaPago> formasPago, List<Proveedor> proveedores,  Requerimiento requerimiento, List<OrdenCompra> ordenes, List<Moneda> monedas)
         {
             FormasPago = formasPago;
             Proveedores = proveedores;
             Requerimiento = requerimiento;
             Ordenes = ordenes;
+            Monedas = monedas;
         }
     }
 }

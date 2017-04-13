@@ -21,6 +21,9 @@ namespace PissanoApp.Models
         public virtual Proveedor Proveedor { get; set; }
 
         [Required()]
+        public bool incluyeIgv { get; set; }
+
+        [Required()]
         public double igv { get; set; }
 
         [Required()]
@@ -48,6 +51,10 @@ namespace PissanoApp.Models
         public virtual FormaPago FormaPago { get; set; }
 
         public virtual List<OrdenCompraDetalle> OrdenesCompraDetalles { get; set; }
+
+        public int monedaId { get; set; }
+
+        public virtual Moneda Moneda { get; set; }
 
     }
 }

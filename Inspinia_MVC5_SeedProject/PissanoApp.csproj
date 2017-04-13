@@ -199,9 +199,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201704101848322_db-update.cs" />
-    <Compile Include="Migrations\201704101848322_db-update.Designer.cs">
-      <DependentUpon>201704101848322_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201704131455048_db-update.cs" />
+    <Compile Include="Migrations\201704131455048_db-update.Designer.cs">
+      <DependentUpon>201704131455048_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -927,10 +927,8 @@
     <Content Include="Views\FormaPago\Details.cshtml" />
     <Content Include="Views\FormaPago\Edit.cshtml" />
     <Content Include="Views\FormaPago\Index.cshtml" />
-    <Content Include="Views\OrdenCompra\Create.cshtml" />
     <Content Include="Views\MenuConfiguracion\Empresa.cshtml" />
     <Content Include="Views\MenuConfiguracion\Obra.cshtml" />
-    <Content Include="Views\OrdenCompra\Approve.cshtml" />
     <Content Include="Views\Categoria\Create.cshtml" />
     <Content Include="Views\Categoria\Delete.cshtml" />
     <Content Include="Views\Categoria\Details.cshtml" />
@@ -959,11 +957,6 @@
     <Content Include="Views\MaterialPresupuestoViewModel\Create.cshtml" />
     <Content Include="Views\PresupuestoTitulosViewModel\Create.cshtml" />
     <Content Include="Views\PresupuestoPartidaViewModel\Create.cshtml" />
-    <Content Include="Views\Obra\Create.cshtml" />
-    <Content Include="Views\Obra\Delete.cshtml" />
-    <Content Include="Views\Obra\Details.cshtml" />
-    <Content Include="Views\Obra\Edit.cshtml" />
-    <Content Include="Views\Obra\Index.cshtml" />
     <Content Include="Views\Forms\Advanced.cshtml" />
     <Content Include="Views\Forms\BasicFroms.cshtml" />
     <Content Include="Views\Forms\FileUpload.cshtml" />
@@ -989,6 +982,17 @@
     <Content Include="Views\Proveedor\Index.cshtml" />
     <Content Include="Views\OrdenCompraViewModel\Index.cshtml" />
     <Content Include="Views\OrdenCompraViewModel\IndexApprove.cshtml" />
+    <Content Include="Views\Obra\Create.cshtml" />
+    <Content Include="Views\Obra\Delete.cshtml" />
+    <Content Include="Views\Obra\Details.cshtml" />
+    <Content Include="Views\Obra\Edit.cshtml" />
+    <Content Include="Views\Obra\Index.cshtml" />
+    <Content Include="Views\OrdenCompra\Create.cshtml" />
+    <Content Include="Views\OrdenCompra\Delete.cshtml" />
+    <Content Include="Views\OrdenCompra\Details.cshtml" />
+    <Content Include="Views\OrdenCompra\Edit.cshtml" />
+    <Content Include="Views\OrdenCompra\Index.cshtml" />
+    <Content Include="Views\OrdenCompra\Document.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1000,8 +1004,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704101848322_db-update.resx">
-      <DependentUpon>201704101848322_db-update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704131455048_db-update.resx">
+      <DependentUpon>201704131455048_db-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

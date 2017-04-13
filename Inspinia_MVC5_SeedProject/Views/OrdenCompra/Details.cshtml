@@ -1,0 +1,122 @@
+﻿@model PissanoApp.Models.OrdenCompra
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrdenCompra</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoOrden.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoOrden.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormaPago.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormaPago.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Moneda.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Moneda.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Obra.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Obra.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.razonSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Requerimiento.numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Requerimiento.numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.incluyeIgv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.incluyeIgv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.igv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.igv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adelanto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adelanto)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ordenCompraId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

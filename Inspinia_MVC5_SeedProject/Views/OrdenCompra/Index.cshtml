@@ -1,0 +1,105 @@
+﻿@model IEnumerable<PissanoApp.Models.OrdenCompra>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoOrden.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormaPago.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Moneda.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Obra.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Requerimiento.numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.incluyeIgv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.igv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.comentario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.adelanto)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormaPago.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Moneda.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Obra.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proveedor.razonSocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Requerimiento.numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.incluyeIgv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.igv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.comentario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.adelanto)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ordenCompraId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ordenCompraId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ordenCompraId })
+        </td>
+    </tr>
+}
+
+</table>

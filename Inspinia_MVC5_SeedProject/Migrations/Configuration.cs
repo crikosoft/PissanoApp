@@ -1453,7 +1453,7 @@ namespace PissanoApp.Migrations
 
             };
 
-            partidas.ForEach(s => context.Partida.AddOrUpdate(p => p.nombre, s));
+            partidas.ForEach(s => context.Partida.AddOrUpdate(p => p.partidaId, s));
             context.SaveChanges();
 
             //var empresa = new List<Empresa>

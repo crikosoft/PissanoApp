@@ -1,103 +1,167 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PissanoApp.Models;
 
 namespace PissanoApp.Controllers
 {
     public class OrdenCompraController : Controller
     {
-        //
+        private PissanoContext db = new PissanoContext();
+
         // GET: /OrdenCompra/
         public ActionResult Index()
         {
-            return View();
+            var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            return View(ordenes.ToList());
         }
 
-        // GET: /OrdenCompra/
-        public ActionResult Approve()
-        {
-            return View();
-        }
-
-        //
         // GET: /OrdenCompra/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordencompra);
         }
 
-        //
         // GET: /OrdenCompra/Create
         public ActionResult Create()
         {
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "estadoOrdenId", "nombre");
+            ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre");
+            ViewBag.monedaId = new SelectList(db.Monedas, "monedaId", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "id", "nombre");
+            ViewBag.proveedorId = new SelectList(db.Proveedores, "proveedorId", "razonSocial");
+            ViewBag.requerimientoId = new SelectList(db.Requerimientos, "requerimientoId", "numero");
             return View();
         }
 
-        //
         // POST: /OrdenCompra/Create
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include="ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                db.Ordenes.Add(ordencompra);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "estadoOrdenId", "nombre", ordencompra.estadoOrdenId);
+            ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", ordencompra.formaPagoId);
+            ViewBag.monedaId = new SelectList(db.Monedas, "monedaId", "nombre", ordencompra.monedaId);
+            ViewBag.obraId = new SelectList(db.Obras, "id", "nombre", ordencompra.obraId);
+            ViewBag.proveedorId = new SelectList(db.Proveedores, "proveedorId", "razonSocial", ordencompra.proveedorId);
+            ViewBag.requerimientoId = new SelectList(db.Requerimientos, "requerimientoId", "numero", ordencompra.requerimientoId);
+            return View(ordencompra);
         }
 
-        //
         // GET: /OrdenCompra/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "estadoOrdenId", "nombre", ordencompra.estadoOrdenId);
+            ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", ordencompra.formaPagoId);
+            ViewBag.monedaId = new SelectList(db.Monedas, "monedaId", "nombre", ordencompra.monedaId);
+            ViewBag.obraId = new SelectList(db.Obras, "id", "nombre", ordencompra.obraId);
+            ViewBag.proveedorId = new SelectList(db.Proveedores, "proveedorId", "razonSocial", ordencompra.proveedorId);
+            ViewBag.requerimientoId = new SelectList(db.Requerimientos, "requerimientoId", "numero", ordencompra.requerimientoId);
+            return View(ordencompra);
         }
 
-        //
         // POST: /OrdenCompra/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include="ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                db.Entry(ordencompra).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "estadoOrdenId", "nombre", ordencompra.estadoOrdenId);
+            ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", ordencompra.formaPagoId);
+            ViewBag.monedaId = new SelectList(db.Monedas, "monedaId", "nombre", ordencompra.monedaId);
+            ViewBag.obraId = new SelectList(db.Obras, "id", "nombre", ordencompra.obraId);
+            ViewBag.proveedorId = new SelectList(db.Proveedores, "proveedorId", "razonSocial", ordencompra.proveedorId);
+            ViewBag.requerimientoId = new SelectList(db.Requerimientos, "requerimientoId", "numero", ordencompra.requerimientoId);
+            return View(ordencompra);
         }
 
-        //
         // GET: /OrdenCompra/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordencompra);
         }
 
-        //
         // POST: /OrdenCompra/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            db.Ordenes.Remove(ordencompra);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                return View();
+                db.Dispose();
             }
+            base.Dispose(disposing);
+        }
+
+        // GET: /OrdenCompra/Document/5
+        public ActionResult Document(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordencompra);
         }
     }
 }

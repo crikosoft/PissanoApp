@@ -57,26 +57,47 @@
             </div>
         </div>
         <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        @*<label class="font-noraml col-sm-2 control-label">Proveedor</label>*@
+                        @*<div class="input-group col-sm-10">
+                            
+                        </div>*@
 
-            <div class="form-group">
-                <label class="font-noraml col-sm-2 control-label">Proveedor</label>
-                <div class="input-group col-sm-10">
-                    <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:350px;" tabindex="1" id="proveedor">
-                        <option value="">Seleccione</option>
+                        <label class="control-label" for="order_id">Proveedor</label>
+                        <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:350px;" tabindex="1" id="proveedor">
+                            <option value="">Seleccione</option>
 
-                        @foreach (var item in Model.Proveedores)
-                        {
-                            <option value=@Html.DisplayFor(modelItem => item.proveedorId)>
-                                @Html.DisplayFor(modelItem => item.razonSocial)
-                            </option>
-                        }
-                    </select>
+                            @foreach (var item in Model.Proveedores)
+                            {
+                                <option value=@Html.DisplayFor(modelItem => item.proveedorId)>
+                                    @Html.DisplayFor(modelItem => item.razonSocial)
+                                </option>
+                            }
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="font-noraml col-sm-2 control-label">Form de Pago</label>
-                <div class="input-group col-sm-10">
-                    <select data-placeholder="Seleccione la Prioridad..." class="chosen-select" style="width:350px;" tabindex="2" id="formaPago">
+                <div class="col-sm-4">
+                    @*<div class="form-group">
+                        <label class="font-noraml col-sm-2 control-label">Form de Pago</label>
+                        <div class="input-group col-sm-10">
+                            <select data-placeholder="Seleccione la Prioridad..." class="chosen-select" style="width:350px;" tabindex="2" id="formaPago">
+                                <option value="">Seleccione</option>
+
+                                @foreach (var item in Model.FormasPago)
+                                {
+                                    <option value=@Html.DisplayFor(modelItem => item.formaPagoId)>
+                                        @Html.DisplayFor(modelItem => item.nombre)
+                                    </option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>*@
+
+                    <label class="control-label" for="order_id">Form de Pago</label>
+                    <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:350px;" tabindex="1" id="formaPago">
                         <option value="">Seleccione</option>
 
                         @foreach (var item in Model.FormasPago)
@@ -85,15 +106,36 @@
                                 @Html.DisplayFor(modelItem => item.nombre)
                             </option>
                         }
-
                     </select>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <label class="font-noraml col-sm-2 control-label">Comentario</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" tabindex="3" id="comentario"> <span class="help-block m-b-none">Agregue algún comentario a considerar durante la Orden de Compra</span>
+                </div>
+
+                <div class="col-sm-4">
+                    
+
+                    <label class="control-label" for="order_id">Moneda</label>
+                    <select data-placeholder="Elija la Moneda..." class="chosen-select" style="width:350px;" tabindex="1" id="moneda">
+                        <option value="">Seleccione</option>
+
+                        @foreach (var item in Model.Monedas)
+                        {
+                            <option value=@Html.DisplayFor(modelItem => item.monedaId)>
+                                @Html.DisplayFor(modelItem => item.nombre)
+                            </option>
+                        }
+                    </select>
+
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        @*<label class="font-noraml col-sm-2 control-label">Comentario</label>
+                        <div class="col-sm-10">
+                            
+                        </div>*@
+                        <label class="control-label" for="order_id">Comentario</label>
+                        <input type="text" class="form-control" tabindex="3" id="comentario"> <span class="help-block m-b-none">Agregue algún comentario a considerar durante la Orden de Compra</span>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -611,6 +653,7 @@
                 ordenCompra.proveedorId = $("#proveedor").val();
                 ordenCompra.requerimientoId = $("#requerimientoId").val();;
                 ordenCompra.formaPagoId = $("#formaPago").val();
+                ordenCompra.monedaId = $("#moneda").val();
                 ordenCompra.comentario = $("#comentario").val();
                 ordenCompra.igv = 10;
                 ordenCompra.total = 100;
