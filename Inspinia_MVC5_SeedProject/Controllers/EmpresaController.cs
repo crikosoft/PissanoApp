@@ -10,11 +10,15 @@ using PissanoApp.Models;
 
 namespace PissanoApp.Controllers
 {
+    [Authorize(Roles="admin")]
+    //[Authorize(Roles = "IncidentResolvers")]
     public class EmpresaController : Controller
     {
         private PissanoContext db = new PissanoContext();
 
-        // GET: /Empresa/
+
+
+        // GET: /Empresa/        
         public ActionResult Index()
         {
             return View(db.Empresas.ToList());

@@ -16,7 +16,7 @@ namespace PissanoApp.Controllers
         private PissanoContext db = new PissanoContext();
 
         // GET: /RequerimientoViewModel/
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             var obras = db.Obras;
 
@@ -26,10 +26,12 @@ namespace PissanoApp.Controllers
 
             var prioridades = db.Prioridad;
 
-            var requerimientos = db.Requerimientos.OrderByDescending(p => p.requerimientoId);
+            //var requerimientos = db.Requerimientos.OrderByDescending(p => p.requerimientoId);
+            var requerimientos = db.Requerimientos.Where(p => p.tipoCompraId == id).OrderByDescending(p => p.requerimientoId);
 
+            var tipoCompra = db.TipoCompra.Find(id);
 
-            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList());
+            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList(), tipoCompra);
 
 
             return View(RequerimientoViewModels);
@@ -57,8 +59,9 @@ namespace PissanoApp.Controllers
 
             var requerimientos = db.Requerimientos;
 
+            var tipoCompra = db.TipoCompra.Find(id);
 
-            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList());
+            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList(), tipoCompra);
 
 
             return View(RequerimientoViewModels);
@@ -90,6 +93,7 @@ namespace PissanoApp.Controllers
 
 
                 //return View("Index");  
+                //return RedirectToAction("Index/" + requerimiento.tipoCompraId);
                 return RedirectToAction("Index");
             }
 

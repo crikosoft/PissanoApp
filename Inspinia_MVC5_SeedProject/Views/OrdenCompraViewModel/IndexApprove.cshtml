@@ -39,6 +39,8 @@
                                     <th>Prioridad</th>
                                     <th>Proveedor</th>
                                     <th>Total</th>
+                                    <th></th>
+
                                     <th data-hide="all">Fecha</th>
                                     <th data-hide="all">IGV</th>
                                     <th data-hide="all">Total</th>
@@ -68,6 +70,9 @@
                                             <td>@Html.DisplayFor(modelItem => item.Requerimiento.Prioridad.nombre)</td>
                                             <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
                                             <td>@Html.DisplayFor(modelItem => item.total)</td>
+                                            <td>
+                                                <a href="/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                            </td>
 
                                             <td>@Html.DisplayFor(modelItem => item.fecha)</td>
                                             <td>@Html.DisplayFor(modelItem => item.igv)</td>
@@ -81,10 +86,13 @@
                                         
                                               }
                                           </td>
-                                            <td class="project-actions">
+                                            <td>
+                                                <a href="/OrdenCompra/Approve/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
+                                            </td>
+                                            @*<td class="project-actions">
                                                 
                                                 <div class="checkbox i-checks"><label> <input type="checkbox" value="" > <i></i> Aprobar Orden </label></div>
-                                            </td>
+                                            </td>*@
                                         </tr>
                                     }
 

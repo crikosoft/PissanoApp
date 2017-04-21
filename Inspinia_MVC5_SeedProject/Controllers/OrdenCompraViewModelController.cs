@@ -15,7 +15,7 @@ namespace PissanoApp.Controllers
         
         // GET: /OrdenCompraViewModel/
 
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             var formasPago = db.FormaPagos;
 
@@ -23,34 +23,36 @@ namespace PissanoApp.Controllers
 
             var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == 1);
 
-            var ordenesCompra = db.Ordenes;
+            var ordenesCompra = db.Ordenes.Where(p => p.Requerimiento.tipoCompraId == id);
+
+            var tipoCompra = db.TipoCompra.Find(id);
 
             var monedas = db.Monedas;
 
-            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList());
+            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList(), tipoCompra);
 
 
             return View(OrdenCompraViewModels);
         }
 
 
-        public ActionResult IndexApprove()
-        {
-            var formasPago = db.FormaPagos;
+        //public ActionResult IndexApprove()
+        //{
+        //    var formasPago = db.FormaPagos;
 
-            var proveedores = db.Proveedores;
+        //    var proveedores = db.Proveedores;
 
-            var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == 1);
+        //    var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == 1);
 
-            var ordenesCompra = db.Ordenes;
+        //    var ordenesCompra = db.Ordenes;
 
-            var monedas = db.Monedas;
+        //    var monedas = db.Monedas;
 
-            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList());
+        //    var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList());
 
 
-            return View(OrdenCompraViewModels);
-        }
+        //    return View(OrdenCompraViewModels);
+        //}
 
 
 
@@ -70,7 +72,9 @@ namespace PissanoApp.Controllers
 
             var monedas = db.Monedas;
 
-            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList());
+            var tipoCompra = db.TipoCompra.Find(requerimiento.tipoCompraId);
+
+            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList(), tipoCompra);
 
 
             return View(OrdenCompraViewModels);
@@ -105,13 +109,13 @@ namespace PissanoApp.Controllers
                 foreach (var item in ordenCompra.OrdenesCompraDetalles)
                 {
                     item.ordenCompraId = ordenCompra.ordenCompraId;
-                    item.estadoOrdenDetalleId = 1;
+                    item.estadoOrdenDetalleId = 1; 
                     item.precioTotal = item.cantidad * item.precioUnitario;
                     total = total + item.cantidad * item.precioUnitario;
                     db.OrdenDetalles.Add(item);
 
                 }
-
+                ordenCompra.subTotal = total;
                 ordenCompra.igv = total*0.18;
                 ordenCompra.total = total + total * 0.18;
 

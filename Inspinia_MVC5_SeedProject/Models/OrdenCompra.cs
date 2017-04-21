@@ -24,6 +24,9 @@ namespace PissanoApp.Models
         public bool incluyeIgv { get; set; }
 
         [Required()]
+        public double subTotal { get; set; }
+
+        [Required()]
         public double igv { get; set; }
 
         [Required()]

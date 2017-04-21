@@ -15,12 +15,15 @@ namespace PissanoApp.ViewModels
 
         public List<Requerimiento> Requerimientos { get; set; }
 
-        public RequerimientoViewModel(List<Obra> obras, List<Material> materiales, List<Prioridad> prioridades, List<Requerimiento> requerimientos)
+        public TipoCompra TipoCompra{ get; set; }
+
+        public RequerimientoViewModel(List<Obra> obras, List<Material> materiales, List<Prioridad> prioridades, List<Requerimiento> requerimientos, TipoCompra tipoCompra)
         {
             Obras = obras;
             Materiales = materiales;
             Prioridades = prioridades;
             Requerimientos = requerimientos;
+            TipoCompra = tipoCompra;
         }
 
 

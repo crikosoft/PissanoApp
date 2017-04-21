@@ -1,25 +1,24 @@
 ﻿@model PissanoApp.Models.OrdenCompra
 
 @{
-    ViewBag.Title = "Document";
+    ViewBag.Title = "Approve";
 }
 
 
-
-
+@using (Html.BeginForm())
+{
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ordenCompraId)
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
         <h2>Documento de Orden de Compra</h2>
         <ol class="breadcrumb">
-            @*<li>
-                <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
-            </li>
             <li>
-                Other Pages
+                @Html.ActionLink("Lista Aprobaciones", "IndexApprove")
             </li>
             <li class="active">
-                <strong>Invoice</strong>
-            </li>*@
+                <strong>Aprobación</strong>
+            </li>
         </ol>
     </div>
     <div class="col-lg-4">
@@ -27,7 +26,7 @@
             @*<a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Editar </a>
             <a href="#" class="btn btn-white"><i class="fa fa-check "></i> Guardar </a>*@
             <a href="/OrdenCompra/DocumentPrint/@Html.DisplayFor(model => model.ordenCompraId)" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir </a>
-            
+
         </div>
     </div>
 </div>
@@ -87,15 +86,15 @@
 
 
                             @*<tr>
-                                <td>
-                                    <div><strong>Admin Theme with psd project layouts</strong></div>
-                                    <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
-                                </td>
-                                <td>1</td>
-                                <td>$26.00</td>
-                                <td>$5.98</td>
-                                <td>$31,98</td>
-                            </tr>*@
+                                    <td>
+                                        <div><strong>Admin Theme with psd project layouts</strong></div>
+                                        <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+                                    </td>
+                                    <td>1</td>
+                                    <td>$26.00</td>
+                                    <td>$5.98</td>
+                                    <td>$31,98</td>
+                                </tr>*@
 
 
                             @foreach (var item in Model.OrdenesCompraDetalles)
@@ -113,7 +112,7 @@
                             }
 
 
-                           
+
 
                         </tbody>
                     </table>
@@ -135,10 +134,23 @@
                         </tr>
                     </tbody>
                 </table>
-                @*<div class="text-right">
-                    <button class="btn btn-primary"><i class="fa fa-dollar"></i> Aprobar!</button>
-                </div>*@
 
+                @* botones de Aprobación *@
+                <div class="text-right">
+                    @*<button class="btn btn-primary"><i class="fa fa-check"></i> Aprobar!</button>*@
+                    <div class="form-group">
+                        
+                            <input type="submit" value="Aprobar!" class="btn btn-primary" />
+                        
+                    </div>
+                </div>
+
+
+                @*fin botones Aprobación*@
+
+                @*<div class="text-left">
+            <button class="btn btn-warning"><i class="fa fa-times"></i> No Aprobar!</button>
+        </div>*@
 
                 <div class="well m-t">
                     <strong>Comentario</strong>
@@ -151,7 +163,7 @@
 </div>
 
 @* Copiar hasta aqui para print*@
-
+}
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ordenCompraId }) |

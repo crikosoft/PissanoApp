@@ -3,6 +3,7 @@
     ViewBag.Title = "Create";
 }
 
+@Html.HiddenFor(model => model.TipoCompra.tipoCompraId)
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -655,6 +656,7 @@
                 ordenCompra.formaPagoId = $("#formaPago").val();
                 ordenCompra.monedaId = $("#moneda").val();
                 ordenCompra.comentario = $("#comentario").val();
+                ordenCompra.subTotal = 10;
                 ordenCompra.igv = 10;
                 ordenCompra.total = 100;
                 ordenCompra.estadoOrdenId = 1;
@@ -682,7 +684,9 @@
                     url: '@Url.Action("CrearOrdenCompra")',
                     data: OrdenCompraFinal,
                     error: function () {
-                        window.location = '@Url.Action("Index")';
+                        //window.location = '@Url.Action("Index")';
+                        window.location = '@Url.Action("Index/" + @Html.DisplayFor(model => model.TipoCompra.tipoCompraId))';
+
                         //alert("hola");
                     }
                 })

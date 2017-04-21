@@ -163,5 +163,92 @@ namespace PissanoApp.Controllers
             }
             return View(ordencompra);
         }
+
+        // GET: /OrdenCompra/Document/5
+        public ActionResult DocumentPrint(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordencompra);
+        }
+
+
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult Approve(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordencompra);
+        }
+
+
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult IndexApprove()
+        {
+            //var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            return View(ordenes.ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Approve([Bind(Include="ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)
+        {
+            //if (ModelState.IsValid)
+            //{
+                //db.Entry(ordencompra).State = EntityState.Modified;
+
+            OrdenCompra orderCompra = db.Ordenes.Find(ordencompra.ordenCompraId);
+            if (orderCompra == null)
+            {
+                return HttpNotFound();
+            }
+
+            orderCompra.estadoOrdenId = 2;
+                db.SaveChanges();
+                return RedirectToAction("IndexApprove");
+            //}
+            //ViewBag.obraId = new SelectList(db.Obras, "id", "direccion", ordencompra.ordenCompraId);
+            return View(ordencompra);
+        }
+
+
+        //[HttpPost]
+        ////[ValidateAntiForgeryToken]
+        //public ActionResult ApproveOrder(int? id)
+        //{
+
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+
+        //    OrdenCompra orderCompra = db.Ordenes.Find(id);
+        //    if (orderCompra == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+           
+        //        orderCompra.estadoOrdenId = 1;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return RedirectToAction("Index");
+        }
     }
-}
+//}
