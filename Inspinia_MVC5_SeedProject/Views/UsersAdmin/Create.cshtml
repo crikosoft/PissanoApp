@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pissano | Login</title>
+    <title>INSPINIA | Login</title>
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -25,7 +25,7 @@
 
     <div class="middle-box text-center loginscreen  animated fadeInDown">
         <div>
-            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 <h4>Create a new account.</h4>
@@ -50,7 +50,10 @@
                     </div>
                 </div>
                 
+                <h4>Select Role for User</h4>
+                <hr />
                 @Html.DropDownList("RoleId","No Roles")
+              
                 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-8">

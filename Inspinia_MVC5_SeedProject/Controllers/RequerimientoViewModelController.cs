@@ -11,6 +11,7 @@ using PissanoApp.Models;
 
 namespace PissanoApp.Controllers
 {
+        [Authorize(Roles = "Obra")]
     public class RequerimientoViewModelController : Controller
     {
         private PissanoContext db = new PissanoContext();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -115,5 +116,46 @@ namespace PissanoApp.Models
         //public System.Data.Entity.DbSet<PissanoApp.ViewModels.RequerimientoViewModel> RequerimientoViewModels { get; set; }
     }
 
+
+    public class MyDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public MyDbContext()
+            : base("IdentityConnection")
+        {
+        }
+
+
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Change the name of the table to be Users instead of AspNetUsers
+            modelBuilder.Entity<IdentityUser>()
+                .ToTable("AspNetUsers");
+            modelBuilder.Entity<ApplicationUser>()
+                .ToTable("AspNetUsers");
+        }
+
+        public DbSet<ToDo> ToDoes { get; set; }
+
+        public DbSet<MyUserInfo> MyUserInfo { get; set; }
+    }
+
+
+    public class MyUserInfo
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+    public class ToDo
+    {
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public bool IsDone { get; set; }
+        public virtual ApplicationUser User { get; set; }
+    }
 
 }

@@ -10,112 +10,112 @@ using PissanoApp.Models;
 
 namespace PissanoApp.Controllers
 {
-    
-    //[Authorize(Roles = "IncidentResolvers")]
-    [Authorize(Roles = "Administrador, Obra")]
-    public class EmpresaController : Controller
+    public class PartidaController : Controller
     {
         private PissanoContext db = new PissanoContext();
 
-
-
-        // GET: /Empresa/        
+        // GET: /Partida/
         public ActionResult Index()
         {
-            return View(db.Empresas.ToList());
+            var partida = db.Partida.Include(p => p.SubPresupuesto);
+            return View(partida.ToList());
         }
 
-        // GET: /Empresa/Details/5
+        // GET: /Partida/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresas.Find(id);
-            if (empresa == null)
+            Partida partida = db.Partida.Find(id);
+            if (partida == null)
             {
                 return HttpNotFound();
             }
-            return View(empresa);
+            return View(partida);
         }
 
-        // GET: /Empresa/Create
+        // GET: /Partida/Create
         public ActionResult Create()
         {
+            ViewBag.subPresupuestoId = new SelectList(db.SubPresupuesto, "subPresupuestoId", "nombre");
             return View();
         }
 
-        // POST: /Empresa/Create
+        // POST: /Partida/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="empresaId,nombre,ruc,agenteRetenedor,telefono,direccion")] Empresa empresa)
+        public ActionResult Create([Bind(Include="partidaId,nombre,descripcion,subPresupuestoId")] Partida partida)
         {
             if (ModelState.IsValid)
             {
-                db.Empresas.Add(empresa);
+                db.Partida.Add(partida);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(empresa);
+            ViewBag.subPresupuestoId = new SelectList(db.SubPresupuesto, "subPresupuestoId", "nombre", partida.subPresupuestoId);
+            return View(partida);
         }
 
-        // GET: /Empresa/Edit/5
+        // GET: /Partida/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresas.Find(id);
-            if (empresa == null)
+            Partida partida = db.Partida.Find(id);
+            if (partida == null)
             {
                 return HttpNotFound();
             }
-            return View(empresa);
+            ViewBag.subPresupuestoId = new SelectList(db.SubPresupuesto, "subPresupuestoId", "nombre", partida.subPresupuestoId);
+            return View(partida);
         }
 
-        // POST: /Empresa/Edit/5
+        // POST: /Partida/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="empresaId,nombre,ruc,agenteRetenedor,telefono,direccion")] Empresa empresa)
+        public ActionResult Edit([Bind(Include="partidaId,nombre,descripcion,subPresupuestoId")] Partida partida)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(empresa).State = EntityState.Modified;
+                db.Entry(partida).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(empresa);
+            ViewBag.subPresupuestoId = new SelectList(db.SubPresupuesto, "subPresupuestoId", "nombre", partida.subPresupuestoId);
+            return View(partida);
         }
 
-        // GET: /Empresa/Delete/5
+        // GET: /Partida/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresas.Find(id);
-            if (empresa == null)
+            Partida partida = db.Partida.Find(id);
+            if (partida == null)
             {
                 return HttpNotFound();
             }
-            return View(empresa);
+            return View(partida);
         }
 
-        // POST: /Empresa/Delete/5
+        // POST: /Partida/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Empresa empresa = db.Empresas.Find(id);
-            db.Empresas.Remove(empresa);
+            Partida partida = db.Partida.Find(id);
+            db.Partida.Remove(partida);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -128,18 +128,5 @@ namespace PissanoApp.Controllers
             }
             base.Dispose(disposing);
         }
-
-
-        //Menu
-        public ActionResult Obra()
-        {
-            return View();
-        }
-
-        public ActionResult FormaPago()
-        {
-            return View();
-        }
-
     }
 }

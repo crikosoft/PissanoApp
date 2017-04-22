@@ -9,15 +9,20 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using PissanoApp.Models;
+using System.Data.Entity;
+
 
 namespace PissanoApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
+        public RoleManager<IdentityRole> RoleManager { get; private set; }
+
         public AccountController()
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
+            RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
         }
 
         public AccountController(UserManager<ApplicationUser> userManager)
@@ -63,9 +68,17 @@ namespace PissanoApp.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
+        //[AllowAnonymous]
+        //public ActionResult Register()
+        //{
+        //    return View();
+        //}
+
+        //[AllowAnonymous]
+        public async Task<ActionResult> Register()
         {
+            //ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Id", "Name");
+            ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Id", "Name");
             return View();
         }
 
@@ -74,7 +87,7 @@ namespace PissanoApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string RoleId)
         {
             if (ModelState.IsValid)
             {
@@ -82,8 +95,19 @@ namespace PissanoApp.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+
+                    if (!String.IsNullOrEmpty(RoleId))
+                    {
+                        // Lineas que buscan y asigna roles a los usuarios creados
+                        var role = await RoleManager.FindByIdAsync(RoleId);
+                        //var role = new IdentityRole() { Name = "Logistica" };
+                        var result2 = await UserManager.AddToRoleAsync(user.Id, role.Name);
+                        // Fin 
+
+
+                        await SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {

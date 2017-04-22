@@ -10,6 +10,6 @@ namespace PissanoApp.Models
         public int subPresupuestoId { get; set; }
         public string nombre { get; set; }
 
-        public virtual List<PresupuestoTitulo> PresupuestoTitulo { get; set; }
+        public virtual List<Partida> Partidas { get; set; }
     }
 }

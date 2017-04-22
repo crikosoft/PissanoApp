@@ -10,6 +10,7 @@ using PissanoApp.Models;
 
 namespace PissanoApp.Controllers
 {
+    //[Authorize(Roles = "Logistica")]
     public class OrdenCompraController : Controller
     {
         private PissanoContext db = new PissanoContext();
