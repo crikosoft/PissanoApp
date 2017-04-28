@@ -11,7 +11,7 @@ using PissanoApp.Models;
 
 namespace PissanoApp.Controllers
 {
-        [Authorize(Roles = "Obra")]
+        //[Authorize(Roles = "Obra")]
     public class RequerimientoViewModelController : Controller
     {
         private PissanoContext db = new PissanoContext();
@@ -32,7 +32,11 @@ namespace PissanoApp.Controllers
 
             var tipoCompra = db.TipoCompra.Find(id);
 
-            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList(), tipoCompra);
+            var partidas = db.Partida;
+
+            var subPresupuestos = db.SubPresupuesto;
+
+            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList(), tipoCompra, partidas.ToList(), subPresupuestos.ToList());
 
 
             return View(RequerimientoViewModels);
@@ -62,7 +66,12 @@ namespace PissanoApp.Controllers
 
             var tipoCompra = db.TipoCompra.Find(id);
 
-            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList(), tipoCompra);
+
+            var partidas = db.Partida;
+
+            var subPresupuestos = db.SubPresupuesto;
+
+            var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList(), tipoCompra, partidas.ToList(), subPresupuestos.ToList());
 
 
             return View(RequerimientoViewModels);
@@ -76,7 +85,7 @@ namespace PissanoApp.Controllers
             if (ModelState.IsValid)
             {
 
-                requerimiento.ordenGenerada = false;
+                requerimiento.estadoRequerimientoId = 1;
                 requerimiento.fecha = DateTime.Today;
 
 
@@ -98,7 +107,7 @@ namespace PissanoApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View();
+            return View(requerimiento);
         }
 
 

@@ -15,5 +15,16 @@ namespace PissanoApp.Models
         public int materialId { get; set; }
         public virtual Material Material { get; set; }
         public int cantidad { get; set; }
+
+        public int partidaId { get; set; }
+        public virtual Partida Partida { get; set; }
+
+        public int estadoRequerimientoDetalleId { get; set; }
+        public virtual EstadoRequerimientoDetalle EstadoRequerimientoDetalle { get; set; }
+
+        public int? ordenCompraId { get; set; }
+        public virtual OrdenCompra OrdenCompra { get; set; }
+
+
     }
 }

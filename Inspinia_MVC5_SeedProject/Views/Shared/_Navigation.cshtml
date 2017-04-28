@@ -30,78 +30,96 @@
 @if (Request.IsAuthenticated)
 {
 
-    if (User.IsInRole("Administrador") || User.IsInRole("Logistica") || User.IsInRole("Ingeniero de Campo") || User.IsInRole("Ingeniero Residente"))
-    { 
+            if (User.IsInRole("Administrador") || User.IsInRole("Logística") || User.IsInRole("Ingeniero de Campo") || User.IsInRole("Ingeniero Residente"))
+            { 
 
-            <li class="@Html.IsSelected(controller: "")">
-                <a href="#"><i class="fa fa-desktop"></i><span class="nav-label" data-i18n="nav.empresa">Mantenimiento</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
-                    @if (!User.IsInRole("Logistica") && !User.IsInRole("Ingeniero de Campo") && !User.IsInRole("Ingeniero Residente"))
-                    {
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Empresa")">Empresas<span class="label label-primary pull-right">Nuevo</span></a></li>
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Obra")">Obras<span class="label label-primary pull-right">Nuevo</span></a></li>
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Partida")">Partidas<span class="label label-primary pull-right">Nuevo</span></a></li>
-                    }
+                    <li class="@Html.IsSelected(controller: "")">
+                        <a href="#"><i class="fa fa-desktop"></i><span class="nav-label" data-i18n="nav.empresa">Mantenimiento</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
+                            @if (!User.IsInRole("Logística") && !User.IsInRole("Ingeniero de Campo") && !User.IsInRole("Ingeniero Residente"))
+                            {
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Empresa")">Empresas<span class="label label-primary pull-right">Nuevo</span></a></li>
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Obra")">Obras<span class="label label-primary pull-right">Nuevo</span></a></li>
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Partida")">Partidas<span class="label label-primary pull-right">Nuevo</span></a></li>
+                            }
 
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Proveedor")">Proveedores<span class="label label-primary pull-right">Nuevo</span></a></li>
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "FormaPago")">Formas Pago<span class="label label-primary pull-right">Nuevo</span></a></li>
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Material")">Materiales<span class="label label-primary pull-right">Nuevo</span></a></li>
-                    <li class="@Html.IsSelected(action: "")"><a href="@Url.Action("Index", "UnidadMedida")">Unidad Medida<span class="label label-primary pull-right">Nuevo</span></a></li>
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Proveedor")">Proveedores<span class="label label-primary pull-right">Nuevo</span></a></li>
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "FormaPago")">Formas Pago<span class="label label-primary pull-right">Nuevo</span></a></li>
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Material")">Materiales<span class="label label-primary pull-right">Nuevo</span></a></li>
+                            <li class="@Html.IsSelected(action: "")"><a href="@Url.Action("Index", "UnidadMedida")">Unidad Medida<span class="label label-primary pull-right">Nuevo</span></a></li>
                    
-                </ul>
-            </li>
-    }
+                        </ul>
+                    </li>
+            }
             
     
-  if (User.IsInRole("Administrador") || User.IsInRole("Ingeniero de Campo") || User.IsInRole("Ingeniero Residente"))
-    {    
-            <li class="@Html.IsSelected(controller: "")">
-                <a href="#"><i class="fa fa-building"></i><span class="nav-label" data-i18n="nav.empresa">Requerimientos</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/1", "RequerimientoViewModel")">Requerimiento  Material<span class="label label-primary pull-right">Nuevo</span></a></li>
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/2", "RequerimientoViewModel")">Requerimiento SubContrato<span class="label label-primary pull-right">Nuevo</span></a></li>
+          if (User.IsInRole("Administrador") || User.IsInRole("Ingeniero de Campo") || User.IsInRole("Ingeniero Residente"))
+            {    
+                    <li class="@Html.IsSelected(controller: "")">
+                        <a href="#"><i class="fa fa-building"></i><span class="nav-label" data-i18n="nav.empresa">Requerimientos</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/1", "RequerimientoViewModel")">Requerimiento  Material<span class="label label-primary pull-right">Nuevo</span></a></li>
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/2", "RequerimientoViewModel")">Requerimiento SubContrato<span class="label label-primary pull-right">Nuevo</span></a></li>
                     
-                </ul>
-            </li>    
-}
+                        </ul>
+                    </li>    
+            }
 
-         if (User.IsInRole("Administrador") || User.IsInRole("Logistica"))
+         if (User.IsInRole("Administrador") || User.IsInRole("Logística"))
             {   
     
             <li class="@Html.IsSelected(controller: "")">
                 <a href="#"><i class="fa fa-flask"></i><span class="nav-label" data-i18n="nav.empresa">Logística</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
 
-                    <li>
+                    @*<li>
                         <a href="@Url.Action("Index", "OrdenCompraViewModel/Index/1")">Orden de Compra<span class="label label-primary pull-right">Nuevo</span></a>
 
                     </li>
                     <li>
                         <a href="@Url.Action("Index", "OrdenCompraViewModel/Index/2")">Orden de Servicio<span class="label label-primary pull-right">Nuevo</span></a>
-                    </li>
+                    </li>*@
+
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/1", "OrdenCompraViewModel")">Orden de Compra<span class="label label-primary pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/2", "OrdenCompraViewModel")">Orden de Servicio<span class="label label-primary pull-right">Nuevo</span></a></li>
+
                     
                 </ul>
             </li>
-        }
-    
-        
-         if (User.IsInRole("Administrador") || User.IsInRole("Gerente General"))
+            }
+
+
+         if (User.IsInRole("Administrador") || User.IsInRole("Gerente General") || User.IsInRole("Jefatura de Proyecto") || User.IsInRole("Ingeniero Residente"))
             {   
     
             <li class="@Html.IsSelected(controller: "")">
                 <a href="#"><i class="fa fa-flask"></i><span class="nav-label" data-i18n="nav.empresa">Aprobaciones</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
 
-                    <li>
-                        <a href="@Url.Action("IndexApprove", "OrdenCompra")">Aprobación Gerencia<span class="label label-primary pull-right">Nuevo</span></a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("IndexApprove", "OrdenCompra")">Aprobación Ing. Residente<span class="label label-primary pull-right">Nuevo</span></a>
-                    </li>
+                    @if (User.IsInRole("Ingeniero Residente") || User.IsInRole("Administrador"))
+                    {
+                        <li>
+                            <a href="@Url.Action("IndexApprove", "Requerimiento")">Aprobación Ing. Residente Req.<span class="label label-primary pull-right">Nuevo</span></a>
+                        </li>
 
-                    <li>
-                        <a href="@Url.Action("IndexApprove", "OrdenCompra")">Aprobación Jefatura Proyecto<span class="label label-primary pull-right">Nuevo</span></a>
-                    </li>
+                        <li>
+                            <a href="@Url.Action("IndexApprove", "OrdenCompra")">Aprobación Ing. Residente OC<span class="label label-primary pull-right">Nuevo</span></a>
+                        </li>
+                    }
+                    
+                    @if (User.IsInRole("Jefatura de Proyecto") || User.IsInRole("Administrador"))
+                    {
+                        <li>
+                            <a href="@Url.Action("IndexApprove2", "OrdenCompra")">Aprobación Jefatura Proyecto<span class="label label-primary pull-right">Nuevo</span></a>
+                        </li>
+                    }
+                    
+                    @if (User.IsInRole("Gerente General") || User.IsInRole("Administrador"))
+                    {
+                        <li>
+                            <a href="@Url.Action("IndexApprove3", "OrdenCompra")">Aprobación Gerencia<span class="label label-primary pull-right">Nuevo</span></a>
+                        </li>
+                    }
                 </ul>
             </li>
         }        
@@ -112,14 +130,21 @@
 
             <li class="@Html.IsSelected(controller: "")">
                 <a href="#"><i class="fa fa-calculator"></i><span class="nav-label" data-i18n="nav.empresa">Contabilidad</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
+                @*<ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
                     <li class="@Html.IsSelected(action: "Pago")"><a href="@Url.Action("ProductsList", "Ecommerce")">Ingreso Factura<span class="label label-info pull-right">Protot</span></a></li>
+                </ul>*@
+
+                <ul class="nav nav-second-level collapse">
+                    <li>
+                        <a href="@Url.Action("IndexAccounting", "OrdenCompra")">Ordenes de Compra<span class="label label-primary pull-right">Nuevo</span></a>
+                    </li>
                 </ul>
             </li>
+    
+
+    
             }
 
-
-           
 
 }
         </ul>

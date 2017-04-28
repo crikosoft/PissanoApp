@@ -15,7 +15,7 @@ using Microsoft.Owin.Security;
 
 namespace PissanoApp.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrador")]
     public class UsersAdminController : Controller
     {
         public UsersAdminController()

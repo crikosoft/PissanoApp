@@ -12,7 +12,7 @@ namespace PissanoApp.Controllers
 {
     
     //[Authorize(Roles = "IncidentResolvers")]
-    [Authorize(Roles = "Administrador, Obra")]
+    //[Authorize(Roles = "Administrador, Obra")]
     public class EmpresaController : Controller
     {
         private PissanoContext db = new PissanoContext();

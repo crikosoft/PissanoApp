@@ -25,7 +25,7 @@
         <div class="title-action">
             @*<a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Editar </a>
             <a href="#" class="btn btn-white"><i class="fa fa-check "></i> Guardar </a>*@
-            <a href="/OrdenCompra/DocumentPrint/@Html.DisplayFor(model => model.ordenCompraId)" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir </a>
+            <a href="~/OrdenCompra/DocumentPrint/@Html.DisplayFor(model => model.ordenCompraId)" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir </a>
 
         </div>
     </div>
@@ -122,15 +122,15 @@
                     <tbody>
                         <tr>
                             <td><strong>Sub Total :</strong></td>
-                            <td>S/. @Html.DisplayFor(model => model.subTotal)</td>
+                            <td>@Html.DisplayFor(model => model.Moneda.simbolo)  @Html.DisplayFor(model => model.subTotal)</td>
                         </tr>
                         <tr>
                             <td><strong>IGV :</strong></td>
-                            <td>S/. @Html.DisplayFor(model => model.igv)</td>
+                            <td>@Html.DisplayFor(model => model.Moneda.simbolo)  @Html.DisplayFor(model => model.igv)</td>
                         </tr>
                         <tr>
                             <td><strong>TOTAL :</strong></td>
-                            <td>S/. @Html.DisplayFor(model => model.total)</td>
+                            <td>@Html.DisplayFor(model => model.Moneda.simbolo)  @Html.DisplayFor(model => model.total)</td>
                         </tr>
                     </tbody>
                 </table>

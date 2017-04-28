@@ -196,12 +196,71 @@ namespace PissanoApp.Controllers
             return View(ordencompra);
         }
 
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult Approve2(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordencompra);
+        }
+
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult Approve3(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordencompra);
+        }
+
+
+
 
         // GET: /OrdenCompra/Approve/5
         public ActionResult IndexApprove()
         {
             //var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
-            var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            var ordenes = db.Ordenes.Where(p => p.estadoOrdenId==1).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            return View(ordenes.ToList());
+        }
+
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult IndexApprove2()
+        {
+            //var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            var ordenes = db.Ordenes.Where(p => p.estadoOrdenId==2).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            return View(ordenes.ToList());
+        }
+
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult IndexApprove3()
+        {
+            //var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            var ordenes = db.Ordenes.Where(p => p.estadoOrdenId == 3).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            return View(ordenes.ToList());
+        }
+
+        // GET: /OrdenCompra/IndexAcounting/
+        public ActionResult IndexAccounting()
+        {                        
+            var estadoList = new int[] { 4, 5, 6 };
+            var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.estadoOrdenId)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+
+            //var ordenes = db.Ordenes.Include(p => p.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            //var ordenes = db.Ordenes.Where(p => p.estadoOrdenId == 3).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
             return View(ordenes.ToList());
         }
 
@@ -227,6 +286,52 @@ namespace PissanoApp.Controllers
             return View(ordencompra);
         }
 
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Approve2([Bind(Include = "ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //db.Entry(ordencompra).State = EntityState.Modified;
+
+            OrdenCompra orderCompra = db.Ordenes.Find(ordencompra.ordenCompraId);
+            if (orderCompra == null)
+            {
+                return HttpNotFound();
+            }
+
+            orderCompra.estadoOrdenId = 3;
+            db.SaveChanges();
+            return RedirectToAction("IndexApprove2");
+            //}
+            //ViewBag.obraId = new SelectList(db.Obras, "id", "direccion", ordencompra.ordenCompraId);
+            return View(ordencompra);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Approve3([Bind(Include = "ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //db.Entry(ordencompra).State = EntityState.Modified;
+
+            OrdenCompra orderCompra = db.Ordenes.Find(ordencompra.ordenCompraId);
+            if (orderCompra == null)
+            {
+                return HttpNotFound();
+            }
+
+            orderCompra.estadoOrdenId = 4;
+            db.SaveChanges();
+            return RedirectToAction("IndexApprove3");
+            //}
+            //ViewBag.obraId = new SelectList(db.Obras, "id", "direccion", ordencompra.ordenCompraId);
+            return View(ordencompra);
+        }
 
         //[HttpPost]
         ////[ValidateAntiForgeryToken]

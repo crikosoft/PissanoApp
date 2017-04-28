@@ -10,8 +10,8 @@ namespace PissanoApp.Controllers
     {
         public ActionResult Index()
         {
-            ViewData["SubTitle"] = "Bienvenido al Sistema de Gestión de Compras de PISSANO ";
-            ViewData["Message"] = "Nos encontramos en la etapa de Construcción";
+            ViewData["SubTitle"] = "Bienvenido al Sistema de Gestión de Compras PISSANO ";
+            ViewData["Message"] = "1era Versión. Disponible con los módulos de Requerimiento, Aprobación de Requerimiento, Creación de Ordenes de Compra, Aprobaciones de Ordenes de Compra (Ing. Residente, Jefatura de Proyecto y Gerente General)";
 
             return View();
         }

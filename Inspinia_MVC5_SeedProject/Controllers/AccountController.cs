@@ -14,7 +14,7 @@ using System.Data.Entity;
 
 namespace PissanoApp.Controllers
 {
-    //[Authorize]
+  
     public class AccountController : Controller
     {
         public RoleManager<IdentityRole> RoleManager { get; private set; }
@@ -75,6 +75,7 @@ namespace PissanoApp.Controllers
         //}
 
         //[AllowAnonymous]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Register()
         {
             //ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Id", "Name");
@@ -87,6 +88,7 @@ namespace PissanoApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Register(RegisterViewModel model, string RoleId)
         {
             if (ModelState.IsValid)

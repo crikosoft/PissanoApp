@@ -13,7 +13,7 @@
 
 <p>
     @*<a href="@Url.Action("RequerimientoViewModel/1", "RequerimientoViewModel")" class="btn btn-w-m btn-primary">Nuevo Requerimiento de Materiales</a>*@
-    <a href="/RequerimientoViewModel/Create/@Html.DisplayFor(model => model.TipoCompra.tipoCompraId)" class="btn btn-w-m btn-primary"> Nuevo Requerimiento </a>
+    <a href="~/RequerimientoViewModel/Create/@Html.DisplayFor(model => model.TipoCompra.tipoCompraId)" class="btn btn-w-m btn-primary"> Nuevo Requerimiento </a>
 </p>
 
 @*<p>
@@ -45,10 +45,11 @@
                                 <th>Plazo (días)</th>
                                 <th>Items</th>
                                 <th>Tipo de Compra</th>
-                                <th>Orden Compra</th>
-                                <th>Estado Orden</th>
+                                @*<th>Orden Compra</th>*@
+                                <th>Estado</th>
                                 <th></th>
                                 <th></th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -65,50 +66,55 @@
                                     <td>@Html.DisplayFor(modelItem => item.Detalles.Count)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TipoCompra.nombre)</td>
 
-                                    @if (item.ordenGenerada == false)
+                                    @*@if (item.ordenGenerada == false)
                                     { 
                                     <td class="client-status"><span class="label label-warning">En espera</span></td>
                                     }
                                     else
                                     { 
                                         <td class="client-status">
-                                            @*<span class="label label-primary">@Html.DisplayFor(modelItem => item.OrdenCompras[0].numero)</span>*@
                                             <a href="/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.OrdenCompras[0].ordenCompraId)" class="label label-primary">@Html.DisplayFor(modelItem => item.OrdenCompras[0].numero) </a>
                                         </td>     
                                                                       
-                                    }
+                                    }*@
 
-                                    @if (item.ordenGenerada == false)
+                                    @if (item.estadoRequerimientoId == 1)
                                     {
-                                        <td class="client-status"><span class="label label-warning">Ninguno</span></td>
+                                        <td class="client-status"><span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span></td>
                                     }
-                                    else
+                                    else if (item.estadoRequerimientoId == 4)
                                     {
-                                        if (item.OrdenCompras[0].estadoOrdenId == 1)
+                                        <td class="client-status"><span class="label label-primary">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span></td>
+                                    }
+                                    else { 
+                                        <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span></td>
+                                        @*if (item.OrdenCompras[0].estadoOrdenId == 1)
                                         {
-                                            <td class="client-status"><span class="label label-danger">Pendiente Aprobación</span> </td>
+                                            <td class="client-status"><span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span> </td>
                                         
                                         
                                         }
                                         else
                                             {                      
                                             <td class="client-status"><span class="label label-primary">@Html.DisplayFor(modelItem => item.OrdenCompras[0].EstadoOrden.nombre)</span></td>
-                                            }
+                                            }*@
                                     }
+                                    <td class="project-actions">
+                                        <a href="~/Requerimiento/Document/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                    </td>
+
                                         <td>
 
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.requerimientoId }) |
-                                            @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })
+                                            @*@Html.ActionLink("Editar", "Edit", new { id = item.requerimientoId }) |
+                                            @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |*@
+                                            @if (item.estadoRequerimientoId == 1)
+                                            {
+                                                <a href="~/Requerimiento/Delete/@Html.DisplayFor(modelItem => item.requerimientoId)" > Eliminar </a>
 
+                                                    @*@Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })*@
+                                            }
                                     </td>
-                                    <td class="project-actions">
-                                        @if (item.ordenGenerada == false)
-                                        {
-                                        <a href="/OrdenCompraViewModel/Create/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Crear Orden Compra </a>
-                                        }
-                                        
-                                    </td>
+
                                 </tr>
                             }
 
@@ -124,10 +130,11 @@
                                 <th>Plazo (días)</th>
                                 <th>Items</th>
                                 <th>Tipo de Compra</th>
-                                <th>Orden Compra</th>
-                                <th>Estado Orden</th>
+                                @*<th>Orden Compra</th>*@
+                                <th>Estado</th>
                                 <th></th>
                                 <th></th>
+     
 
                             </tr>
                         </tfoot>

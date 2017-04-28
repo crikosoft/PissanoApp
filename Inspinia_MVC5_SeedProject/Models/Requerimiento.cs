@@ -30,8 +30,8 @@ namespace PissanoApp.Models
         [DisplayName("Obra")]
         public virtual Obra Obra { get; set; }
 
-        [DisplayName("Estado")]
-        public bool ordenGenerada { get; set; }
+        //[DisplayName("Orden Generada")]
+        //public bool ordenGenerada { get; set; }
 
         [DisplayName("Prioridad")]
         public int prioridadId { get; set; }
@@ -42,6 +42,11 @@ namespace PissanoApp.Models
         [DisplayName("TipoCompra")]
         public int? tipoCompraId { get; set; }
 
+        [DisplayName("Estado")]
+        public int estadoRequerimientoId { get; set; }
+        public virtual EstadoRequerimiento EstadoRequerimiento { get; set; }
+
+
         [DisplayName("Obra")]
         public virtual TipoCompra TipoCompra { get; set; }
 
@@ -49,6 +54,8 @@ namespace PissanoApp.Models
         public virtual List<RequerimientoDetalle> Detalles { get; set; }
 
         public virtual List<OrdenCompra> OrdenCompras { get; set; }
+
+
 
 
     }

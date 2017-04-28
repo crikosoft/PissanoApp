@@ -21,7 +21,13 @@ namespace PissanoApp.Controllers
 
             var proveedores = db.Proveedores;
 
-            var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == 1);
+
+//            var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == 11);
+//            var requerimiento = db.Requerimientos.First();
+
+             Requerimiento req = new Requerimiento();
+
+             var requerimiento = req;
 
             var ordenesCompra = db.Ordenes.Where(p => p.Requerimiento.tipoCompraId == id);
 
@@ -68,6 +74,8 @@ namespace PissanoApp.Controllers
 
             var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == id);
 
+            requerimiento.Detalles =  requerimiento.Detalles.Where(p => p.estadoRequerimientoDetalleId == 1).ToList();
+
             var ordenesCompra = db.Ordenes;
 
             var monedas = db.Monedas;
@@ -90,13 +98,40 @@ namespace PissanoApp.Controllers
             if (ModelState.IsValid)
             {
                 ordenCompra.Requerimiento = db.Requerimientos.Single(p => p.requerimientoId == ordenCompra.requerimientoId);
-                ordenCompra.numero = "OC-" + ordenCompra.Requerimiento.requerimientoId.ToString();
+                ordenCompra.numero = "OC-" + ordenCompra.Requerimiento.requerimientoId.ToString() + "-"+ ordenCompra.OrdenesCompraDetalles[0].materialId;
                 ordenCompra.fecha = DateTime.Today;
-                ordenCompra.igv = 10;
-                ordenCompra.total = 100;
-                ordenCompra.estadoOrdenId = 1;
+                //ordenCompra.igv = 10;
+                //ordenCompra.total = 100;
+                //ordenCompra.estadoOrdenId = 1;
 
-                ordenCompra.Requerimiento.ordenGenerada = true;
+                var cantidadDetalles = 0;
+                cantidadDetalles = ordenCompra.Requerimiento.Detalles.Where(p => p.estadoRequerimientoDetalleId == 1).Count();
+                if (cantidadDetalles == ordenCompra.OrdenesCompraDetalles.Count())
+                {
+                    ordenCompra.Requerimiento.estadoRequerimientoId = 3; // OC total
+                }
+                else
+                {
+                    ordenCompra.Requerimiento.estadoRequerimientoId = 2; // OC Parcial
+                }
+
+
+                // Actualiza estado de Requerimientos
+                foreach (var item in ordenCompra.Requerimiento.Detalles)
+                {
+                    foreach (var item2 in ordenCompra.OrdenesCompraDetalles)
+                    {
+                        if (item.requerimientoDetalleId == item2.ordenCompradetalleId)
+                        {
+                            item.estadoRequerimientoDetalleId = 2;
+                            item.ordenCompraId = ordenCompra.ordenCompraId;
+                        }
+
+                    }  
+                }
+                // Fin Actualiza estado Requerimientos
+
+                
 
                 ordenCompra.adelanto = 1;
                 ordenCompra.obraId = ordenCompra.Requerimiento.obraId;

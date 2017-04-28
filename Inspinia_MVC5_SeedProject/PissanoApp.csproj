@@ -201,9 +201,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201704222220325_db-create.cs" />
-    <Compile Include="Migrations\201704222220325_db-create.Designer.cs">
-      <DependentUpon>201704222220325_db-create.cs</DependentUpon>
+    <Compile Include="Migrations\201704251608258_db-create.cs" />
+    <Compile Include="Migrations\201704251608258_db-create.Designer.cs">
+      <DependentUpon>201704251608258_db-create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -214,6 +214,8 @@
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="Models\EstadoOrden.cs" />
     <Compile Include="Models\EstadoOrdenDetalle.cs" />
+    <Compile Include="Models\EstadoRequerimiento.cs" />
+    <Compile Include="Models\EstadoRequerimientoDetalle.cs" />
     <Compile Include="Models\FormaPago.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Ingreso.cs" />
@@ -1006,6 +1008,15 @@
     <Content Include="Views\Partida\Details.cshtml" />
     <Content Include="Views\Partida\Edit.cshtml" />
     <Content Include="Views\Partida\Index.cshtml" />
+    <Content Include="Views\Requerimiento\Document.cshtml" />
+    <Content Include="Views\Requerimiento\IndexApprove.cshtml" />
+    <Content Include="Views\Requerimiento\Approve.cshtml" />
+    <Content Include="Views\OrdenCompra\IndexApprove2.cshtml" />
+    <Content Include="Views\OrdenCompra\IndexApprove3.cshtml" />
+    <Content Include="Views\OrdenCompra\Approve2.cshtml" />
+    <Content Include="Views\OrdenCompra\Approve3.cshtml" />
+    <Content Include="Views\Requerimiento\IndexOC.cshtml" />
+    <Content Include="Views\OrdenCompra\IndexAccounting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1017,8 +1028,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704222220325_db-create.resx">
-      <DependentUpon>201704222220325_db-create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704251608258_db-create.resx">
+      <DependentUpon>201704251608258_db-create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -113,15 +113,15 @@
                 <tbody>
                     <tr>
                         <td><strong>Sub Total :</strong></td>
-                        <td>S/. @Html.DisplayFor(model => model.subTotal)</td>
+                        <td>@Html.DisplayFor(model => model.Moneda.simbolo)  @Html.DisplayFor(model => model.subTotal)</td>
                     </tr>
                     <tr>
                         <td><strong>IGV :</strong></td>
-                        <td>S/. @Html.DisplayFor(model => model.igv)</td>
+                        <td>@Html.DisplayFor(model => model.Moneda.simbolo)  @Html.DisplayFor(model => model.igv)</td>
                     </tr>
                     <tr>
                         <td><strong>TOTAL :</strong></td>
-                        <td>S/. @Html.DisplayFor(model => model.total)</td>
+                        <td>@Html.DisplayFor(model => model.Moneda.simbolo)  @Html.DisplayFor(model => model.total)</td>
                     </tr>
                 </tbody>
             </table>

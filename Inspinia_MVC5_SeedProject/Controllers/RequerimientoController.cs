@@ -21,6 +21,26 @@ namespace PissanoApp.Controllers
             return View(requerimientos.ToList());
         }
 
+
+        // GET: /Requerimiento/
+        public ActionResult IndexApprove()
+        {
+            var requerimientos = db.Requerimientos.Where(p => p.estadoRequerimientoId == 1).Include(r => r.Obra).Include(r => r.Prioridad);
+            return View(requerimientos.ToList());
+        }
+
+
+        // GET: /Requerimiento/
+        public ActionResult IndexOC()
+        {
+            var estadoList = new int[] { 2, 4 };
+            var requerimientos = db.Requerimientos.Where(p => estadoList.Contains(p.estadoRequerimientoId));
+            //var requerimientos = db.Requerimientos.Where(p => p.estadoRequerimientoId==4 ).Include(r => r.Obra).Include(r => r.Prioridad);
+            //var requerimientos = db.Requerimientos.Where(p => p.estadoRequerimientoId.ToString().Contains("2,4")).Include(r => r.Obra).Include(r => r.Prioridad);
+            
+            return View(requerimientos.ToList());
+        }
+
         // GET: /Requerimiento/Details/5
         public ActionResult Details(int? id)
         {
@@ -119,6 +139,12 @@ namespace PissanoApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Requerimiento requerimiento = db.Requerimientos.Find(id);
+
+            foreach (var item in requerimiento.Detalles)
+            {
+                db.RequerimientoDetalles.Remove(item);
+
+            }
             db.Requerimientos.Remove(requerimiento);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -131,6 +157,62 @@ namespace PissanoApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+
+        // GET: /Requerimiento/Document/5
+        public ActionResult Document(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Requerimiento requerimiento = db.Requerimientos.Find(id);
+            if (requerimiento == null)
+            {
+                return HttpNotFound();
+            }
+            return View(requerimiento);
+        }
+
+
+        // GET: /Requerimiento/Approve/5
+        public ActionResult Approve(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Requerimiento requerimiento = db.Requerimientos.Find(id);
+            if (requerimiento == null)
+            {
+                return HttpNotFound();
+            }
+            return View(requerimiento);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Approve([Bind(Include = "requerimientoId,fecha,numero,comentario,obraId,ordenGenerada,prioridadId")] Requerimiento requerimiento)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //db.Entry(ordencompra).State = EntityState.Modified;
+
+            Requerimiento Requerimiento = db.Requerimientos.Find(requerimiento.requerimientoId);
+            if (Requerimiento == null)
+            {
+                return HttpNotFound();
+            }
+
+            Requerimiento.estadoRequerimientoId = 4;
+            db.SaveChanges();
+            return RedirectToAction("IndexApprove");
+            //}
+            //ViewBag.obraId = new SelectList(db.Obras, "id", "direccion", ordencompra.ordenCompraId);
+            //return View(requerimiento);
         }
     }
 }

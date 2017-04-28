@@ -9,7 +9,7 @@ namespace PissanoApp.Models
     {
         public int monedaId { get; set; }
         public string nombre { get; set; }
-        public string descripcion { get; set; }
+        public string simbolo { get; set; }
 
         public virtual List<Presupuesto> Presupuestos { get; set; }
 

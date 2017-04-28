@@ -45,8 +45,8 @@ namespace PissanoApp.Migrations
 
             var monedas = new List<Moneda>
             {
-                new Moneda { nombre= "Soles"},
-                new Moneda { nombre= "Dolares"}
+                new Moneda { nombre= "Soles", simbolo="S/."},
+                new Moneda { nombre= "Dolares", simbolo="$"}
 
             };
 
@@ -135,13 +135,40 @@ namespace PissanoApp.Migrations
             tiposPresupuesto.ForEach(s => context.TipoPresupuestoes.AddOrUpdate(p => p.descripcion, s));
             context.SaveChanges();
 
+            var estadoRequerimiento = new List<EstadoRequerimiento>
+            {
+                new EstadoRequerimiento { nombre="Sin Aprobación", descripcion = "Sin Aprobación"},
+                new EstadoRequerimiento { nombre="Con OC parcial", descripcion = "Con OC parcial"},
+                new EstadoRequerimiento { nombre="Con OC total", descripcion = "Con OC total"},
+                new EstadoRequerimiento { nombre="Aprobado", descripcion = "Aprobado"},
+                new EstadoRequerimiento { nombre="No Aprobado", descripcion = "No Aprobado"}
+
+            };
+
+
+            estadoRequerimiento.ForEach(s => context.EstadoRequerimiento.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
+
+            var estadoRequerimientoDetalle = new List<EstadoRequerimientoDetalle>
+            {
+                new EstadoRequerimientoDetalle { nombre="Sin OC", descripcion = "Sin OC"},
+                new EstadoRequerimientoDetalle { nombre="Con OC", descripcion = "Con OC"}
+
+            };
+
+
+            estadoRequerimientoDetalle.ForEach(s => context.EstadoRequerimientoDetalle.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
 
             var estadosOrden = new List<EstadoOrden>
             {
                 new EstadoOrden { descripcion = "Pendiente de Aprobación", nombre = "Pendiente de Aprobación"},
-                new EstadoOrden { descripcion = "Aprobado y Enviado", nombre = "Aprobado y Enviado"},
-                new EstadoOrden { descripcion = "Orden Recibida Parcial", nombre = "Orden Recibida Parcial"},
-                new EstadoOrden { descripcion = "Orden Recibida Total", nombre = "Orden Recibida Total"}
+                new EstadoOrden { descripcion = "Aprobación 1", nombre = "Aprobación 1"},
+                new EstadoOrden { descripcion = "Aprobación 2", nombre = "Aprobación 2"},
+                new EstadoOrden { descripcion = "Aprobación 3", nombre = "Aprobación 3"},
+                 new EstadoOrden { descripcion = "Ingreso Parcial", nombre = "Ingreso Parcial"},
+                 new EstadoOrden { descripcion = "Ingreso Total", nombre = "Ingreso Total"}
 
             };
 

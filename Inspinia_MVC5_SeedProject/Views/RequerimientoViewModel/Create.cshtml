@@ -4,8 +4,14 @@
     ViewBag.Title = "Create";
 }
 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
 @Html.HiddenFor(model => model.TipoCompra.tipoCompraId)
 
+
+    
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>Requerimiento de Compra</h2>
@@ -44,6 +50,10 @@
             </div>
         </div>
 
+        
+
+
+
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Cabecera</h5>
@@ -55,11 +65,11 @@
             </div>
             <div class="ibox-content">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             @*<label class="font-noraml col-sm-2 control-label">Obra</label>*@
                             <label class="control-label" for="order_id">Obra</label>
-                            <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:350px;" tabindex="1" id="obra">
+                            <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:250px;" tabindex="1" id="obra">
                                 <option value="">Seleccione</option>
 
                                 @foreach (var item in Model.Obras)
@@ -72,11 +82,27 @@
 
                         </div>
                         </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="order_id">Partida</label>
+                            <select data-placeholder="Elija la Partida..." class="chosen-select" style="width:250px;" tabindex="2" id="partida">
+                                <option value="">Seleccione</option>
+                                @foreach (var item in Model.Partidas)
+                                {
+                                    <option value=@Html.DisplayFor(modelItem => item.partidaId)>
+                                        @Html.DisplayFor(modelItem => item.nombre)
+                                    </option>
+                                }
+                            </select>
+
+                        </div>
+                        </div>
+
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label class="control-label" for="order_id">Prioridad</label>
                             @*<label class="font-noraml col-sm-2 control-label">Prioridad</label>*@
-                            <select data-placeholder="Seleccione la Prioridad..." class="chosen-select" style="width:350px;" tabindex="2" id="prioridad">
+                            <select data-placeholder="Seleccione la Prioridad..." class="chosen-select" style="width:250px;" tabindex="3" id="prioridad">
                                 <option value="">Seleccione</option>
 
                                 @foreach (var item in Model.Prioridades)
@@ -87,9 +113,13 @@
                                 }
 
                             </select>
+                            @Html.ValidationMessageFor(model => model.Requerimientos[0].prioridadId)
+
 
                         </div>
-                        </div>
+                    </div>
+                    
+
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label class="control-label" for="order_id">Comentario</label>
@@ -108,7 +138,7 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Elija sus Materiales desde la Tabla. Use el Filtro de Búsqueda</h5>
+                            <h5>Elija sus Materiales haciendo click en cada material de la Tabla. Use el Filtro de Búsqueda</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -213,7 +243,7 @@
 
     </div>
     
-
+}
 
 
 <div>
@@ -263,199 +293,204 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            var $image = $(".image-crop > img")
-            $($image).cropper({
-                aspectRatio: 1.618,
-                preview: ".img-preview",
-                done: function (data) {
-                    // Output the result data for cropping image.
-                }
-            });
 
-            var $inputImage = $("#inputImage");
-            if (window.FileReader) {
-                $inputImage.change(function () {
-                    var fileReader = new FileReader(),
-                            files = this.files,
-                            file;
+            //$("#Partida").css('visibility', 'hidden');
+            //$("#Partida").hide();
+            //alert($("#Partida").val());
 
-                    if (!files.length) {
-                        return;
-                    }
+            //var $image = $(".image-crop > img")
+            //$($image).cropper({
+            //    aspectRatio: 1.618,
+            //    preview: ".img-preview",
+            //    done: function (data) {
+            //        // Output the result data for cropping image.
+            //    }
+            //});
 
-                    file = files[0];
+            //var $inputImage = $("#inputImage");
+            //if (window.FileReader) {
+            //    $inputImage.change(function () {
+            //        var fileReader = new FileReader(),
+            //                files = this.files,
+            //                file;
 
-                    if (/^image\/\w+$/.test(file.type)) {
-                        fileReader.readAsDataURL(file);
-                        fileReader.onload = function () {
-                            $inputImage.val("");
-                            $image.cropper("reset", true).cropper("replace", this.result);
-                        };
-                    } else {
-                        showMessage("Please choose an image file.");
-                    }
-                });
-            } else {
-                $inputImage.addClass("hide");
-            }
+            //        if (!files.length) {
+            //            return;
+            //        }
 
-            $("#download").click(function () {
-                window.open($image.cropper("getDataURL"));
-            });
+            //        file = files[0];
 
-            $("#zoomIn").click(function () {
-                $image.cropper("zoom", 0.1);
-            });
+            //        if (/^image\/\w+$/.test(file.type)) {
+            //            fileReader.readAsDataURL(file);
+            //            fileReader.onload = function () {
+            //                $inputImage.val("");
+            //                $image.cropper("reset", true).cropper("replace", this.result);
+            //            };
+            //        } else {
+            //            showMessage("Please choose an image file.");
+            //        }
+            //    });
+            //} else {
+            //    $inputImage.addClass("hide");
+            //}
 
-            $("#zoomOut").click(function () {
-                $image.cropper("zoom", -0.1);
-            });
+            //$("#download").click(function () {
+            //    window.open($image.cropper("getDataURL"));
+            //});
 
-            $("#rotateLeft").click(function () {
-                $image.cropper("rotate", 45);
-            });
+            //$("#zoomIn").click(function () {
+            //    $image.cropper("zoom", 0.1);
+            //});
 
-            $("#rotateRight").click(function () {
-                $image.cropper("rotate", -45);
-            });
+            //$("#zoomOut").click(function () {
+            //    $image.cropper("zoom", -0.1);
+            //});
 
-            $("#setDrag").click(function () {
-                $image.cropper("setDragMode", "crop");
-            });
+            //$("#rotateLeft").click(function () {
+            //    $image.cropper("rotate", 45);
+            //});
 
-            $('#data_1 .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
+            //$("#rotateRight").click(function () {
+            //    $image.cropper("rotate", -45);
+            //});
 
-            $('#data_2 .input-group.date').datepicker({
-                startView: 1,
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true
-            });
+            //$("#setDrag").click(function () {
+            //    $image.cropper("setDragMode", "crop");
+            //});
 
-            $('#data_3 .input-group.date').datepicker({
-                startView: 2,
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true
-            });
+            //$('#data_1 .input-group.date').datepicker({
+            //    todayBtn: "linked",
+            //    keyboardNavigation: false,
+            //    forceParse: false,
+            //    calendarWeeks: true,
+            //    autoclose: true
+            //});
 
-            $('#data_4 .input-group.date').datepicker({
-                minViewMode: 1,
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true,
-                todayHighlight: true
-            });
+            //$('#data_2 .input-group.date').datepicker({
+            //    startView: 1,
+            //    todayBtn: "linked",
+            //    keyboardNavigation: false,
+            //    forceParse: false,
+            //    autoclose: true
+            //});
 
-            $('#data_5 .input-daterange').datepicker({
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true
-            });
+            //$('#data_3 .input-group.date').datepicker({
+            //    startView: 2,
+            //    todayBtn: "linked",
+            //    keyboardNavigation: false,
+            //    forceParse: false,
+            //    autoclose: true
+            //});
 
-            var elem = document.querySelector('.js-switch');
-            var switchery = new Switchery(elem, { color: '#1AB394' });
+            //$('#data_4 .input-group.date').datepicker({
+            //    minViewMode: 1,
+            //    keyboardNavigation: false,
+            //    forceParse: false,
+            //    autoclose: true,
+            //    todayHighlight: true
+            //});
 
-            var elem_2 = document.querySelector('.js-switch_2');
-            var switchery_2 = new Switchery(elem_2, { color: '#ED5565' });
+            //$('#data_5 .input-daterange').datepicker({
+            //    keyboardNavigation: false,
+            //    forceParse: false,
+            //    autoclose: true
+            //});
 
-            var elem_3 = document.querySelector('.js-switch_3');
-            var switchery_3 = new Switchery(elem_3, { color: '#1AB394' });
+            //var elem = document.querySelector('.js-switch');
+            //var switchery = new Switchery(elem, { color: '#1AB394' });
 
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
+            //var elem_2 = document.querySelector('.js-switch_2');
+            //var switchery_2 = new Switchery(elem_2, { color: '#ED5565' });
 
-            $('.demo1').colorpicker();
+            //var elem_3 = document.querySelector('.js-switch_3');
+            //var switchery_3 = new Switchery(elem_3, { color: '#1AB394' });
+
+            //$('.i-checks').iCheck({
+            //    checkboxClass: 'icheckbox_square-green',
+            //    radioClass: 'iradio_square-green',
+            //});
+
+            //$('.demo1').colorpicker();
 
             
 
-            $('.clockpicker').clockpicker();
+            //$('.clockpicker').clockpicker();
 
-            $('input[name="daterange"]').daterangepicker();
+            //$('input[name="daterange"]').daterangepicker();
 
-            $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+            //$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
-            $('#reportrange').daterangepicker({
-                format: 'MM/DD/YYYY',
-                startDate: moment().subtract(29, 'days'),
-                endDate: moment(),
-                minDate: '01/01/2012',
-                maxDate: '12/31/2015',
-                dateLimit: { days: 60 },
-                showDropdowns: true,
-                showWeekNumbers: true,
-                timePicker: false,
-                timePickerIncrement: 1,
-                timePicker12Hour: true,
-                ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                },
-                opens: 'right',
-                drops: 'down',
-                buttonClasses: ['btn', 'btn-sm'],
-                applyClass: 'btn-primary',
-                cancelClass: 'btn-default',
-                separator: ' to ',
-                locale: {
-                    applyLabel: 'Submit',
-                    cancelLabel: 'Cancel',
-                    fromLabel: 'From',
-                    toLabel: 'To',
-                    customRangeLabel: 'Custom',
-                    daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-                    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                    firstDay: 1
-                }
-            }, function (start, end, label) {
-                console.log(start.toISOString(), end.toISOString(), label);
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            });
+            //$('#reportrange').daterangepicker({
+            //    format: 'MM/DD/YYYY',
+            //    startDate: moment().subtract(29, 'days'),
+            //    endDate: moment(),
+            //    minDate: '01/01/2012',
+            //    maxDate: '12/31/2015',
+            //    dateLimit: { days: 60 },
+            //    showDropdowns: true,
+            //    showWeekNumbers: true,
+            //    timePicker: false,
+            //    timePickerIncrement: 1,
+            //    timePicker12Hour: true,
+            //    ranges: {
+            //        'Today': [moment(), moment()],
+            //        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            //        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            //        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            //        'This Month': [moment().startOf('month'), moment().endOf('month')],
+            //        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            //    },
+            //    opens: 'right',
+            //    drops: 'down',
+            //    buttonClasses: ['btn', 'btn-sm'],
+            //    applyClass: 'btn-primary',
+            //    cancelClass: 'btn-default',
+            //    separator: ' to ',
+            //    locale: {
+            //        applyLabel: 'Submit',
+            //        cancelLabel: 'Cancel',
+            //        fromLabel: 'From',
+            //        toLabel: 'To',
+            //        customRangeLabel: 'Custom',
+            //        daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            //        monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            //        firstDay: 1
+            //    }
+            //}, function (start, end, label) {
+            //    console.log(start.toISOString(), end.toISOString(), label);
+            //    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            //});
 
 
-            $(".select2_demo_1").select2();
-            $(".select2_demo_2").select2();
-            $(".select2_demo_3").select2({
-                placeholder: "Select a state",
-                allowClear: true
-            });
+            //$(".select2_demo_1").select2();
+            //$(".select2_demo_2").select2();
+            //$(".select2_demo_3").select2({
+            //    placeholder: "Select a state",
+            //    allowClear: true
+            //});
 
-            $(".touchspin1").TouchSpin({
-                buttondown_class: 'btn btn-white',
-                buttonup_class: 'btn btn-white'
-            });
+            //$(".touchspin1").TouchSpin({
+            //    buttondown_class: 'btn btn-white',
+            //    buttonup_class: 'btn btn-white'
+            //});
 
-            $(".touchspin2").TouchSpin({
-                min: 0,
-                max: 100,
-                step: 0.1,
-                decimals: 2,
-                boostat: 5,
-                maxboostedstep: 10,
-                postfix: '%',
-                buttondown_class: 'btn btn-white',
-                buttonup_class: 'btn btn-white'
-            });
+            //$(".touchspin2").TouchSpin({
+            //    min: 0,
+            //    max: 100,
+            //    step: 0.1,
+            //    decimals: 2,
+            //    boostat: 5,
+            //    maxboostedstep: 10,
+            //    postfix: '%',
+            //    buttondown_class: 'btn btn-white',
+            //    buttonup_class: 'btn btn-white'
+            //});
 
-            $(".touchspin3").TouchSpin({
-                verticalbuttons: true,
-                buttondown_class: 'btn btn-white',
-                buttonup_class: 'btn btn-white'
-            });
+            //$(".touchspin3").TouchSpin({
+            //    verticalbuttons: true,
+            //    buttondown_class: 'btn btn-white',
+            //    buttonup_class: 'btn btn-white'
+            //});
 
 
 
@@ -528,7 +563,10 @@
 
             var row = $(this),
             cloneRow = row.clone();
+
             cloneRow.append('<td><input type="text" class="form-control" id="cantidad"></td>').append('<td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar"> Eliminar!!</button></td>');
+//          cloneRow.append('<td><input type="text" class="form-control" id="cantidad"></td>').append('<td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar"> Eliminar!!</button></td>').append($('#partida').clone().show());
+            //cloneRow.append();
 
             copyTable = $('#editableMaterial tbody');
 
@@ -604,6 +642,8 @@
 
                     requerimientoDetalle.materialId = cells[i].materialid;
                     requerimientoDetalle.cantidad = cells[i].cantidad;
+                    requerimientoDetalle.partidaId = $("#partida").val();
+                    requerimientoDetalle.estadoRequerimientoDetalleId = 1;
                     Detalles.push(requerimientoDetalle);
 
                 }
@@ -629,22 +669,29 @@
 
                 $.ajax({
                     contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
+                    //dataType: 'json', // Tells the server what kind of content the client is expecting back as the result.
                     type: 'POST',
           //          param: RequerimientoFinal,
                     url: '@Url.Action("CrearRequerimiento")',
                     data: RequerimientoFinal,
-                    error: function () {
+                    success: function (data) {
+                        //alert('success');
                         window.location = '@Url.Action("Index/" + @Html.DisplayFor(model => model.TipoCompra.tipoCompraId))';
-
-
+                    },
+                    error: function (result) {
+                        //window.location = Url.Action("Index/" + Html.DisplayFor(model => model.TipoCompra.tipoCompraId))';
+                        alert('No se pudo insertar. Revise que toda la información esté seleccionada');
+                        //alert(result.statusText);
                         //alert("hola");
                     }
                 });
             //.done(function (result) {
             //    //alert("pasó");
             //});
-            });
+        });
+
+
+
 
         });
 
