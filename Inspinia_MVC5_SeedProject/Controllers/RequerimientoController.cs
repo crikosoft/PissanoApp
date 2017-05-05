@@ -140,14 +140,17 @@ namespace PissanoApp.Controllers
         {
             Requerimiento requerimiento = db.Requerimientos.Find(id);
 
-            foreach (var item in requerimiento.Detalles)
-            {
-                db.RequerimientoDetalles.Remove(item);
+            //foreach (var item in requerimiento.Detalles)
+            //{
+            //    db.RequerimientoDetalles.Remove(item);
 
-            }
+            //}
             db.Requerimientos.Remove(requerimiento);
             db.SaveChanges();
-            return RedirectToAction("Index");
+//            return RedirectToAction("Index");
+            return RedirectToAction("Index/1","RequerimientoViewModel" );
+
+
         }
 
         protected override void Dispose(bool disposing)

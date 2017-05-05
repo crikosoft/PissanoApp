@@ -37,6 +37,7 @@ namespace PissanoApp.Models
         [DisplayName("Familia")]
         public virtual Material MaterialPadre { get; set; }
 
+        public virtual List<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
 
 //        public virtual MaterialNivelStock MaterialNivelStock { get; set; }
 

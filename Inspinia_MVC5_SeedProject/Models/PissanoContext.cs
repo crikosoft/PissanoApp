@@ -29,6 +29,13 @@ namespace PissanoApp.Models
               HasForeignKey(m => m.materialPadreId);
 
 
+
+            //modelBuilder.Entity<Requerimiento>().
+            //    HasOptional(a => a.Detalles).
+            //    WithOptionalDependent().
+            //    WillCascadeOnDelete(true);
+
+            //No se usa
             //modelBuilder.Entity<Presupuesto>()
             //            .HasMany<Titulo>(s => s.Titulos)
             //            .WithMany(c => c.Presupuestos)

@@ -201,9 +201,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201704251608258_db-create.cs" />
-    <Compile Include="Migrations\201704251608258_db-create.Designer.cs">
-      <DependentUpon>201704251608258_db-create.cs</DependentUpon>
+    <Compile Include="Migrations\201705041711548_db_create.cs" />
+    <Compile Include="Migrations\201705041711548_db_create.Designer.cs">
+      <DependentUpon>201705041711548_db_create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1017,6 +1017,7 @@
     <Content Include="Views\OrdenCompra\Approve3.cshtml" />
     <Content Include="Views\Requerimiento\IndexOC.cshtml" />
     <Content Include="Views\OrdenCompra\IndexAccounting.cshtml" />
+    <Content Include="Views\OrdenCompraViewModel\Create - Copia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1028,8 +1029,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704251608258_db-create.resx">
-      <DependentUpon>201704251608258_db-create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705041711548_db_create.resx">
+      <DependentUpon>201705041711548_db_create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

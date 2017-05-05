@@ -144,7 +144,7 @@
 
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Ingrese el precio de los materiales que desee generar OC. Use el Filtro de Búsqueda</h5>
@@ -161,12 +161,12 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th hidden="hidden">Código</th>
+                                    <th>Código</th>
                                     <th>Material</th>
                                     <th>Unidad de Medida</th>
                                     <th>Cantidad</th>
                                     <th>Precio</th>
-                                    <th hidden="hidden">DetalleId</th>
+                                    <th>DetalleId</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -176,13 +176,12 @@
 
                                     <tr class="gradeX">
                                         <td>@Html.DisplayFor(modelItem => item.Material.materialId)</td>
-                                        <td hidden="hidden">@Html.DisplayFor(modelItem => item.Material.codigo)</td>
-                                        
-                                        <td><a data-toggle="tab" href="#contact-@Html.DisplayFor(modelItem => item.Material.materialId)" class="client-link">@Html.DisplayFor(modelItem => item.Material.nombre)</a></td>
+                                        <td>@Html.DisplayFor(modelItem => item.Material.codigo)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Material.nombre)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</td>
                                         <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
                                         <td><input type="text" class="form-control" id="precio"> </td>
-                                        <td hidden="hidden">@Html.DisplayFor(modelItem => item.requerimientoDetalleId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.requerimientoDetalleId)</td>
                                     </tr>
                                 }
 
@@ -192,12 +191,12 @@
                             <tfoot>
                                 <tr>
                                     <th>Id</th>
-                                    <th hidden="hidden">Código</th>
+                                    <th>Código</th>
                                     <th>Material</th>
                                     <th>Unidad de Medida</th>
                                     <th>Cantidad</th>
                                     <th>Precio</th>
-                                    <th hidden="hidden">DetalleId</th>
+                                    <th>DetalleId</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -206,167 +205,54 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-sm-4">
-                <div class="ibox ">
-
-                    <div class="ibox-content">
-                        <div class="tab-content">
-
-                            @foreach (var item in Model.Requerimiento.Detalles)
-                            {
-
-                                <div id="contact-@Html.DisplayFor(modelItem => item.Material.materialId)" class="tab-pane">
-                                    <div class="row m-b-lg">
-                                        @*<div class="col-lg-4 text-center">
-                                            <h2>Nicki Smith</h2>
-
-                                            <div class="m-b-sm">
-                                                <img alt="image" class="img-circle" src="~/Images/a2.jpg"
-                                                     style="width: 62px">
-                                            </div>
-                                        </div>*@
-                                        <div class="col-lg-12">
-                                            <strong>
-                                                @Html.DisplayFor(modelItem => item.Material.nombre)
-                                            </strong>
-
-                                            @*<p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.
-                                            </p>
-                                            <button type="button" class="btn btn-primary btn-sm btn-block">
-                                                <i class="fa fa-envelope"></i> Send Message
-                                            </button>*@
-                                        </div>
-                                    </div>
-                                    <div class="client-detail">
-                                        <div class="full-height-scroll">
-
-                                            @*<strong>Información a Considerar</strong>
-
-                                            <ul class="list-group clear-list">
-                                                <li class="list-group-item fist-item">
-                                                    <span class="pull-right">100 soles </span>
-                                                    Avance Partida de Control
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <span class="pull-right"> 10:16 am </span>
-                                                    Sign a contract
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <span class="pull-right"> 08:22 pm </span>
-                                                    Open new shop
-                                                </li>
-
-                                            </ul>
-                                            <strong>Notes</strong>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.
-                                            </p>
-                                            <hr />*@
-                                            <strong>Comparación de Precios</strong>
-                                            <div id="vertical-timeline" class="vertical-container dark-timeline">
-                                                <div class="vertical-timeline-block">
-                                                    <div class="vertical-timeline-icon gray-bg">
-                                                        <i class="fa fa-coffee"></i>
-                                                    </div>
-                                                    <div class="vertical-timeline-content">
-                                                        <p>
-                                                            @{
-                                                                double? maxValue = 0;
-                                                                string maxProveedor = "";
-
-
-                                                                if (item.Material.OrdenCompraDetalles.Count > 0)
-                                                                {
-                                                                    maxValue = item.Material.OrdenCompraDetalles.Max(p => p.precioUnitario);
-                                                                    maxProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == maxValue).SingleOrDefault().OrdenCompra.Proveedor.razonSocial;
-
-                                                                }
-
-                                                            }
-                                                            Precio Mayor: @Html.DisplayFor(modelItem => maxValue)
-                                                        </p>
-                                                        <p>
-                                                            Proveedor: @Html.DisplayFor(modelItem => maxProveedor)
-                                                        </p>
-                                                        <span class="vertical-date small text-muted"> 2:10 pm - 12.06.2014 </span>
-                                                    </div>
-                                                </div>
-                                                <div class="vertical-timeline-block">
-                                                    <div class="vertical-timeline-icon gray-bg">
-                                                        <i class="fa fa-briefcase"></i>
-                                                    </div>
-                                                    <div class="vertical-timeline-content">
-                                                        <p>
-                                                            @{
-                                                                double? minValue = 0;
-                                                                string minProveedor = "";
-                                                                
-                                                                
-                                                                if (item.Material.OrdenCompraDetalles.Count > 0)
-                                                                {
-                                                                    minValue = item.Material.OrdenCompraDetalles.Min(p => p.precioUnitario);
-                                                                    minProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == minValue).SingleOrDefault().OrdenCompra.Proveedor.razonSocial;
-
-                                                                }
-
-                                                            }
-                                                            Precio Menor: @Html.DisplayFor(modelItem => minValue)
-                                                        </p>
-                                                        <p>
-                                                            Proveedor: @Html.DisplayFor(modelItem => minProveedor)
-                                                        </p>
-                                                        <span class="vertical-date small text-muted"> 4:20 pm - 10.05.2014 </span>
-                                                    </div>
-                                                </div>
-                                                <div class="vertical-timeline-block">
-                                                    <div class="vertical-timeline-icon gray-bg">
-                                                        <i class="fa fa-bolt"></i>
-                                                    </div>
-                                                    <div class="vertical-timeline-content">
-                                                        <p>
-                                                            @{
-                                                                double? lastValue = 0;
-                                                                string lastProveedor = "";
-
-
-                                                                if (item.Material.OrdenCompraDetalles.Count > 0)
-                                                                {
-                                                                    lastValue = item.Material.OrdenCompraDetalles.LastOrDefault().precioUnitario;
-                                                                    lastProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == lastValue).SingleOrDefault().OrdenCompra.Proveedor.razonSocial;
-
-                                                                }
-
-                                                            }
-                                                            Último Precio: @Html.DisplayFor(modelItem => lastValue)
-                                                        </p>
-                                                        <p>
-                                                            Proveedor: @Html.DisplayFor(modelItem => lastProveedor)
-                                                        </p>
-                                                        <span class="vertical-date small text-muted"> 06:10 pm - 11.03.2014 </span>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
     </div>
 
 
-   
+    @*<div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Materiales Seleccionados</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table table-striped table-bordered table-hover dataTables-example" id="editableMaterial">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Código</th>
+                                <th>Material</th>
+                                <th>Unidad de Medida</th>
+                                <th>Cantidad</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Id</th>
+                                <th>Código</th>
+                                <th>Material</th>
+                                <th>Unidad de Medida</th>
+                                <th>Cantidad</th>
+                                <th></th>
+                            </tr>
+
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>*@
 
 
 </div>
@@ -672,6 +558,61 @@
 
 
 
+        //// Función que copia contenido de fila seleccionada y copia en tabla destino
+        //var table = $('#tableMaterial').DataTable();
+
+        //$('#tableMaterial tbody').on('click', 'tr', function () {
+        //    if ($(this).hasClass('selected')) {
+        //        $(this).removeClass('selected');
+        //    }
+        //    else {
+        //        table.$('tr.selected').removeClass('selected');
+        //        $(this).addClass('selected');
+        //    }
+
+        //    var row = $(this),
+        //    cloneRow = row.clone();
+        //    cloneRow.append('<td><input type="text" class="form-control" id="cantidad"></td>').append('<td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar"> Eliminar!!</button></td>');
+
+        //    copyTable = $('#editableMaterial tbody');
+
+        //    //copyTable.append(cloneRow);
+
+        //    var table3 = $('#editableMaterial').DataTable();
+
+        //    //table3.row.add([1, 2, 3, 4]).draw();
+        //    table3.row.add(cloneRow).draw();
+        //    //table.row('.selected').remove().draw(false);
+        //});
+        //    //Fin funcion
+
+
+
+        //    // Función que elimina fila de Tabla Materiales Seleccionados
+        //var table2 = $('#editableMaterial').DataTable();
+
+        //$('#editableMaterial tbody').on('click', 'button', function () {
+
+
+
+        //    if ($(this).hasClass('selected')) {
+        //        $(this).removeClass('selected');
+        //    }
+        //    else {
+        //        table2.$('tr.selected').removeClass('selected');
+        //        $(this).addClass('selected');
+        //    }
+
+
+        //    //Pendiente
+        //    table2.row('.selected').remove().draw(false);
+
+        //});
+
+        // Fin Función que elimina fila de Tabla Materiales Seleccionados
+
+
+        // Función que guarda datos de Tabla Materiales Seleccionados
 
 
         $("#BtnGuardar").click(function () {

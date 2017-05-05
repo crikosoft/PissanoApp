@@ -3,7 +3,7 @@ namespace PissanoApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class dbcreate : DbMigration
+    public partial class db_create : DbMigration
     {
         public override void Up()
         {

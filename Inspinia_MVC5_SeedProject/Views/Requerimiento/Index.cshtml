@@ -26,9 +26,7 @@
         <th>
             @Html.DisplayNameFor(model => model.comentario)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ordenGenerada)
-        </th>
+
         <th></th>
     </tr>
 
@@ -49,9 +47,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.comentario)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ordenGenerada)
-        </td>
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.requerimientoId }) |
             @Html.ActionLink("Details", "Details", new { id=item.requerimientoId }) |
