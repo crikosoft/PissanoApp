@@ -82,12 +82,21 @@ namespace PissanoApp.Controllers
         [HttpPost]
         public ActionResult CrearRequerimiento(Requerimiento requerimiento)
         {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
             if (ModelState.IsValid)
             {
 
-                requerimiento.estadoRequerimientoId = 1;
-                requerimiento.fecha = DateTime.Today;
+                var estado = db.EstadoRequerimiento.Where(p => p.nombre == "Pendiente Aprobación").SingleOrDefault();
+                var estadoDetalle = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Sin Aprobación").SingleOrDefault();
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
 
+                requerimiento.fechaCreacion = cstTime;
+                requerimiento.usuarioCreacion = User.Identity.Name;
+                requerimiento.fechaModificacion = cstTime;
+                requerimiento.EstadoRequerimiento = estado;
 
                 db.Requerimientos.Add(requerimiento);
                 //db.SaveChanges();
@@ -95,8 +104,21 @@ namespace PissanoApp.Controllers
 
                 foreach (var item in requerimiento.Detalles)
                 {
+                    item.estadoRequerimientoDetalleId = estadoDetalle.estadoRequerimientoDetalleId;
                     db.RequerimientoDetalles.Add(item);
                 }
+
+                var requerimientoEstado = new RequerimientoEstadoRequerimiento();
+                requerimientoEstado.Requerimiento = requerimiento;
+                
+                
+                requerimientoEstado.estadoRequerimientoId = estado.estadoRequerimientoId;
+                requerimientoEstado.usuarioCreacion = User.Identity.Name;
+                requerimientoEstado.fechaCreacion = cstTime;
+
+                db.RequerimientoEstadoRequerimiento.Add(requerimientoEstado);
+
+
 
                 db.SaveChanges();
 

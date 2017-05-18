@@ -4,9 +4,9 @@
     ViewBag.Title = "Approve";
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+@*@using (Html.BeginForm())
+{*@
+    @*@Html.AntiForgeryToken()*@
     @Html.HiddenFor(model => model.requerimientoId)
 
 
@@ -53,7 +53,7 @@
                             Plazo de Atención (días): @Html.DisplayFor(model => model.Prioridad.plazoDias)<br>
 
                         </address>
-                        <span><strong>Fecha Emisión:</strong> @Html.DisplayFor(model => model.fecha)</span><br />
+                        <span><strong>Fecha Emisión:</strong> @Html.DisplayFor(model => model.fechaCreacion)</span><br />
                     </div>
                     <div class="col-sm-6 text-right">
                         <h4>No. de Requerimiento</h4>
@@ -65,9 +65,10 @@
                 @* Se borró bloque de código con respecto a Documento OC *@
 
                 <div class="table-responsive m-t">
-                    <table class="table invoice-table">
+                    <table class="table invoice-table" id="tablaItems">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Lista de Items</th>
                                 <th>Cantidad</th>
                                 <th>UND.</th>
@@ -86,6 +87,13 @@
                             @foreach (var item in Model.Detalles)
                             {
                                 <tr>
+
+                                    <td>
+                                        @if ((item.EstadoRequerimientoDetalle.nombre == "Sin Aprobación") || (item.EstadoRequerimientoDetalle.nombre == "Aprobación Rechazada"))
+                                        {
+                                            <input type="checkbox" class="i-checks" id=@Html.DisplayFor(modelItem => item.requerimientoDetalleId) name="input[]">
+                                        }
+                                    </td>
                                     <td>
                                         <div><strong>@Html.DisplayFor(modelItem => item.Material.nombre)</strong></div>
                                         <small>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</small>
@@ -110,8 +118,9 @@
                     @* botones de Aprobación *@
                     <div class="text-right">
                         <div class="form-group">
-                            <input type="submit" value="Aprobar!" class="btn btn-primary" />
-
+                            @*<input type="submit" value="Aprobar!" class="btn btn-primary" />*@
+                            <input value="Aprobar!" class="btn btn-primary" id="BtnAprobar" />
+                            <input type="submit" value="Rechazar!" class="btn btn-danger" />
                         </div>
                     </div>
 
@@ -132,9 +141,95 @@
 
 @* Copiar hasta aqui para print*@
 
-}
+@*}*@
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.requerimientoId }) |*@
     @Html.ActionLink("Back to List", "IndexApprove")
 </p>
 
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/iCheck")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+
+            $("#BtnAprobar").click(function () {
+
+                var cells = [];
+
+                $('#tablaItems tr').each(function () {
+                    if ($(this).find("td:eq(0) input[type='checkbox']").is(":checked")) {
+                        cells.push({
+
+                            requerimientoDetalleId: $(this).find("td:eq(0) input[type='checkbox']").attr("id")
+                            //$(this).find("td").eq(3).text(cantidad);
+                            //$(this).find("td").eq(4).text(partidacodigo);
+                            //$(this).find("td").eq(5).text(partidatexto);
+
+                        });
+                    }
+                    
+
+                });
+
+
+
+                    var Detalles = [];
+
+                    for (var i = 0; i < cells.length; i++) {                  
+                        var requerimientoDetalle = new Object();
+
+                        requerimientoDetalle.requerimientoDetalleId = cells[i].requerimientoDetalleId;
+                        Detalles.push(requerimientoDetalle);
+
+                        alert(requerimientoDetalle.requerimientoDetalleId);
+
+
+                    }
+
+                
+
+                    var requerimiento = new Object();
+
+                    requerimiento.requerimientoId = $("#requerimientoId").val(); 
+                    requerimiento.Detalles = Detalles;
+
+                    RequerimientoFinal = JSON.stringify({ 'requerimiento': requerimiento });
+
+
+                    $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        type: 'POST',
+                        url: '@Url.Action("Approve")',
+                        data: RequerimientoFinal,
+                        success: function (data) {
+                            window.location = '@Url.Action("IndexApprove")';
+                        },
+                        error: function (result) {
+                            alert(result.statusText)
+                            alert('No se pudo realizar la acción solicitada');
+
+                        }
+                    });
+                });
+
+        });
+
+
+        //function addRequestVerificationToken(data) {
+        //    data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+        //    return data;
+        //};
+    </script>
+}

@@ -3,7 +3,7 @@ namespace PissanoApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class db_create : DbMigration
+    public partial class dbcreate : DbMigration
     {
         public override void Up()
         {
@@ -514,9 +514,9 @@ namespace PissanoApp.Migrations
             DropForeignKey("dbo.RequerimientoDetalles", "estadoRequerimientoDetalleId", "dbo.EstadoRequerimientoDetalles");
             DropForeignKey("dbo.OrdenCompras", "proveedorId", "dbo.Proveedors");
             DropForeignKey("dbo.OrdenCompraDetalles", "ordenCompraId", "dbo.OrdenCompras");
-            DropForeignKey("dbo.OrdenCompraDetalles", "materialId", "dbo.Materials");
             DropForeignKey("dbo.Materials", "unidadMedidaId", "dbo.UnidadMedidas");
             DropForeignKey("dbo.Materials", "tipoMaterialId", "dbo.TipoMaterials");
+            DropForeignKey("dbo.OrdenCompraDetalles", "materialId", "dbo.Materials");
             DropForeignKey("dbo.Materials", "materialPadreId", "dbo.Materials");
             DropForeignKey("dbo.OrdenCompraDetalles", "estadoOrdenDetalleId", "dbo.EstadoOrdenDetalles");
             DropForeignKey("dbo.OrdenCompras", "obraId", "dbo.Obras");

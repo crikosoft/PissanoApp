@@ -75,7 +75,7 @@ namespace PissanoApp.Controllers
         //}
 
         //[AllowAnonymous]
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Register()
         {
             //ViewBag.RoleId = new SelectList(await RoleManager.Roles.ToListAsync(), "Id", "Name");
@@ -88,7 +88,7 @@ namespace PissanoApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Register(RegisterViewModel model, string RoleId)
         {
             if (ModelState.IsValid)

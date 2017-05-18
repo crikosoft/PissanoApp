@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.SubPresupuesto.nombre)
@@ -42,4 +42,91 @@
     </tr>
 }
 
+</table>*@
+
+
+<table class="table table-striped table-bordered table-hover dataTables-example">
+    <thead>
+        <tr>
+            <th>
+                Sub Presupuesto
+            </th>
+            <th>
+                Nombre de Partida
+            </th>
+            <th>
+                Descripción
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubPresupuesto.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.partidaId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.partidaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.partidaId })
+        </td>
+    </tr>
+}
+    </tbody>
 </table>
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+
+                "order": [[0, "desc"]]
+
+            });
+
+
+
+
+        });
+
+    </script>
+}

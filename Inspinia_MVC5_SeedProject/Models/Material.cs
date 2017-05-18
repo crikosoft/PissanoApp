@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -40,6 +41,13 @@ namespace PissanoApp.Models
         public virtual List<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
 
 //        public virtual MaterialNivelStock MaterialNivelStock { get; set; }
+
+
+
+        //public string UserID { get; set; }
+        //[ForeignKey("UserID")]
+        //public virtual ApplicationUser User { get; set; }
+
 
     }
 }

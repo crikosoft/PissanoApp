@@ -42,7 +42,7 @@
                                 <th>Obra</th>
                                 <th>Fecha</th>
                                 <th>Prioridad</th>
-                                <th>Plazo (días)</th>
+                                <th>Creado por</th>
                                 <th>Items</th>
                                 <th>Tipo de Compra</th>
                                 @*<th>Orden Compra</th>*@
@@ -60,9 +60,9 @@
                                 <tr class="gradeX">
                                     <td>@Html.DisplayFor(modelItem => item.requerimientoId)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.fecha)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Prioridad.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Prioridad.plazoDias)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.usuarioCreacion)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Detalles.Count)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TipoCompra.nombre)</td>
 
@@ -78,11 +78,11 @@
                                                                       
                                     }*@
 
-                                    @if (item.estadoRequerimientoId == 1)
+                                    @if (item.EstadoRequerimiento.nombre == "Pendiente Aprobación")
                                     {
                                         <td class="client-status"><span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span></td>
                                     }
-                                    else if (item.estadoRequerimientoId == 4)
+                                    else if (item.EstadoRequerimiento.nombre == "Aprobado Total")
                                     {
                                         <td class="client-status"><span class="label label-primary">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span></td>
                                     }
@@ -107,7 +107,8 @@
 
                                             @*@Html.ActionLink("Editar", "Edit", new { id = item.requerimientoId }) |
                                             @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |*@
-                                            @if (item.estadoRequerimientoId == 1)
+                                            
+                                            @if (item.EstadoRequerimiento.nombre == "Pendiente Aprobación")
                                             {
                                                 <a href="~/Requerimiento/Delete/@Html.DisplayFor(modelItem => item.requerimientoId)" > Eliminar </a>
 
@@ -127,7 +128,7 @@
                                 <th>Obra</th>
                                 <th>Fecha</th>
                                 <th>Prioridad</th>
-                                <th>Plazo (días)</th>
+                                <th>Creado por</th>
                                 <th>Items</th>
                                 <th>Tipo de Compra</th>
                                 @*<th>Orden Compra</th>*@

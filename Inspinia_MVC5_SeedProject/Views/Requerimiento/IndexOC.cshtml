@@ -31,7 +31,7 @@
                                 <th>Obra</th>
                                 <th>Fecha</th>
                                 <th>Prioridad</th>
-                                <th>Plazo (días)</th>
+                                <th>Creado por</th>
                                 <th>Items</th>
                                 <th>Tipo de Compra</th>
                                 <th>Estado</th>
@@ -48,9 +48,9 @@
                                 <tr class="gradeX">
                                     <td>@Html.DisplayFor(modelItem => item.requerimientoId)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.fecha)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Prioridad.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Prioridad.plazoDias)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.usuarioCreacion)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Detalles.Count)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TipoCompra.nombre)</td>
 
@@ -89,7 +89,7 @@
                                 <th>Obra</th>
                                 <th>Fecha</th>
                                 <th>Prioridad</th>
-                                <th>Plazo (días)</th>
+                                <th>Creado por</th>
                                 <th>Items</th>
                                 <th>Tipo de Compra</th>
                                 <th>Estado</th>

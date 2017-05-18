@@ -98,8 +98,20 @@ namespace PissanoApp.Controllers
             if (ModelState.IsValid)
             {
                 ordenCompra.Requerimiento = db.Requerimientos.Single(p => p.requerimientoId == ordenCompra.requerimientoId);
-                ordenCompra.numero = "OC-" + ordenCompra.Requerimiento.requerimientoId.ToString() + "-"+ ordenCompra.OrdenesCompraDetalles[0].materialId;
-                ordenCompra.fecha = DateTime.Today;
+                //ordenCompra.numero = "OC-" + ordenCompra.Requerimiento.requerimientoId.ToString() + "-"+ ordenCompra.OrdenesCompraDetalles[0].materialId;
+                var parametro = db.Parametro.Single(p => p.nombre=="OC");
+
+                string ceros = new String('0', 5 - parametro.ultimoNumero.ToString().Length);
+                ordenCompra.numero = "OC-" + ceros + (parametro.ultimoNumero + 1).ToString() + "-" + ordenCompra.Requerimiento.Obra.identificador;
+
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                ordenCompra.fechaCreacion = cstTime;
+                ordenCompra.usuarioCreacion = User.Identity.Name;
+                ordenCompra.fechaModificacion = cstTime;
                 //ordenCompra.igv = 10;
                 //ordenCompra.total = 100;
                 //ordenCompra.estadoOrdenId = 1;
@@ -153,6 +165,8 @@ namespace PissanoApp.Controllers
                 ordenCompra.subTotal = total;
                 ordenCompra.igv = total*0.18;
                 ordenCompra.total = total + total * 0.18;
+
+                parametro.ultimoNumero = parametro.ultimoNumero + 1;
 
                 db.SaveChanges();
                 return RedirectToAction("Index");

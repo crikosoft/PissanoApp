@@ -20,7 +20,7 @@ namespace PissanoApp.Controllers
     {
         public UsersAdminController()
         {
-            context = new MyDbContext();
+            context = new ApplicationDbContext();
             UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
         }
@@ -33,7 +33,8 @@ namespace PissanoApp.Controllers
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
         public RoleManager<IdentityRole> RoleManager { get; private set; }
-        public MyDbContext context { get; private set; }
+        //public MyDbContext context { get; private set; }
+        public ApplicationDbContext context { get; private set; }
 
         //
         // GET: /Users/

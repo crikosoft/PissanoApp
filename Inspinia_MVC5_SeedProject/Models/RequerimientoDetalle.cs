@@ -25,6 +25,8 @@ namespace PissanoApp.Models
         public int? ordenCompraId { get; set; }
         public virtual OrdenCompra OrdenCompra { get; set; }
 
+        public virtual List<RequerimientoDetalleEstadoRequerimientoDetalle> RequerimientoDetalleEstadosRequerimientoDetalle { get; set; }
+
 
     }
 }

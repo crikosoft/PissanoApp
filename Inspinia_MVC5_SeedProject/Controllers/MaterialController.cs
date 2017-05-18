@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PissanoApp.Models;
+using Microsoft.AspNet.Identity;
 
 namespace PissanoApp.Controllers
 {
@@ -68,6 +69,11 @@ namespace PissanoApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //UserManager<ApplicationUser> userManager;
+
+                //var user = userManager.FindByName (User.Identity.GetUserId);
+
+                //material.UserID = User.Identity.GetUserId();
                 db.Materiales.Add(material);
                 db.SaveChanges();
                 return RedirectToAction("Index");

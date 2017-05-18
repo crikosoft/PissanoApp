@@ -14,9 +14,6 @@ namespace PissanoApp.Models
         public string numero { get; set; }
 
         [Required()]
-        public DateTime fecha { get; set; }
-
-        [Required()]
         public int proveedorId { get; set; }
         public virtual Proveedor Proveedor { get; set; }
 
@@ -49,7 +46,15 @@ namespace PissanoApp.Models
 
         public int formaPagoId { get; set; }
 
+        [Required()]
+        public string usuarioCreacion { get; set; }
 
+        public string usuarioModificacion { get; set; }
+
+        [Required()]
+        public DateTime fechaCreacion { get; set; }
+
+        public DateTime fechaModificacion { get; set; }
 
         public virtual FormaPago FormaPago { get; set; }
 

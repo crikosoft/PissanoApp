@@ -13,6 +13,7 @@ namespace PissanoApp.Models
         [Required()]
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public virtual List<Requerimiento> Requerimientos { get; set; }
+        public virtual List<RequerimientoEstadoRequerimiento> RequerimientosEstadoRequerimiento { get; set; }
+
     }
 }

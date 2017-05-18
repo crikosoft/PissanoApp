@@ -26,6 +26,8 @@ namespace PissanoApp.Models
 
         public int tiempoEjecucion { get; set; } //Meses
 
+        public string identificador { get; set; }
+
         public int empresaId { get; set; }
         public virtual Empresa empresa { get; set; }
 

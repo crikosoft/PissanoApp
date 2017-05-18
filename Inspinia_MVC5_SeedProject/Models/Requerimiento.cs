@@ -12,10 +12,6 @@ namespace PissanoApp.Models
         [DisplayName("Id")]
         public int requerimientoId { get; set; }
 
-        [DisplayName("Fecha Registro")]
-        [DataType(DataType.Date)]  
-        public DateTime fecha { get; set; }
-
         [DisplayName("Numero")]
         [MaxLength(10)]
         public String numero { get; set; }
@@ -54,6 +50,20 @@ namespace PissanoApp.Models
         public virtual List<RequerimientoDetalle> Detalles { get; set; }
 
         public virtual List<OrdenCompra> OrdenCompras { get; set; }
+
+
+
+        [Required()]
+        public string usuarioCreacion { get; set; }
+
+        public string usuarioModificacion { get; set; }
+
+        [Required()]
+        public DateTime fechaCreacion { get; set; }
+
+        public DateTime fechaModificacion { get; set; }
+
+        public virtual List<RequerimientoEstadoRequerimiento> RequerimientosEstadoRequerimiento { get; set; }
 
 
 

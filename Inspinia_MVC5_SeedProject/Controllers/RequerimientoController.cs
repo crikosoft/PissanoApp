@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PissanoApp.Models;
+using System.Data.Entity.Validation;
+using System.Text;
 
 namespace PissanoApp.Controllers
 {
@@ -25,7 +27,8 @@ namespace PissanoApp.Controllers
         // GET: /Requerimiento/
         public ActionResult IndexApprove()
         {
-            var requerimientos = db.Requerimientos.Where(p => p.estadoRequerimientoId == 1).Include(r => r.Obra).Include(r => r.Prioridad);
+
+            var requerimientos = db.Requerimientos.Include(r => r.Obra).Include(r => r.Prioridad);
             return View(requerimientos.ToList());
         }
 
@@ -196,26 +199,125 @@ namespace PissanoApp.Controllers
         }
 
 
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Approve([Bind(Include = "requerimientoId,fecha,numero,comentario,obraId,ordenGenerada,prioridadId")] Requerimiento requerimiento)
+        //{
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    //db.Entry(ordencompra).State = EntityState.Modified;
+
+        //    Requerimiento Requerimiento = db.Requerimientos.Find(requerimiento.requerimientoId);
+        //    if (Requerimiento == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    Requerimiento.estadoRequerimientoId = 4;
+        //    db.SaveChanges();
+        //    return RedirectToAction("IndexApprove");
+        //    //}
+        //    //ViewBag.obraId = new SelectList(db.Obras, "id", "direccion", ordencompra.ordenCompraId);
+        //    //return View(requerimiento);
+        //}
+
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Approve([Bind(Include = "requerimientoId,fecha,numero,comentario,obraId,ordenGenerada,prioridadId")] Requerimiento requerimiento)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Approve(Requerimiento requerimiento)
         {
-            //if (ModelState.IsValid)
-            //{
-            //db.Entry(ordencompra).State = EntityState.Modified;
+             var errors = ModelState.Values.SelectMany(v => v.Errors);
 
-            Requerimiento Requerimiento = db.Requerimientos.Find(requerimiento.requerimientoId);
-            if (Requerimiento == null)
-            {
-                return HttpNotFound();
-            }
+             //if (ModelState.IsValid)
+             //{
 
-            Requerimiento.estadoRequerimientoId = 4;
-            db.SaveChanges();
-            return RedirectToAction("IndexApprove");
-            //}
-            //ViewBag.obraId = new SelectList(db.Obras, "id", "direccion", ordencompra.ordenCompraId);
-            //return View(requerimiento);
+                 Requerimiento Requerimiento = db.Requerimientos.Find(requerimiento.requerimientoId);
+
+                 DateTime timeUtc = DateTime.UtcNow;
+                 TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                 DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+                 var estado = db.EstadoRequerimiento.Where(p => p.nombre == "Aprobado").SingleOrDefault(); ;
+                 var estadoDetalle = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Aprobado").SingleOrDefault();
+
+                 var estadoList = new string[] { "Sin Aprobación", "Aprobación Rechazada"};
+
+                 if (Requerimiento.Detalles.Where(p => estadoList.Contains(p.EstadoRequerimientoDetalle.nombre)).Count() != requerimiento.Detalles.Count())
+                 {
+                     estado = db.EstadoRequerimiento.Where(p => p.nombre == "Aprobado parcial").SingleOrDefault();
+
+                 }
+
+
+
+
+                 Requerimiento.estadoRequerimientoId = estadoDetalle.estadoRequerimientoDetalleId;
+
+
+                 var requerimientoEstado = new RequerimientoEstadoRequerimiento();
+                 var requerimientoDetalleEstado = new RequerimientoDetalleEstadoRequerimientoDetalle();
+                 requerimientoEstado.Requerimiento = Requerimiento;
+
+
+                 requerimientoEstado.requerimientoId = requerimiento.requerimientoId;
+                 requerimientoEstado.estadoRequerimientoId = estado.estadoRequerimientoId;
+                 requerimientoEstado.usuarioCreacion = User.Identity.Name;
+                 requerimientoEstado.fechaCreacion = cstTime;
+                 Requerimiento.estadoRequerimientoId = estado.estadoRequerimientoId;
+
+                 //Actualiza datos en Requerimiento
+                 requerimientoEstado.Requerimiento.estadoRequerimientoId = estado.estadoRequerimientoId;
+                 requerimientoEstado.Requerimiento.usuarioModificacion = User.Identity.Name;
+                 requerimientoEstado.Requerimiento.fechaModificacion = cstTime;
+
+                 db.RequerimientoEstadoRequerimiento.Add(requerimientoEstado);
+
+                 foreach (var item in requerimiento.Detalles)
+                 {
+
+
+                     var requerimientoDetalleEstadoRequerimientoDetalle = new RequerimientoDetalleEstadoRequerimientoDetalle();
+                     requerimientoDetalleEstadoRequerimientoDetalle.requerimientoDetalleId = item.requerimientoDetalleId;
+                     requerimientoDetalleEstadoRequerimientoDetalle.estadoRequerimientoDetalleId = estadoDetalle.estadoRequerimientoDetalleId;
+                     requerimientoDetalleEstadoRequerimientoDetalle.usuarioCreacion = User.Identity.Name;
+                     requerimientoDetalleEstadoRequerimientoDetalle.fechaCreacion = cstTime;
+                     RequerimientoDetalle RequerimientoDetalle = db.RequerimientoDetalles.Find(item.requerimientoDetalleId);
+                     RequerimientoDetalle.estadoRequerimientoDetalleId = estadoDetalle.estadoRequerimientoDetalleId;
+                     requerimientoDetalleEstadoRequerimientoDetalle.RequerimientoDetalle = RequerimientoDetalle;
+                     db.RequerimientoDetalleEstadoRequerimientoDetalle.Add(requerimientoDetalleEstadoRequerimientoDetalle);
+
+
+
+                 }
+
+                // db.SaveChanges();
+
+                 try
+                 {
+                     db.SaveChanges();
+                 }
+                 catch (DbEntityValidationException ex)
+                 {
+                     StringBuilder sb = new StringBuilder();
+
+                     foreach (var failure in ex.EntityValidationErrors)
+                     {
+                         sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                         foreach (var error in failure.ValidationErrors)
+                         {
+                             sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                             sb.AppendLine();
+                         }
+                     }
+
+                     throw new DbEntityValidationException(
+                         "Entity Validation Failed - errors follow:\n" +
+                         sb.ToString(), ex
+                     ); // Add the original exception as the innerException
+                 }
+                 return RedirectToAction("IndexApprove");
+             //}
+
+             //return View(requerimiento);
         }
     }
 }

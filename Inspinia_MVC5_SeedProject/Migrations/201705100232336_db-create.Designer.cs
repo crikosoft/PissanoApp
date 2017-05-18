@@ -7,13 +7,13 @@ namespace PissanoApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class db_create : IMigrationMetadata
+    public sealed partial class dbcreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(db_create));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(dbcreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705041711548_db_create"; }
+            get { return "201705100232336_db-create"; }
         }
         
         string IMigrationMetadata.Source

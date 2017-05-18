@@ -20,9 +20,6 @@
         {
 
 
-
-
-
             var tipoMaterial = new List<TipoMaterial>
             {
                 new TipoMaterial { nombre= "Materiales"},
@@ -112,11 +109,11 @@
             var obras = new List<Obra>
             {
                 new Obra { nombre= "Sucre", direccion= "EDIFICIO MULTIFAMILIAR SUCRE - MIRAFLORES", fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12, 
-                    empresaId = empresas.Single(s => s.nombre == "PISSANO SAC" ).empresaId},
+                    empresaId = empresas.Single(s => s.nombre == "Consorcio PISSANO S.A.C." ).empresaId},
                 new Obra { nombre= "San Borja Norte", direccion= "RESIDENCIAL  SAN BORJA NORTE" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
-                    empresaId = empresas.Single(s => s.nombre == "PISSANO SAC" ).empresaId},
+                    empresaId = empresas.Single(s => s.nombre == "Consorcio PISSANO S.A.C." ).empresaId, identificador = "002"},
                 new Obra { nombre= "Barcelona", direccion= "BARCELONA" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
-                    empresaId = empresas.Single(s => s.nombre == "PISSANO SAC" ).empresaId},
+                    empresaId = empresas.Single(s => s.nombre == "Consorcio PISSANO S.A.C." ).empresaId, identificador = "001"},
 
             };
 
@@ -137,12 +134,12 @@
 
             var estadoRequerimiento = new List<EstadoRequerimiento>
             {
-                new EstadoRequerimiento { nombre="Sin Aprobación", descripcion = "Sin Aprobación"},
+                new EstadoRequerimiento { nombre="Pendiente Aprobación", descripcion = "Pendiente Aprobación"},
                 new EstadoRequerimiento { nombre="Con OC parcial", descripcion = "Con OC parcial"},
                 new EstadoRequerimiento { nombre="Con OC total", descripcion = "Con OC total"},
-                new EstadoRequerimiento { nombre="Aprobado", descripcion = "Aprobado"},
-                new EstadoRequerimiento { nombre="No Aprobado", descripcion = "No Aprobado"}
-
+                new EstadoRequerimiento { nombre="Aprobado Total", descripcion = "Aprobado"},
+                new EstadoRequerimiento { nombre="Aprobación Rechazada", descripcion = "Aprobación Rechazada"},
+                new EstadoRequerimiento { nombre="Aprobado Parcial", descripcion = "Aprobado Parcial"}
             };
 
 
@@ -153,10 +150,12 @@
             var estadoRequerimientoDetalle = new List<EstadoRequerimientoDetalle>
             {
                 new EstadoRequerimientoDetalle { nombre="Sin OC", descripcion = "Sin OC"},
-                new EstadoRequerimientoDetalle { nombre="Con OC", descripcion = "Con OC"}
+                new EstadoRequerimientoDetalle { nombre="Con OC", descripcion = "Con OC"},
+                new EstadoRequerimientoDetalle { nombre="Aprobado", descripcion = "Aprobado"},
+                new EstadoRequerimientoDetalle { nombre="Sin Aprobación", descripcion = "Sin Aprobación"},
+                new EstadoRequerimientoDetalle { nombre="Aprobación Rechazada", descripcion = "Aprobación Rechazada"}
 
             };
-
 
             estadoRequerimientoDetalle.ForEach(s => context.EstadoRequerimientoDetalle.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
@@ -212,8 +211,6 @@
 
             formaPagos.ForEach(s => context.FormaPagos.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
-
-
 
 
             var subPresupuesto = new List<SubPresupuesto>
@@ -697,6 +694,15 @@
             titulo.ForEach(s => context.Titulo.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
 
+
+            var parametros = new List<Parametro>
+            {
+                new Parametro { nombre= "OC", ultimoNumero = 0},
+                new Parametro { nombre= "RQ", ultimoNumero = 0}
+            };
+
+            parametros.ForEach(s => context.Parametro.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
 
             var partidas = new List<Partida>
             {

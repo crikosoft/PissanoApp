@@ -31,7 +31,7 @@
                                 <th>Obra</th>
                                 <th>Fecha</th>
                                 <th>Prioridad</th>
-                                <th>Plazo (días)</th>
+                                <th>Creado por</th>
                                 <th>Items</th>
                                 <th>Tipo de Compra</th>
                                 <th>Estado</th>
@@ -48,18 +48,18 @@
                                 <tr class="gradeX">
                                     <td>@Html.DisplayFor(modelItem => item.requerimientoId)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.fecha)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Prioridad.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Prioridad.plazoDias)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.usuarioCreacion)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Detalles.Count)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TipoCompra.nombre)</td>
 
 
-                                    @if (item.estadoRequerimientoId == 1)
+                                    @if ((item.EstadoRequerimiento.nombre == "Pendiente Aprobación") || (item.EstadoRequerimiento.nombre == "Aprobación Rechazada") || (item.EstadoRequerimiento.nombre == "Aprobado Parcial"))
                                     {
                                         <td class="client-status"><span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span></td>
                                     }
-                                    else if (item.estadoRequerimientoId == 2)
+                                    else if ((item.EstadoRequerimiento.nombre == "Con OC parcial") || (item.EstadoRequerimiento.nombre == "Aprobado Total"))
                                     {
                                         <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span></td>
                                     }
@@ -74,8 +74,11 @@
 
                                    
                                     <td>
+                                    @if ((item.EstadoRequerimiento.nombre == "Pendiente Aprobación") || (item.EstadoRequerimiento.nombre == "Aprobación Rechazada") || (item.EstadoRequerimiento.nombre == "Aprobado Parcial"))
+                                    {
                                         <a href="~/Requerimiento/Approve/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
-                                    </td>
+                                    }                                
+    </td>
 
                                 </tr>
                             }
