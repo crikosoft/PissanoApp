@@ -309,7 +309,7 @@
                                                                 if (item.Material.OrdenCompraDetalles.Count > 0)
                                                                 {
                                                                     minValue = item.Material.OrdenCompraDetalles.Min(p => p.precioUnitario);
-                                                                    minProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == minValue).SingleOrDefault().OrdenCompra.Proveedor.razonSocial;
+                                                                    minProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == minValue).Last().OrdenCompra.Proveedor.razonSocial;
 
                                                                 }
 
@@ -336,7 +336,7 @@
                                                                 if (item.Material.OrdenCompraDetalles.Count > 0)
                                                                 {
                                                                     lastValue = item.Material.OrdenCompraDetalles.LastOrDefault().precioUnitario;
-                                                                    lastProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == lastValue).SingleOrDefault().OrdenCompra.Proveedor.razonSocial;
+                                                                    lastProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == lastValue).Last().OrdenCompra.Proveedor.razonSocial;
 
                                                                 }
 

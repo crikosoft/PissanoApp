@@ -34,6 +34,15 @@ namespace PissanoApp.Models
         public virtual List<Presupuesto> Presupuestos { get; set; }
 
         public virtual List<Requerimiento> Requerimientos { get; set; }
+
+
+        public string usuarioCreacion { get; set; }
+
+        public string usuarioModificacion { get; set; }
+
+        public DateTime fechaCreacion { get; set; }
+
+        public DateTime fechaModificacion { get; set; }
         
     }
 }

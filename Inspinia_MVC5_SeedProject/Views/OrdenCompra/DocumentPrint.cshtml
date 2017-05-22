@@ -30,7 +30,7 @@
         <div class="ibox-content p-xl">
             <div class="row">
                 <div class="col-sm-6">
-                    <h5>From:</h5>
+                    @*<h5>From:</h5>*@
                     <address>
                         <strong>@Html.DisplayFor(model => model.Obra.empresa.nombre)</strong><br>
                         RUC: @Html.DisplayFor(model => model.Obra.empresa.ruc)<br>
@@ -56,7 +56,7 @@
                         Email: @Html.DisplayFor(model => model.Proveedor.email)
                     </address>
                     <p>
-                        <span><strong>Fecha Emisión:</strong> @Html.DisplayFor(model => model.fecha) </span><br />
+                        <span><strong>Fecha Emisión:</strong> @Html.DisplayFor(model => model.fechaCreacion) </span><br />
                         <span><strong>Fecha Venc.:</strong></span>
                     </p>
                 </div>

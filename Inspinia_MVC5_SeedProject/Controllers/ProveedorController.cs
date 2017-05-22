@@ -50,6 +50,16 @@ namespace PissanoApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                proveedor.fechaCreacion = cstTime;
+                proveedor.usuarioCreacion = User.Identity.Name;
+                proveedor.fechaModificacion = cstTime;
+
+
                 db.Proveedores.Add(proveedor);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -82,6 +92,16 @@ namespace PissanoApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                proveedor.fechaCreacion = cstTime;
+                proveedor.usuarioCreacion = User.Identity.Name;
+                proveedor.fechaModificacion = cstTime;
+                proveedor.usuarioModificacion = User.Identity.Name;
+
                 db.Entry(proveedor).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

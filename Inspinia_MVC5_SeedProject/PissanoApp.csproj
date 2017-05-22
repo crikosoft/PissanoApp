@@ -201,13 +201,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201705100232336_db-create.cs" />
-    <Compile Include="Migrations\201705100232336_db-create.Designer.cs">
-      <DependentUpon>201705100232336_db-create.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705171804002_db-update.cs" />
-    <Compile Include="Migrations\201705171804002_db-update.Designer.cs">
-      <DependentUpon>201705171804002_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201705220527515_db-create.cs" />
+    <Compile Include="Migrations\201705220527515_db-create.Designer.cs">
+      <DependentUpon>201705220527515_db-create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1025,6 +1021,7 @@
     <Content Include="Views\Requerimiento\IndexOC.cshtml" />
     <Content Include="Views\OrdenCompra\IndexAccounting.cshtml" />
     <Content Include="Views\OrdenCompraViewModel\Create - Copia.cshtml" />
+    <Content Include="Views\RequerimientoViewModel\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1036,11 +1033,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705100232336_db-create.resx">
-      <DependentUpon>201705100232336_db-create.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705171804002_db-update.resx">
-      <DependentUpon>201705171804002_db-update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705220527515_db-create.resx">
+      <DependentUpon>201705220527515_db-create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

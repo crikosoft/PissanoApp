@@ -36,8 +36,8 @@ namespace PissanoApp.Controllers
         // GET: /Requerimiento/
         public ActionResult IndexOC()
         {
-            var estadoList = new int[] { 2, 4 };
-            var requerimientos = db.Requerimientos.Where(p => estadoList.Contains(p.estadoRequerimientoId));
+            var estadoList = new string[] { "Aprobado Total", "Con OC parcial", "Aprobado Parcial" };
+            var requerimientos = db.Requerimientos.Where(p => estadoList.Contains(p.EstadoRequerimiento.nombre));
             //var requerimientos = db.Requerimientos.Where(p => p.estadoRequerimientoId==4 ).Include(r => r.Obra).Include(r => r.Prioridad);
             //var requerimientos = db.Requerimientos.Where(p => p.estadoRequerimientoId.ToString().Contains("2,4")).Include(r => r.Obra).Include(r => r.Prioridad);
             
@@ -236,7 +236,7 @@ namespace PissanoApp.Controllers
                  DateTime timeUtc = DateTime.UtcNow;
                  TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
                  DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
-                 var estado = db.EstadoRequerimiento.Where(p => p.nombre == "Aprobado").SingleOrDefault(); ;
+                 var estado = db.EstadoRequerimiento.Where(p => p.nombre == "Aprobado Total").SingleOrDefault(); ;
                  var estadoDetalle = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Aprobado").SingleOrDefault();
 
                  var estadoList = new string[] { "Sin Aprobación", "Aprobación Rechazada"};
@@ -318,6 +318,95 @@ namespace PissanoApp.Controllers
              //}
 
              //return View(requerimiento);
+        }
+
+        [HttpPost]
+        public ActionResult Disapprove(Requerimiento requerimiento)
+        {
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+            Requerimiento Requerimiento = db.Requerimientos.Find(requerimiento.requerimientoId);
+
+            DateTime timeUtc = DateTime.UtcNow;
+            TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+            var estado = db.EstadoRequerimiento.Where(p => p.nombre == "Aprobación Rechazada").SingleOrDefault(); ;
+            var estadoDetalle = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Aprobación Rechazada").SingleOrDefault();
+
+
+            var estadoList = new string[] { "Sin Aprobación", "Aprobación Rechazada" };
+
+            if (Requerimiento.Detalles.Where(p => estadoList.Contains(p.EstadoRequerimientoDetalle.nombre)).Count() != requerimiento.Detalles.Count())
+            {
+                //if (Requerimiento.EstadoRequerimiento.nombre != "Aprobado Parcial")
+                //{ 
+                    estado = db.EstadoRequerimiento.Where(p => p.nombre == "Rechazado Parcial").SingleOrDefault();
+                //}
+            }
+
+            Requerimiento.estadoRequerimientoId = estadoDetalle.estadoRequerimientoDetalleId;
+
+            var requerimientoEstado = new RequerimientoEstadoRequerimiento();
+            var requerimientoDetalleEstado = new RequerimientoDetalleEstadoRequerimientoDetalle();
+            requerimientoEstado.Requerimiento = Requerimiento;
+
+
+            requerimientoEstado.requerimientoId = requerimiento.requerimientoId;
+            requerimientoEstado.estadoRequerimientoId = estado.estadoRequerimientoId;
+            requerimientoEstado.usuarioCreacion = User.Identity.Name;
+            requerimientoEstado.fechaCreacion = cstTime;
+            Requerimiento.estadoRequerimientoId = estado.estadoRequerimientoId;
+
+            //Actualiza datos en Requerimiento
+            requerimientoEstado.Requerimiento.estadoRequerimientoId = estado.estadoRequerimientoId;
+            requerimientoEstado.Requerimiento.usuarioModificacion = User.Identity.Name;
+            requerimientoEstado.Requerimiento.fechaModificacion = cstTime;
+
+            db.RequerimientoEstadoRequerimiento.Add(requerimientoEstado);
+
+            foreach (var item in requerimiento.Detalles)
+            {
+
+
+                var requerimientoDetalleEstadoRequerimientoDetalle = new RequerimientoDetalleEstadoRequerimientoDetalle();
+                requerimientoDetalleEstadoRequerimientoDetalle.requerimientoDetalleId = item.requerimientoDetalleId;
+                requerimientoDetalleEstadoRequerimientoDetalle.estadoRequerimientoDetalleId = estadoDetalle.estadoRequerimientoDetalleId;
+                requerimientoDetalleEstadoRequerimientoDetalle.usuarioCreacion = User.Identity.Name;
+                requerimientoDetalleEstadoRequerimientoDetalle.fechaCreacion = cstTime;
+                RequerimientoDetalle RequerimientoDetalle = db.RequerimientoDetalles.Find(item.requerimientoDetalleId);
+                RequerimientoDetalle.estadoRequerimientoDetalleId = estadoDetalle.estadoRequerimientoDetalleId;
+                requerimientoDetalleEstadoRequerimientoDetalle.RequerimientoDetalle = RequerimientoDetalle;
+                db.RequerimientoDetalleEstadoRequerimientoDetalle.Add(requerimientoDetalleEstadoRequerimientoDetalle);
+
+
+
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                );
+            }
+            return RedirectToAction("IndexApprove");
         }
     }
 }

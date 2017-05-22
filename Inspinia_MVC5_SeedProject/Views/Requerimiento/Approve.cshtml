@@ -120,7 +120,7 @@
                         <div class="form-group">
                             @*<input type="submit" value="Aprobar!" class="btn btn-primary" />*@
                             <input value="Aprobar!" class="btn btn-primary" id="BtnAprobar" />
-                            <input type="submit" value="Rechazar!" class="btn btn-danger" />
+                            <input value="Desaprobar!" class="btn btn-danger" id="BtnDesaprobar" />
                         </div>
                     </div>
 
@@ -173,9 +173,6 @@
                         cells.push({
 
                             requerimientoDetalleId: $(this).find("td:eq(0) input[type='checkbox']").attr("id")
-                            //$(this).find("td").eq(3).text(cantidad);
-                            //$(this).find("td").eq(4).text(partidacodigo);
-                            //$(this).find("td").eq(5).text(partidatexto);
 
                         });
                     }
@@ -193,7 +190,7 @@
                         requerimientoDetalle.requerimientoDetalleId = cells[i].requerimientoDetalleId;
                         Detalles.push(requerimientoDetalle);
 
-                        alert(requerimientoDetalle.requerimientoDetalleId);
+                        //alert(requerimientoDetalle.requerimientoDetalleId);
 
 
                     }
@@ -224,12 +221,62 @@
                     });
                 });
 
+
+            $("#BtnDesaprobar").click(function () {
+
+                var cells = [];
+
+                $('#tablaItems tr').each(function () {
+                    if ($(this).find("td:eq(0) input[type='checkbox']").is(":checked")) {
+                        cells.push({
+
+                            requerimientoDetalleId: $(this).find("td:eq(0) input[type='checkbox']").attr("id")
+
+                        });
+                    }
+
+
+                });
+
+
+
+                var Detalles = [];
+
+                for (var i = 0; i < cells.length; i++) {
+                    var requerimientoDetalle = new Object();
+
+                    requerimientoDetalle.requerimientoDetalleId = cells[i].requerimientoDetalleId;
+                    Detalles.push(requerimientoDetalle);
+
+
+                }
+
+
+
+                var requerimiento = new Object();
+
+                requerimiento.requerimientoId = $("#requerimientoId").val();
+                requerimiento.Detalles = Detalles;
+
+                RequerimientoFinal = JSON.stringify({ 'requerimiento': requerimiento });
+
+
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: 'POST',
+                    url: '@Url.Action("Disapprove")',
+                    data: RequerimientoFinal,
+                    success: function (data) {
+                        window.location = '@Url.Action("IndexApprove")';
+                    },
+                    error: function (result) {
+                        alert(result.statusText)
+                        alert('No se pudo realizar la acción solicitada');
+
+                    }
+                });
+            });
         });
 
-
-        //function addRequestVerificationToken(data) {
-        //    data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
-        //    return data;
-        //};
     </script>
 }

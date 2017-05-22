@@ -55,11 +55,11 @@
                                     <td>@Html.DisplayFor(modelItem => item.TipoCompra.nombre)</td>
 
 
-                                    @if ((item.EstadoRequerimiento.nombre == "Pendiente Aprobación") || (item.EstadoRequerimiento.nombre == "Aprobación Rechazada") || (item.EstadoRequerimiento.nombre == "Aprobado Parcial"))
+                                    @if ((item.EstadoRequerimiento.nombre == "Pendiente Aprobación") || (item.EstadoRequerimiento.nombre == "Aprobación Rechazada"))
                                     {
                                         <td class="client-status"><span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span></td>
                                     }
-                                    else if ((item.EstadoRequerimiento.nombre == "Con OC parcial") || (item.EstadoRequerimiento.nombre == "Aprobado Total"))
+                                    else if ((item.EstadoRequerimiento.nombre == "Aprobado Parcial") || (item.EstadoRequerimiento.nombre == "Rechazado Parcial"))
                                     {
                                         <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</span></td>
                                     }
@@ -74,7 +74,8 @@
 
                                    
                                     <td>
-                                    @if ((item.EstadoRequerimiento.nombre == "Pendiente Aprobación") || (item.EstadoRequerimiento.nombre == "Aprobación Rechazada") || (item.EstadoRequerimiento.nombre == "Aprobado Parcial"))
+                                    @*@if ((item.EstadoRequerimiento.nombre == "Pendiente Aprobación") || (item.EstadoRequerimiento.nombre == "Aprobación Rechazada") || (item.EstadoRequerimiento.nombre == "Rechazado Parcial") || (item.EstadoRequerimiento.nombre == "Aprobado Parcial") || ((item.EstadoRequerimiento.nombre == "Con OC parcial")))*@
+                                     @if (item.Detalles.Count(p => p.EstadoRequerimientoDetalle.nombre == "Sin Aprobación") >0)
                                     {
                                         <a href="~/Requerimiento/Approve/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
                                     }                                

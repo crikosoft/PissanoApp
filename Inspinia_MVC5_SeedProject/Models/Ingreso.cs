@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +17,17 @@ namespace PissanoApp.Models
         public virtual List<IngresoDetalle> IngresoDetalles { get; set; }
 
         public virtual DocumentoPago DocumentoPago { get; set; }
+
+
+        [Required()]
+        public string usuarioCreacion { get; set; }
+
+        public string usuarioModificacion { get; set; }
+
+        [Required()]
+        public DateTime fechaCreacion { get; set; }
+
+        public DateTime fechaModificacion { get; set; }
 
     }
 }

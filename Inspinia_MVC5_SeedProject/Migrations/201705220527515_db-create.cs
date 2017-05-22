@@ -28,7 +28,12 @@ namespace PissanoApp.Migrations
                         fechaInicio = c.DateTime(nullable: false),
                         fechaFin = c.DateTime(nullable: false),
                         tiempoEjecucion = c.Int(nullable: false),
+                        identificador = c.String(),
                         empresaId = c.Int(nullable: false),
+                        usuarioCreacion = c.String(),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.id)
                 .ForeignKey("dbo.Empresas", t => t.empresaId)
@@ -84,7 +89,6 @@ namespace PissanoApp.Migrations
                     {
                         ordenCompraId = c.Int(nullable: false, identity: true),
                         numero = c.String(nullable: false),
-                        fecha = c.DateTime(nullable: false),
                         proveedorId = c.Int(nullable: false),
                         incluyeIgv = c.Boolean(nullable: false),
                         subTotal = c.Double(nullable: false),
@@ -96,6 +100,10 @@ namespace PissanoApp.Migrations
                         comentario = c.String(),
                         adelanto = c.Int(nullable: false),
                         formaPagoId = c.Int(nullable: false),
+                        usuarioCreacion = c.String(nullable: false),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(nullable: false),
                         monedaId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ordenCompraId)
@@ -171,6 +179,10 @@ namespace PissanoApp.Migrations
                         unidadMedidaId = c.Int(nullable: false),
                         tipoMaterialId = c.Int(nullable: false),
                         materialPadreId = c.Int(),
+                        usuarioCreacion = c.String(),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.materialId)
                 .ForeignKey("dbo.Materials", t => t.materialPadreId)
@@ -213,6 +225,10 @@ namespace PissanoApp.Migrations
                         numeroCuenta = c.String(maxLength: 100),
                         estado = c.Boolean(nullable: false),
                         ruc = c.String(nullable: false),
+                        usuarioCreacion = c.String(),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.proveedorId);
             
@@ -221,13 +237,16 @@ namespace PissanoApp.Migrations
                 c => new
                     {
                         requerimientoId = c.Int(nullable: false, identity: true),
-                        fecha = c.DateTime(nullable: false),
                         numero = c.String(maxLength: 10),
                         comentario = c.String(maxLength: 1000),
                         obraId = c.Int(nullable: false),
                         prioridadId = c.Int(nullable: false),
                         tipoCompraId = c.Int(),
                         estadoRequerimientoId = c.Int(nullable: false),
+                        usuarioCreacion = c.String(nullable: false),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.requerimientoId)
                 .ForeignKey("dbo.EstadoRequerimientoes", t => t.estadoRequerimientoId)
@@ -281,6 +300,10 @@ namespace PissanoApp.Migrations
                         nombre = c.String(),
                         descripcion = c.String(),
                         subPresupuestoId = c.Int(nullable: false),
+                        usuarioCreacion = c.String(),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(nullable: false),
                         Titulo_tituloId = c.Int(),
                     })
                 .PrimaryKey(t => t.partidaId)
@@ -299,6 +322,22 @@ namespace PissanoApp.Migrations
                 .PrimaryKey(t => t.subPresupuestoId);
             
             CreateTable(
+                "dbo.RequerimientoDetalleEstadoRequerimientoDetalles",
+                c => new
+                    {
+                        requerimientoDetalleEstadoRequerimientoDetalleId = c.Int(nullable: false, identity: true),
+                        requerimientoDetalleId = c.Int(nullable: false),
+                        estadoRequerimientoDetalleId = c.Int(nullable: false),
+                        usuarioCreacion = c.String(nullable: false),
+                        fechaCreacion = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.requerimientoDetalleEstadoRequerimientoDetalleId)
+                .ForeignKey("dbo.EstadoRequerimientoDetalles", t => t.estadoRequerimientoDetalleId)
+                .ForeignKey("dbo.RequerimientoDetalles", t => t.requerimientoDetalleId)
+                .Index(t => t.requerimientoDetalleId)
+                .Index(t => t.estadoRequerimientoDetalleId);
+            
+            CreateTable(
                 "dbo.EstadoRequerimientoes",
                 c => new
                     {
@@ -307,6 +346,22 @@ namespace PissanoApp.Migrations
                         descripcion = c.String(),
                     })
                 .PrimaryKey(t => t.estadoRequerimientoId);
+            
+            CreateTable(
+                "dbo.RequerimientoEstadoRequerimientoes",
+                c => new
+                    {
+                        requerimientoEstadoRequerimientoId = c.Int(nullable: false, identity: true),
+                        requerimientoId = c.Int(nullable: false),
+                        estadoRequerimientoId = c.Int(nullable: false),
+                        usuarioCreacion = c.String(nullable: false),
+                        fechaCreacion = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.requerimientoEstadoRequerimientoId)
+                .ForeignKey("dbo.EstadoRequerimientoes", t => t.estadoRequerimientoId)
+                .ForeignKey("dbo.Requerimientoes", t => t.requerimientoId)
+                .Index(t => t.requerimientoId)
+                .Index(t => t.estadoRequerimientoId);
             
             CreateTable(
                 "dbo.Prioridads",
@@ -422,6 +477,10 @@ namespace PissanoApp.Migrations
                         ordenCompraId = c.Int(nullable: false),
                         numeroGuia = c.String(),
                         fecha = c.DateTime(nullable: false),
+                        usuarioCreacion = c.String(nullable: false),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(nullable: false),
                         DocumentoPago_documentoPagoId = c.Int(),
                     })
                 .PrimaryKey(t => t.ingresoId)
@@ -445,6 +504,16 @@ namespace PissanoApp.Migrations
                 .ForeignKey("dbo.Materials", t => t.materialId)
                 .Index(t => t.almacenId)
                 .Index(t => t.materialId);
+            
+            CreateTable(
+                "dbo.Parametroes",
+                c => new
+                    {
+                        parametroId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(),
+                        ultimoNumero = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.parametroId);
             
             CreateTable(
                 "dbo.PresupuestoTituloes",
@@ -506,6 +575,10 @@ namespace PissanoApp.Migrations
             DropForeignKey("dbo.OrdenCompras", "requerimientoId", "dbo.Requerimientoes");
             DropForeignKey("dbo.Requerimientoes", "obraId", "dbo.Obras");
             DropForeignKey("dbo.Requerimientoes", "estadoRequerimientoId", "dbo.EstadoRequerimientoes");
+            DropForeignKey("dbo.RequerimientoEstadoRequerimientoes", "requerimientoId", "dbo.Requerimientoes");
+            DropForeignKey("dbo.RequerimientoEstadoRequerimientoes", "estadoRequerimientoId", "dbo.EstadoRequerimientoes");
+            DropForeignKey("dbo.RequerimientoDetalleEstadoRequerimientoDetalles", "requerimientoDetalleId", "dbo.RequerimientoDetalles");
+            DropForeignKey("dbo.RequerimientoDetalleEstadoRequerimientoDetalles", "estadoRequerimientoDetalleId", "dbo.EstadoRequerimientoDetalles");
             DropForeignKey("dbo.RequerimientoDetalles", "requerimientoId", "dbo.Requerimientoes");
             DropForeignKey("dbo.RequerimientoDetalles", "partidaId", "dbo.Partidas");
             DropForeignKey("dbo.Partidas", "subPresupuestoId", "dbo.SubPresupuestoes");
@@ -539,6 +612,10 @@ namespace PissanoApp.Migrations
             DropIndex("dbo.Categorias", new[] { "categoriaPadreId" });
             DropIndex("dbo.PresupuestoDetalles", new[] { "materialId" });
             DropIndex("dbo.PresupuestoDetalles", new[] { "presupuestoId" });
+            DropIndex("dbo.RequerimientoEstadoRequerimientoes", new[] { "estadoRequerimientoId" });
+            DropIndex("dbo.RequerimientoEstadoRequerimientoes", new[] { "requerimientoId" });
+            DropIndex("dbo.RequerimientoDetalleEstadoRequerimientoDetalles", new[] { "estadoRequerimientoDetalleId" });
+            DropIndex("dbo.RequerimientoDetalleEstadoRequerimientoDetalles", new[] { "requerimientoDetalleId" });
             DropIndex("dbo.Partidas", new[] { "Titulo_tituloId" });
             DropIndex("dbo.Partidas", new[] { "subPresupuestoId" });
             DropIndex("dbo.RequerimientoDetalles", new[] { "ordenCompraId" });
@@ -569,6 +646,7 @@ namespace PissanoApp.Migrations
             DropIndex("dbo.Almacens", new[] { "obraId" });
             DropTable("dbo.TituloPresupuestoes");
             DropTable("dbo.PresupuestoTituloes");
+            DropTable("dbo.Parametroes");
             DropTable("dbo.MaterialNivelStocks");
             DropTable("dbo.Ingresoes");
             DropTable("dbo.IngresoDetalles");
@@ -580,7 +658,9 @@ namespace PissanoApp.Migrations
             DropTable("dbo.PresupuestoDetalles");
             DropTable("dbo.TipoCompras");
             DropTable("dbo.Prioridads");
+            DropTable("dbo.RequerimientoEstadoRequerimientoes");
             DropTable("dbo.EstadoRequerimientoes");
+            DropTable("dbo.RequerimientoDetalleEstadoRequerimientoDetalles");
             DropTable("dbo.SubPresupuestoes");
             DropTable("dbo.Partidas");
             DropTable("dbo.EstadoRequerimientoDetalles");

@@ -72,9 +72,11 @@ namespace PissanoApp.Controllers
 
             var proveedores = db.Proveedores;
 
+            var estadoRequerimientoDetalle = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Aprobado").SingleOrDefault(); ;
+
             var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == id);
 
-            requerimiento.Detalles =  requerimiento.Detalles.Where(p => p.estadoRequerimientoDetalleId == 1).ToList();
+            requerimiento.Detalles = requerimiento.Detalles.Where(p => p.estadoRequerimientoDetalleId == estadoRequerimientoDetalle.estadoRequerimientoDetalleId).ToList();
 
             var ordenesCompra = db.Ordenes;
 
@@ -116,9 +118,9 @@ namespace PissanoApp.Controllers
                 //ordenCompra.total = 100;
                 //ordenCompra.estadoOrdenId = 1;
 
-                var cantidadDetalles = 0;
-                cantidadDetalles = ordenCompra.Requerimiento.Detalles.Where(p => p.estadoRequerimientoDetalleId == 1).Count();
-                if (cantidadDetalles == ordenCompra.OrdenesCompraDetalles.Count())
+                var cantidadDetallesConOc = 0;
+                cantidadDetallesConOc = ordenCompra.Requerimiento.Detalles.Where(p => p.estadoRequerimientoDetalleId == 2).Count();
+                if (cantidadDetallesConOc + ordenCompra.OrdenesCompraDetalles.Count() == ordenCompra.Requerimiento.Detalles.Count())
                 {
                     ordenCompra.Requerimiento.estadoRequerimientoId = 3; // OC total
                 }

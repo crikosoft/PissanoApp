@@ -40,14 +40,13 @@ namespace PissanoApp.Models
 
         public virtual List<OrdenCompraDetalle> OrdenCompraDetalles { get; set; }
 
-//        public virtual MaterialNivelStock MaterialNivelStock { get; set; }
+        public string usuarioCreacion { get; set; }
 
+        public string usuarioModificacion { get; set; }
 
+        public DateTime fechaCreacion { get; set; }
 
-        //public string UserID { get; set; }
-        //[ForeignKey("UserID")]
-        //public virtual ApplicationUser User { get; set; }
-
+        public DateTime fechaModificacion { get; set; }
 
     }
 }

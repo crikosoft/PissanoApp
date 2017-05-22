@@ -30,7 +30,9 @@
                 </div>
                 <div class="ibox-content">
 
-                    <table class="footable table table-stripped toggle-arrow-tiny " data-page-size="10">
+                    @*<table class="footable table table-stripped toggle-arrow-tiny " data-page-size="10">*@
+                    <table class="footable table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+
                         <thead>
                             <tr>
 
@@ -38,17 +40,18 @@
                                 <th>Estado</th>
                                 <th>OC</th>
                                 <th>Obra</th>
+                                <th>Fecha</th>
                                 <th>Prioridad</th>
                                 <th>Proveedor</th>
                                 <th>Tipo Compra</th>
                                 <th>Total</th>
                                 <th></th>
 
-                                <th data-hide="all">Fecha</th>
-                                <th data-hide="all">IGV</th>
-                                <th data-hide="all">Total</th>
-                                <th data-hide="all">Forma Pago</th>
-                                <th data-hide="all">Materiales</th>
+                                @*<th data-hide="all">Fecha</th>
+                    <th data-hide="all">IGV</th>
+                    <th data-hide="all">Total</th>
+                    <th data-hide="all">Forma Pago</th>
+                    <th data-hide="all">Materiales</th>*@
                                 <th></th>
                             </tr>
                         </thead>
@@ -62,6 +65,7 @@
                                     <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>
                                     <td>@Html.DisplayFor(modelItem => item.numero)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Requerimiento.Prioridad.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Requerimiento.TipoCompra.nombre)</td>
@@ -71,25 +75,29 @@
                                         <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>
 
-                                    <td>@Html.DisplayFor(modelItem => item.fecha)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.igv)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.total)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.FormaPago.nombre)</td>
+                                    @*<td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
+                        <td>@Html.DisplayFor(modelItem => item.igv)</td>
+                        <td>@Html.DisplayFor(modelItem => item.total)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FormaPago.nombre)</td>
+                        <td>
+                            @foreach (var itemDetalles in item.OrdenesCompraDetalles)
+                            {
+                                @Html.DisplayFor(modelItem => itemDetalles.Material.nombre)
+
+
+                            }
+                        </td>*@
                                     <td>
-                                        @foreach (var itemDetalles in item.OrdenesCompraDetalles)
+                                        @if (item.estadoOrdenId == 3)
                                         {
-                                            @Html.DisplayFor(modelItem => itemDetalles.Material.nombre)
-
-
+                                            <a href="~/OrdenCompra/Approve3/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
                                         }
-                                    </td>
-                                    <td>
-                                        <a href="~/OrdenCompra/Approve3/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
+
                                     </td>
                                     @*<td class="project-actions">
 
-                                            <div class="checkbox i-checks"><label> <input type="checkbox" value="" > <i></i> Aprobar Orden </label></div>
-                                        </td>*@
+                            <div class="checkbox i-checks"><label> <input type="checkbox" value="" > <i></i> Aprobar Orden </label></div>
+                        </td>*@
                                 </tr>
                             }
 
@@ -97,9 +105,18 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5">
-                                    <ul class="pagination pull-right"></ul>
-                                </td>
+
+                                <th data-toggle="true">Id</th>
+                                <th>Estado</th>
+                                <th>OC</th>
+                                <th>Obra</th>
+                                <th>Fecha</th>
+                                <th>Prioridad</th>
+                                <th>Proveedor</th>
+                                <th>Tipo Compra</th>
+                                <th>Total</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>

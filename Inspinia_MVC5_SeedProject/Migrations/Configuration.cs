@@ -108,12 +108,12 @@
 
             var obras = new List<Obra>
             {
-                new Obra { nombre= "Sucre", direccion= "EDIFICIO MULTIFAMILIAR SUCRE - MIRAFLORES", fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12, 
-                    empresaId = empresas.Single(s => s.nombre == "Consorcio PISSANO S.A.C." ).empresaId},
+               new Obra { nombre= "Sucre", direccion= "Sucre" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
+                    empresaId = empresas.Single(s => s.nombre == "Consorcio PISSANO S.A.C." ).empresaId, identificador = "003", fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
                 new Obra { nombre= "San Borja Norte", direccion= "RESIDENCIAL  SAN BORJA NORTE" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
-                    empresaId = empresas.Single(s => s.nombre == "Consorcio PISSANO S.A.C." ).empresaId, identificador = "002"},
+                    empresaId = empresas.Single(s => s.nombre == "Consorcio PISSANO S.A.C." ).empresaId, identificador = "002", fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
                 new Obra { nombre= "Barcelona", direccion= "BARCELONA" , fechaInicio= DateTime.Today, fechaFin= DateTime.Today.AddMonths(12), tiempoEjecucion=12,
-                    empresaId = empresas.Single(s => s.nombre == "Consorcio PISSANO S.A.C." ).empresaId, identificador = "001"},
+                    empresaId = empresas.Single(s => s.nombre == "Consorcio PISSANO S.A.C." ).empresaId, identificador = "001", fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador"},
 
             };
 
@@ -137,9 +137,10 @@
                 new EstadoRequerimiento { nombre="Pendiente Aprobación", descripcion = "Pendiente Aprobación"},
                 new EstadoRequerimiento { nombre="Con OC parcial", descripcion = "Con OC parcial"},
                 new EstadoRequerimiento { nombre="Con OC total", descripcion = "Con OC total"},
-                new EstadoRequerimiento { nombre="Aprobado Total", descripcion = "Aprobado"},
+                new EstadoRequerimiento { nombre="Aprobado Total", descripcion = "Aprobado Total"},
                 new EstadoRequerimiento { nombre="Aprobación Rechazada", descripcion = "Aprobación Rechazada"},
-                new EstadoRequerimiento { nombre="Aprobado Parcial", descripcion = "Aprobado Parcial"}
+                new EstadoRequerimiento { nombre="Aprobado Parcial", descripcion = "Aprobado Parcial"},
+                new EstadoRequerimiento { nombre="Rechazado Parcial", descripcion = "Rechazado Parcial"}
             };
 
 
@@ -239,386 +240,386 @@
             context.SaveChanges();
 
 
-            var materialpadres = new List<Material>
-            {
-                new  Material { codigo="20001001", nombre= "Acero corrugado f'y = 4200 Kg/cm2", MaterialPadre=null,
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId
-                },
+            //var materialpadres = new List<Material>
+            //{
+            //    new  Material { codigo="20001001", nombre= "Acero corrugado f'y = 4200 Kg/cm2", MaterialPadre=null,
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId
+            //    },
 
-                new  Material { codigo="20001002", nombre= "Concreto Premezclado", MaterialPadre=null,
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId
-                },
+            //    new  Material { codigo="20001002", nombre= "Concreto Premezclado", MaterialPadre=null,
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId
+            //    },
 
-                new  Material { codigo="20001003", nombre= "Cemento Portland ", MaterialPadre=null,
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId
-                },
+            //    new  Material { codigo="20001003", nombre= "Cemento Portland ", MaterialPadre=null,
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId
+            //    },
 
-                new  Material { codigo="20001004", nombre= "Alambre Negro Recocido", MaterialPadre=null,
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "kg").unidadMedidaId
-                },
+            //    new  Material { codigo="20001004", nombre= "Alambre Negro Recocido", MaterialPadre=null,
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "kg").unidadMedidaId
+            //    },
 
-                new  Material { codigo="20001005", nombre= "Agregados", MaterialPadre=null,
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId
-                },
+            //    new  Material { codigo="20001005", nombre= "Agregados", MaterialPadre=null,
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId
+            //    },
 
 
-                // SubContratos
+            //    // SubContratos
 
-                new  Material { codigo="20000001", nombre= "Alquiler de baños portatiles", MaterialPadre=null,
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId
-                },
+            //    new  Material { codigo="20000001", nombre= "Alquiler de baños portatiles", MaterialPadre=null,
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId
+            //    },
                 
 
-                new  Material { codigo="20000002", nombre= "Alquiler de lavaderos portatiles", MaterialPadre=null,
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId
-                },
-
-                new  Material { codigo="20000003", nombre= "Alquiler de duchas portatiles", MaterialPadre=null,
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId
-                },
-
-                new  Material { codigo="20000004", nombre= "Alquiler de encofrado metálico", MaterialPadre=null,
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId
-                }
-
-            };
-
-            materialpadres.ForEach(s => context.Materiales.AddOrUpdate(p => p.codigo, s));
-            context.SaveChanges();
-
-
-            var materialhijos = new List<Material>
-            {
-
-                new  Material { codigo="20001001-0001", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 1/4' x 9 Mt.",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
-                },
-
-
-                new  Material { codigo="20001001-0002", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 8mm x 9 Mt.",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
-                },
-
-                new  Material { codigo="20001001-0003", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 3/8' x 9 Mt.",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
-                },
-
-
-                new  Material { codigo="20001001-0004", nombre= "Acero corrugado f'y = 4200 Kg/cm2  G-60 Ø 1/2' x 9 Mt.",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
-                },
-
-                new  Material { codigo="20001001-0005", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 5/8' x 9 Mt.",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
-                },
-
-                new  Material { codigo="20001001-0006", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 3/4' x 9 Mt.",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
-                },
-
-                new  Material { codigo="20001001-0007", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 1' x 9 Mt.",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
-                },
-
-                new  Material { codigo="20001001-0008", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 1 3/8' x 9 Mt.",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
-                },
-
-                // 02
-
-                new  Material { codigo="20001002-0001", nombre= "Concreto Premezclado 210 kg/cm2 Slump 4' - 6' Huso 57",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-
-                new  Material { codigo="20001002-0002", nombre= "Concreto Premezclado 210 kg/cm2 Slump 4' - 6' Huso 67",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-                new  Material { codigo="20001002-0003", nombre= "Concreto Premezclado 210 kg/cm2 c/ imp Slump 4' - 6' Huso 67",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-
-                new  Material { codigo="20001002-0004", nombre= "Concreto Premezclado 245 kg/cm2 Slump 4' - 6' Huso 57",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-                new  Material { codigo="20001002-0005", nombre= "Concreto Premezclado 245 kg/cm2 Slump 4' - 6' Huso 67",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-                new  Material { codigo="20001002-0006", nombre= "Concreto Premezclado 245 kg/cm2 c/ imp Slump 4' - 6' Huso 67",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-                new  Material { codigo="20001002-0007", nombre= "Concreto Premezclado 280 kg/cm2 Slump 4' - 6' Huso 57",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
+            //    new  Material { codigo="20000002", nombre= "Alquiler de lavaderos portatiles", MaterialPadre=null,
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId
+            //    },
+
+            //    new  Material { codigo="20000003", nombre= "Alquiler de duchas portatiles", MaterialPadre=null,
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId
+            //    },
+
+            //    new  Material { codigo="20000004", nombre= "Alquiler de encofrado metálico", MaterialPadre=null,
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId
+            //    }
+
+            //};
+
+            //materialpadres.ForEach(s => context.Materiales.AddOrUpdate(p => p.codigo, s));
+            //context.SaveChanges();
+
+
+            //var materialhijos = new List<Material>
+            //{
+
+            //    new  Material { codigo="20001001-0001", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 1/4' x 9 Mt.",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
+            //    },
+
+
+            //    new  Material { codigo="20001001-0002", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 8mm x 9 Mt.",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
+            //    },
+
+            //    new  Material { codigo="20001001-0003", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 3/8' x 9 Mt.",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
+            //    },
+
+
+            //    new  Material { codigo="20001001-0004", nombre= "Acero corrugado f'y = 4200 Kg/cm2  G-60 Ø 1/2' x 9 Mt.",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
+            //    },
+
+            //    new  Material { codigo="20001001-0005", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 5/8' x 9 Mt.",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
+            //    },
+
+            //    new  Material { codigo="20001001-0006", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 3/4' x 9 Mt.",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
+            //    },
+
+            //    new  Material { codigo="20001001-0007", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 1' x 9 Mt.",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
+            //    },
+
+            //    new  Material { codigo="20001001-0008", nombre= "Acero corrugado f'y = 4200 Kg/cm2 G-60 Ø 1 3/8' x 9 Mt.",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "Var").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001001").materialId
+            //    },
+
+            //    // 02
+
+            //    new  Material { codigo="20001002-0001", nombre= "Concreto Premezclado 210 kg/cm2 Slump 4' - 6' Huso 57",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+
+            //    new  Material { codigo="20001002-0002", nombre= "Concreto Premezclado 210 kg/cm2 Slump 4' - 6' Huso 67",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+            //    new  Material { codigo="20001002-0003", nombre= "Concreto Premezclado 210 kg/cm2 c/ imp Slump 4' - 6' Huso 67",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+
+            //    new  Material { codigo="20001002-0004", nombre= "Concreto Premezclado 245 kg/cm2 Slump 4' - 6' Huso 57",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+            //    new  Material { codigo="20001002-0005", nombre= "Concreto Premezclado 245 kg/cm2 Slump 4' - 6' Huso 67",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+            //    new  Material { codigo="20001002-0006", nombre= "Concreto Premezclado 245 kg/cm2 c/ imp Slump 4' - 6' Huso 67",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+            //    new  Material { codigo="20001002-0007", nombre= "Concreto Premezclado 280 kg/cm2 Slump 4' - 6' Huso 57",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
 
-                new  Material { codigo="20001002-0008", nombre= "Concreto Premezclado 280 kg/cm2 Slump 4' - 6' Huso 67",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-
-                new  Material { codigo="20001002-0009", nombre= "Concreto Premezclado 280 kg/cm2 c/ imp Slump 4' - 6' Huso 67",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-
-                new  Material { codigo="20001002-0010", nombre= "Concreto Premezclado 350 kg/cm2 Slump 4' - 6' Huso 57",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-                new  Material { codigo="20001002-0011", nombre= "Concreto Premezclado 350 kg/cm2 Slump 4' - 6' Huso 67",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-                new  Material { codigo="20001002-0012", nombre= "Concreto Premezclado 350 kg/cm2 c/ imp Slump 4' - 6' Huso 67",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-                new  Material { codigo="20001002-0013", nombre= "Mortero Premezclado 1:6",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },
-
-                new  Material { codigo="20001002-0014", nombre= "Mortero Premezclado 1:6",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
-                },                
-
-
-                // 3
-
-
-                new  Material { codigo="20001003-0001", nombre= "Cemento Sol Portland Tipo I (42.5 kg)",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001003").materialId
-                },
-
-
-                new  Material { codigo="20001003-0002", nombre= "Cemento APU Portland GU (42.5 kg)",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001003").materialId
-                },
-
-                new  Material { codigo="20001003-0003", nombre= "Cemento Andino Portland Tipo V (42.5 kg)",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001003").materialId
-                },
-
-                // 4
-
-                new  Material { codigo="20001004-0001", nombre= "Alambre Negro Recocido # 16",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001004").materialId
-                },
-
+            //    new  Material { codigo="20001002-0008", nombre= "Concreto Premezclado 280 kg/cm2 Slump 4' - 6' Huso 67",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+
+            //    new  Material { codigo="20001002-0009", nombre= "Concreto Premezclado 280 kg/cm2 c/ imp Slump 4' - 6' Huso 67",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+
+            //    new  Material { codigo="20001002-0010", nombre= "Concreto Premezclado 350 kg/cm2 Slump 4' - 6' Huso 57",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+            //    new  Material { codigo="20001002-0011", nombre= "Concreto Premezclado 350 kg/cm2 Slump 4' - 6' Huso 67",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+            //    new  Material { codigo="20001002-0012", nombre= "Concreto Premezclado 350 kg/cm2 c/ imp Slump 4' - 6' Huso 67",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+            //    new  Material { codigo="20001002-0013", nombre= "Mortero Premezclado 1:6",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },
+
+            //    new  Material { codigo="20001002-0014", nombre= "Mortero Premezclado 1:6",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001002").materialId
+            //    },                
+
+
+            //    // 3
+
+
+            //    new  Material { codigo="20001003-0001", nombre= "Cemento Sol Portland Tipo I (42.5 kg)",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001003").materialId
+            //    },
+
+
+            //    new  Material { codigo="20001003-0002", nombre= "Cemento APU Portland GU (42.5 kg)",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001003").materialId
+            //    },
+
+            //    new  Material { codigo="20001003-0003", nombre= "Cemento Andino Portland Tipo V (42.5 kg)",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001003").materialId
+            //    },
+
+            //    // 4
+
+            //    new  Material { codigo="20001004-0001", nombre= "Alambre Negro Recocido # 16",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001004").materialId
+            //    },
+
 
-                new  Material { codigo="20001004-0002", nombre= "Alambre Negro Recocido # 8",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001004").materialId
-                },
-
+            //    new  Material { codigo="20001004-0002", nombre= "Alambre Negro Recocido # 8",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001004").materialId
+            //    },
+
 
-                // 5
+            //    // 5
 
-                new  Material { codigo="20001005-0001", nombre= "Confitillo",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001004").materialId
-                },
+            //    new  Material { codigo="20001005-0001", nombre= "Confitillo",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001004").materialId
+            //    },
 
 
-                new  Material { codigo="20001005-0002", nombre= "Arena Fina",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001004").materialId
-                },
+            //    new  Material { codigo="20001005-0002", nombre= "Arena Fina",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001004").materialId
+            //    },
 
 
-                new  Material { codigo="20001005-0003", nombre= "Arena Gruesa",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
-                },
+            //    new  Material { codigo="20001005-0003", nombre= "Arena Gruesa",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
+            //    },
 
-                new  Material { codigo="20001005-0004", nombre= "Piedra Chancada de 1/2'",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
-                },
+            //    new  Material { codigo="20001005-0004", nombre= "Piedra Chancada de 1/2'",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
+            //    },
 
-                new  Material { codigo="20001005-0005", nombre= "Piedra Chancada de 3/4' a 1'",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
-                },
+            //    new  Material { codigo="20001005-0005", nombre= "Piedra Chancada de 3/4' a 1'",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
+            //    },
 
-                new  Material { codigo="20001005-0006", nombre= "Piedra de Zanja 6'",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
-                },
+            //    new  Material { codigo="20001005-0006", nombre= "Piedra de Zanja 6'",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
+            //    },
 
-                new  Material { codigo="20001005-0007", nombre= "Piedra de Zanja 8'",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
-                },
+            //    new  Material { codigo="20001005-0007", nombre= "Piedra de Zanja 8'",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
+            //    },
 
 
-                new  Material { codigo="20001005-0008", nombre= "Hormigón",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
-                },
+            //    new  Material { codigo="20001005-0008", nombre= "Hormigón",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "m3").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
+            //    },
 
 
-                new  Material { codigo="20001005-0009", nombre= "Arena Fina",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
-                },
+            //    new  Material { codigo="20001005-0009", nombre= "Arena Fina",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
+            //    },
 
-                new  Material { codigo="20001005-0010", nombre= "Arena Gruesa",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
-                },
+            //    new  Material { codigo="20001005-0010", nombre= "Arena Gruesa",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
+            //    },
 
-                new  Material { codigo="20001005-0011", nombre= "Piedra Chancada de 1/2'",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
-                },
+            //    new  Material { codigo="20001005-0011", nombre= "Piedra Chancada de 1/2'",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "Materiales").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "bls").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20001005").materialId
+            //    },
 
 
-                // SubContratos 01
+            //    // SubContratos 01
 
 
-                new  Material { codigo="20000001-001", nombre= "Alquiler de Baños Portatiles Estándar",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20000001").materialId
-                },
+            //    new  Material { codigo="20000001-001", nombre= "Alquiler de Baños Portatiles Estándar",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20000001").materialId
+            //    },
 
-                new  Material { codigo="20000001-002", nombre= "Alquiler de Baños Portatiles C/Lavamanos",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20000001").materialId
-                },
+            //    new  Material { codigo="20000001-002", nombre= "Alquiler de Baños Portatiles C/Lavamanos",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20000001").materialId
+            //    },
 
 
 
-                // SubContratos 02
+            //    // SubContratos 02
 
 
-                new  Material { codigo="20000002-001", nombre= "Alquiler de lavaderos portatiles P/Obreros",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20000002").materialId
-                },
+            //    new  Material { codigo="20000002-001", nombre= "Alquiler de lavaderos portatiles P/Obreros",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20000002").materialId
+            //    },
 
-                new  Material { codigo="20000002-002", nombre= "Alquiler de lavaderos portatiles Ejecutivo",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20000002").materialId
-                },
+            //    new  Material { codigo="20000002-002", nombre= "Alquiler de lavaderos portatiles Ejecutivo",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20000002").materialId
+            //    },
 
 
-                // SubContratos 03
+            //    // SubContratos 03
 
 
-                new  Material { codigo="20000003-001", nombre= "Alquiler de duchas portatiles",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20000003").materialId
-                },
+            //    new  Material { codigo="20000003-001", nombre= "Alquiler de duchas portatiles",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20000003").materialId
+            //    },
 
-                // SubContratos 04
+            //    // SubContratos 04
 
 
-                new  Material { codigo="20000004-001", nombre= "Alquiler de encofrado metalico de Placas",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20000004").materialId
-                },
+            //    new  Material { codigo="20000004-001", nombre= "Alquiler de encofrado metalico de Placas",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20000004").materialId
+            //    },
 
-                new  Material { codigo="20000004-002", nombre= "Alquiler de encofrado metalico de Columnas",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20000004").materialId
-                },
+            //    new  Material { codigo="20000004-002", nombre= "Alquiler de encofrado metalico de Columnas",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20000004").materialId
+            //    },
 
-                new  Material { codigo="20000004-003", nombre= "Alquiler de encofrado metalico de techo",
-                tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
-                unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
-                materialPadreId = materialpadres.Single(s => s.codigo == "20000004").materialId
-                }
+            //    new  Material { codigo="20000004-003", nombre= "Alquiler de encofrado metalico de techo",
+            //    tipoMaterialId = tipoMaterial.Single(s => s.nombre == "SubContratos").tipoMaterialId,
+            //    unidadMedidaId = unidadMedida.Single(s => s.nombre == "mes").unidadMedidaId,
+            //    materialPadreId = materialpadres.Single(s => s.codigo == "20000004").materialId
+            //    }
 
-            };
+            //};
 
 
-            materialhijos.ForEach(s => context.Materiales.AddOrUpdate(p => p.codigo, s));
-            context.SaveChanges();
+            //materialhijos.ForEach(s => context.Materiales.AddOrUpdate(p => p.codigo, s));
+            //context.SaveChanges();
 
 
             var titulo = new List<Titulo>
@@ -706,39 +707,39 @@
 
             var partidas = new List<Partida>
             {
-                new Partida {  nombre ="ALBAÑILERIA", descripcion = "ALBAÑILERIA", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="TARRAJEO Y PULIDOS ESCALERAS", descripcion = "TARRAJEO Y PULIDOS ESCALERAS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="DERRAMES", descripcion = "DERRAMES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="BRUÑAS", descripcion = "BRUÑAS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="SOLAQUEOS", descripcion = "SOLAQUEOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="PISOS", descripcion = "PISOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="ZOCALOS", descripcion = "ZOCALOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="CONTRAZOCALOS", descripcion = "CONTRAZOCALOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="CARPINTEERIA DE MADERA", descripcion = "CARPINTEERIA DE MADERA", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="MUEBLES", descripcion = "MUEBLES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="Closet", descripcion = "Closet", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="TABLEROS", descripcion = "TABLEROS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="CARPINTEERIA METALICA", descripcion = "CARPINTEERIA METALICA", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="CERRAJERÍA ", descripcion = "CERRAJERÍA ", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="VIDRIOS", descripcion = "VIDRIOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="PINTURA", descripcion = "PINTURA", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="APARATOS SANITARIOS", descripcion = "APARATOS SANITARIOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )", descripcion = "LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="JUNTAS y DINTELES", descripcion = "JUNTAS y DINTELES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
-                new Partida {  nombre ="VARIOS", descripcion = "VARIOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId },
+                new Partida {  nombre ="ALBAÑILERIA", descripcion = "ALBAÑILERIA", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="TARRAJEO Y PULIDOS ESCALERAS", descripcion = "TARRAJEO Y PULIDOS ESCALERAS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId,fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="DERRAMES", descripcion = "DERRAMES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="BRUÑAS", descripcion = "BRUÑAS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="SOLAQUEOS", descripcion = "SOLAQUEOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="PISOS", descripcion = "PISOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="ZOCALOS", descripcion = "ZOCALOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="CONTRAZOCALOS", descripcion = "CONTRAZOCALOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="CARPINTEERIA DE MADERA", descripcion = "CARPINTEERIA DE MADERA", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="MUEBLES", descripcion = "MUEBLES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="Closet", descripcion = "Closet", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="TABLEROS", descripcion = "TABLEROS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId,fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="CARPINTEERIA METALICA", descripcion = "CARPINTEERIA METALICA", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="CERRAJERÍA ", descripcion = "CERRAJERÍA ", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="VIDRIOS", descripcion = "VIDRIOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="PINTURA", descripcion = "PINTURA", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="APARATOS SANITARIOS", descripcion = "APARATOS SANITARIOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )", descripcion = "LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="JUNTAS y DINTELES", descripcion = "JUNTAS y DINTELES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                new Partida {  nombre ="VARIOS", descripcion = "VARIOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Arquitectura").subPresupuestoId , fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador"},
 
 
-                 new Partida {  nombre ="OBRAS PRELIMINARES", descripcion = "OBRAS PRELIMINARES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="DEMOLICIONES", descripcion = "DEMOLICIONES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="MOVIMIENTO DE TIERRAS (INCL. RELLENOS Y AFIRMADOS)", descripcion = "MOVIMIENTO DE TIERRAS (INCL. RELLENOS Y AFIRMADOS)", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="OBRAS DE CONCRETO SIMPLE", descripcion = "OBRAS DE CONCRETO SIMPLE", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="ESTABILIZACION DE TALUDES (MURO PANTALLA)", descripcion = "ESTABILIZACION DE TALUDES (MURO PANTALLA)", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="ENCOFRADO Y DESENCOFRADO ", descripcion = "ENCOFRADO Y DESENCOFRADO ", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="ACERO CORRUGADO f'y=4200 Kg/cm2", descripcion = "ACERO CORRUGADO f'y=4200 Kg/cm2", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="CONCRETO", descripcion = "CONCRETO", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )", descripcion = "LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="JUNTAS y DINTELES", descripcion = "JUNTAS y DINTELES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
-                 new Partida {  nombre ="VARIOS", descripcion = "VARIOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId },
+                 new Partida {  nombre ="OBRAS PRELIMINARES", descripcion = "OBRAS PRELIMINARES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="DEMOLICIONES", descripcion = "DEMOLICIONES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="MOVIMIENTO DE TIERRAS (INCL. RELLENOS Y AFIRMADOS)", descripcion = "MOVIMIENTO DE TIERRAS (INCL. RELLENOS Y AFIRMADOS)", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="OBRAS DE CONCRETO SIMPLE", descripcion = "OBRAS DE CONCRETO SIMPLE", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="ESTABILIZACION DE TALUDES (MURO PANTALLA)", descripcion = "ESTABILIZACION DE TALUDES (MURO PANTALLA)", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="ENCOFRADO Y DESENCOFRADO ", descripcion = "ENCOFRADO Y DESENCOFRADO ", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="ACERO CORRUGADO f'y=4200 Kg/cm2", descripcion = "ACERO CORRUGADO f'y=4200 Kg/cm2", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="CONCRETO", descripcion = "CONCRETO", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )", descripcion = "LOSAS ALIGERADA DE H=25 CMS ( INCLUYE LAS RAMPAS )", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="JUNTAS y DINTELES", descripcion = "JUNTAS y DINTELES", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
+                 new Partida {  nombre ="VARIOS", descripcion = "VARIOS", subPresupuestoId = subPresupuesto.Single(s => s.nombre == "Estructuras").subPresupuestoId, fechaCreacion=DateTime.Today, fechaModificacion=DateTime.Today, usuarioCreacion = "administrador" },
 
 
             //    new Partida {  nombre ="TRAZO Y REPLANTEO DE OBRA", descripcion = "TRAZO Y REPLANTEO DE OBRA", unidadMedidaId = unidadMedida.Single(s => s.nombre == "m2").unidadMedidaId },

@@ -69,11 +69,16 @@ namespace PissanoApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                //UserManager<ApplicationUser> userManager;
 
-                //var user = userManager.FindByName (User.Identity.GetUserId);
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
 
-                //material.UserID = User.Identity.GetUserId();
+                material.fechaCreacion = cstTime;
+                material.usuarioCreacion = User.Identity.Name;
+                material.fechaModificacion = cstTime;
+
+
                 db.Materiales.Add(material);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -112,6 +117,16 @@ namespace PissanoApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                material.fechaCreacion = cstTime;
+                material.usuarioCreacion = User.Identity.Name;
+                material.fechaModificacion = cstTime;
+                material.usuarioModificacion = User.Identity.Name;
+
                 db.Entry(material).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
