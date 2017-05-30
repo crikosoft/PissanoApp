@@ -213,6 +213,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\Almacen.cs" />
+    <Compile Include="Models\OrdenServicio.cs" />
     <Compile Include="Models\RequerimientoDetalleEstadoRequerimientoDetalle.cs" />
     <Compile Include="Models\RequerimientoEstadoRequerimiento.cs" />
     <Compile Include="Models\Categoria.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Models\TipoDocumento.cs" />
     <Compile Include="Models\TipoMaterial.cs" />
     <Compile Include="Models\TipoPresupuesto.cs" />
+    <Compile Include="Models\TipoValorizacion.cs" />
     <Compile Include="Models\Titulo.cs" />
     <Compile Include="Models\UnidadMedida.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
