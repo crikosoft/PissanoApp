@@ -134,6 +134,8 @@ namespace PissanoApp.Models
 
         public DbSet<RequerimientoDetalleEstadoRequerimientoDetalle> RequerimientoDetalleEstadoRequerimientoDetalle { get; set; }
 
+        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.OrdenCompraViewModel> OrdenCompraViewModels { get; set; }
+
         //public System.Data.Entity.DbSet<PissanoApp.ViewModels.RequerimientoViewModel> RequerimientoViewModels { get; set; }
         
 

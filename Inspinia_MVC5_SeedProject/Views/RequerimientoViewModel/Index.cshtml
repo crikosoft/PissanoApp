@@ -109,8 +109,8 @@
                                             @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |*@
                                             
                                             @if (item.EstadoRequerimiento.nombre == "Pendiente Aprobación" || item.EstadoRequerimiento.nombre == "Aprobado Parcial")
-                                                {
-                                                    <a href="~/RequerimientoViewModel/Edit/@Html.DisplayFor(modelItem => item.requerimientoId)"> Modificar </a>
+{
+    <a href="~/RequerimientoViewModel/Edit/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"> Modificar </a>
                                                      @*@Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })*@
                                                 }
                                     </td>

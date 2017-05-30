@@ -85,10 +85,14 @@
                                     </td>
 
                                     <td>
-                                        @Html.ActionLink("Editar", "Edit", new { id = item.requerimientoId }) |
+                                        @*@Html.ActionLink("Editar", "Edit", new { id = item.ordenCompraId }) |
                                         @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |
-                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })
-                                    </td>
+                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })*@
+                                        @if (item.EstadoOrden.nombre == "Pendiente de Aprobación")
+                                        { 
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.ordenCompraId }, new { @class = "btn btn-white btn-sm" })
+                                        }
+                                      </td>
                                     @*<td class="project-actions">
                                         <a href="/RequerimientoViewModel/Create/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Aprobar Orden Compra </a>
                                     </td>*@
