@@ -1,0 +1,242 @@
+﻿@model PissanoApp.Models.OrdenServicio
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrdenServicio</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FormaPago.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormaPago.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Material.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Material.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Moneda.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Moneda.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Partida.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Partida.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.razonSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoValorizacion.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoValorizacion.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.metrado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.metrado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.precioUnitario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.precioUnitario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.subtotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subtotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.igv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.igv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adelanto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adelanto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adelantoPorc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adelantoPorc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fondoGarantia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fondoGarantia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fondoGarantiaPorc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fondoGarantiaPorc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.duracion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.duracion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.avance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.avance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.avancePorc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.avancePorc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.saldo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.saldo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.saldoPorc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.saldoPorc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numeroPagos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numeroPagos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaModificacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ordenServicioId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

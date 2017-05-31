@@ -101,19 +101,10 @@ namespace PissanoApp.Models
         public System.Data.Entity.DbSet<PissanoApp.Models.Moneda> Monedas { get; set; }
 
         public System.Data.Entity.DbSet<PissanoApp.Models.TipoPresupuesto> TipoPresupuestoes { get; set; }
-
-        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.PresupuestoViewModel> PresupuestoViewModels { get; set; }
-
-        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.PresupuestoViewModel> PresupuestoViewModels { get; set; }
-
         
         public DbSet<Titulo> Titulo { get; set; }
 
         public DbSet<Partida> Partida { get; set; }
-
-        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.PresupuestoPartidaViewModel> PresupuestoPartidaViewModels { get; set; }
-
-        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.PresupuestoTitulosViewModel> PresupuestoTitulosViewModels { get; set; }
 
         public DbSet<PresupuestoTitulo> PresupuestoTitulo { get; set; }
 
@@ -133,6 +124,18 @@ namespace PissanoApp.Models
         public DbSet<RequerimientoEstadoRequerimiento> RequerimientoEstadoRequerimiento { get; set; }
 
         public DbSet<RequerimientoDetalleEstadoRequerimientoDetalle> RequerimientoDetalleEstadoRequerimientoDetalle { get; set; }
+
+        public DbSet<OrdenServicio> OrdenServicio { get; set; }
+
+        public DbSet<Valorizacion> Valorizacion { get; set; }
+
+        public DbSet<Archivo> Archivo { get; set; }
+
+        public DbSet<TipoValorizacion> TipoValorizacion { get; set; }
+
+        public DbSet<TipoArchivo> TipoArchivo { get; set; }
+
+        public DbSet<OrdenServicioArchivo> OrdenServicioArchivo { get; set; }
 
         //public System.Data.Entity.DbSet<PissanoApp.ViewModels.OrdenCompraViewModel> OrdenCompraViewModels { get; set; }
 

@@ -240,6 +240,19 @@
             context.SaveChanges();
 
 
+            var tipoValorizaciones = new List<TipoValorizacion>
+            {
+                new TipoValorizacion { nombre= "Quincenal", descripcion="Quincenal" },
+                new TipoValorizacion { nombre= "Mensual", descripcion="Mensual" },
+                new TipoValorizacion { nombre= "Al término de ejecución de actividad", descripcion="Al término de ejecución de actividad" }
+
+
+
+            };
+
+            tipoValorizaciones.ForEach(s => context.TipoValorizacion.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
             //var materialpadres = new List<Material>
             //{
             //    new  Material { codigo="20001001", nombre= "Acero corrugado f'y = 4200 Kg/cm2", MaterialPadre=null,

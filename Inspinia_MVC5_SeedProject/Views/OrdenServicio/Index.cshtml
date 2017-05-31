@@ -1,0 +1,195 @@
+﻿@model IEnumerable<PissanoApp.Models.OrdenServicio>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FormaPago.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Material.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Moneda.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Partida.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoValorizacion.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.metrado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.precioUnitario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.subtotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.igv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.adelanto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.adelantoPorc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fondoGarantia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fondoGarantiaPorc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaInicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.duracion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.avance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.avancePorc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.saldo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.saldoPorc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numeroPagos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.comentario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuarioCreacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuarioModificacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaModificacion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormaPago.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Material.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Moneda.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Partida.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proveedor.razonSocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoValorizacion.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.metrado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.precioUnitario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.subtotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.igv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.adelanto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.adelantoPorc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fondoGarantia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fondoGarantiaPorc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaInicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.duracion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.avance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.avancePorc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.saldo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.saldoPorc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numeroPagos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.comentario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuarioCreacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuarioModificacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaCreacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaModificacion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ordenServicioId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ordenServicioId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ordenServicioId })
+        </td>
+    </tr>
+}
+
+</table>

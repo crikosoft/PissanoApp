@@ -5,12 +5,12 @@ using System.Web;
 
 namespace PissanoApp.Models
 {
-    public class TipoValorizacion
+    public class TipoArchivo
     {
-        public int tipoValorizacionId { get; set; }
+        public int tipoArchivoId { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
 
-        public virtual List<OrdenServicio> OrdenServicio { get; set; }
+        public List<Archivo> Archivos { get; set; }
     }
 }
