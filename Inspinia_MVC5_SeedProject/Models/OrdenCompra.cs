@@ -64,5 +64,7 @@ namespace PissanoApp.Models
 
         public virtual Moneda Moneda { get; set; }
 
+        public virtual List<OrdenCompraEstadoOrden> OrdenCompraEstados { get; set; }
+
     }
 }

@@ -277,7 +277,7 @@ namespace PissanoApp.Controllers
                 OrdenCompraOriginal.subTotal = total;
                 OrdenCompraOriginal.igv = total * 0.18;
                 OrdenCompraOriginal.total = total + total * 0.18;
-
+                OrdenCompraOriginal.estadoOrdenId = ordenCompra.estadoOrdenId;
 
 
                 // 4. Agrega Estado - Orden Compras

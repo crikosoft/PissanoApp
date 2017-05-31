@@ -168,7 +168,10 @@
                 new EstadoOrden { descripcion = "Aprobación 2", nombre = "Aprobación 2"},
                 new EstadoOrden { descripcion = "Aprobación 3", nombre = "Aprobación 3"},
                  new EstadoOrden { descripcion = "Ingreso Parcial", nombre = "Ingreso Parcial"},
-                 new EstadoOrden { descripcion = "Ingreso Total", nombre = "Ingreso Total"}
+                 new EstadoOrden { descripcion = "Ingreso Total", nombre = "Ingreso Total"},
+                 new EstadoOrden { descripcion = "Rechazado Aprobación 1", nombre = "Rechazado Aprobación 1"},
+                 new EstadoOrden { descripcion = "Rechazado Aprobación 2", nombre = "Rechazado Aprobación 2"},
+                 new EstadoOrden { descripcion = "Rechazado Aprobación 3", nombre = "Rechazado Aprobación 3"}
 
             };
 
