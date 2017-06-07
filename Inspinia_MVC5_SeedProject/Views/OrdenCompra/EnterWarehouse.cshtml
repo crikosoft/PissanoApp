@@ -1,7 +1,7 @@
 ﻿@model PissanoApp.Models.OrdenCompra
 
 @{
-    ViewBag.Title = "Approve2";
+    ViewBag.Title = "EnterWarehouse";
 }
 
 
@@ -11,7 +11,7 @@
     @Html.HiddenFor(model => model.ordenCompraId)
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
-            <h2>Documento de Orden de Compra</h2>
+            <h2>Ingreso de Orden de Compra</h2>
             <ol class="breadcrumb">
                 <li>
                     @Html.ActionLink("Lista Aprobaciones", "IndexApprove")
@@ -72,11 +72,14 @@
                     </div>
 
                     <div class="table-responsive m-t">
-                        <table class="table invoice-table">
+                        <table class="table invoice-table" id="tablaItems">
                             <thead>
                                 <tr>
+                                    <th></th>
+
                                     <th>Lista de Items</th>
                                     <th>Cantidad</th>
+                                    <th>Cantidad Ingresada</th>
                                     <th>UND.</th>
                                     <th>Precio Unitario</th>
                                     <th>Precio Total</th>
@@ -86,25 +89,30 @@
 
 
                                 @*<tr>
-                                        <td>
-                                            <div><strong>Admin Theme with psd project layouts</strong></div>
-                                            <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
-                                        </td>
-                                        <td>1</td>
-                                        <td>$26.00</td>
-                                        <td>$5.98</td>
-                                        <td>$31,98</td>
-                                    </tr>*@
+                    <td>
+                        <div><strong>Admin Theme with psd project layouts</strong></div>
+                        <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+                    </td>
+                    <td>1</td>
+                    <td>$26.00</td>
+                    <td>$5.98</td>
+                    <td>$31,98</td>
+                </tr>*@
 
 
                                 @foreach (var item in Model.OrdenesCompraDetalles)
                                 {
                                     <tr>
                                         <td>
+                                            <input type="checkbox" class="i-checks" id=@Html.DisplayFor(modelItem => item.ordenCompradetalleId) name="input[]">
+                                        </td>
+                                        <td>
                                             <div><strong>@Html.DisplayFor(modelItem => item.Material.nombre)</strong></div>
                                             <small>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</small>
                                         </td>
                                         <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
+                                        <td><input type="text" class="form-control" id="cantidadingresada" placeholder="0"></td>
+
                                         <td>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</td>
                                         <td>@Html.DisplayFor(modelItem => item.precioUnitario)</td>
                                         <td>@Html.DisplayFor(modelItem => item.precioTotal)</td>
@@ -122,77 +130,71 @@
                         <tbody>
                             <tr>
                                 <td><strong>Sub Total :</strong></td>
-                                <td>@Html.DisplayFor(model => model.Moneda.simbolo)  @Html.DisplayFor(model => model.subTotal)</td>
+                                <td>S/. @Html.DisplayFor(model => model.subTotal)</td>
                             </tr>
                             <tr>
                                 <td><strong>IGV :</strong></td>
-                                <td>@Html.DisplayFor(model => model.Moneda.simbolo)  @Html.DisplayFor(model => model.igv)</td>
+                                <td>S/. @Html.DisplayFor(model => model.igv)</td>
                             </tr>
                             <tr>
                                 <td><strong>TOTAL :</strong></td>
-                                <td>@Html.DisplayFor(model => model.Moneda.simbolo)  @Html.DisplayFor(model => model.total)</td>
+                                <td>S/. @Html.DisplayFor(model => model.total)</td>
                             </tr>
                         </tbody>
                     </table>
 
-                   
+
 
                     <div class="well m-t">
                         <strong>Comentario</strong>
                         @Html.DisplayFor(model => model.comentario)
                     </div>
-
                     @* botones de Aprobación *@
-                    <div class="text-left">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <input value="Desaprobar!" class="btn btn-danger" id="BtnDesaprobarModal" data-toggle="modal" data-target="#myModalDesaprobar" />
-
-                            </div>
-                        </div>
-                    </div>
                     <div class="text-right">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <input type="submit" value="Aprobar!" class="btn btn-primary" />
-
-                            </div>
+                        <div class="form-group">
+                            @*<input type="submit" value="Aprobar!" class="btn btn-primary" />*@
+                            <input value="Aprobar!" class="btn btn-primary" id="BtnAprobar" />
                         </div>
                     </div>
 
                     @*fin botones Aprobación*@
                 </div>
+
             </div>
+
+
+
+
+
 
         </div>
     </div>
-    
-    
+
 
     @* Copiar hasta aqui para print*@
-    
-   
-             <div class="modal inmodal" id="myModalDesaprobar" tabindex="-1" role="dialog" aria-hidden="true">
-              <div class="modal-dialog">
-                  <div class="modal-content animated fadeIn">
-                      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                          <h4 class="modal-title">Desaprobando Orden de Compra</h4>
-                      </div>
-                      <div class="modal-body">
-                              <p>
-                                 
-                                  <textarea rows="3" class="form-control" id="comentario"></textarea> <span class="help-block m-b-none">Agregue algún comentario o motivo a considerar durante la revisión de la Orden de Compra</span>
 
-                        </p>
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-dismiss="modal" id="BtnDesaprobar">Desaprobar!</button>
-                      </div>
-                  </div>
-              </div>
-          </div> 
- 
+
+    <div class="modal inmodal" id="myModalDesaprobar" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeIn">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Desaprobando Orden de Compra</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+
+                        <textarea rows="3" class="form-control" id="comentario"></textarea> <span class="help-block m-b-none">Agregue algún comentario o motivo a considerar durante la revisión de la Orden de Compra</span>
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="BtnDesaprobar">Desaprobar!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 }
 
 <p>
@@ -200,18 +202,57 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 
-@section Scripts {
+@section Styles {
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+}
 
+@section Scripts {
+@Scripts.Render("~/plugins/iCheck")
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
 
-            $("#BtnDesaprobar").click(function () {
+            $("#BtnAprobar").click(function () {
+
+                var cells = [];
+
+                $('#tablaItems tr').each(function () {
+                    if ($(this).find("td:eq(0) input[type='checkbox']").is(":checked")) {
+                        cells.push({
+
+                            ordenDetalleId: $(this).find("td:eq(0) input[type='checkbox']").attr("id"),
+                            cantidad: $(this).find("td:eq(3) input[type='text']").val()
+                            
+
+                        });
+                    }
+
+
+                });
+
+                //alert(cells[0].cantidad);
+                var Detalles = [];
+
+                for (var i = 0; i < cells.length; i++) {
+                    var ordenCompraDetalle = new Object();
+
+                    ordenCompraDetalle.ordenCompraDetalleId = cells[i].ordenDetalleId;
+                    ordenCompraDetalle.cantidad = cells[i].cantidad;
+                    Detalles.push(ordenCompraDetalle);
+
+                    //alert(ordenCompraDetalle.cantidad);
+                    
+
+                }
 
                 var ordenCompra = new Object();
 
                 ordenCompra.ordenCompraId = $("#ordenCompraId").val();
-                ordenCompra.comentario = $("#comentario").val();;
+                ordenCompra.OrdenCompraDetalle = Detalles;
 
                 OrdenCompraFinal = JSON.stringify({ 'ordenCompra': ordenCompra });
 
@@ -219,19 +260,20 @@
                 $.ajax({
                     contentType: 'application/json; charset=utf-8',
                     type: 'POST',
-                    url: '@Url.Action("Disapprove2")',
+                    url: '@Url.Action("EnterWarehouse")',
                     data: OrdenCompraFinal,
                     success: function (data) {
-                        window.location = '@Url.Action("IndexApprove2")';
+                        window.location = '@Url.Action("IndexWarehouse")';
                     },
                     error: function (result) {
                         alert(result.statusText)
                         alert('No se pudo realizar la acción solicitada');
 
                     }
-                });
-            });
+                })
 
+
+        });
 
         });
 

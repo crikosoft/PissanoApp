@@ -74,8 +74,15 @@
 
 
                                     <td>
-      
-                                        <a href="~/OrdenCompraViewModel/Create/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn  btn-primary btn-sm"><i class="fa fa-folder"></i> Crear Orden Compra </a>                                   </td>
+                                          @if (item.TipoCompra.nombre == "Materiales")
+                                            { 
+                                           <a href="~/OrdenCompraViewModel/Create/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn  btn-primary btn-sm"><i class="fa fa-folder"></i> Crear Orden Compra </a>                                  
+                                          }
+                                          else if (item.TipoCompra.nombre == "SubContratos")
+                                          {
+                                          <a href="~/OrdenServicioViewModel/Create/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn  btn-primary btn-sm"><i class="fa fa-folder"></i> Crear Orden Servicio </a>                                  
+                                          }
+                                      </td>
 
                                 </tr>
                             }

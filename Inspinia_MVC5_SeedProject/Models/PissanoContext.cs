@@ -29,6 +29,12 @@ namespace PissanoApp.Models
               HasForeignKey(m => m.materialPadreId);
 
 
+            //modelBuilder.Entity<OrdenServicio>().
+            //  HasOptional<Requerimiento>(a => a.Requerimiento).
+            //  WithMany().
+            //  HasForeignKey(m => m.requerimientoId);
+
+
             //modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
             //modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
             //modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
@@ -136,6 +142,12 @@ namespace PissanoApp.Models
         public DbSet<TipoArchivo> TipoArchivo { get; set; }
 
         public DbSet<OrdenServicioArchivo> OrdenServicioArchivo { get; set; }
+
+        public DbSet<OrdenCompraEstadoOrden> OrdenCompraEstadoOrden { get; set; }
+
+        public DbSet<EstadoValorizacion> EstadosValorizacion { get; set; }
+
+
 
         //public System.Data.Entity.DbSet<PissanoApp.ViewModels.OrdenCompraViewModel> OrdenCompraViewModels { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PissanoApp.Models.OrdenCompra>
 
 @{
-    ViewBag.Title = "IndexApprove";
+    ViewBag.Title = "IndexWarehouse";
 }
 
 
@@ -11,8 +11,8 @@
 
 @*<p>
 
-    <a href="@Url.Action("IndexApprove", "OrdenCompraViewModel")" class="btn btn-w-m btn-primary">Aprobar</a>
-</p>*@
+        <a href="@Url.Action("IndexApprove", "OrdenCompraViewModel")" class="btn btn-w-m btn-primary">Aprobar</a>
+    </p>*@
 
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -30,7 +30,9 @@
                 </div>
                 <div class="ibox-content">
 
+                    @*<table class="footable table table-stripped toggle-arrow-tiny " data-page-size="10">*@
                     <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+
                         <thead>
                             <tr>
 
@@ -45,11 +47,11 @@
                                 <th>Total</th>
                                 <th></th>
 
-                                
-                                @*<th data-hide="all">IGV</th>
-                                <th data-hide="all">Total</th>
-                                <th data-hide="all">Forma Pago</th>
-                                <th data-hide="all">Materiales</th>*@
+                                @*<th data-hide="all">Fecha</th>
+                                    <th data-hide="all">IGV</th>
+                                    <th data-hide="all">Total</th>
+                                    <th data-hide="all">Forma Pago</th>
+                                    <th data-hide="all">Materiales</th>*@
                                 <th></th>
                             </tr>
                         </thead>
@@ -60,10 +62,27 @@
 
                                 <tr class="gradeX">
                                     <td>@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
-                                    <td class="client-status"><span class="label label-warning"></span>
-                                        <button type="button" class="btn btn-warning btn-xs" data-container="body" data-toggle="popover" data-placement="right" data-content="@Html.DisplayFor(modelItem => item.OrdenCompraEstados.LastOrDefault().comentario)">
-                                            @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                        </button>
+                                    @*<td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>*@
+                                    <td class="client-status">
+                                        <span class="label label-warning"></span>
+                                        @if (item.estadoOrdenId == 4)
+                                            {
+                                            <button type="button" class="btn btn-warning btn-xs" data-container="body" data-toggle="popover" data-placement="right" data-content="@Html.DisplayFor(modelItem => item.OrdenCompraEstados.LastOrDefault().comentario)">
+                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+                                            </button>
+                                        }
+                                        else if (item.estadoOrdenId == 6)
+                                        {
+                                            <button type="button" class="btn btn-success btn-xs" data-container="body" data-toggle="popover" data-placement="right" data-content="@Html.DisplayFor(modelItem => item.OrdenCompraEstados.LastOrDefault().comentario)">
+                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+                                            </button>
+                                        }
+                                        else if (item.estadoOrdenId == 5)
+                                        {
+                                            <button type="button" class="btn btn-default btn-xs" data-container="body" data-toggle="popover" data-placement="right" data-content="@Html.DisplayFor(modelItem => item.OrdenCompraEstados.LastOrDefault().comentario)">
+                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+                                            </button>
+                                        }  
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.numero)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
@@ -77,28 +96,29 @@
                                         <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>
 
-                                    
-                                    @*<td>@Html.DisplayFor(modelItem => item.igv)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.total)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.FormaPago.nombre)</td>
-                                    <td>
-                                        @foreach (var itemDetalles in item.OrdenesCompraDetalles)
-                                        {
-                                            @Html.DisplayFor(modelItem => itemDetalles.Material.nombre)
+                                    @*<td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.igv)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.total)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.FormaPago.nombre)</td>
+                                        <td>
+                                            @foreach (var itemDetalles in item.OrdenesCompraDetalles)
+                                            {
+                                                @Html.DisplayFor(modelItem => itemDetalles.Material.nombre)
 
 
-                                        }
-                                    </td>*@
+                                            }
+                                        </td>*@
                                     <td>
-                                        @if (item.estadoOrdenId == 1)
+                                        @if (item.estadoOrdenId == 4)
                                         {
-                                            <a href="~/OrdenCompra/Approve/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
+                                            <a href="~/OrdenCompra/EnterWarehouse/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Ingresar </a>
                                         }
+
                                     </td>
                                     @*<td class="project-actions">
 
-                            <div class="checkbox i-checks"><label> <input type="checkbox" value="" > <i></i> Aprobar Orden </label></div>
-                        </td>*@
+                                            <div class="checkbox i-checks"><label> <input type="checkbox" value="" > <i></i> Aprobar Orden </label></div>
+                                        </td>*@
                                 </tr>
                             }
 
@@ -182,3 +202,5 @@
 
     </script>
 }
+
+

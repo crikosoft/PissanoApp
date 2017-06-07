@@ -12,6 +12,13 @@ namespace PissanoApp.Models
         public int ordenServicioId { get; set; }
 
         [Required()]
+        public string numero { get; set; }
+
+        [Required()]
+        public int obraId { get; set; }
+        public virtual Obra Obra { get; set; }
+
+        [Required()]
         [StringLength(20)]
         [DisplayName("Código")]
         public string codigo { get; set; }
@@ -65,6 +72,9 @@ namespace PissanoApp.Models
         [Required(ErrorMessage = "Partida es requerida")]
         public int partidaId { get; set; }
 
+        public int requerimientoId { get; set; }
+        public virtual Requerimiento Requerimiento { get; set; }
+
         public double? avance { get; set; }
         public double? avancePorc { get; set; }
         public double? saldo { get; set; }
@@ -72,7 +82,6 @@ namespace PissanoApp.Models
         public int numeroPagos { get; set; }
 
 
-        [Required()]
         [StringLength(1000)]
         [DisplayName("Comentario")]
         public string comentario { get; set; }
@@ -83,6 +92,8 @@ namespace PissanoApp.Models
         public virtual Moneda Moneda{ get; set; }
         public virtual TipoValorizacion TipoValorizacion { get; set; }
         public virtual List<OrdenServicioArchivo> OrdenServicioArchivos { get; set; }
+        public virtual List<Valorizacion> Valorizaciones { get; set; }
+
         public virtual Partida Partida { get; set; }
 
 

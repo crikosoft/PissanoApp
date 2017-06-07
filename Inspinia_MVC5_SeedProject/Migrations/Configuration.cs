@@ -168,7 +168,10 @@
                 new EstadoOrden { descripcion = "Aprobación 2", nombre = "Aprobación 2"},
                 new EstadoOrden { descripcion = "Aprobación 3", nombre = "Aprobación 3"},
                  new EstadoOrden { descripcion = "Ingreso Parcial", nombre = "Ingreso Parcial"},
-                 new EstadoOrden { descripcion = "Ingreso Total", nombre = "Ingreso Total"}
+                 new EstadoOrden { descripcion = "Ingreso Total", nombre = "Ingreso Total"},
+                 new EstadoOrden { descripcion = "Rechazado Aprobación 1", nombre = "Rechazado Aprobación 1"},
+                 new EstadoOrden { descripcion = "Rechazado Aprobación 2", nombre = "Rechazado Aprobación 2"},
+                 new EstadoOrden { descripcion = "Rechazado Aprobación 3", nombre = "Rechazado Aprobación 3"}
 
             };
 
@@ -239,19 +242,33 @@
             presupuestos.ForEach(s => context.Presupuestos.AddOrUpdate(p => p.descripcion, s));
             context.SaveChanges();
 
-
+            
             var tipoValorizaciones = new List<TipoValorizacion>
             {
                 new TipoValorizacion { nombre= "Quincenal", descripcion="Quincenal" },
                 new TipoValorizacion { nombre= "Mensual", descripcion="Mensual" },
                 new TipoValorizacion { nombre= "Al término de ejecución de actividad", descripcion="Al término de ejecución de actividad" }
 
-
-
             };
 
             tipoValorizaciones.ForEach(s => context.TipoValorizacion.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
+
+            var estadoValorizacion = new List<EstadoValorizacion>
+            {
+                new EstadoValorizacion { nombre= "Pendiente de Registro", descripcion="Pendiente de Registro" },
+                new EstadoValorizacion { nombre= "Pendiente de Aprobación", descripcion="Pendiente de Aprobación" },
+                new EstadoValorizacion { nombre= "Aprobación 1", descripcion="Aprobación 1" },
+                new EstadoValorizacion { nombre= "Aprobación 2", descripcion="Aprobación 2" },
+                new EstadoValorizacion { nombre= "Aprobación 3", descripcion="Aprobación 3" },
+                new EstadoValorizacion { nombre= "Rechazado", descripcion="Rechazado" },
+                new EstadoValorizacion { nombre= "Pagado", descripcion="Pagado" }
+
+            };
+
+            estadoValorizacion.ForEach(s => context.EstadosValorizacion.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
 
             //var materialpadres = new List<Material>
             //{
@@ -712,7 +729,8 @@
             var parametros = new List<Parametro>
             {
                 new Parametro { nombre= "OC", ultimoNumero = 0},
-                new Parametro { nombre= "RQ", ultimoNumero = 0}
+                new Parametro { nombre= "RQ", ultimoNumero = 0},
+                new Parametro { nombre= "OS", ultimoNumero = 0}
             };
 
             parametros.ForEach(s => context.Parametro.AddOrUpdate(p => p.nombre, s));

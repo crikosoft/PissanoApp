@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PissanoApp.Models;
+using System.Data.Entity.Validation;
+using System.Text;
 
 namespace PissanoApp.Controllers
 {
@@ -19,6 +21,71 @@ namespace PissanoApp.Controllers
         {
             var ordenservicio = db.OrdenServicio.Include(o => o.FormaPago).Include(o => o.Material).Include(o => o.Moneda).Include(o => o.Partida).Include(o => o.Proveedor).Include(o => o.TipoValorizacion);
             return View(ordenservicio.ToList());
+        }
+
+        public ActionResult Valorizar(int? id)
+        {
+            OrdenServicio ordenservicio = db.OrdenServicio.Find(id);
+            return View(ordenservicio);
+        }
+
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult SaveValorization(Valorizacion valorizacion)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+            //if (ModelState.IsValid)
+            //{
+
+            OrdenServicio ordenServicio = db.OrdenServicio.Find(valorizacion.ordenServicioId);
+
+            DateTime timeUtc = DateTime.UtcNow;
+            TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+            
+            Valorizacion valorizacion2 = db.Valorizacion.Find(valorizacion.valorizacionId);
+            valorizacion2.avancePorc = valorizacion.avancePorc;
+            valorizacion2.avance = ordenServicio.total * valorizacion.avancePorc/100;
+            valorizacion2.estadoValorizacionId = 2;
+            valorizacion2.usuarioModificacion = User.Identity.Name;
+            valorizacion2.fechaModificacion = cstTime;
+
+            ordenServicio.avance = ordenServicio.avance + valorizacion2.avance;
+            ordenServicio.saldo = ordenServicio.saldo - valorizacion2.avance;
+            ordenServicio.usuarioModificacion = User.Identity.Name;
+            ordenServicio.fechaModificacion = cstTime;
+
+            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                ); // Add the original exception as the innerException
+            }
+            return RedirectToAction("IndexApprove");
+            //}
+
+            //return View(requerimiento);
         }
 
         // GET: /OrdenServicio/Details/5

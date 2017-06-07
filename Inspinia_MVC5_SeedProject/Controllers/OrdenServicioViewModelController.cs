@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace PissanoApp.Controllers
 {
-    public class OrdenCompraViewModelController : Controller
+    public class OrdenServicioViewModelController : Controller
     {
 
         private PissanoContext db = new PissanoContext();
@@ -29,13 +29,15 @@ namespace PissanoApp.Controllers
 
              var requerimiento = req;
 
-            var ordenesCompra = db.Ordenes.Where(p => p.Requerimiento.tipoCompraId == id);
+            var ordenesCompra = db.OrdenServicio.Where(p => p. Requerimiento.tipoCompraId == id);
 
             var tipoCompra = db.TipoCompra.Find(id);
 
             var monedas = db.Monedas;
 
-            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList(), tipoCompra);
+            var tipoValorizaciones = db.TipoValorizacion;
+
+            var OrdenCompraViewModels = new OrdenServicioViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList(), tipoCompra, tipoValorizaciones.ToList());
 
 
             return View(OrdenCompraViewModels);
@@ -78,13 +80,16 @@ namespace PissanoApp.Controllers
 
             requerimiento.Detalles = requerimiento.Detalles.Where(p => p.estadoRequerimientoDetalleId == estadoRequerimientoDetalle.estadoRequerimientoDetalleId).ToList();
 
-            var ordenesCompra = db.Ordenes;
+            var ordenesCompra = db.OrdenServicio;
 
             var monedas = db.Monedas;
 
             var tipoCompra = db.TipoCompra.Find(requerimiento.tipoCompraId);
 
-            var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList(), tipoCompra);
+            var tipoValorizaciones = db.TipoValorizacion;
+
+
+            var OrdenCompraViewModels = new OrdenServicioViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList(), tipoCompra, tipoValorizaciones.ToList());
 
 
             return View(OrdenCompraViewModels);
@@ -101,10 +106,10 @@ namespace PissanoApp.Controllers
             {
                 ordenCompra.Requerimiento = db.Requerimientos.Single(p => p.requerimientoId == ordenCompra.requerimientoId);
                 //ordenCompra.numero = "OC-" + ordenCompra.Requerimiento.requerimientoId.ToString() + "-"+ ordenCompra.OrdenesCompraDetalles[0].materialId;
-                var parametro = db.Parametro.Single(p => p.nombre == "OC");
+                var parametro = db.Parametro.Single(p => p.nombre=="OS");
 
                 string ceros = new String('0', 5 - parametro.ultimoNumero.ToString().Length);
-                ordenCompra.numero = "OC-" + ceros + (parametro.ultimoNumero + 1).ToString() + "-" + ordenCompra.Requerimiento.Obra.identificador;
+                ordenCompra.numero = "OS-" + ceros + (parametro.ultimoNumero + 1).ToString() + "-" + ordenCompra.Requerimiento.Obra.identificador;
 
 
                 DateTime timeUtc = DateTime.UtcNow;
@@ -141,31 +146,31 @@ namespace PissanoApp.Controllers
                             item.ordenCompraId = ordenCompra.ordenCompraId;
                         }
 
-                    }
+                    }  
                 }
                 // Fin Actualiza estado Requerimientos
 
-
+                
 
                 ordenCompra.adelanto = 1;
                 ordenCompra.obraId = ordenCompra.Requerimiento.obraId;
 
                 db.Ordenes.Add(ordenCompra);
                 //db.SaveChanges();
-
-                var total = 0.0;
+                
+                var total=0.0;
 
                 foreach (var item in ordenCompra.OrdenesCompraDetalles)
                 {
                     item.ordenCompraId = ordenCompra.ordenCompraId;
-                    item.estadoOrdenDetalleId = 1;
+                    item.estadoOrdenDetalleId = 1; 
                     item.precioTotal = item.cantidad * item.precioUnitario;
                     total = total + item.cantidad * item.precioUnitario;
                     db.OrdenDetalles.Add(item);
 
                 }
                 ordenCompra.subTotal = total;
-                ordenCompra.igv = total * 0.18;
+                ordenCompra.igv = total*0.18;
                 ordenCompra.total = total + total * 0.18;
 
                 parametro.ultimoNumero = parametro.ultimoNumero + 1;
@@ -177,6 +182,111 @@ namespace PissanoApp.Controllers
             return View();
         }
 
+
+        public ActionResult CrearOrdenServicio(OrdenServicio ordenCompra)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+            if (ModelState.IsValid)
+            {
+                ordenCompra.Requerimiento = db.Requerimientos.Single(p => p.requerimientoId == ordenCompra.requerimientoId);
+                //ordenCompra.numero = "OC-" + ordenCompra.Requerimiento.requerimientoId.ToString() + "-"+ ordenCompra.OrdenesCompraDetalles[0].materialId;
+                var parametro = db.Parametro.Single(p => p.nombre == "OS");
+
+                string ceros = new String('0', 5 - parametro.ultimoNumero.ToString().Length);
+                ordenCompra.numero = "OS-" + ceros + (parametro.ultimoNumero + 1).ToString() + "-" + ordenCompra.Requerimiento.Obra.identificador;
+
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                ordenCompra.fechaCreacion = cstTime;
+                ordenCompra.usuarioCreacion = User.Identity.Name;
+                ordenCompra.fechaModificacion = cstTime;
+                //ordenCompra.igv = 10;
+                //ordenCompra.total = 100;
+                //ordenCompra.estadoOrdenId = 1;
+
+                ordenCompra.Requerimiento.estadoRequerimientoId = 3; // OC total
+
+                //var cantidadDetallesConOc = 0;
+                //cantidadDetallesConOc = ordenCompra.Requerimiento.Detalles.Where(p => p.estadoRequerimientoDetalleId == 2).Count();
+                //if (cantidadDetallesConOc + ordenCompra.OrdenesCompraDetalles.Count() == ordenCompra.Requerimiento.Detalles.Count())
+                //{
+                //    ordenCompra.Requerimiento.estadoRequerimientoId = 3; // OC total
+                //}
+                //else
+                //{
+                //    ordenCompra.Requerimiento.estadoRequerimientoId = 2; // OC Parcial
+                //}
+
+
+                // Actualiza estado de Requerimientos
+                foreach (var item in ordenCompra.Requerimiento.Detalles)
+                {
+                    item.estadoRequerimientoDetalleId = 2;
+                    item.ordenCompraId = 1;//ordenCompra.ordenServicioId; ***********************
+                }
+                // Fin Actualiza estado Requerimientos
+
+
+
+                ordenCompra.adelanto = 1;
+                ordenCompra.obraId = ordenCompra.Requerimiento.obraId;
+
+                db.OrdenServicio.Add(ordenCompra);
+                //db.SaveChanges();
+
+                var total = 0.0;
+
+                //foreach (var item in ordenCompra.OrdenesCompraDetalles)
+                //{
+                //    item.ordenCompraId = ordenCompra.ordenCompraId;
+                //    item.estadoOrdenDetalleId = 1; 
+                //    item.precioTotal = item.cantidad * item.precioUnitario;
+                //    total = total + item.cantidad * item.precioUnitario;
+                //    db.OrdenDetalles.Add(item);
+
+                //}
+
+                total = ordenCompra.metrado * ordenCompra.precioUnitario;
+                ordenCompra.subtotal = total;
+                ordenCompra.igv = total * 0.18;
+                ordenCompra.total = total + total * 0.18;
+                ordenCompra.saldo = total + total * 0.18;
+
+                parametro.ultimoNumero = parametro.ultimoNumero + 1;
+
+                //var valorizacion = new Valorizacion();
+
+                for (int i =0; i < ordenCompra.numeroPagos; i++)
+                {
+                    var valorizacion = new Valorizacion();
+                    int numero = i + 1;
+                    valorizacion.concepto = "Valorización #" + numero;
+
+
+                    valorizacion.OrdenServicio = ordenCompra;
+                    valorizacion.avance = 0;
+                    valorizacion.avancePorc = 0;
+                    valorizacion.estadoValorizacionId = 1;
+                    valorizacion.fechacierre = cstTime;
+                    valorizacion.fechaCreacion = cstTime;
+                    valorizacion.fechaModificacion = cstTime;
+                    valorizacion.usuarioCreacion = User.Identity.Name;
+                    valorizacion.usuarioModificacion = User.Identity.Name;
+
+
+                    db.Valorizacion.Add(valorizacion);
+                }
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
         // GET: /RequerimientoViewModel/Create
         public ActionResult Edit(int? id)
         {

@@ -140,6 +140,23 @@ namespace PissanoApp.Migrations
                 .PrimaryKey(t => t.formaPagoId);
             
             CreateTable(
+                "dbo.OrdenCompraEstadoOrdens",
+                c => new
+                    {
+                        ordenCompraEstadoOrdenId = c.Int(nullable: false, identity: true),
+                        ordenCompraId = c.Int(nullable: false),
+                        estadoOrdenId = c.Int(nullable: false),
+                        comentario = c.String(),
+                        usuarioCreacion = c.String(nullable: false),
+                        fechaCreacion = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.ordenCompraEstadoOrdenId)
+                .ForeignKey("dbo.EstadoOrdens", t => t.estadoOrdenId)
+                .ForeignKey("dbo.OrdenCompras", t => t.ordenCompraId)
+                .Index(t => t.ordenCompraId)
+                .Index(t => t.estadoOrdenId);
+            
+            CreateTable(
                 "dbo.OrdenCompraDetalles",
                 c => new
                     {
@@ -364,6 +381,139 @@ namespace PissanoApp.Migrations
                 .Index(t => t.estadoRequerimientoId);
             
             CreateTable(
+                "dbo.OrdenServicios",
+                c => new
+                    {
+                        ordenServicioId = c.Int(nullable: false, identity: true),
+                        numero = c.String(nullable: false),
+                        obraId = c.Int(nullable: false),
+                        codigo = c.String(nullable: false, maxLength: 20),
+                        materialId = c.Int(nullable: false),
+                        proveedorId = c.Int(nullable: false),
+                        metrado = c.Double(nullable: false),
+                        precioUnitario = c.Double(nullable: false),
+                        subtotal = c.Double(nullable: false),
+                        igv = c.Double(nullable: false),
+                        total = c.Double(nullable: false),
+                        formaPagoId = c.Int(nullable: false),
+                        monedaId = c.Int(nullable: false),
+                        adelanto = c.Double(),
+                        adelantoPorc = c.Double(),
+                        fondoGarantia = c.Double(),
+                        fondoGarantiaPorc = c.Double(),
+                        tipoValorizacionId = c.Int(nullable: false),
+                        fechaInicio = c.DateTime(nullable: false),
+                        duracion = c.Int(),
+                        partidaId = c.Int(nullable: false),
+                        requerimientoId = c.Int(nullable: false),
+                        avance = c.Double(),
+                        avancePorc = c.Double(),
+                        saldo = c.Double(),
+                        saldoPorc = c.Double(),
+                        numeroPagos = c.Int(nullable: false),
+                        comentario = c.String(maxLength: 1000),
+                        usuarioCreacion = c.String(nullable: false),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.ordenServicioId)
+                .ForeignKey("dbo.FormaPagoes", t => t.formaPagoId)
+                .ForeignKey("dbo.Materials", t => t.materialId)
+                .ForeignKey("dbo.Monedas", t => t.monedaId)
+                .ForeignKey("dbo.Obras", t => t.obraId)
+                .ForeignKey("dbo.Partidas", t => t.partidaId)
+                .ForeignKey("dbo.Proveedors", t => t.proveedorId)
+                .ForeignKey("dbo.Requerimientoes", t => t.requerimientoId)
+                .ForeignKey("dbo.TipoValorizacions", t => t.tipoValorizacionId)
+                .Index(t => t.obraId)
+                .Index(t => t.materialId)
+                .Index(t => t.proveedorId)
+                .Index(t => t.formaPagoId)
+                .Index(t => t.monedaId)
+                .Index(t => t.tipoValorizacionId)
+                .Index(t => t.partidaId)
+                .Index(t => t.requerimientoId);
+            
+            CreateTable(
+                "dbo.OrdenServicioArchivoes",
+                c => new
+                    {
+                        ordenServicioArchivoId = c.Int(nullable: false, identity: true),
+                        ordenServicioId = c.Int(nullable: false),
+                        archivoId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ordenServicioArchivoId)
+                .ForeignKey("dbo.Archivoes", t => t.archivoId)
+                .ForeignKey("dbo.OrdenServicios", t => t.ordenServicioId)
+                .Index(t => t.ordenServicioId)
+                .Index(t => t.archivoId);
+            
+            CreateTable(
+                "dbo.Archivoes",
+                c => new
+                    {
+                        archivoId = c.Int(nullable: false, identity: true),
+                        tipoArchivoId = c.Int(nullable: false),
+                        ruta = c.String(),
+                    })
+                .PrimaryKey(t => t.archivoId)
+                .ForeignKey("dbo.TipoArchivoes", t => t.tipoArchivoId)
+                .Index(t => t.tipoArchivoId);
+            
+            CreateTable(
+                "dbo.TipoArchivoes",
+                c => new
+                    {
+                        tipoArchivoId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(),
+                        descripcion = c.String(),
+                    })
+                .PrimaryKey(t => t.tipoArchivoId);
+            
+            CreateTable(
+                "dbo.TipoValorizacions",
+                c => new
+                    {
+                        tipoValorizacionId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(),
+                        descripcion = c.String(),
+                    })
+                .PrimaryKey(t => t.tipoValorizacionId);
+            
+            CreateTable(
+                "dbo.Valorizacions",
+                c => new
+                    {
+                        valorizacionId = c.Int(nullable: false, identity: true),
+                        ordenServicioId = c.Int(nullable: false),
+                        concepto = c.String(),
+                        fechacierre = c.DateTime(nullable: false),
+                        avance = c.Double(nullable: false),
+                        avancePorc = c.Double(nullable: false),
+                        estadoValorizacionId = c.Int(nullable: false),
+                        usuarioCreacion = c.String(nullable: false),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.valorizacionId)
+                .ForeignKey("dbo.EstadoValorizacions", t => t.estadoValorizacionId)
+                .ForeignKey("dbo.OrdenServicios", t => t.ordenServicioId)
+                .Index(t => t.ordenServicioId)
+                .Index(t => t.estadoValorizacionId);
+            
+            CreateTable(
+                "dbo.EstadoValorizacions",
+                c => new
+                    {
+                        estadoValorizacionId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(),
+                        descripcion = c.String(),
+                    })
+                .PrimaryKey(t => t.estadoValorizacionId);
+            
+            CreateTable(
                 "dbo.Prioridads",
                 c => new
                     {
@@ -572,6 +722,19 @@ namespace PissanoApp.Migrations
             DropForeignKey("dbo.Presupuestoes", "monedaId", "dbo.Monedas");
             DropForeignKey("dbo.Requerimientoes", "tipoCompraId", "dbo.TipoCompras");
             DropForeignKey("dbo.Requerimientoes", "prioridadId", "dbo.Prioridads");
+            DropForeignKey("dbo.Valorizacions", "ordenServicioId", "dbo.OrdenServicios");
+            DropForeignKey("dbo.Valorizacions", "estadoValorizacionId", "dbo.EstadoValorizacions");
+            DropForeignKey("dbo.OrdenServicios", "tipoValorizacionId", "dbo.TipoValorizacions");
+            DropForeignKey("dbo.OrdenServicios", "requerimientoId", "dbo.Requerimientoes");
+            DropForeignKey("dbo.OrdenServicios", "proveedorId", "dbo.Proveedors");
+            DropForeignKey("dbo.OrdenServicios", "partidaId", "dbo.Partidas");
+            DropForeignKey("dbo.OrdenServicioArchivoes", "ordenServicioId", "dbo.OrdenServicios");
+            DropForeignKey("dbo.OrdenServicioArchivoes", "archivoId", "dbo.Archivoes");
+            DropForeignKey("dbo.Archivoes", "tipoArchivoId", "dbo.TipoArchivoes");
+            DropForeignKey("dbo.OrdenServicios", "obraId", "dbo.Obras");
+            DropForeignKey("dbo.OrdenServicios", "monedaId", "dbo.Monedas");
+            DropForeignKey("dbo.OrdenServicios", "materialId", "dbo.Materials");
+            DropForeignKey("dbo.OrdenServicios", "formaPagoId", "dbo.FormaPagoes");
             DropForeignKey("dbo.OrdenCompras", "requerimientoId", "dbo.Requerimientoes");
             DropForeignKey("dbo.Requerimientoes", "obraId", "dbo.Obras");
             DropForeignKey("dbo.Requerimientoes", "estadoRequerimientoId", "dbo.EstadoRequerimientoes");
@@ -592,6 +755,8 @@ namespace PissanoApp.Migrations
             DropForeignKey("dbo.OrdenCompraDetalles", "materialId", "dbo.Materials");
             DropForeignKey("dbo.Materials", "materialPadreId", "dbo.Materials");
             DropForeignKey("dbo.OrdenCompraDetalles", "estadoOrdenDetalleId", "dbo.EstadoOrdenDetalles");
+            DropForeignKey("dbo.OrdenCompraEstadoOrdens", "ordenCompraId", "dbo.OrdenCompras");
+            DropForeignKey("dbo.OrdenCompraEstadoOrdens", "estadoOrdenId", "dbo.EstadoOrdens");
             DropForeignKey("dbo.OrdenCompras", "obraId", "dbo.Obras");
             DropForeignKey("dbo.OrdenCompras", "monedaId", "dbo.Monedas");
             DropForeignKey("dbo.OrdenCompras", "formaPagoId", "dbo.FormaPagoes");
@@ -612,6 +777,19 @@ namespace PissanoApp.Migrations
             DropIndex("dbo.Categorias", new[] { "categoriaPadreId" });
             DropIndex("dbo.PresupuestoDetalles", new[] { "materialId" });
             DropIndex("dbo.PresupuestoDetalles", new[] { "presupuestoId" });
+            DropIndex("dbo.Valorizacions", new[] { "estadoValorizacionId" });
+            DropIndex("dbo.Valorizacions", new[] { "ordenServicioId" });
+            DropIndex("dbo.Archivoes", new[] { "tipoArchivoId" });
+            DropIndex("dbo.OrdenServicioArchivoes", new[] { "archivoId" });
+            DropIndex("dbo.OrdenServicioArchivoes", new[] { "ordenServicioId" });
+            DropIndex("dbo.OrdenServicios", new[] { "requerimientoId" });
+            DropIndex("dbo.OrdenServicios", new[] { "partidaId" });
+            DropIndex("dbo.OrdenServicios", new[] { "tipoValorizacionId" });
+            DropIndex("dbo.OrdenServicios", new[] { "monedaId" });
+            DropIndex("dbo.OrdenServicios", new[] { "formaPagoId" });
+            DropIndex("dbo.OrdenServicios", new[] { "proveedorId" });
+            DropIndex("dbo.OrdenServicios", new[] { "materialId" });
+            DropIndex("dbo.OrdenServicios", new[] { "obraId" });
             DropIndex("dbo.RequerimientoEstadoRequerimientoes", new[] { "estadoRequerimientoId" });
             DropIndex("dbo.RequerimientoEstadoRequerimientoes", new[] { "requerimientoId" });
             DropIndex("dbo.RequerimientoDetalleEstadoRequerimientoDetalles", new[] { "estadoRequerimientoDetalleId" });
@@ -633,6 +811,8 @@ namespace PissanoApp.Migrations
             DropIndex("dbo.OrdenCompraDetalles", new[] { "estadoOrdenDetalleId" });
             DropIndex("dbo.OrdenCompraDetalles", new[] { "materialId" });
             DropIndex("dbo.OrdenCompraDetalles", new[] { "ordenCompraId" });
+            DropIndex("dbo.OrdenCompraEstadoOrdens", new[] { "estadoOrdenId" });
+            DropIndex("dbo.OrdenCompraEstadoOrdens", new[] { "ordenCompraId" });
             DropIndex("dbo.OrdenCompras", new[] { "monedaId" });
             DropIndex("dbo.OrdenCompras", new[] { "formaPagoId" });
             DropIndex("dbo.OrdenCompras", new[] { "requerimientoId" });
@@ -658,6 +838,13 @@ namespace PissanoApp.Migrations
             DropTable("dbo.PresupuestoDetalles");
             DropTable("dbo.TipoCompras");
             DropTable("dbo.Prioridads");
+            DropTable("dbo.EstadoValorizacions");
+            DropTable("dbo.Valorizacions");
+            DropTable("dbo.TipoValorizacions");
+            DropTable("dbo.TipoArchivoes");
+            DropTable("dbo.Archivoes");
+            DropTable("dbo.OrdenServicioArchivoes");
+            DropTable("dbo.OrdenServicios");
             DropTable("dbo.RequerimientoEstadoRequerimientoes");
             DropTable("dbo.EstadoRequerimientoes");
             DropTable("dbo.RequerimientoDetalleEstadoRequerimientoDetalles");
@@ -672,6 +859,7 @@ namespace PissanoApp.Migrations
             DropTable("dbo.Materials");
             DropTable("dbo.EstadoOrdenDetalles");
             DropTable("dbo.OrdenCompraDetalles");
+            DropTable("dbo.OrdenCompraEstadoOrdens");
             DropTable("dbo.FormaPagoes");
             DropTable("dbo.EstadoOrdens");
             DropTable("dbo.OrdenCompras");

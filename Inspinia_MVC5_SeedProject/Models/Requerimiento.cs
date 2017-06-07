@@ -51,6 +51,8 @@ namespace PissanoApp.Models
 
         public virtual List<OrdenCompra> OrdenCompras { get; set; }
 
+        public virtual List<OrdenServicio> OrdenServicios { get; set; }
+
 
 
         [Required()]

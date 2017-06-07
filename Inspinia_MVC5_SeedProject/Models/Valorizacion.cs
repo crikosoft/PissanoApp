@@ -15,7 +15,10 @@ namespace PissanoApp.Models
         public double avance { get; set; }
         public double avancePorc { get; set; }
 
+        public int estadoValorizacionId { get; set; }
+
         public virtual OrdenServicio OrdenServicio { get; set; }
+        public virtual EstadoValorizacion EstadoValorizacion { get; set; }
 
         [Required()]
         public string usuarioCreacion { get; set; }

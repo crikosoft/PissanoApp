@@ -1,4 +1,4 @@
-﻿@model PissanoApp.ViewModels.OrdenCompraViewModel
+﻿@model PissanoApp.ViewModels.OrdenServicioViewModel
 @{
     ViewBag.Title = "Create";
 }
@@ -7,7 +7,7 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Orden de Compra</h2>
+        <h2>Orden de Servicio</h2>
         <ol class="breadcrumb">
             <li>
                 @Html.ActionLink("Lista", "Index")
@@ -25,7 +25,7 @@
 
 
 <div class="form-horizontal">
-    <h4>Crear Orden de Compra</h4>
+    <h4>Crear Orden de Servicio</h4>
     <hr />
     @Html.ValidationSummary(true)
 
@@ -46,7 +46,7 @@
 
     <input type="text" class="form-control" tabindex="3" id="requerimientoId" value="@Html.DisplayFor(model => model.Requerimiento.requerimientoId)">
 
-    
+
 
     <div class="ibox float-e-margins">
         <div class="ibox-title">
@@ -63,8 +63,8 @@
                     <div class="form-group">
                         @*<label class="font-noraml col-sm-2 control-label">Proveedor</label>*@
                         @*<div class="input-group col-sm-10">
-                            
-                        </div>*@
+
+                            </div>*@
 
                         <label class="control-label" for="order_id">Proveedor</label>
                         <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:350px;" tabindex="1" id="proveedor">
@@ -80,59 +80,27 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    @*<div class="form-group">
-                        <label class="font-noraml col-sm-2 control-label">Form de Pago</label>
-                        <div class="input-group col-sm-10">
-                            <select data-placeholder="Seleccione la Prioridad..." class="chosen-select" style="width:350px;" tabindex="2" id="formaPago">
-                                <option value="">Seleccione</option>
 
-                                @foreach (var item in Model.FormasPago)
-                                {
-                                    <option value=@Html.DisplayFor(modelItem => item.formaPagoId)>
-                                        @Html.DisplayFor(modelItem => item.nombre)
-                                    </option>
-                                }
-
-                            </select>
-                        </div>
-                    </div>*@
-
-                    <label class="control-label" for="order_id">Form de Pago</label>
-                    <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:350px;" tabindex="1" id="formaPago">
-                        <option value="">Seleccione</option>
-
-                        @foreach (var item in Model.FormasPago)
-                        {
-                            <option value=@Html.DisplayFor(modelItem => item.formaPagoId)>
-                                @Html.DisplayFor(modelItem => item.nombre)
-                            </option>
-                        }
-                    </select>
+     
+                    Adjuntar Contrato <input type="file" name="pic" accept="image/*" class="btn btn-default btn-file">
+                   
 
                 </div>
 
                 <div class="col-sm-4">
+
+
+
+
                     
-
-                    <label class="control-label" for="order_id">Moneda</label>
-                    <select data-placeholder="Elija la Moneda..." class="chosen-select" style="width:350px;" tabindex="1" id="moneda">
-                        <option value="">Seleccione</option>
-
-                        @foreach (var item in Model.Monedas)
-                        {
-                            <option value=@Html.DisplayFor(modelItem => item.monedaId)>
-                                @Html.DisplayFor(modelItem => item.nombre)
-                            </option>
-                        }
-                    </select>
-
+                    
                 </div>
                 <div class="col-sm-12">
                     <div class="form-group">
                         @*<label class="font-noraml col-sm-2 control-label">Comentario</label>
-                        <div class="col-sm-10">
-                            
-                        </div>*@
+                            <div class="col-sm-10">
+
+                            </div>*@
                         <label class="control-label" for="order_id">Comentario</label>
                         <input type="text" class="form-control" tabindex="3" id="comentario"> <span class="help-block m-b-none">Agregue algún comentario a considerar durante la Orden de Compra</span>
 
@@ -142,12 +110,141 @@
         </div>
     </div>
 
+
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Pago</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="order_id">Forma Pago</label>
+                        <select data-placeholder="Elija la Forma de Pago..." class="chosen-select" style="width:350px;" tabindex="1" id="formaPago">
+                            <option value="">Seleccione</option>
+
+                            @foreach (var item in Model.FormasPago)
+                            {
+                                <option value=@Html.DisplayFor(modelItem => item.formaPagoId)>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="order_id">Moneda</label>
+                        <select data-placeholder="Elija la Moneda..." class="chosen-select" style="width:350px;" tabindex="1" id="moneda">
+                            <option value="">Seleccione</option>
+
+                            @foreach (var item in Model.Monedas)
+                            {
+                                <option value=@Html.DisplayFor(modelItem => item.monedaId)>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="order_id">% de Adelanto</label>
+                        @*<input type="text" class="form-control" tabindex="3" id="Adelanto"> <span class="help-block m-b-none">Ingrese % de Adelanto</span>*@
+                        <input class="touchspin2" type="text" value="0" name="adelanto" id="adelanto">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+
+                <div class="col-sm-4">
+
+                    <div class="form-group">
+                        <label class="control-label" for="order_id">% de Fondo Garantía</label>
+                        @*<input type="text" class="form-control" tabindex="3" id="Adelanto"> <span class="help-block m-b-none">Ingrese el % Fondo Garantía</span>*@
+                        <input class="touchspin2" type="text" value="0" name="fondogarantia" id="fondogarantia">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Valorizaciones</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="order_id">Valorizacion</label>
+                        <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:350px;" tabindex="1" id="tipovalorizacion">
+                            <option value="">Seleccione</option>
+
+                            @foreach (var item in Model.TipoValorizaciones)
+                            {
+                                <option value=@Html.DisplayFor(modelItem => item.tipoValorizacionId)>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </option>
+                            }
+                        </select>     
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+
+                    <div class="form-group" id="data_1">
+                        <label class="control-label" for="order_id">Fecha Inicio</label>
+                        <div class="input-group date">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" id="fechainicio">
+                        </div>
+                    </div>
+                    
+
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label" for="order_id">Número de Pagos</label>
+                        @*<input type="text" class="form-control" tabindex="3" id="Adelanto"> <span class="help-block m-b-none">Ingrese el número de Pagos</span>*@
+                        <input class="touchspin1" type="text" value="" name="demo1" id="demo1">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-8">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Ingrese el precio de los materiales que desee generar OC. Use el Filtro de Búsqueda</h5>
+                        <h5>Ingrese el precio de los servicios que desee generar OS.</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -163,9 +260,9 @@
                                     <th>Id</th>
                                     <th hidden="hidden">Código</th>
                                     <th>Material</th>
-                                    <th>Unidad de Medida</th>
+                                    <th>Unidad de Control</th>
                                     <th>Cantidad</th>
-                                    <th>Precio</th>
+                                    <th>Precio Unitario</th>
                                     <th hidden="hidden">DetalleId</th>
                                 </tr>
                             </thead>
@@ -177,7 +274,7 @@
                                     <tr class="gradeX">
                                         <td>@Html.DisplayFor(modelItem => item.Material.materialId)</td>
                                         <td hidden="hidden">@Html.DisplayFor(modelItem => item.Material.codigo)</td>
-                                        
+
                                         <td><a data-toggle="tab" href="#contact-@Html.DisplayFor(modelItem => item.Material.materialId)" class="client-link">@Html.DisplayFor(modelItem => item.Material.nombre)</a></td>
                                         <td>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</td>
                                         <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
@@ -194,9 +291,9 @@
                                     <th>Id</th>
                                     <th hidden="hidden">Código</th>
                                     <th>Material</th>
-                                    <th>Unidad de Medida</th>
+                                    <th>Unidad de Control</th>
                                     <th>Cantidad</th>
-                                    <th>Precio</th>
+                                    <th>Precio Unitario</th>
                                     <th hidden="hidden">DetalleId</th>
                                 </tr>
                             </tfoot>
@@ -219,25 +316,25 @@
                                 <div id="contact-@Html.DisplayFor(modelItem => item.Material.materialId)" class="tab-pane">
                                     <div class="row m-b-lg">
                                         @*<div class="col-lg-4 text-center">
-                                            <h2>Nicki Smith</h2>
+                                                <h2>Nicki Smith</h2>
 
-                                            <div class="m-b-sm">
-                                                <img alt="image" class="img-circle" src="~/Images/a2.jpg"
-                                                     style="width: 62px">
-                                            </div>
-                                        </div>*@
+                                                <div class="m-b-sm">
+                                                    <img alt="image" class="img-circle" src="~/Images/a2.jpg"
+                                                         style="width: 62px">
+                                                </div>
+                                            </div>*@
                                         <div class="col-lg-12">
                                             <strong>
                                                 @Html.DisplayFor(modelItem => item.Material.nombre)
                                             </strong>
 
                                             @*<p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.
-                                            </p>
-                                            <button type="button" class="btn btn-primary btn-sm btn-block">
-                                                <i class="fa fa-envelope"></i> Send Message
-                                            </button>*@
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                    tempor incididunt ut labore et dolore magna aliqua.
+                                                </p>
+                                                <button type="button" class="btn btn-primary btn-sm btn-block">
+                                                    <i class="fa fa-envelope"></i> Send Message
+                                                </button>*@
                                         </div>
                                     </div>
                                     <div class="client-detail">
@@ -245,27 +342,27 @@
 
                                             @*<strong>Información a Considerar</strong>
 
-                                            <ul class="list-group clear-list">
-                                                <li class="list-group-item fist-item">
-                                                    <span class="pull-right">100 soles </span>
-                                                    Avance Partida de Control
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <span class="pull-right"> 10:16 am </span>
-                                                    Sign a contract
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <span class="pull-right"> 08:22 pm </span>
-                                                    Open new shop
-                                                </li>
+                                                <ul class="list-group clear-list">
+                                                    <li class="list-group-item fist-item">
+                                                        <span class="pull-right">100 soles </span>
+                                                        Avance Partida de Control
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <span class="pull-right"> 10:16 am </span>
+                                                        Sign a contract
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <span class="pull-right"> 08:22 pm </span>
+                                                        Open new shop
+                                                    </li>
 
-                                            </ul>
-                                            <strong>Notes</strong>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.
-                                            </p>
-                                            <hr />*@
+                                                </ul>
+                                                <strong>Notes</strong>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                    tempor incididunt ut labore et dolore magna aliqua.
+                                                </p>
+                                                <hr />*@
                                             <strong>Comparación de Precios</strong>
                                             <div id="vertical-timeline" class="vertical-container dark-timeline">
                                                 <div class="vertical-timeline-block">
@@ -275,16 +372,16 @@
                                                     <div class="vertical-timeline-content">
                                                         <p>
                                                             @{
-                                                                double? maxValue = 0;
-                                                                string maxProveedor = "";
+                                double? maxValue = 0;
+                                string maxProveedor = "";
 
 
-                                                                if (item.Material.OrdenCompraDetalles.Count > 0)
-                                                                {
-                                                                    maxValue = item.Material.OrdenCompraDetalles.Max(p => p.precioUnitario);
-                                                                    maxProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == maxValue).FirstOrDefault().OrdenCompra.Proveedor.razonSocial;
+                                if (item.Material.OrdenCompraDetalles.Count > 0)
+                                {
+                                    maxValue = item.Material.OrdenCompraDetalles.Max(p => p.precioUnitario);
+                                    maxProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == maxValue).SingleOrDefault().OrdenCompra.Proveedor.razonSocial;
 
-                                                                }
+                                }
 
                                                             }
                                                             Precio Mayor: @Html.DisplayFor(modelItem => maxValue)
@@ -302,16 +399,16 @@
                                                     <div class="vertical-timeline-content">
                                                         <p>
                                                             @{
-                                                                double? minValue = 0;
-                                                                string minProveedor = "";
-                                                                
-                                                                
-                                                                if (item.Material.OrdenCompraDetalles.Count > 0)
-                                                                {
-                                                                    minValue = item.Material.OrdenCompraDetalles.Min(p => p.precioUnitario);
-                                                                    minProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == minValue).Last().OrdenCompra.Proveedor.razonSocial;
+                                double? minValue = 0;
+                                string minProveedor = "";
 
-                                                                }
+
+                                if (item.Material.OrdenCompraDetalles.Count > 0)
+                                {
+                                    minValue = item.Material.OrdenCompraDetalles.Min(p => p.precioUnitario);
+                                    minProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == minValue).Last().OrdenCompra.Proveedor.razonSocial;
+
+                                }
 
                                                             }
                                                             Precio Menor: @Html.DisplayFor(modelItem => minValue)
@@ -329,16 +426,16 @@
                                                     <div class="vertical-timeline-content">
                                                         <p>
                                                             @{
-                                                                double? lastValue = 0;
-                                                                string lastProveedor = "";
+                                double? lastValue = 0;
+                                string lastProveedor = "";
 
 
-                                                                if (item.Material.OrdenCompraDetalles.Count > 0)
-                                                                {
-                                                                    lastValue = item.Material.OrdenCompraDetalles.LastOrDefault().precioUnitario;
-                                                                    lastProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == lastValue).Last().OrdenCompra.Proveedor.razonSocial;
+                                if (item.Material.OrdenCompraDetalles.Count > 0)
+                                {
+                                    lastValue = item.Material.OrdenCompraDetalles.LastOrDefault().precioUnitario;
+                                    lastProveedor = item.Material.OrdenCompraDetalles.Where(p => p.precioUnitario == lastValue).Last().OrdenCompra.Proveedor.razonSocial;
 
-                                                                }
+                                }
 
                                                             }
                                                             Último Precio: @Html.DisplayFor(modelItem => lastValue)
@@ -366,7 +463,7 @@
     </div>
 
 
-   
+
 
 
 </div>
@@ -398,6 +495,7 @@
     @Styles.Render("~/plugins/select2Styles")
     @Styles.Render("~/plugins/touchSpinStyles")
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+
 }
 
 @section Scripts {
@@ -420,7 +518,17 @@
 
     <script type="text/javascript">
     $(document).ready(function () {
+        
 
+        $('#data_1 .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+
+        $('.demo1').colorpicker();
         //var $image = $(".image-crop > img")
         //$($image).cropper({
         //    aspectRatio: 1.618,
@@ -592,22 +700,23 @@
         //    allowClear: true
         //});
 
-        //$(".touchspin1").TouchSpin({
-        //    buttondown_class: 'btn btn-white',
-        //    buttonup_class: 'btn btn-white'
-        //});
+        $(".touchspin1").TouchSpin({
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
 
-        //$(".touchspin2").TouchSpin({
-        //    min: 0,
-        //    max: 100,
-        //    step: 0.1,
-        //    decimals: 2,
-        //    boostat: 5,
-        //    maxboostedstep: 10,
-        //    postfix: '%',
-        //    buttondown_class: 'btn btn-white',
-        //    buttonup_class: 'btn btn-white'
-        //});
+        $(".touchspin2").TouchSpin({
+            min: 0,
+            max: 100,
+            step: 1.0,
+            decimals: 2,
+            boostat: 5,
+            maxboostedstep: 10,
+            postfix: '%',
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white',
+            
+        });
 
         //$(".touchspin3").TouchSpin({
         //    verticalbuttons: true,
@@ -697,21 +806,24 @@
             //var data = $.parseJSON(cells);
             var Detalles = [];
 
+
+            var ordenCompra = new Object();
+
             for (var i = 0; i < cells.length; i++) {
                 var ordenDetalle = new Object();
 
-                ordenDetalle.materialId = cells[i].materialid;
-                ordenDetalle.precioUnitario = cells[i].precio;
-                ordenDetalle.cantidad = cells[i].cantidad;
-                ordenDetalle.precioTotal = 10;
-                ordenDetalle.estadoOrdenDetalleId = 1;
-                ordenDetalle.ordenCompradetalleId = cells[i].detalleId;
-                Detalles.push(ordenDetalle);
+                ordenCompra.materialId = cells[i].materialid;
+                ordenCompra.precioUnitario = cells[i].precio;
+                ordenCompra.metrado = cells[i].cantidad;
+                ordenCompra.total = 10;
+                //ordenCompra.estadoOrdenDetalleId = 1;
+                //ordenCompra.ordenCompradetalleId = cells[i].detalleId;
+   
 
             }
 
 
-            var ordenCompra = new Object();
+            //var ordenCompra = new Object();
 
             ordenCompra.proveedorId = $("#proveedor").val();
             ordenCompra.requerimientoId = $("#requerimientoId").val();;
@@ -721,12 +833,35 @@
             ordenCompra.subTotal = 10;
             ordenCompra.igv = 10;
             ordenCompra.total = 100;
-            ordenCompra.estadoOrdenId = 1;
-
-            ordenCompra.adelanto = 1;
+            //ordenCompra.estadoOrdenId = 1;
+            ordenCompra.adelantoPorc = $("#adelanto ").val();
+            ordenCompra.adelanto = $("#adelanto").val();
             ordenCompra.obraId = 1;
             ordenCompra.numero = "OC100";
             ordenCompra.usuarioCreacion = "aa";
+
+            //nuevos para servicio
+            ordenCompra.fondoGarantiaPorc = $("#fondoGarantia ").val();
+            ordenCompra.fondoGarantia = $("#fondoGarantia").val();
+            ordenCompra.tipoValorizacionId = $("#tipovalorizacion").val();
+            ordenCompra.fechaInicio = "06/02/2017";
+            ordenCompra.duracion = $("#demo1").val();
+            ordenCompra.partidaId = 1
+            ordenCompra.numeroPagos = $("#demo1").val();
+            ordenCompra.avance = 0;
+            ordenCompra.saldo = 0;
+            //public double? avance { get; set; }
+            //public double? avancePorc { get; set; }
+            //public double? saldo { get; set; }
+            //public double? saldoPorc { get; set; }
+            ordenCompra.usuarioCreacion = "administrador"
+            ordenCompra.usuarioModificacion = "administrador"
+            ordenCompra.fechaCreacion = "06/02/2017";
+            ordenCompra.fechaModificacion = "06/02/2017";
+            ordenCompra.codigo = "1";
+            // Fin
+            
+
 
 
             ordenCompra.OrdenesCompraDetalles = Detalles;
@@ -745,14 +880,14 @@
                 //dataType: 'json', // Tells the server what kind of content the client is expecting back as the result.
                 type: 'POST',
                 //          param: RequerimientoFinal,
-                url: '@Url.Action("CrearOrdenCompra")',
+                url: '@Url.Action("CrearOrdenServicio")',
                 data: OrdenCompraFinal,
                 success: function (data) {
                     //alert('success');
                     window.location = '@Url.Action("Index/" + @Html.DisplayFor(model => model.TipoCompra.tipoCompraId))';
                 },
                 error: function (result) {
-
+                    alert(result);
                     alert('No se pudo insertar. Revise que toda la información esté seleccionada');
 
                 }
