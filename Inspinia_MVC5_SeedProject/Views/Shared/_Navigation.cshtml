@@ -138,12 +138,36 @@
                     <li>
                         <a href="@Url.Action("IndexAccounting", "OrdenCompra")">Ordenes de Compra<span class="label label-primary pull-right">Nuevo</span></a>
                     </li>
+
                 </ul>
             </li>
     
 
     
             }
+            
+           if (User.IsInRole("Administrador") || User.IsInRole("Almacén"))
+            {
+
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-calculator"></i><span class="nav-label" data-i18n="nav.empresa">Almacén</span><span class="fa arrow"></span></a>
+                @*<ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Pago")"><a href="@Url.Action("ProductsList", "Ecommerce")">Ingreso Factura<span class="label label-info pull-right">Protot</span></a></li>
+                </ul>*@
+
+                <ul class="nav nav-second-level collapse">
+                    <li>
+                        <a href="@Url.Action("IndexWarehouse", "OrdenCompra")">Ingreso de Compras<span class="label label-primary pull-right">Nuevo</span></a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Inventory", "Material")">Inventario<span class="label label-primary pull-right">Nuevo</span></a>
+                    </li>
+                </ul>
+            </li>
+    
+
+    
+            }                 
 
 
 }

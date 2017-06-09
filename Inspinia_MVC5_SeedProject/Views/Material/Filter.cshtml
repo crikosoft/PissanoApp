@@ -42,7 +42,7 @@
                 Código
             </th>
             <th>
-               Material Padre
+               En Stock
             </th>
             <th></th>
         </tr>
@@ -65,7 +65,13 @@
                     @Html.DisplayFor(modelItem => item.codigo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MaterialPadre.nombre)
+@if (item.MaterialNivelStocks.Count() > 0)
+{
+    var sum = item.MaterialNivelStocks.Sum(survey => survey.cantidad);
+
+    @Html.Label(sum.ToString());
+}
+                    
                 </td>
                 <td>
                     @Html.ActionLink("Editar", "Edit", new { id = item.materialId }) |

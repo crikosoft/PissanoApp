@@ -12,6 +12,8 @@ namespace PissanoApp.Models
         public int ordenCompraId { get; set; }
         public virtual OrdenCompra OrdenCompra { get; set; }
         public string numeroGuia { get; set; } //o sin numero en caso de servicios
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")] 
         public DateTime fecha { get; set; }
 
         public virtual List<IngresoDetalle> IngresoDetalles { get; set; }

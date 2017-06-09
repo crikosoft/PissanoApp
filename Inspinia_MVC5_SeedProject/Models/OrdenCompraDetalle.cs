@@ -21,11 +21,15 @@ namespace PissanoApp.Models
         public double cantidad { get; set; }
 
         [Required()]
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         public double precioUnitario { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         public double precioTotal { get; set; }
 
         [Required()]
         public int estadoOrdenDetalleId { get; set; }
         public virtual EstadoOrdenDetalle EstadoOrdenDetalle { get; set; }
+
+        public virtual List<IngresoDetalle> IngresoDetalles { get; set; }
     }
 }

@@ -59,8 +59,10 @@ namespace PissanoApp.Models
         public string usuarioModificacion { get; set; }
 
         [Required()]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime fechaCreacion { get; set; }
-
+        
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime fechaModificacion { get; set; }
 
         public virtual List<RequerimientoEstadoRequerimiento> RequerimientosEstadoRequerimiento { get; set; }

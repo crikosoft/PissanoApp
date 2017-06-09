@@ -48,5 +48,7 @@ namespace PissanoApp.Models
 
         public DateTime fechaModificacion { get; set; }
 
+        public virtual List<MaterialNivelStock> MaterialNivelStocks { get; set; }
+
     }
 }

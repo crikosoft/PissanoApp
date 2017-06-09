@@ -243,6 +243,17 @@
             context.SaveChanges();
 
 
+            var almacenes = new List<Almacen>
+            {
+                new Almacen { obraId = obras.Single(s => s.nombre =="Barcelona").id},
+                new Almacen {  obraId = obras.Single(s => s.nombre =="San Borja Norte").id}
+                
+            };
+
+
+            almacenes.ForEach(s => context.Almacens.AddOrUpdate(p => p.obraId, s));
+            context.SaveChanges();
+
             //var materialpadres = new List<Material>
             //{
             //    new  Material { codigo="20001001", nombre= "Acero corrugado f'y = 4200 Kg/cm2", MaterialPadre=null,

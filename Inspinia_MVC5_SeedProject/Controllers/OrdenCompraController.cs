@@ -348,7 +348,6 @@ namespace PissanoApp.Controllers
         }
 
 
-
         [HttpPost]
         public ActionResult Disapprove(OrdenCompra ordenCompra)
         {
@@ -451,6 +450,18 @@ namespace PissanoApp.Controllers
             return View(ordenes.ToList());
         }
 
+        // GET: /OrdenCompra/IndexWarehouse/
+        public ActionResult IndexWarehouse()
+        {
+            var estadoList = new int[] { 4, 5, 6 };
+            var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.estadoOrdenId)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            //var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.estadoOrdenId));
+
+            //var ordenes = db.Ordenes.Include(p => p.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            //var ordenes = db.Ordenes.Where(p => p.estadoOrdenId == 3).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            return View(ordenes.ToList());
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Approve([Bind(Include="ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)
@@ -520,6 +531,176 @@ namespace PissanoApp.Controllers
             return View(ordencompra);
         }
 
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult EnterWarehouse(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordencompra);
+        }
+
+
+        [HttpPost]
+        public ActionResult EnterWarehouse(OrdenCompra ordenCompra)
+        {
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+            OrdenCompra OrdenCompraOriginal = db.Ordenes.Find(ordenCompra.ordenCompraId);
+
+
+            DateTime timeUtc = DateTime.UtcNow;
+            TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+            var estadoIngresoTotal = db.EstadoOrdenes.Where(p => p.nombre == "Ingreso Total").SingleOrDefault();
+            var estadoIngresoParcial = db.EstadoOrdenes.Where(p => p.nombre == "Ingreso Parcial").SingleOrDefault();
+            var estadoDetalleIngresoTotal = db.EstadoOrdenDetalles.Where(p => p.nombre == "Atendido Total").SingleOrDefault();
+            var estadoDetalleIngresoParcial = db.EstadoOrdenDetalles.Where(p => p.nombre == "Atendido Parcial").SingleOrDefault(); 
+
+            //1. Registra Estado Orden Ingreso Total
+            //2. Registra Estado Orden Detalles Ingreso Total
+            //3. Registra Estado Orden Ingreso Parcial
+            //4. Registra Estado Orden Detalles Ingreso Parcial
+            //5. Registra Ingreso documento
+            //6. Actualiza Inventario en Almacén
+
+            //Revisa detalles
+
+            // Tabla Ingreso
+
+            var ingreso = new Ingreso();
+            var ingresosDetalle = new List<IngresoDetalle>();
+            var cantidadDetallesAtendidos = 0;
+
+            //3 Atendido Total
+            cantidadDetallesAtendidos = OrdenCompraOriginal.OrdenesCompraDetalles.Where(p => p.estadoOrdenDetalleId == 3).Count();
+
+           
+
+            // Actualiza estado de Requerimientos
+            OrdenCompraOriginal.estadoOrdenId = estadoIngresoTotal.estadoOrdenId;
+
+            foreach (var item in ordenCompra.OrdenesCompraDetalles)
+            {
+                foreach (var item2 in OrdenCompraOriginal.OrdenesCompraDetalles)
+                {
+                    if (item.ordenCompradetalleId == item2.ordenCompradetalleId)
+                    {
+                        var cantidadIngresados = 0;
+
+                        cantidadIngresados = item2.IngresoDetalles.Sum(survey => survey.cantidad);
+
+                        if ((item.cantidad + cantidadIngresados) == item2.cantidad)
+                        {
+                            item2.estadoOrdenDetalleId = estadoDetalleIngresoTotal.estadoOrdenDetalleId;
+                        }
+                        else
+                        {
+                            item2.estadoOrdenDetalleId = estadoDetalleIngresoParcial.estadoOrdenDetalleId;
+                            OrdenCompraOriginal.estadoOrdenId = estadoIngresoParcial.estadoOrdenId;
+                        }
+
+                        var ingresoDetalle = new IngresoDetalle();
+
+                        ingresoDetalle.Ingreso = ingreso;
+                        ingresoDetalle.cantidad = int.Parse(item.cantidad.ToString());
+                        ingresoDetalle.ordenCompradetalleId = item.ordenCompradetalleId;
+                        ingresoDetalle.avance = 0;
+
+                        ingresosDetalle.Add(ingresoDetalle);
+
+                        var materialNivelStock = new MaterialNivelStock();
+
+                        materialNivelStock.almacenId = OrdenCompraOriginal.Obra.Almacenes[0].almacenId;
+                        materialNivelStock.cantidad = materialNivelStock.cantidad + int.Parse(item.cantidad.ToString());
+                        materialNivelStock.materialId = item2.materialId;
+                        materialNivelStock.fechaStock = cstTime;
+                        db.MaterialNivelStock.Add(materialNivelStock);
+                     }
+                }
+            }
+
+            ingreso.IngresoDetalles = ingresosDetalle;
+
+            
+
+
+            //var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre))
+
+
+            if (ordenCompra.OrdenesCompraDetalles.Count + cantidadDetallesAtendidos != OrdenCompraOriginal.OrdenesCompraDetalles.Count)
+            {
+                OrdenCompraOriginal.estadoOrdenId = estadoIngresoParcial.estadoOrdenId;
+            }
+            // Fin Actualiza estado Requerimientos
+
+            //Actualiza datos en Orden de Compra
+
+            OrdenCompraOriginal.usuarioModificacion = User.Identity.Name;
+            OrdenCompraOriginal.fechaModificacion = cstTime;
+
+            
+
+            var ordenCompraEstado = new OrdenCompraEstadoOrden();
+
+            ordenCompraEstado.OrdenCompra = OrdenCompraOriginal;
+            ordenCompraEstado.ordenCompraId = ordenCompra.ordenCompraId;
+            ordenCompraEstado.estadoOrdenId = OrdenCompraOriginal.estadoOrdenId;
+            ordenCompraEstado.usuarioCreacion = User.Identity.Name;
+            ordenCompraEstado.fechaCreacion = cstTime;
+            //ordenCompraEstado.comentario = ordenCompra.comentario;
+
+
+            ingreso.numeroGuia = "guia";
+            ingreso.OrdenCompra = OrdenCompraOriginal;
+            ingreso.ordenCompraId = OrdenCompraOriginal.ordenCompraId;
+            ingreso.usuarioCreacion = User.Identity.Name;
+            ingreso.fecha = cstTime;
+            ingreso.fechaCreacion = cstTime;
+            ingreso.fechaModificacion = cstTime;
+            ingreso.usuarioModificacion = User.Identity.Name;
+
+
+            db.OrdenCompraEstadoOrden.Add(ordenCompraEstado);
+            db.Ingresos.Add(ingreso);
+
+
+
+
+
+            try
+            {
+                db.SaveChanges();
+            }
+
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                );
+            }
+            return RedirectToAction("IndexApprove3");
+        }
         //[HttpPost]
         ////[ValidateAntiForgeryToken]
         //public ActionResult ApproveOrder(int? id)

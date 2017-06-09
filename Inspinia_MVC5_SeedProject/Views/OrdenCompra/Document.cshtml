@@ -66,6 +66,7 @@
                             Email: @Html.DisplayFor(model => model.Proveedor.email)
                         </address>
                         <p>
+                            <span><strong>Forma de Pago:</strong> @Html.DisplayFor(model => model.FormaPago.nombre)</span><br />
                             <span><strong>Fecha Emisión:</strong> @Html.DisplayFor(model => model.fechaCreacion)</span><br />
                             <span><strong>Fecha Entrega:</strong> </span>
                         </p>
@@ -75,8 +76,9 @@
                 <div class="table-responsive m-t">
                     <table class="table invoice-table">
                         <thead>
-                            <tr>
-                                <th>Lista de Items</th>
+                            <tr>                                
+                                <th>Items</th>
+                                <th>Partida</th>
                                 <th>Cantidad</th>
                                 <th>UND.</th>
                                 <th>Precio Unitario</th>
@@ -86,17 +88,6 @@
                         <tbody>
 
 
-                            @*<tr>
-                                <td>
-                                    <div><strong>Admin Theme with psd project layouts</strong></div>
-                                    <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
-                                </td>
-                                <td>1</td>
-                                <td>$26.00</td>
-                                <td>$5.98</td>
-                                <td>$31,98</td>
-                            </tr>*@
-
 
                             @foreach (var item in Model.OrdenesCompraDetalles)
                             {
@@ -105,10 +96,13 @@
                                         <div><strong>@Html.DisplayFor(modelItem => item.Material.nombre)</strong></div>
                                         <small>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</small>
                                     </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OrdenCompra.Requerimiento.Detalles.Where(a => a.materialId == item.materialId).SingleOrDefault().Partida.nombre) - @Html.DisplayFor(modelItem => item.OrdenCompra.Requerimiento.Detalles.Where(a => a.materialId == item.materialId).SingleOrDefault().Partida.SubPresupuesto.nombre)
+                                    </td>
                                     <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.precioUnitario)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.precioTotal)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioUnitario)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioTotal)</td>
                                 </tr>
                             }
 

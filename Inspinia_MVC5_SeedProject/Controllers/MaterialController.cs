@@ -30,12 +30,21 @@ namespace PissanoApp.Controllers
             else
                 searchText = searchText.ToLower();
 
-            var materiales = db.Materiales.Include(m => m.TipoMaterial).Include(m => m.UnidadMedida).Where(p => p.nombre.ToLower().Contains(searchText));
+            var materiales = db.Materiales.Include(m => m.TipoMaterial).Include(m => m.UnidadMedida).Include(m => m.MaterialNivelStocks).Where(p => p.nombre.ToLower().Contains(searchText));
 
             return View(materiales.ToList());
 
         }
 
+
+        // GET: /Material/
+        public ActionResult Inventory()
+        {
+            var materiales = db.Materiales.Where(m => m.TipoMaterial.nombre == "Materiales").Include(m => m.MaterialPadre).Include(m => m.TipoMaterial).Include(m => m.UnidadMedida).Include(m => m.MaterialNivelStocks);
+//            var materiales = db.Materiales.Where(m => m.TipoMaterial.nombre == "Materiales").Include(m => m.MaterialPadre).Include(m => m.TipoMaterial).Include(m => m.UnidadMedida).Include(m => m.MaterialNivelStocks).Select(c => c.MaterialNivelStocks.Where(a => a.Almacen.Obra.nombre == "Barcelona"));
+            return View(materiales.ToList());
+
+        }
         // GET: /Material/Details/5
         public ActionResult Details(int? id)
         {

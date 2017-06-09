@@ -201,9 +201,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201705220527515_db-create.cs" />
-    <Compile Include="Migrations\201705220527515_db-create.Designer.cs">
-      <DependentUpon>201705220527515_db-create.cs</DependentUpon>
+    <Compile Include="Migrations\201706071633541_db-update.cs" />
+    <Compile Include="Migrations\201706071633541_db-update.Designer.cs">
+      <DependentUpon>201706071633541_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1024,6 +1024,9 @@
     <Content Include="Views\OrdenCompraViewModel\Create - Copia.cshtml" />
     <Content Include="Views\RequerimientoViewModel\Edit.cshtml" />
     <Content Include="Views\OrdenCompraViewModel\Edit.cshtml" />
+    <Content Include="Views\OrdenCompra\IndexWarehouse.cshtml" />
+    <Content Include="Views\OrdenCompra\EnterWarehouse.cshtml" />
+    <Content Include="Views\Material\Inventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1035,8 +1038,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705220527515_db-create.resx">
-      <DependentUpon>201705220527515_db-create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706071633541_db-update.resx">
+      <DependentUpon>201706071633541_db-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -1053,7 +1056,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59911</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

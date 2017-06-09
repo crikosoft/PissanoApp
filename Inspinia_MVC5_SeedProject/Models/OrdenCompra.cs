@@ -21,12 +21,15 @@ namespace PissanoApp.Models
         public bool incluyeIgv { get; set; }
 
         [Required()]
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         public double subTotal { get; set; }
 
         [Required()]
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         public double igv { get; set; }
 
         [Required()]
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]        
         public double total { get; set; }
 
         [Required()]
@@ -52,8 +55,10 @@ namespace PissanoApp.Models
         public string usuarioModificacion { get; set; }
 
         [Required()]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime fechaCreacion { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime fechaModificacion { get; set; }
 
         public virtual FormaPago FormaPago { get; set; }

@@ -10,5 +10,7 @@ namespace PissanoApp.Models
         public int almacenId { get; set; }
         public int obraId { get; set; }
         public virtual Obra Obra { get; set; }
+
+        public virtual List<MaterialNivelStock> MaterialNivelStocks { get; set; }
     }
 }

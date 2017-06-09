@@ -43,6 +43,10 @@ namespace PissanoApp.Models
         public DateTime fechaCreacion { get; set; }
 
         public DateTime fechaModificacion { get; set; }
+
+        public virtual List<Almacen> Almacenes { get; set; }
+
+
         
     }
 }

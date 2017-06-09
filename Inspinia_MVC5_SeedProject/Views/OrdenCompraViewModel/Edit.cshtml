@@ -188,6 +188,36 @@
             </div>
 
             <div class="col-sm-4">
+
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="tab-content">
+                            <strong>Totales</strong>
+
+                            <ul class="list-group clear-list">
+                                <li class="list-group-item fist-item">
+                                    <span class="pull-right"><label class="control-label" id="lblSubTotal">@Html.DisplayFor(model => model.Ordenes[0].subTotal)</label> </span>
+                                    SubTotal
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right"> <label class="control-label" id="lblIgv">@Html.DisplayFor(model => model.Ordenes[0].igv)</label> </span>
+                                    IGV
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right"> <label class="control-label" id="lblTotal">@Html.DisplayFor(model => model.Ordenes[0].total)</label> </span>
+                                    Total
+                                </li>
+
+                            </ul>
+
+                            <button type="button" class="btn btn-default btn-sm btn-block" id="BtnCalcular">
+                                <i class="fa fa-calculator"></i> Calcular
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="ibox ">
 
                     <div class="ibox-content">
@@ -554,7 +584,41 @@
         });
 
 
-            $("#requerimientoId").css('visibility', 'hidden');
+        $("#requerimientoId").css('visibility', 'hidden');
+
+
+        $("#BtnCalcular").click(function () {
+
+            var cells = [];
+            var rows = $("#editableMaterial").dataTable().fnGetNodes();
+            //alert(rows.length);
+            for (var i = 0; i < rows.length; i++) {
+
+                if ($(rows[i]).find("td:eq(5) input[type='text']").val() != "") {
+                    cells.push({
+
+                        precio: $(rows[i]).find("td:eq(5) input[type='text']").val(),
+                        cantidad: $(rows[i]).find("td:eq(4)").html()
+                    });
+                }
+            }
+
+            var subtotal = 0;
+            var igv = 0;
+            var total = 0;
+
+            for (var i = 0; i < cells.length; i++) {
+                subtotal = subtotal + cells[i].precio * cells[i].cantidad;
+            }
+
+            igv = subtotal * 0.18;
+            total = subtotal + subtotal * 0.18;
+
+            $('#lblSubTotal').text(subtotal.toFixed(2));
+            $("#lblIgv").text(igv.toFixed(2));
+            $("#lblTotal").text(total.toFixed(2));
+
+        });
 
 
         });
