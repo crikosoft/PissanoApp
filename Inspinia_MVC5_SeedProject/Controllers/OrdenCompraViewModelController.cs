@@ -101,17 +101,40 @@ namespace PissanoApp.Controllers
             {
                 ordenCompra.Requerimiento = db.Requerimientos.Single(p => p.requerimientoId == ordenCompra.requerimientoId);
                 //ordenCompra.numero = "OC-" + ordenCompra.Requerimiento.requerimientoId.ToString() + "-"+ ordenCompra.OrdenesCompraDetalles[0].materialId;
-                var parametro = db.Parametro.Single(p => p.nombre=="OC");
+                
+                //Traer datos de parametros
+                var paramtext = "OC";
+
+                if (ordenCompra.Requerimiento.TipoCompra.nombre == "Materiales")
+                {
+                    if (ordenCompra.fechaCreacion != DateTime.MinValue)
+                        paramtext = "OCE";
+                }
+                else if (ordenCompra.Requerimiento.TipoCompra.nombre == "SubContratos")
+                {
+                    paramtext = "OS";
+                }
+
+                var parametro = db.Parametro.Single(p => p.nombre == paramtext);
+
 
                 string ceros = new String('0', 5 - parametro.ultimoNumero.ToString().Length);
-                ordenCompra.numero = "OC-" + ceros + (parametro.ultimoNumero + 1).ToString() + "-" + ordenCompra.Requerimiento.Obra.identificador;
-
+                if (ordenCompra.Requerimiento.TipoCompra.nombre == "Materiales")
+                {
+                    ordenCompra.numero = "OC-" + ceros + (parametro.ultimoNumero + 1).ToString() + "-" + ordenCompra.Requerimiento.Obra.identificador;
+                }
+                else {
+                    ordenCompra.numero = "OS-" + ceros + (parametro.ultimoNumero + 1).ToString() + "-" + ordenCompra.Requerimiento.Obra.identificador;
+                }
 
                 DateTime timeUtc = DateTime.UtcNow;
                 TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
                 DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
 
-                ordenCompra.fechaCreacion = cstTime;
+                //Si es nuevo, no antiguo
+                if (ordenCompra.fechaCreacion == DateTime.MinValue)
+                    ordenCompra.fechaCreacion = cstTime;
+                
                 ordenCompra.usuarioCreacion = User.Identity.Name;
                 ordenCompra.fechaModificacion = cstTime;
                 //ordenCompra.igv = 10;
