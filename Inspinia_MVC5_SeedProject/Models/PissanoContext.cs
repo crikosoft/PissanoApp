@@ -135,15 +135,12 @@ namespace PissanoApp.Models
         public DbSet<RequerimientoDetalleEstadoRequerimientoDetalle> RequerimientoDetalleEstadoRequerimientoDetalle { get; set; }
 
         public DbSet<OrdenCompraEstadoOrden> OrdenCompraEstadoOrden { get; set; }
-        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.OrdenCompraViewModel> OrdenCompraViewModels { get; set; }
 
-        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.RequerimientoViewModel> RequerimientoViewModels { get; set; }
-        
+        public DbSet<Archivo> Archivo { get; set; }
 
-        //public DbSet<Aprobacion> Aprobacion { get; set; }
-        //public System.Data.Entity.DbSet<PissanoApp.ViewModels.RequerimientoViewModel> RequerimientoViewModels { get; set; }
+        public DbSet<TipoArchivo> TipoArchivo { get; set; }
 
-        //public DbSet<ApplicationUser> AplicationUsers { get; set; }
+       
     }
 
 

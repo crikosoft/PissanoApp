@@ -27,8 +27,18 @@ namespace PissanoApp.Controllers
         // GET: /Requerimiento/
         public ActionResult IndexApprove()
         {
+            //var requerimientos = db.Requerimientos;
+            var obrasList = new string[] { "Barcelona", "San Borja Norte" };
+            if (User.Identity.Name == "david.moreano")
+            {
+                obrasList = new string[] { "Barcelona" };
+            }
+            else if (User.Identity.Name == "jorge.bernardo")
+            {
+                obrasList = new string[] { "San Borja Norte" };
+            }
 
-            var requerimientos = db.Requerimientos.Include(r => r.Obra).Include(r => r.Prioridad);
+            var requerimientos = db.Requerimientos.Where(p => obrasList.Contains(p.Obra.nombre)).Include(r => r.Obra).Include(r => r.Prioridad);
             return View(requerimientos.ToList());
         }
 

@@ -46,6 +46,7 @@
                                 <th>Estado</th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
    
                             </tr>
                         </thead>
@@ -95,7 +96,11 @@
                                     <td class="project-actions">
                                         <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>
+                                    <td>
 
+                                            <a href="~/OrdenCompra/FileUpload/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-file"></i> Cotización </a>                                        
+
+                                    </td>
                                     <td>
                                         @*@Html.ActionLink("Editar", "Edit", new { id = item.ordenCompraId }) |
                                         @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |

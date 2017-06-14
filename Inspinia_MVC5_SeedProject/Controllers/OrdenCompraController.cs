@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PissanoApp.Models;
 using System.Data.Entity.Validation;
 using System.Text;
+using System.IO;
 
 namespace PissanoApp.Controllers
 {
@@ -411,11 +412,20 @@ namespace PissanoApp.Controllers
         // GET: /OrdenCompra/Approve/5
         public ActionResult IndexApprove()
         {
+
+            var obrasList = new string[] { "Barcelona", "San Borja Norte" };
+            if (User.Identity.Name == "david.moreano")
+            {
+                obrasList = new string[] { "Barcelona" };
+            }
+            else if (User.Identity.Name == "jorge.bernardo")
+            {
+                obrasList = new string[] { "San Borja Norte" };
+            }
+
             var estadoList = new string[] { "Pendiente de Aprobación", "Aprobación 1", "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 1", "Rechazado Aprobación 2", "Rechazado Aprobación 3" };
-            //var requerimientos = db.Requerimientos.Where(p => estadoList.Contains(p.EstadoRequerimiento.nombre));
-            //var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
-            //var ordenes = db.Ordenes.Where(p => p.estadoOrdenId==1).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
-            var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            
+            var ordenes = db.Ordenes.Where(p => obrasList.Contains(p.Obra.nombre)).Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
             return View(ordenes.ToList());
         }
 
@@ -701,6 +711,67 @@ namespace PissanoApp.Controllers
             }
             return RedirectToAction("IndexApprove3");
         }
+
+
+        public ActionResult FileUpload(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordencompra = db.Ordenes.Find(id);
+            if (ordencompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordencompra);
+        }
+
+        [HttpPost]
+        public ActionResult FileUploadHandler(int? ordenCompraId)
+        {
+
+
+            if (ordenCompraId == null)
+            {
+                return HttpNotFound();
+            }
+
+            OrdenCompra OrdenCompra = db.Ordenes.Find(ordenCompraId);
+
+            foreach (var fileKey in Request.Files.AllKeys)
+            {
+                var file = Request.Files[fileKey];
+                try
+                {
+                    if (file != null)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+                        var path = Path.Combine(Server.MapPath("~/Uploads"), OrdenCompra.numero +"-"+ fileName);
+                        file.SaveAs(path);
+
+
+
+                         Archivo archivo = new Archivo();
+                         archivo.ordenCompraId = OrdenCompra.ordenCompraId;
+                         archivo.tipoArchivoId = 1;
+                         archivo.ruta = OrdenCompra.numero + "-" + fileName;
+
+                         db.Archivo.Add(archivo);
+                         db.SaveChanges();
+                        
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { Message = "Error guardando Archivo(s)" });
+                }
+            }
+            return Json(new { Message = "Archivo(s) guardados" });
+        }
+
         //[HttpPost]
         ////[ValidateAntiForgeryToken]
         //public ActionResult ApproveOrder(int? id)

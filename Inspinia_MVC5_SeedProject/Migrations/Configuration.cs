@@ -254,6 +254,17 @@
             almacenes.ForEach(s => context.Almacens.AddOrUpdate(p => p.obraId, s));
             context.SaveChanges();
 
+
+            var tipoArchivos = new List<TipoArchivo>
+            {
+                new TipoArchivo { nombre= "Cotizacion", descripcion="Cotizacion" },
+                new TipoArchivo { nombre= "Valorizacion", descripcion="Valorizacion" },
+
+            };
+
+            tipoArchivos.ForEach(s => context.TipoArchivo.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
             //var materialpadres = new List<Material>
             //{
             //    new  Material { codigo="20001001", nombre= "Acero corrugado f'y = 4200 Kg/cm2", MaterialPadre=null,

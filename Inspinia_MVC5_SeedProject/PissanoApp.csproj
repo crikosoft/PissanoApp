@@ -201,14 +201,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
-    <Compile Include="Migrations\201706071633541_db-update.cs" />
-    <Compile Include="Migrations\201706071633541_db-update.Designer.cs">
-      <DependentUpon>201706071633541_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201706140028037_db-create.cs" />
+    <Compile Include="Migrations\201706140028037_db-create.Designer.cs">
+      <DependentUpon>201706140028037_db-create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\Almacen.cs" />
+    <Compile Include="Models\Archivo.cs" />
     <Compile Include="Models\OrdenCompraEstadoOrden.cs" />
     <Compile Include="Models\RequerimientoDetalleEstadoRequerimientoDetalle.cs" />
     <Compile Include="Models\RequerimientoEstadoRequerimiento.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Models\Requerimiento.cs" />
     <Compile Include="Models\RequerimientoDetalle.cs" />
     <Compile Include="Models\SubPresupuesto.cs" />
+    <Compile Include="Models\TipoArchivo.cs" />
     <Compile Include="Models\TipoCompra.cs" />
     <Compile Include="Models\TipoDocumento.cs" />
     <Compile Include="Models\TipoMaterial.cs" />
@@ -1027,6 +1029,7 @@
     <Content Include="Views\OrdenCompra\IndexWarehouse.cshtml" />
     <Content Include="Views\OrdenCompra\EnterWarehouse.cshtml" />
     <Content Include="Views\Material\Inventory.cshtml" />
+    <Content Include="Views\OrdenCompra\FileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1038,8 +1041,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706071633541_db-update.resx">
-      <DependentUpon>201706071633541_db-update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706140028037_db-create.resx">
+      <DependentUpon>201706140028037_db-create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

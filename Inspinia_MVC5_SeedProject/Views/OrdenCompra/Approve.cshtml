@@ -11,7 +11,14 @@
         @Html.HiddenFor(model => model.ordenCompraId)
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
-        <h2>Documento de Orden de Compra</h2>
+        @if (Model.Requerimiento.TipoCompra.nombre == "Materiales")
+        {
+            <h2>Documento de Orden de Compra</h2>
+        }
+        else if (Model.Requerimiento.TipoCompra.nombre == "SubContratos")
+        {
+            <h2>Documento de Orden de Servicio</h2>
+        }
         <ol class="breadcrumb">
             <li>
                 @Html.ActionLink("Lista Aprobaciones", "IndexApprove")
@@ -19,12 +26,19 @@
             <li class="active">
                 <strong>Aprobación</strong>
             </li>
+
+
         </ol>
     </div>
     <div class="col-lg-4">
         <div class="title-action">
             @*<a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Editar </a>
             <a href="#" class="btn btn-white"><i class="fa fa-check "></i> Guardar </a>*@
+            @foreach (var item in Model.Archivos)
+            {
+                <a href="~/Uploads/@Html.DisplayFor(model => item.ruta)" target="_blank" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> Abrir Cotización </a>
+            }
+
             <a href="~/OrdenCompra/DocumentPrint/@Html.DisplayFor(model => model.ordenCompraId)" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir </a>
 
         </div>
@@ -50,7 +64,14 @@
                     </div>
 
                     <div class="col-sm-6 text-right">
-                        <h4>No. de Orden de Compra</h4>
+                        @if (Model.Requerimiento.TipoCompra.nombre == "Materiales")
+                        {
+                            <h4>No. de Orden de Compra</h4>
+                        }
+                        else if (Model.Requerimiento.TipoCompra.nombre == "SubContratos")
+                        {
+                            <h4>No. de Orden de Servicio</h4>
+                        }
                         <h4 class="text-navy">@Html.DisplayFor(model => model.numero)</h4>
                         <span>Proveedor:</span>
                         <address>

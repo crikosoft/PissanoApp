@@ -12,7 +12,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pissano | Orden de Compra</title>
+
+    @if (Model.Requerimiento.TipoCompra.nombre == "Materiales")
+    {
+        <title>Pissano | Orden de Compra</title>
+    }
+    else if (Model.Requerimiento.TipoCompra.nombre == "SubContratos")
+    {
+        <title>Pissano | Orden de Servicio</title>
+    }
+    
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -41,7 +50,14 @@
                 </div>
 
                 <div class="col-sm-6 text-right">
-                    <h4>No. de Orden de Compra</h4>
+                    @if (Model.Requerimiento.TipoCompra.nombre == "Materiales")
+                    {
+                        <h4>No. de Orden de Compra</h4>
+                    }
+                    else if (Model.Requerimiento.TipoCompra.nombre == "SubContratos")
+                    {
+                        <h4>No. de Orden de Servicio</h4>
+                    }
                     <h4 class="text-navy">@Html.DisplayFor(model => model.numero)</h4>
                     <span>Proveedor:</span>
                     <address>
@@ -88,7 +104,7 @@
                                     <small>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</small>
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.OrdenCompra.Requerimiento.Detalles.Where(a => a.materialId == item.materialId).SingleOrDefault().Partida.nombre) - @Html.DisplayFor(modelItem => item.OrdenCompra.Requerimiento.Detalles.Where(a => a.materialId == item.materialId).SingleOrDefault().Partida.SubPresupuesto.nombre)
+                                    @Html.DisplayFor(modelItem => item.OrdenCompra.Requerimiento.Detalles.Where(a => a.materialId == item.materialId).FirstOrDefault().Partida.nombre) - @Html.DisplayFor(modelItem => item.OrdenCompra.Requerimiento.Detalles.Where(a => a.materialId == item.materialId).FirstOrDefault().Partida.SubPresupuesto.nombre)
                                 </td>
                                 <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</td>

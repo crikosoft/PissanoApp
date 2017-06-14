@@ -71,5 +71,7 @@ namespace PissanoApp.Models
 
         public virtual List<OrdenCompraEstadoOrden> OrdenCompraEstados { get; set; }
 
+        public virtual List<Archivo> Archivos { get; set; }
+
     }
 }
