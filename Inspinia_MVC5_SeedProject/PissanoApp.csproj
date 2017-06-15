@@ -205,6 +205,10 @@
     <Compile Include="Migrations\201706140028037_db-create.Designer.cs">
       <DependentUpon>201706140028037_db-create.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706151406420_db-update.cs" />
+    <Compile Include="Migrations\201706151406420_db-update.Designer.cs">
+      <DependentUpon>201706151406420_db-update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
@@ -1030,6 +1034,7 @@
     <Content Include="Views\OrdenCompra\EnterWarehouse.cshtml" />
     <Content Include="Views\Material\Inventory.cshtml" />
     <Content Include="Views\OrdenCompra\FileUpload.cshtml" />
+    <Content Include="Views\OrdenCompra\Analytics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1043,6 +1048,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201706140028037_db-create.resx">
       <DependentUpon>201706140028037_db-create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706151406420_db-update.resx">
+      <DependentUpon>201706151406420_db-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

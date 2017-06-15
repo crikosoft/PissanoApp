@@ -472,6 +472,15 @@ namespace PissanoApp.Controllers
             return View(ordenes.ToList());
         }
 
+
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult Analytics()
+        {
+            var estadoList = new string[] { "Aprobación 3", "Ingreso Total", "Ingreso Parcial" };
+           var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            return View(ordenes.ToList());
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Approve([Bind(Include="ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)

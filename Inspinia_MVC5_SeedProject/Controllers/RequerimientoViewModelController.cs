@@ -96,7 +96,7 @@ namespace PissanoApp.Controllers
             
             // aqui
 
-            var estadoRequerimientoDetalle = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Sin Aprobación").SingleOrDefault(); ;
+            var estadoRequerimientoDetalle = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Sin Aprobación").FirstOrDefault(); ;
 
             //var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == id);
 
