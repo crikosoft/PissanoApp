@@ -67,6 +67,12 @@
                             Lima, Perú<br>
                             <abbr title="Teléfono">T:</abbr> @Html.DisplayFor(model => model.Obra.empresa.telefono)
                         </address>
+
+                        <address>
+                            <strong>@Html.DisplayFor(model => model.Obra.nombre)</strong><br>
+                            Dirección: @Html.DisplayFor(model => model.Obra.direccion)<br>
+                            Lima, Perú<br>
+                        </address>
                     </div>
 
                     <div class="col-sm-6 text-right">
@@ -81,24 +87,33 @@
                         
                         
                         <h4 class="text-navy">@Html.DisplayFor(model => model.numero)</h4>
-                        <span>Proveedor:</span>
-                        <address>
-                            <strong>@Html.DisplayFor(model => model.Proveedor.razonSocial)</strong><br>
-                            RUC: @Html.DisplayFor(model => model.Proveedor.ruc)<br>
-                            Cuenta Corriente: @Html.DisplayFor(model => model.Proveedor.numeroCuenta)<br><br>
-                            Dirección: @Html.DisplayFor(model => model.Proveedor.direccion)<br>
-                            Lima, Perú<br>
-                            <abbr title="Teléfono">T:</abbr> @Html.DisplayFor(model => model.Proveedor.telefono)<br />
-                            Atención: @Html.DisplayFor(model => model.Proveedor.representanteVentas)<br />
-                            No.Contacto: @Html.DisplayFor(model => model.Proveedor.movil)<br />
-                            Email: @Html.DisplayFor(model => model.Proveedor.email)
-                        </address>
-                        <p>
-                            <span><strong>Forma de Pago:</strong> @Html.DisplayFor(model => model.FormaPago.nombre)</span><br />
-                            <span><strong>Fecha Emisión:</strong> @Html.DisplayFor(model => model.fechaCreacion)</span><br />
-                            <span><strong>Fecha Entrega:</strong> </span>
-                        </p>
-                    </div>
+                        @if (Model.EstadoOrden.nombre != "Aprobación 3")
+                        {
+                            <h4 class="text-danger">Estado: @Html.DisplayFor(model => model.EstadoOrden.nombre) </h4>
+                        }
+                        else
+                        {
+                            <h4 class="text-success">Estado: @Html.DisplayFor(model => model.EstadoOrden.nombre) </h4>
+                        }
+
+                            <span>Proveedor:</span>
+                            <address>
+                                <strong>@Html.DisplayFor(model => model.Proveedor.razonSocial)</strong><br>
+                                RUC: @Html.DisplayFor(model => model.Proveedor.ruc)<br>
+                                Cuenta Corriente: @Html.DisplayFor(model => model.Proveedor.numeroCuenta)<br><br>
+                                Dirección: @Html.DisplayFor(model => model.Proveedor.direccion)<br>
+                                Lima, Perú<br>
+                                <abbr title="Teléfono">T:</abbr> @Html.DisplayFor(model => model.Proveedor.telefono)<br />
+                                Atención: @Html.DisplayFor(model => model.Proveedor.representanteVentas)<br />
+                                No.Contacto: @Html.DisplayFor(model => model.Proveedor.movil)<br />
+                                Email: @Html.DisplayFor(model => model.Proveedor.email)
+                            </address>
+                            <p>
+                                <span><strong>Forma de Pago:</strong> @Html.DisplayFor(model => model.FormaPago.nombre)</span><br />
+                                <span><strong>Fecha Emisión:</strong> @Html.DisplayFor(model => model.fechaCreacion)</span><br />
+                                <span><strong>Fecha Entrega:</strong> </span>
+                            </p>
+</div>
                 </div>
 
                 <div class="table-responsive m-t">
@@ -166,6 +181,8 @@
                     <strong>Comentario</strong>
                     @Html.DisplayFor(model => model.comentario)
                 </div>
+
+  
             </div>
         </div>
 

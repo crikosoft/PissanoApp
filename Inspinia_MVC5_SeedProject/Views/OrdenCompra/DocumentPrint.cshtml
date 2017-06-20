@@ -47,6 +47,12 @@
                         Lima, Perú<br>
                         <abbr title="Teléfono">P:</abbr> @Html.DisplayFor(model => model.Obra.empresa.telefono)
                     </address>
+
+                    <address>
+                        <strong>@Html.DisplayFor(model => model.Obra.nombre)</strong><br>
+                        Dirección: @Html.DisplayFor(model => model.Obra.direccion)<br>
+                        Lima, Perú<br>
+                    </address>
                 </div>
 
                 <div class="col-sm-6 text-right">
@@ -59,6 +65,14 @@
                         <h4>No. de Orden de Servicio</h4>
                     }
                     <h4 class="text-navy">@Html.DisplayFor(model => model.numero)</h4>
+                    @if (Model.EstadoOrden.nombre != "Aprobación 3")
+                    { 
+                    <h4 class="text-danger">Estado: @Html.DisplayFor(model => model.EstadoOrden.nombre) </h4>
+                    }
+                    else
+                    { 
+                    <h4 class="text-success">Estado: @Html.DisplayFor(model => model.EstadoOrden.nombre) </h4>
+                    }
                     <span>Proveedor:</span>
                     <address>
                         <strong>@Html.DisplayFor(model => model.Proveedor.razonSocial)</strong><br>
