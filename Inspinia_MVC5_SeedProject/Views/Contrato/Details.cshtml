@@ -1,0 +1,164 @@
+﻿@model PissanoApp.Models.Contrato
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Contrato</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrdenCompra.numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrdenCompra.numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoValorizacion.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoValorizacion.nombre)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.metrado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.metrado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adelanto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adelanto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adelantoPorc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adelantoPorc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fondoGarantia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fondoGarantia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fondoGarantiaPorc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fondoGarantiaPorc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.duracion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.duracion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.avance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.avance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.avancePorc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.avancePorc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.saldo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.saldo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.saldoPorc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.saldoPorc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numeroPagos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numeroPagos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaModificacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.contratoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

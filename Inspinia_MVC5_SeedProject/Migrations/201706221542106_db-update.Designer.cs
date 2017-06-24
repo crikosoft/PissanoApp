@@ -13,7 +13,7 @@ namespace PissanoApp.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201706151406420_db-update"; }
+            get { return "201706221542106_db-update"; }
         }
         
         string IMigrationMetadata.Source

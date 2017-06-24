@@ -5,8 +5,16 @@
 }
 @Html.HiddenFor(model => model.TipoCompra.tipoCompraId)
 
-<h2>Ordenes de Compra</h2>
 
+@*@if (Model.TipoCompra.nombre == "Materiales")
+{
+    <h2>Ordenes de Compra</h2>
+}
+else if (Model.TipoCompra.nombre == "SubContratos")
+{
+    <h2>Ordenes de Servicio</h2>
+}*@
+<h2>Ordenes</h2>
 
 
 <p>
@@ -34,17 +42,18 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example" data-page-size="10" id="tableMaterial">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th hidden>Id</th>
                                 <th>Orden Compra</th>
                                 <th>Obra</th>
                                 <th>Fecha</th>
                                 <th>Prioridad</th>
                                 <th>Tipo de Orden</th>
-                                <th>Razón Social (días)</th>
-                                <th>Forma Pago</th>
+                                <th>Razón Social</th>
+                                @*<th>Forma Pago</th>*@
                                 @*<th>Total</th>*@
                                 <th>Estado</th>
                                 <th></th>
+                                <th>Cotizaciones y Contratos</th>
                                 <th></th>
                                 <th></th>
    
@@ -56,7 +65,7 @@
                             {
 
                                 <tr class="gradeX">
-                                    <td>@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
                                     <td class="project-actions">
                                         <span class="label label-primary">@Html.DisplayFor(modelItem => item.numero)</span>
                                     </td>
@@ -65,7 +74,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.Requerimiento.Prioridad.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Requerimiento.TipoCompra.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.FormaPago.nombre)</td>
+                                    @*<td>@Html.DisplayFor(modelItem => item.FormaPago.nombre)</td>*@
                                     @*<td>@Html.DisplayFor(modelItem => item.total)</td>*@
                                     @if (item.estadoOrdenId == 1)
                                     {
@@ -98,9 +107,21 @@
                                     </td>
                                     <td>
 
-                                            <a href="~/OrdenCompra/FileUpload/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-file"></i> Cotización </a>                                        
+                                            <a href="~/OrdenCompra/FileUpload/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-files-o"></i> Archivos</a>                                        
 
                                     </td>
+
+                                    <td>
+                                        @if (item.Contratos.Count() ==0 )
+                                        { 
+                                        <a href="~/Contrato/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"> Contrato </a>
+                                        }
+                                        else
+                                        { 
+                                        <a href="~/Contrato/Edit/@Html.DisplayFor(modelItem => item.Contratos[0].contratoId)" class="btn btn-white btn-sm"> <i class="fa fa-edit"></i> Contrato </a>
+                                        }
+                                    </td>
+
                                     <td>
                                         @*@Html.ActionLink("Editar", "Edit", new { id = item.ordenCompraId }) |
                                         @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |
@@ -121,19 +142,20 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Id</th>
+                                <th hidden>Id</th>
                                 <th>Orden Compra</th>
                                 <th>Obra</th>
                                 <th data-hide="all">Fecha</th>
                                 <th>Prioridad</th>
                                 <th>Tipo de Orden</th>
                                 <th>Razón Social </th>
-                                <th>Forma Pago</th>
+                                @*<th>Forma Pago</th>*@
                                 @*<th>Total</th>*@
                                 <th>Estado</th>
                                 <th></th>
+                                <th>Cotizaciones y Contratos</th>
                                 <th></th>
-  
+                                <th></th>
 
                             </tr>
                         </tfoot>

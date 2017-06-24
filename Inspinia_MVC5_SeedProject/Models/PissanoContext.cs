@@ -140,6 +140,15 @@ namespace PissanoApp.Models
 
         public DbSet<TipoArchivo> TipoArchivo { get; set; }
 
+        //Contrato y Valoriación
+        public DbSet<Contrato> Contrato { get; set; }
+
+        public DbSet<Valorizacion> Valorizacion { get; set; }
+
+        public DbSet<TipoValorizacion> TipoValorizacion { get; set; }
+
+        public DbSet<EstadoValorizacion> EstadosValorizacion { get; set; }
+
        
     }
 

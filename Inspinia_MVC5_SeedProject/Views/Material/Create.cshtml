@@ -37,7 +37,7 @@
                 Unidad de Medida
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("unidadMedidaId", String.Empty)
+                @Html.DropDownList("unidadMedidaId", (IEnumerable<SelectListItem>)ViewBag.unidadMedidaId, "-- Seleccione --", new { @class = "chosen-select", @style = "width:20%;" })
                 @Html.ValidationMessageFor(model => model.unidadMedidaId)
             </div>
         </div>
@@ -48,7 +48,7 @@
                 Tipo Material
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("tipoMaterialId", String.Empty)
+                @Html.DropDownList("tipoMaterialId", (IEnumerable<SelectListItem>)ViewBag.tipoMaterialId, "-- Seleccione --", new { @class = "chosen-select", @style = "width:20%;" })
                 @Html.ValidationMessageFor(model => model.tipoMaterialId)
             </div>
         </div>
@@ -59,19 +59,85 @@
                 Material Padre
             </div>
             <div class="col-md-10">
-                @Html.DropDownList("materialPadreId", String.Empty)
+                @*@Html.DropDownList("materialPadreId", String.Empty)*@
+                @Html.DropDownList("materialPadreId", (IEnumerable<SelectListItem>)ViewBag.materialPadreId, "-- Seleccione --", new { @class = "chosen-select" })
                 @Html.ValidationMessageFor(model => model.materialPadreId)
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Crear" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Filter")
+    @Html.ActionLink("Volver a la Lista", "Index")
 </div>
+
+
+@section Styles {
+
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/nouiSliderStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/ionRangeSlider/ionRangeStyles")
+    @Styles.Render("~/plugins/imagecropperStyles")
+    @Styles.Render("~/Content/plugins/colorpicker/colorpickerStyles")
+    @Styles.Render("~/plugins/select2Styles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/ionRange")
+    @Scripts.Render("~/plugins/nouiSlider")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/knob")
+    @Scripts.Render("~/plugins/imagecropper")
+    @Scripts.Render("~/plugins/colorpicker")
+    @Scripts.Render("~/plugins/clockpicker")
+    @Scripts.Render("~/plugins/dateRange")
+    @Scripts.Render("~/plugins/select2")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+        });
+
+    
+    </script>
+
+
+}

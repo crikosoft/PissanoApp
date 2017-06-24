@@ -73,5 +73,7 @@ namespace PissanoApp.Models
 
         public virtual List<Archivo> Archivos { get; set; }
 
+        public virtual List<Contrato> Contratos { get; set; }
+
     }
 }

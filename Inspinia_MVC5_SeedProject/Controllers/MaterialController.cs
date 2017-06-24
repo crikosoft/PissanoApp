@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PissanoApp.Models;
 using Microsoft.AspNet.Identity;
+using System.Web.UI.WebControls;
 
 namespace PissanoApp.Controllers
 {
@@ -19,6 +20,8 @@ namespace PissanoApp.Controllers
         public ActionResult Index()
         {
             var materiales = db.Materiales.Include(m => m.MaterialPadre).Include(m => m.TipoMaterial).Include(m => m.UnidadMedida);
+             
+            
             return View(materiales.ToList());
         }
 
@@ -63,6 +66,7 @@ namespace PissanoApp.Controllers
         // GET: /Material/Create
         public ActionResult Create()
         {
+
             ViewBag.materialPadreId = new SelectList(db.Materiales, "materialId", "nombre");
             ViewBag.tipoMaterialId = new SelectList(db.TipoMateriales, "tipoMaterialId", "nombre");
             ViewBag.unidadMedidaId = new SelectList(db.UnidadMedidas, "unidadMedidaId", "nombre");

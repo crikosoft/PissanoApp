@@ -1,0 +1,93 @@
+﻿@model IEnumerable<PissanoApp.Models.Contrato>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrdenCompra.numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoValorizacion.nombre)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.metrado)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.adelantoPorc)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.fondoGarantiaPorc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaInicio)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.numeroPagos)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrdenCompra.numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoValorizacion.nombre)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.metrado)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.adelantoPorc)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.fondoGarantiaPorc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaInicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.duracion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.avance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.avancePorc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.saldo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.saldoPorc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numeroPagos)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.contratoId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.contratoId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.contratoId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AlmacenController.cs" />
     <Compile Include="Controllers\AppViewsController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\ContratoController.cs" />
     <Compile Include="Controllers\EcommerceController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\FormaPagoController.cs" />
@@ -205,16 +206,18 @@
     <Compile Include="Migrations\201706140028037_db-create.Designer.cs">
       <DependentUpon>201706140028037_db-create.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706151406420_db-update.cs" />
-    <Compile Include="Migrations\201706151406420_db-update.Designer.cs">
-      <DependentUpon>201706151406420_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201706221542106_db-update.cs" />
+    <Compile Include="Migrations\201706221542106_db-update.Designer.cs">
+      <DependentUpon>201706221542106_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\Almacen.cs" />
     <Compile Include="Models\Archivo.cs" />
+    <Compile Include="Models\EstadoValorizacion.cs" />
     <Compile Include="Models\OrdenCompraEstadoOrden.cs" />
+    <Compile Include="Models\Contrato.cs" />
     <Compile Include="Models\RequerimientoDetalleEstadoRequerimientoDetalle.cs" />
     <Compile Include="Models\RequerimientoEstadoRequerimiento.cs" />
     <Compile Include="Models\Categoria.cs" />
@@ -252,8 +255,10 @@
     <Compile Include="Models\TipoDocumento.cs" />
     <Compile Include="Models\TipoMaterial.cs" />
     <Compile Include="Models\TipoPresupuesto.cs" />
+    <Compile Include="Models\TipoValorizacion.cs" />
     <Compile Include="Models\Titulo.cs" />
     <Compile Include="Models\UnidadMedida.cs" />
+    <Compile Include="Models\Valorizacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\MaterialPresupuestoViewModel.cs" />
@@ -1035,6 +1040,11 @@
     <Content Include="Views\Material\Inventory.cshtml" />
     <Content Include="Views\OrdenCompra\FileUpload.cshtml" />
     <Content Include="Views\OrdenCompra\Analytics.cshtml" />
+    <Content Include="Views\Contrato\Delete.cshtml" />
+    <Content Include="Views\Contrato\Details.cshtml" />
+    <Content Include="Views\Contrato\Edit.cshtml" />
+    <Content Include="Views\Contrato\Index.cshtml" />
+    <Content Include="Views\Contrato\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1049,8 +1059,8 @@
     <EmbeddedResource Include="Migrations\201706140028037_db-create.resx">
       <DependentUpon>201706140028037_db-create.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706151406420_db-update.resx">
-      <DependentUpon>201706151406420_db-update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706221542106_db-update.resx">
+      <DependentUpon>201706221542106_db-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
