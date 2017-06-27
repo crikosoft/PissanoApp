@@ -29,6 +29,9 @@ namespace PissanoApp.Controllers
         {
             //var requerimientos = db.Requerimientos;
             var obrasList = new string[] { "Barcelona", "San Borja Norte" };
+            var estadoList = new string[] { "Pendiente Aprobación", "Con OC parcial", "Con OC total", "Aprobado Total", "Aprobación Rechazada", "Aprobado Parcial", "Rechazado Parcial" };
+
+
             if (User.Identity.Name == "david.moreano")
             {
                 obrasList = new string[] { "Barcelona" };
@@ -38,7 +41,7 @@ namespace PissanoApp.Controllers
                 obrasList = new string[] { "San Borja Norte" };
             }
 
-            var requerimientos = db.Requerimientos.Where(p => obrasList.Contains(p.Obra.nombre)).Include(r => r.Obra).Include(r => r.Prioridad);
+            var requerimientos = db.Requerimientos.Where(p => estadoList.Contains(p.EstadoRequerimiento.nombre)).Where(p => obrasList.Contains(p.Obra.nombre)).Include(r => r.Obra).Include(r => r.Prioridad);
             return View(requerimientos.ToList());
         }
 

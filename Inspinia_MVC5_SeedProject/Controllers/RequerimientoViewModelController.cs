@@ -21,16 +21,17 @@ namespace PissanoApp.Controllers
         // GET: /RequerimientoViewModel/
         public ActionResult Index(int? id)
         {
-            var obras = db.Obras;
 
-           
+            var estadoList = new string[] { "Pendiente Aprobación", "Con OC parcial", "Con OC total", "Aprobado Total", "Aprobación Rechazada", "Aprobado Parcial", "Rechazado Parcial" };
+
+            var obras = db.Obras; 
 
             var materiales = db.Materiales;
 
             var prioridades = db.Prioridad;
 
             //var requerimientos = db.Requerimientos.OrderByDescending(p => p.requerimientoId);
-            var requerimientos = db.Requerimientos.Where(p => p.tipoCompraId == id).OrderByDescending(p => p.requerimientoId);
+            var requerimientos = db.Requerimientos.Where(p => estadoList.Contains(p.EstadoRequerimiento.nombre)).Where(p => p.tipoCompraId == id).OrderByDescending(p => p.requerimientoId);
 
             var tipoCompra = db.TipoCompra.Find(id);
 
