@@ -1,0 +1,263 @@
+﻿@model  PissanoApp.Models.Contrato
+@{
+    ViewBag.Title = "Valorizar";
+}
+
+<h2>Valorizar</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+
+@{
+    ViewBag.Title = "Cart";
+}
+
+<input type="text" class="form-control" tabindex="3" id="ordenCompraId" value="@Html.DisplayFor(model => model.OrdenCompra.ordenCompraId)">
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Ingresar Valorizaciones de Ordenes de Servicios: @Model.OrdenCompra.Proveedor.razonSocial</h2>
+
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+
+
+    <div class="row">
+        <div class="col-md-9">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <span class="pull-right">(<strong>@Model.Valorizaciones.Count()</strong>) items</span>
+                    <h5>Valorizaciones</h5>
+                </div>
+                <div class="ibox-content">
+
+
+                    <div class="table-responsive">
+                        <table class="table shoping-cart-table" id="tablaItems">
+
+                            <tbody>
+
+                                @{bool currentValorization = true;}
+                                @foreach (var item in Model.Valorizaciones)
+                                {
+
+                                    <tr>
+                                        <td hidden="hidden">@Html.DisplayFor(modelItem => item.valorizacionId)</td>
+                                        <td width="90">
+                                            <div class="cart-product-imitation">
+                                            </div>
+                                        </td>
+                                        <td class="desc">
+                                            <h3>
+                                                <a href="#" class="text-navy">
+                                                    @Html.DisplayFor(modelItem => item.Contrato.OrdenCompra.numero) 
+                                                </a>
+                                            </h3>
+                                            <p class="small">
+                                                Servicio
+                                            </p>
+                                            <dl class="small m-b-none">
+                                                <dt>@Html.DisplayFor(modelItem => item.Contrato.OrdenCompra.OrdenesCompraDetalles[0].Material.nombre)</dt>
+                                                <dd>@Html.DisplayFor(modelItem => item.Contrato.OrdenCompra.OrdenesCompraDetalles[0].Material.UnidadMedida.nombre)</dd>
+                                            </dl>
+
+                                            <div class="m-t-sm">
+                                                @*                                            <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a>*@
+                                                @*|*@
+                                                @*<a href="#" class="text-muted"><i class="fa fa-trash"></i> Quitar Orden</a>*@
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            @*Avance S/.180,00 -  78%
+                                                <s class="small text-muted">S/.230,00</s>*@
+                                            @*<s class="small text-muted">@Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre)</s>*@
+
+                                        </td>
+                                        <td width="75">
+                                            @if (item.avance == 0)
+                                            {
+                                                if (Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre).ToString() == "Pendiente de Registro" && currentValorization == true)
+                                                {
+                                                    <input type="text" class="form-control" id="avance" placeholder="0%">
+                                                    currentValorization = false;
+                                                }
+                                                else
+                                                {
+
+
+                                                    <input type="text" class="form-control" id="avance" placeholder="0%" disabled="disabled">
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="text" class="form-control" id="avance" value="@Html.DisplayFor(modelItem => item.avance)">
+
+                                            }
+                                        </td>
+                                        <td>
+                                            <h4>
+                                                @Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre)
+                                            </h4>
+                                        </td>
+                                    </tr>
+
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <div class="ibox-content">
+
+                    @*<button class="btn btn-primary pull-right"><i class="fa fa  fa-arrow-circle-o-right"></i> Enviar</button>*@
+                    <input value="Guardar!" class="btn btn-primary pull-right" id="BtnGuardar" />
+                    @*<button class="btn btn-white"> Guardar </button>*@
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Resumen de Avance de Valorizaciones</h5>
+                </div>
+                <div class="ibox-content">
+                    <span>
+                        Total
+                    </span>
+                    <h2 class="font-bold">
+                        @*@Model.Valorizaciones[0].Contrato.OrdenCompra.Moneda.simbolo @Model.Valorizaciones[0].Contrato.OrdenCompra.total*@
+                    </h2>
+
+
+
+                    <hr />
+                    <span class="text-muted small">
+                        @*Valorización  @Model.Valorizaciones[0].Contrato.TipoValorizacion.nombre*@
+                    </span>
+                    <br />
+                    <span class="text-muted small">
+                        Inicio: 02 - Jun - 2017
+                    </span>
+                    <hr />
+                    <span>
+                        Avance
+                    </span>
+                    <h3 class="font-bold">
+                        @*@Model.Valorizaciones[0].Contrato.OrdenCompra.Moneda.simbolo  @Model.Valorizaciones[0].Contrato.avance*@
+                    </h3>
+                    <hr />
+                    <span>
+                        Saldo
+                    </span>
+                    <h3 class="font-bold">
+                        @*@Model.Valorizaciones[0].Contrato.OrdenCompra.Moneda.simbolo  @Model.Valorizaciones[0].Contrato.saldo*@
+                    </h3>
+                    <div class="m-t-sm">
+                        @*<div class="btn-group">
+                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa  fa-arrow-circle-o-right"></i> Enviar</a>
+                                <a href="#" class="btn btn-white btn-sm"> Cancel</a>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Contacto</h5>
+                </div>
+                <div class="ibox-content text-center">
+
+
+
+                    <h3><i class="fa fa-phone"></i> +51 3461989</h3>
+                    <span class="small">
+                        Por favor comuniquese con Contabilidad ante cualquier duda.
+                    </span>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#BtnGuardar").click(function () {
+
+            var cells = [];
+
+            $('#tablaItems tr').each(function () {
+
+                    cells.push({
+
+                        valorizacionId: $(this).find("td").eq(0).html(),
+                        avancePorc: $(this).find("td:eq(4) input[type='text']").val()
+                    });
+            });
+
+            //alert(cells[0].avancePorc);
+            //return;
+            var Detalles = [];
+            var valorizacion = new Object();
+
+            //for (var i = 0; i < cells.length; i++) {
+
+                valorizacion.valorizacionId = cells[0].valorizacionId;
+                valorizacion.avancePorc = cells[0].avancePorc;
+                valorizacion.ordenServicioId = $("#ordenServicioId").val();
+                //alert(requerimientoDetalle.requerimientoDetalleId);
+            //}
+
+                alert(valorizacion.ordenServicioId);
+
+            ValorizacionFinal = JSON.stringify({ 'valorizacion': valorizacion });
+
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                type: 'POST',
+                url: '@Url.Action("SaveValorization")',
+                data: ValorizacionFinal,
+                success: function (data) {
+                    window.location = '@Url.Action("Index")';
+                },
+                error: function (result) {
+                    alert(result.statusText)
+                    alert('No se pudo realizar la acción solicitada');
+
+                }
+            });
+        });
+
+    });
+    </script>
+}
+

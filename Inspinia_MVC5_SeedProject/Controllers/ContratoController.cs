@@ -39,7 +39,7 @@ namespace PissanoApp.Controllers
         // GET: /Contrato/Create
         public ActionResult Create(int? id)
         {
-            Contrato contrato = db.Contrato.FirstOrDefault();
+            Contrato contrato = new Contrato();
             OrdenCompra orden = db.Ordenes.Where(a => a.ordenCompraId == id).FirstOrDefault();
             contrato.ordenCompraId = orden.ordenCompraId; 
             contrato.OrdenCompra = orden;
@@ -59,7 +59,36 @@ namespace PissanoApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                contrato.fechaCreacion = cstTime;
+                contrato.usuarioCreacion = User.Identity.Name;
+                contrato.fechaModificacion = cstTime;
+
+                if (contrato.adelanto !=0)
+                {
+                    OrdenCompra orden = db.Ordenes.Find(contrato.ordenCompraId);
+
+                    contrato.OrdenCompra = orden;
+                    contrato.avanceMonto = contrato.adelantoPorc * contrato.OrdenCompra.total / 100;
+                    contrato.saldoMonto = contrato.OrdenCompra.total - (contrato.adelantoPorc * contrato.OrdenCompra.total / 100);
+
+                    Valorizacion valorizacion = new Valorizacion();
+                    valorizacion.Contrato = contrato;
+                    valorizacion.concepto = "Adelanto";
+                    valorizacion.avanceMonto = (double)(contrato.adelantoPorc*contrato.OrdenCompra.total/100);
+                    valorizacion.fechacierre = contrato.fechaInicio;
+                    valorizacion.estadoValorizacionId = 2;
+                    valorizacion.fechaCreacion = cstTime;
+                    valorizacion.usuarioCreacion = User.Identity.Name;
+                    valorizacion.fechaModificacion = cstTime;
+                    db.Valorizacion.Add(valorizacion);
+                }
                 db.Contrato.Add(contrato);
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -137,6 +166,13 @@ namespace PissanoApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        public ActionResult Valorizar(int? id)
+        {
+            Contrato contrato = db.Contrato.Find(id);
+            return View(contrato);
         }
     }
 }

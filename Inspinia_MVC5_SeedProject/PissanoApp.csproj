@@ -198,6 +198,7 @@
     <Compile Include="Controllers\TipoMaterialController.cs" />
     <Compile Include="Controllers\UnidadMedidaController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Controllers\ValorizacionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -206,9 +207,9 @@
     <Compile Include="Migrations\201706140028037_db-create.Designer.cs">
       <DependentUpon>201706140028037_db-create.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706221542106_db-update.cs" />
-    <Compile Include="Migrations\201706221542106_db-update.Designer.cs">
-      <DependentUpon>201706221542106_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201706261640331_db-update.cs" />
+    <Compile Include="Migrations\201706261640331_db-update.Designer.cs">
+      <DependentUpon>201706261640331_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1045,6 +1046,12 @@
     <Content Include="Views\Contrato\Edit.cshtml" />
     <Content Include="Views\Contrato\Index.cshtml" />
     <Content Include="Views\Contrato\Create.cshtml" />
+    <Content Include="Views\Contrato\Valorizar.cshtml" />
+    <Content Include="Views\Valorizacion\Create.cshtml" />
+    <Content Include="Views\Valorizacion\Delete.cshtml" />
+    <Content Include="Views\Valorizacion\Details.cshtml" />
+    <Content Include="Views\Valorizacion\Edit.cshtml" />
+    <Content Include="Views\Valorizacion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1059,8 +1066,8 @@
     <EmbeddedResource Include="Migrations\201706140028037_db-create.resx">
       <DependentUpon>201706140028037_db-create.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706221542106_db-update.resx">
-      <DependentUpon>201706221542106_db-update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706261640331_db-update.resx">
+      <DependentUpon>201706261640331_db-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

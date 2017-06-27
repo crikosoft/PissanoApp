@@ -1,93 +1,156 @@
 ﻿@model IEnumerable<PissanoApp.Models.Contrato>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Contratos";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.OrdenCompra.numero)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TipoValorizacion.nombre)
-        </th>
+<h2>Contratos</h2>
 
-        <th>
-            @Html.DisplayNameFor(model => model.metrado)
-        </th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.adelantoPorc)
-        </th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.fondoGarantiaPorc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaInicio)
-        </th>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.numeroPagos)
-        </th>
-        
-        <th></th>
-    </tr>
+@*<p>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrdenCompra.numero)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TipoValorizacion.nombre)
-        </td>
+        <a href="@Url.Action("IndexApprove", "OrdenCompraViewModel")" class="btn btn-w-m btn-primary">Aprobar</a>
+    </p>*@
 
-        <td>
-            @Html.DisplayFor(modelItem => item.metrado)
-        </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.adelantoPorc)
-        </td>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Contratos de la Obra. Use el Filtro de Búsqueda</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.fondoGarantiaPorc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaInicio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.duracion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.avance)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.avancePorc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.saldo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.saldoPorc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.numeroPagos)
-        </td>
+                    </div>
+                </div>
+                <div class="ibox-content">
 
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.contratoId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.contratoId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.contratoId })
-        </td>
-    </tr>
+                    <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th hidden>Id</th>
+                                <th>OC</th>
+                                <th>Obra</th>
+                                <th>Fecha Inicio</th>
+                                <th>Proveedor</th>
+                                <th>Avance</th>
+                                <th>Total</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+
+                                <tr class="gradeX">
+                                    
+                                    <td hidden>@Html.DisplayFor(modelItem => item.contratoId)</td>
+                                    <td class="project-actions">
+                                        <span class="label label-primary">@Html.DisplayFor(modelItem => item.OrdenCompra.numero)</span>
+                                    </td>                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Obra.nombre)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.fechaInicio)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Proveedor.razonSocial)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.avanceMonto)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.OrdenCompra.total)</td>
+
+                                    <td>
+                                        <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                    </td>
+                                    <td>
+                                        <a href="~/Valorizacion/Create/@Html.DisplayFor(modelItem => item.contratoId)" class="btn btn-white btn-sm"><i class="fa fa-money"></i> Valorizaciones </a>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.contratoId }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.contratoId }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.contratoId })
+                                    </td>
+                                  
+                                </tr>
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th hidden>Id</th>
+                                <th>OC</th>
+                                <th>Obra</th>
+                                <th>Fecha Inicio</th>
+                                <th>Proveedor</th>
+                                <th>Avance</th>
+                                <th>Total</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
 }
 
-</table>
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/iCheck")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "order": [[0, "desc"]]
+
+            });
+
+
+            $('.footable').footable();
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+
+    </script>
+}

@@ -1,0 +1,98 @@
+﻿@model PissanoApp.Models.Valorizacion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Valorizacion</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Contrato.comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contrato.comentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoValorizacion.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoValorizacion.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.concepto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.concepto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechacierre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechacierre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.avance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.avance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.avancePorc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.avancePorc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaModificacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.valorizacionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

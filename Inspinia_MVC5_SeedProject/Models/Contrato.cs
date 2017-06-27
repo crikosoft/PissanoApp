@@ -43,10 +43,17 @@ namespace PissanoApp.Models
 
         public int? duracion { get; set; }
 
-        public double? avance { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+        public double? avanceMonto { get; set; }
         public double? avancePorc { get; set; }
-        public double? saldo { get; set; }
+        public double? avanceMetrado { get; set; }  
+
+
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
+        public double? saldoMonto { get; set; }
         public double? saldoPorc { get; set; }
+        public double? saldoMetrado { get; set; }
+
         public int numeroPagos { get; set; }
 
         public virtual TipoValorizacion TipoValorizacion { get; set; }

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<PissanoApp.Models.Valorizacion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Contrato.comentario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoValorizacion.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.concepto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechacierre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.avanceMonto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.avancePorc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuarioCreacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuarioModificacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaModificacion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contrato.comentario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.concepto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechacierre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.avanceMonto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.avancePorc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuarioCreacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuarioModificacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaCreacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaModificacion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.valorizacionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.valorizacionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.valorizacionId })
+        </td>
+    </tr>
+}
+
+</table>
