@@ -15,9 +15,12 @@ namespace PissanoApp.Controllers
         private PissanoContext db = new PissanoContext();
 
         // GET: /Valorizacion/
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var valorizacion = db.Valorizacion.Include(v => v.Contrato).Include(v => v.EstadoValorizacion);
+            ViewBag.contratoId = id;
+            var contrato = db.Contrato.Find(id);
+            ViewBag.numero = contrato.OrdenCompra.numero;
+            var valorizacion = db.Valorizacion.Where(a => a.contratoId == id).Include(v => v.Contrato).Include(v => v.EstadoValorizacion);
             return View(valorizacion.ToList());
         }
 
@@ -162,5 +165,119 @@ namespace PissanoApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        [HttpPost]
+        public ActionResult CreateValorizacion(Valorizacion valorizacion)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+            if (ModelState.IsValid)
+            {
+                
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                valorizacion.usuarioCreacion = User.Identity.Name;
+                valorizacion.usuarioModificacion = User.Identity.Name;
+                valorizacion.fechaCreacion = cstTime;
+                valorizacion.fechaModificacion = cstTime;
+
+                var estadoValorizacion = db.EstadosValorizacion.Where(p => p.nombre == "Pendiente de Aprobación").SingleOrDefault();
+                valorizacion.estadoValorizacionId = estadoValorizacion.estadoValorizacionId;
+
+                db.Valorizacion.Add(valorizacion);
+                //db.SaveChanges();
+
+                var totalAvanceMonto = 0.0;
+
+                foreach (var item in valorizacion.ValorizacionDetalles)
+                {
+                    item.valorizacionId = valorizacion.valorizacionId;
+                    totalAvanceMonto = totalAvanceMonto + item.avanceMonto;
+                    item.usuarioCreacion = User.Identity.Name;
+                    item.usuarioModificacion = User.Identity.Name;
+                    item.fechaCreacion = cstTime;
+                    item.fechaModificacion = cstTime;
+                    db.ValorizacionDetalle.Add(item);
+
+                }
+                valorizacion.avanceMonto = totalAvanceMonto;
+
+
+                var contrato = db.Contrato.Where(p => p.contratoId == valorizacion.contratoId).Single();
+
+                contrato.avanceMonto = contrato.avanceMonto + valorizacion.avanceMonto;
+                contrato.saldoMonto = contrato.saldoMonto - valorizacion.avanceMonto;
+                contrato.usuarioModificacion = User.Identity.Name; ;
+                contrato.fechaModificacion = cstTime;
+
+
+                db.SaveChanges();
+                return RedirectToAction("Index/" + contrato.contratoId);
+            }
+
+            return View();
+        }
+
+
+        //[HttpPost]
+        ////[ValidateAntiForgeryToken]
+        //public ActionResult Create2(Valorizacion valorizacion)
+        //{
+        //    var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+        //    //if (ModelState.IsValid)
+        //    //{
+
+        //    Valorizacion valorizacion = db.Valorizacion.Find(valorizacion.ordenServicioId);
+
+        //    DateTime timeUtc = DateTime.UtcNow;
+        //    TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+        //    DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+        //    Valorizacion valorizacion2 = db.Valorizacion.Find(valorizacion.valorizacionId);
+        //    valorizacion2.avancePorc = valorizacion.avancePorc;
+        //    valorizacion2.avance = ordenServicio.total * valorizacion.avancePorc / 100;
+        //    valorizacion2.estadoValorizacionId = 2;
+        //    valorizacion2.usuarioModificacion = User.Identity.Name;
+        //    valorizacion2.fechaModificacion = cstTime;
+
+        //    ordenServicio.avance = ordenServicio.avance + valorizacion2.avance;
+        //    ordenServicio.saldo = ordenServicio.saldo - valorizacion2.avance;
+        //    ordenServicio.usuarioModificacion = User.Identity.Name;
+        //    ordenServicio.fechaModificacion = cstTime;
+
+        //    db.SaveChanges();
+
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbEntityValidationException ex)
+        //    {
+        //        StringBuilder sb = new StringBuilder();
+
+        //        foreach (var failure in ex.EntityValidationErrors)
+        //        {
+        //            sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+        //            foreach (var error in failure.ValidationErrors)
+        //            {
+        //                sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+        //                sb.AppendLine();
+        //            }
+        //        }
+
+        //        throw new DbEntityValidationException(
+        //            "Entity Validation Failed - errors follow:\n" +
+        //            sb.ToString(), ex
+        //        ); // Add the original exception as the innerException
+        //    }
+        //    return RedirectToAction("IndexApprove");
+        //    //}
+
+        //    //return View(requerimiento);
+        //}
     }
 }

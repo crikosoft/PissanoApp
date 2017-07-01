@@ -21,12 +21,14 @@ namespace PissanoApp.Models
         public double metrado { get; set; }
 
         [DisplayName("Adelanto")]
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         public double? adelanto { get; set; }
 
         [DisplayName("Adelanto %")]
         public double? adelantoPorc { get; set; }
 
         [DisplayName("Fondo de Garantía")]
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         public double? fondoGarantia { get; set; }
 
         [DisplayName("Fondo de Garantía %")]
@@ -57,7 +59,6 @@ namespace PissanoApp.Models
         public int numeroPagos { get; set; }
 
         public virtual TipoValorizacion TipoValorizacion { get; set; }
-        public virtual List<Archivo> ContratoArchivos { get; set; }
         public virtual List<Valorizacion> Valorizaciones { get; set; }
 
         public string usuarioCreacion { get; set; }

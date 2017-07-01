@@ -1,87 +1,219 @@
 ﻿@model IEnumerable<PissanoApp.Models.Valorizacion>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Valorizaciones";
 }
 
-<h2>Index</h2>
+<h2>Valorizaciones @ViewBag.numero</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Contrato.comentario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EstadoValorizacion.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.concepto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechacierre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.avanceMonto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.avancePorc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.usuarioCreacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.usuarioModificacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaCreacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaModificacion)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contrato.comentario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.concepto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechacierre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.avanceMonto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.avancePorc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.usuarioCreacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.usuarioModificacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaCreacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaModificacion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.valorizacionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.valorizacionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.valorizacionId })
-        </td>
-    </tr>
+    @*<a href="~/Valorizacion/Create/@Html.DisplayFor(model => model.ToList()[0].contratoId)" class="btn btn-w-m btn-primary"> Nueva Valorización </a>*@
+<a href="~/Valorizacion/Create/@ViewBag.contratoId" class="btn btn-w-m btn-primary"> Nueva Valorización </a>
+</p>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Valorizaciones. Use el Filtro de Búsqueda</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table table-stripped table-bordered table-hover dataTables-example" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Contrato.OrdenCompra.numero)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.concepto)
+                                </th>
+                                
+                               
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechacierre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.avanceMonto)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.avancePorc)
+                                </th>
+                                <th>
+                                    Imprimir
+                                </th>
+                                <th>
+                                    Archivos
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.usuarioCreacion)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaCreacion)
+                                </th>
+
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                                    {
+                                        <tr class="gradeX">
+                                            <td class="project-actions">
+                                                <span class="label label-primary">@Html.DisplayFor(modelItem => item.Contrato.OrdenCompra.numero)</span>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.concepto)
+                                            </td>
+                                           
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.fechacierre)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.avanceMonto)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.avancePorc)
+                                            </td>
+
+                                            <td class="project-actions">
+                                                <a href="~/Valorizacion/Document/@Html.DisplayFor(modelItem => item.valorizacionId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                            </td>
+
+                                            <td>
+
+                                                <a href="~/OrdenCompra/FileUpload/@Html.DisplayFor(modelItem => item.Contrato.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-files-o"></i> Archivos</a>
+
+                                            </td>
+
+
+                                            @if (item.EstadoValorizacion.nombre == "Pendiente de Aprobación")
+                                            {
+                                                <td class="client-status"><span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre)</span></td>
+                                            }
+                                            else
+                                            { 
+                                                <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre)</span></td>
+                                            
+                                            }
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.usuarioCreacion)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.fechaCreacion)
+                                            </td>
+
+                                            <td>
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.valorizacionId }) |
+                                                @Html.ActionLink("Details", "Details", new { id = item.valorizacionId }) |
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.valorizacionId })
+                                            </td>
+                                        </tr>
+                                    }                           
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Contrato.OrdenCompra.numero)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.concepto)
+                                </th>
+
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechacierre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.avanceMonto)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.avancePorc)
+                                </th>
+                                <th>
+                                    Imprimir
+                                </th>
+                                <th>
+                                    Archivos
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.usuarioCreacion)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaCreacion)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
 }
 
-</table>
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+
+                "order": [[0, "desc"]]
+
+            });
+
+
+        });
+
+    </script>
+}

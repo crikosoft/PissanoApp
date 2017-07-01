@@ -31,5 +31,7 @@ namespace PissanoApp.Models
         public virtual EstadoOrdenDetalle EstadoOrdenDetalle { get; set; }
 
         public virtual List<IngresoDetalle> IngresoDetalles { get; set; }
+
+        public virtual List<ValorizacionDetalle> ValorizacionDetalles { get; set; }
     }
 }

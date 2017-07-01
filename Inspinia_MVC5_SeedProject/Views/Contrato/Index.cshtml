@@ -55,7 +55,8 @@
                                     <td hidden>@Html.DisplayFor(modelItem => item.contratoId)</td>
                                     <td class="project-actions">
                                         <span class="label label-primary">@Html.DisplayFor(modelItem => item.OrdenCompra.numero)</span>
-                                    </td>                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Obra.nombre)</td>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Obra.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.fechaInicio)</td>
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Proveedor.razonSocial)</td>
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.avanceMonto)</td>
@@ -65,7 +66,7 @@
                                         <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>
                                     <td>
-                                        <a href="~/Valorizacion/Create/@Html.DisplayFor(modelItem => item.contratoId)" class="btn btn-white btn-sm"><i class="fa fa-money"></i> Valorizaciones </a>
+                                        <a href="~/Valorizacion/Index/@Html.DisplayFor(modelItem => item.contratoId)" class="btn btn-white btn-sm"><i class="fa fa-money"></i> Valorizaciones </a>
                                     </td>
                                     <td>
                                         @Html.ActionLink("Edit", "Edit", new { id = item.contratoId }) |

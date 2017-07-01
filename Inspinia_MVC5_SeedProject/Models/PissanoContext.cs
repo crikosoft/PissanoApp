@@ -149,7 +149,7 @@ namespace PissanoApp.Models
 
         public DbSet<EstadoValorizacion> EstadosValorizacion { get; set; }
 
-       
+        public DbSet<ValorizacionDetalle> ValorizacionDetalle { get; set; }
     }
 
 

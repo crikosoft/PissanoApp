@@ -208,6 +208,21 @@ namespace PissanoApp.Controllers
             return View(requerimiento);
         }
 
+        // GET: /Requerimiento/Approve/5
+        public ActionResult Cancel(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Requerimiento requerimiento = db.Requerimientos.Find(id);
+            if (requerimiento == null)
+            {
+                return HttpNotFound();
+            }
+            return View(requerimiento);
+        }
+
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
@@ -417,6 +432,84 @@ namespace PissanoApp.Controllers
                 );
             }
             return RedirectToAction("IndexApprove");
+        }
+
+        [HttpPost]
+        public ActionResult Cancel(Requerimiento requerimiento)
+        {
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+            Requerimiento Requerimiento = db.Requerimientos.Find(requerimiento.requerimientoId);
+
+            DateTime timeUtc = DateTime.UtcNow;
+            TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+            var estado = db.EstadoRequerimiento.Where(p => p.nombre == "Anulado").SingleOrDefault(); ;
+            var estadoDetalle = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Anulado").SingleOrDefault();
+
+            Requerimiento.estadoRequerimientoId = estadoDetalle.estadoRequerimientoDetalleId;
+
+            var requerimientoEstado = new RequerimientoEstadoRequerimiento();
+            var requerimientoDetalleEstado = new RequerimientoDetalleEstadoRequerimientoDetalle();
+            requerimientoEstado.Requerimiento = Requerimiento;
+
+
+            requerimientoEstado.requerimientoId = requerimiento.requerimientoId;
+            requerimientoEstado.estadoRequerimientoId = estado.estadoRequerimientoId;
+            requerimientoEstado.usuarioCreacion = User.Identity.Name;
+            requerimientoEstado.fechaCreacion = cstTime;
+            Requerimiento.estadoRequerimientoId = estado.estadoRequerimientoId;
+
+            //Actualiza datos en Requerimiento
+            requerimientoEstado.Requerimiento.estadoRequerimientoId = estado.estadoRequerimientoId;
+            requerimientoEstado.Requerimiento.usuarioModificacion = User.Identity.Name;
+            requerimientoEstado.Requerimiento.fechaModificacion = cstTime;
+
+            db.RequerimientoEstadoRequerimiento.Add(requerimientoEstado);
+
+            foreach (var item in Requerimiento.Detalles)
+            {
+
+
+                var requerimientoDetalleEstadoRequerimientoDetalle = new RequerimientoDetalleEstadoRequerimientoDetalle();
+                requerimientoDetalleEstadoRequerimientoDetalle.requerimientoDetalleId = item.requerimientoDetalleId;
+                requerimientoDetalleEstadoRequerimientoDetalle.estadoRequerimientoDetalleId = estadoDetalle.estadoRequerimientoDetalleId;
+                requerimientoDetalleEstadoRequerimientoDetalle.usuarioCreacion = User.Identity.Name;
+                requerimientoDetalleEstadoRequerimientoDetalle.fechaCreacion = cstTime;
+                RequerimientoDetalle RequerimientoDetalle = db.RequerimientoDetalles.Find(item.requerimientoDetalleId);
+                RequerimientoDetalle.estadoRequerimientoDetalleId = estadoDetalle.estadoRequerimientoDetalleId;
+                requerimientoDetalleEstadoRequerimientoDetalle.RequerimientoDetalle = RequerimientoDetalle;
+                db.RequerimientoDetalleEstadoRequerimientoDetalle.Add(requerimientoDetalleEstadoRequerimientoDetalle);
+
+
+
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new DbEntityValidationException(
+                    "Entity Validation Failed - errors follow:\n" +
+                    sb.ToString(), ex
+                );
+            }
+            return RedirectToAction("Index");
         }
     }
 }

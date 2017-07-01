@@ -3,7 +3,12 @@
     ViewBag.Title = "Valorizar";
 }
 
-<h2>Valorizar</h2>
+<h2>Valorizar: </h2> 
+<h3>
+    <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => modelItem.Contrato.ordenCompraId)" target="_blank" class="text-navy">
+        @Html.DisplayFor(model => model.Contrato.OrdenCompra.numero)
+    </a>
+</h3>
 
 @using (Html.BeginForm())
 {
@@ -16,428 +21,594 @@
 
 
 
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        @*<h2>Ingresar Valorizaciones de Ordenes de Servicios: @Model.Contrato.OrdenCompra.Proveedor.razonSocial</h2>*@
-
-    </div>
-    <div class="col-lg-2">
-
-    </div>
-</div>
-
-<div class="wrapper wrapper-content animated fadeInRight">
-
-
-
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-xs-12">
+            <input value="Guardar!" class="btn btn-primary" id="BtnGuardar" />
+        </div>
+    </div>
 
-            <div class="ibox">
-                <div class="ibox-title">
-                    @*<span class="pull-right">(<strong>@Model.Contrato.Valorizaciones.Count()</strong>) items</span>*@
-                    <h5>Valorizaciones</h5>
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Cabecera</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="control-label" for="concepto">Concepto</label>
+                                @Html.EditorFor(model => model.concepto)
+                                @Html.ValidationMessageFor(model => model.concepto)
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="control-label" for="fechacierre">Fecha de Cierre</label>
+                                @Html.EditorFor(model => model.fechacierre)
+                                @Html.ValidationMessageFor(model => model.fechacierre)
+                            </div>
+                        </div>
+                     </div>
                 </div>
-                <div class="ibox-content">
 
 
-                    <div class="table-responsive">
-                        <table class="table shoping-cart-table" id="tablaItems">
+        <div class="row">
+            <div class="col-md-9">
 
-                            <tbody>
+                <div class="ibox">
+                    <div class="ibox-title">
+                        @*<span class="pull-right">(<strong>@Model.Contrato.Valorizaciones.Count()</strong>) items</span>*@
+                        <h5>Valorización Actual</h5>
+                    </div>
 
-                                @foreach (var item in Model.Contrato.Valorizaciones)
-                                {
+                    <div class="ibox-content">
 
-                                    <tr>
-                                        <td hidden="hidden">@Html.DisplayFor(modelItem => item.valorizacionId)</td>
-                                        <td width="90">
-                                            <div class="cart-product-imitation">
-                                            </div>
-                                        </td>
-                                        <td class="desc">
-                                            <h3>
-                                                <a href="#" class="text-navy">
-                                                    @Html.DisplayFor(modelItem => item.Contrato.OrdenCompra.numero)
-                                                </a>
-                                            </h3>
-                                            <p class="small">
-                                                Servicio
-                                            </p>
-                                            <dl class="small m-b-none">
-                                                <dt>@Html.DisplayFor(modelItem => item.Contrato.OrdenCompra.OrdenesCompraDetalles[0].Material.nombre)</dt>
-                                                <dd>@Html.DisplayFor(modelItem => item.Contrato.OrdenCompra.OrdenesCompraDetalles[0].Material.UnidadMedida.nombre)</dd>
-                                            </dl>
 
-                                            <div class="m-t-sm">
+                        <div class="table-responsive">
+                            <table class="table shoping-cart-table dataTables-example" id="tablaItems">
 
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <h3>
-                                                @Html.DisplayFor(modelItem => item.concepto)
-                                            </h3>
+                                <tbody>
+
+                                    @foreach (var item2 in Model.Contrato.OrdenCompra.OrdenesCompraDetalles)
+                                    {
+                                        <tr>
+
+                                            <td hidden="hidden">@Html.DisplayFor(model => item2.ordenCompradetalleId)</td>
+                                            <td width="90">
+                                                <div class="cart-product-imitation">
+                                                </div>
+                                            </td>
+
+                                            <td class="desc">
+
+
+                                                <h3 class="text-navy">@Html.DisplayFor(modelItem => item2.Material.nombre)</h3>
+                                                <dl class="small m-b-none">
+
+                                                    <dt class="text-navy"></dt>
+                                                    <dd> Metrado Total: @Html.DisplayFor(modeIteml => item2.cantidad) @Html.DisplayFor(modelItem => item2.Material.UnidadMedida.nombre)</dd>
+                                                    @{var avanceMetrado = 0.0;
+                                                    var avanceMonto = 0.0;
+                                                    
+                                                    
+                                                      foreach (var item3 in item2.ValorizacionDetalles)
+                                                      {
+                                                          avanceMetrado = avanceMetrado + item3.avanceMetrado;
+                                                          avanceMonto = avanceMonto + item3.avanceMonto;
+                                                      }
+                                                    //if (item2.ValorizacionDetalles.Count() > 0)
+                                                    //{
+                                                    //    avanceMetrado = @Html.DisplayFor(modeIteml => item2.ValorizacionDetalles.Sum(survey => survey.avanceMetrado)).ToString();
+                                                    //    avanceMonto = @Html.DisplayFor(modeIteml => item2.ValorizacionDetalles.Sum(survey => survey.avanceMonto)).ToString();
+                                                    //}
+                                                    }
+                                                    <dd> Avance Metrado: @avanceMetrado</dd>
+                                                    <dd> Monto Total: @Html.DisplayFor(modelItem => item2.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modeIteml => item2.precioTotal) </dd>
+                                                    <dd> Avance Monto: @Html.DisplayFor(modelItem => item2.OrdenCompra.Moneda.simbolo) @avanceMonto </dd>
+
+
+                                                </dl>
+
+                                                <div class="m-t-sm">
+
+                                                </div>
+                                            </td>
+
+
+                                            <td>
+                                                <h3>
+                                                    @Html.DisplayFor(modelItem => item2.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item2.precioUnitario)
+                                                </h3>
                                                 <p class="small">
-                                                    Concepto
+                                                    Precio Unitario
                                                 </p>
-                                        </td>
-                                        <td width="50">
-                                        @Html.DisplayFor(modelItem => item.fechacierre)
-                                        <p class="small">
-                                            Fecha de Cierre
-                                        </p>
-                                        </td>
-                                        <td width="100">
-                                            <h4>
-                                                @*<input type="text" disabled class="form-control" id="avance" value="@Html.DisplayFor(modelItem => item.avance)">*@
-                                                @Model.Contrato.OrdenCompra.Moneda.simbolo @Html.DisplayFor(modelItem => item.avanceMonto)
-                                            </h4>
-                                            <p class="small">
-                                                Avance Monto
-                                            </p>
-                                        </td>
-                                        <td>
+                                            </td>
+                                            <td hidden="hidden">
 
-                                            @Html.DisplayFor(modelItem => item.avancePorc) %
-                                            <p class="small">
-                                                Avance %
-                                            </p>
-                                        </td>
-                                        <td>
+                                                @{var precio = item2.precioUnitario;
 
-                                            @Html.DisplayFor(modelItem => item.avanceMetrado)
-                                            <p class="small">
-                                                Avance Metrado
-                                            </p>
-                                        </td>
+                                                }
+                                                @precio
+                                            </td>
+
+                                            <td>
+                                                <input type="text" class="form-control" id="avanceMetrado" value="@Html.DisplayFor(model => model.avanceMetrado)">
+
+                                                @*@Html.EditorFor(model => model.avanceMetrado)
+                                                    @Html.ValidationMessageFor(model => model.avanceMetrado)*@
+                                                <p class="small">
+                                                    Avance Actual Metrado
+                                                </p>
+                                            </td>
+
+                                            <td>
+
+                                                <input type="text" disabled class="form-control" id="avanceMonto" value="@Html.DisplayFor(model => model.avanceMonto)">
+
+                                                @*@Html.EditorFor(model => model.avanceMonto)
+                                                 @Html.ValidationMessageFor(model => model.avanceMonto)*@
+                                                <p class="small">
+                                                    Avance Actual Monto
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <input type="text" disabled class="form-control" id="avancePorc" value="@Html.DisplayFor(model => model.avancePorc)">
+
+                                                @*@Html.EditorFor(model => model.avancePorc)
+                            @Html.ValidationMessageFor(model => model.avancePorc)*@
+                                                <p class="small">
+                                                    Avance Actual %
+                                                </p>
+                                            </td>
+
+
+                                        </tr>
+                                    }
 
 
 
-                                        <td>
-                                           
-                                                @Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre)
-                                           
-                                        </td>
-                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <div class="ibox ">
+                        <div class="ibox-content">
+                            <div class="tab-content">
+                                <strong>Totales</strong>
+
+                                <ul class="list-group clear-list">
+
+                                    <li class="list-group-item first-item">
+                                        <span class="pull-right"><label class="control-label" id="lblAvanceMonto">0.00</label> </span>
+                                        Avance Monto
+                                    </li>
+                                    <li class="list-group-item first-item">
+                                        <span class="pull-right"> <label class="control-label" id="lblAvanceMontoIGV">0.00</label> </span>
+                                        Avance Monto inc. IGV
+                                    </li>
+                                    <li class="list-group-item first-item">
+                                        <span class="pull-right"> <label class="control-label" id="lblAvancePorc">0.00</label> </span>
+                                        Avance %
+                                    </li>
+
+
+                                </ul>
+
+                                <button type="button" class="btn btn-default btn-sm btn-block" id="BtnCalcular">
+                                    <i class="fa fa-calculator"></i> Calcular
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        @*<span class="pull-right">(<strong>@Model.Contrato.Valorizaciones.Count()</strong>) items</span>*@
+                        <h5>Valorizaciones: Avance a la fecha</h5>
+                    </div>
+
+
+                    <div class="ibox-content">
+
+
+                        <div class="table-responsive">
+                            <table class="table shoping-cart-table" id="tablaItemsAvance">
+
+                                <tbody>
+
+                                    @foreach (var item in Model.Contrato.Valorizaciones.OrderByDescending(a => a.fechacierre))
+                    {
+
+                    <tr>
+                        <td hidden="hidden">@Html.DisplayFor(modelItem => item.valorizacionId)</td>
+                        <td width="90">
+                            <div class="cart-product-imitation">
+                            </div>
+                        </td>
+                        <td class="desc">
+                            @*<h3>
+                                    <a href="#" class="text-navy">
+                                        @Html.DisplayFor(modelItem => item.Contrato.OrdenCompra.numero)
+                                    </a>
+                                </h3>
+                                <p class="small">
+                                    Servicio
+                                </p>*@
+                            @foreach (var item2 in Model.Contrato.OrdenCompra.OrdenesCompraDetalles)
+                                {
+                                <h3 class="text-navy">@Html.DisplayFor(modelItem => item2.Material.nombre)</h3>
+                                <dl class="small m-b-none">
+
+                                    <dt class="text-navy"></dt>
+                                    <dd>@Html.DisplayFor(modelItem => item2.Material.UnidadMedida.nombre)</dd>
+
+                                </dl>
+                                }
+                            <div class="m-t-sm">
+
+                            </div>
+                        </td>
+                        <td>
+                            <h3>
+                                @Html.DisplayFor(modelItem => item.concepto)
+                            </h3>
+                            <p class="small">
+                                Concepto
+                            </p>
+                        </td>
+                        <td width="50">
+                            @Html.DisplayFor(modelItem => item.fechacierre)
+                            <p class="small">
+                                Fecha de Cierre
+                            </p>
+                        </td>
+                        <td width="100">
+                            <h4>
+                                @*<input type="text" disabled class="form-control" id="avance" value="@Html.DisplayFor(modelItem => item.avance)">*@
+                                @Model.Contrato.OrdenCompra.Moneda.simbolo @Html.DisplayFor(modelItem => item.avanceMonto)
+                            </h4>
+                            <p class="small">
+                                Avance Monto
+                            </p>
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.avancePorc) %
+                            <p class="small">
+                                Avance %
+                            </p>
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.avanceMetrado)
+                            <p class="small">
+                                Avance Metrado
+                            </p>
+                        </td>
+
+
+
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre)
+
+                        </td>
+                    </tr>
+
+                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Resumen de Avance de Valorizaciones</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <span>
+                            Monto Total (inc. igv)
+                        </span>
+                        <h2 class="font-bold">
+                           @Model.Contrato.OrdenCompra.Moneda.simbolo @Html.DisplayFor(a => a.Contrato.OrdenCompra.total) 
+                        </h2>
+
+                        <hr />
+                        <span>
+                            Avance Monto Total (inc. igv)
+                        </span>
+                        <h3 class="font-bold">
+                            @Model.Contrato.OrdenCompra.Moneda.simbolo  @Html.DisplayFor(a => a.Contrato.avanceMonto) 
+                        </h3>
+                        <hr />
+                        <span>
+                            Saldo Monto (inc. igv)
+                        </span>
+                        <h3 class="font-bold">
+                            @Model.Contrato.OrdenCompra.Moneda.simbolo  @Html.DisplayFor(a => a.Contrato.saldoMonto) 
+                        </h3>
+
+                        <hr />
+                        <span class="text-muted small">
+                            Valorización  @Model.Contrato.TipoValorizacion.nombre
+                        </span>
+                        <br />
+                        <span class="text-muted small">
+                            Inicio: @Model.Contrato.fechaInicio
+                        </span>
+                        
+
+                        <div class="m-t-sm">
+                            @*<div class="btn-group">
+                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa  fa-arrow-circle-o-right"></i> Enviar</a>
+                                    <a href="#" class="btn btn-white btn-sm"> Cancel</a>
+                                </div>*@
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Otros</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <span>
+                            Adelanto (inc. igv)  @Html.DisplayFor(a => a.Contrato.adelantoPorc)  %
+                        </span>
+                        <h3 class="font-bold">
+                            @Model.Contrato.OrdenCompra.Moneda.simbolo @Html.DisplayFor(a => a.Contrato.adelanto)
+                        </h3>
+
+                        <hr />
+                        <span>
+                            Fondo de Garantía(inc. igv)   @Html.DisplayFor(a => a.Contrato.fondoGarantiaPorc)  %
+                        </span>
+                        <h3 class="font-bold">
+                            @Model.Contrato.OrdenCompra.Moneda.simbolo  @Html.DisplayFor(a => a.Contrato.fondoGarantia)
+                        </h3>
+                        
+                    </div>
+
+
+                </div>
+
+                
+
+
+                @*<div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="tab-content">
+                            <strong>Totales</strong>
+
+                            <ul class="list-group clear-list">
+                                <li class="list-group-item first-item">
+                                    <span class="pull-right"> <label class="control-label" id="lblAvanceMetrado">0.00</label> </span>
+                                    Avance Metrado
+                                </li>
+                                <li class="list-group-item first-item">
+                                    <span class="pull-right"><label class="control-label" id="lblAvanceMonto">0.00</label> </span>
+                                    Avance Monto
+                                </li>
+                                <li class="list-group-item first-item">
+                                    <span class="pull-right"> <label class="control-label" id="lblAvancePorc">0.00</label> </span>
+                                    Avance %
+                                </li>
+
+
+                            </ul>
+
+                            <button type="button" class="btn btn-default btn-sm btn-block" id="BtnCalcular">
+                                <i class="fa fa-calculator"></i> Calcular
+                            </button>
+                        </div>
+                    </div>
+
+                </div>*@
+
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Contacto</h5>
+                    </div>
+                    <div class="ibox-content text-center">
+
+
+
+                        <h3><i class="fa fa-phone"></i> +51 3461989</h3>
+                        <span class="small">
+                            Por favor comuniquese con Contabilidad ante cualquier duda.
+                        </span>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
+                </div>
+}
+
+@section Styles {
+
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/plugins/clockpickerStyles")
+    @Styles.Render("~/plugins/dateRangeStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/switcheryStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/nouiSliderStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/ionRangeSlider/ionRangeStyles")
+    @Styles.Render("~/plugins/imagecropperStyles")
+    @Styles.Render("~/Content/plugins/colorpicker/colorpickerStyles")
+    @Styles.Render("~/plugins/select2Styles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+}
+
+@section Scripts {
+
+@Scripts.Render("~/plugins/iCheck")
+@Scripts.Render("~/plugins/dataPicker")
+@Scripts.Render("~/plugins/ionRange")
+@Scripts.Render("~/plugins/nouiSlider")
+@Scripts.Render("~/plugins/jasnyBootstrap")
+@Scripts.Render("~/plugins/switchery")
+@Scripts.Render("~/plugins/chosen")
+@Scripts.Render("~/plugins/knob")
+@Scripts.Render("~/plugins/imagecropper")
+@Scripts.Render("~/plugins/colorpicker")
+@Scripts.Render("~/plugins/clockpicker")
+@Scripts.Render("~/plugins/dateRange")
+@Scripts.Render("~/plugins/select2")
+@Scripts.Render("~/plugins/touchSpin")
+@Scripts.Render("~/plugins/dataTables")
+@Scripts.Render("~/plugins/jeditable")
+
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+
+
+                            $("#BtnCalcular").click(function () {
+
+                                var avanceMetrado = 0;
+                                var avanceMonto = 0;
+                                var avancePorc = 0;
+                                var precioUnitario = 0;
+                                var subtotal = 0;
+
+                                var cells = [];
+
+                                $('#tablaItems tr').each(function () {
+                                    cells.push({
+
+                                        ordenDetalleId: $(this).find("td").eq(0).html(),
+                                        preciounitario: $(this).find("td").eq(4).html(),
+                                        metrado: $(this).find("td:eq(5) input[type='text']").val()
+                                    });
+                                    subtotal = $(this).find("td").eq(4).html() * $(this).find("td:eq(5) input[type='text']").val();
+                                    $(this).find("td:eq(6) input[type='text']").val(subtotal.toFixed(2));
+                                });
+
+                                var total = 0;
+                                
+                                for (var i = 0; i < cells.length; i++) {
+                                    total = total + cells[i].preciounitario * cells[i].metrado;
+                                }
+
+                                $('#lblAvanceMonto').text(total.toFixed(2));
+                                $('#lblAvanceMontoIGV').text((total * 1.18).toFixed(2));
+
+                            });
+
+
+                            $("#BtnGuardar").click(function () {
+
+                                var cells = [];
+
+                                $('#tablaItems tr').each(function () {
+
+                                    cells.push({
+
+                                        ordenDetalleId: $(this).find("td").eq(0).html(),
+                                        avanceMetrado: $(this).find("td:eq(5) input[type='text']").val(),
+                                        avanceMonto:  $(this).find("td").eq(4).html() * $(this).find("td:eq(5) input[type='text']").val()*1.18,
+                                        avancePorc: 0
+
+                                    });
+                                });
+
+                                //alert(cells[0].avancePorc);
+                                //return;
+
+                                var Detalles = [];
+                                for (var i = 0; i < cells.length; i++) {
+                                    var valorizacionDetalle = new Object();
+
+                                    valorizacionDetalle.ordenCompraDetalleId = cells[i].ordenDetalleId;
+                                    valorizacionDetalle.avanceMetrado = cells[i].avanceMetrado;
+                                    valorizacionDetalle.avanceMonto = cells[i].avanceMonto;
+                                    valorizacionDetalle.avancePorc = cells[i].avancePorc;
+                                    Detalles.push(valorizacionDetalle);
 
                                 }
 
-                                <tr>
-                                    <td width="90">
-                                        <div class="cart-product-imitation">
-                                        </div>
-                                    </td>
-                                    <td class="desc">
-                                        <h3>
-                                            <a href="#" class="text-navy">
-                                                @Html.DisplayFor(modelItem => modelItem.Contrato.OrdenCompra.numero)
-                                            </a>
-                                        </h3>
-                                        <p class="small">
-                                            Servicio
-                                        </p>
-                                        <dl class="small m-b-none">
-                                            <dt>@Html.DisplayFor(modelItem => modelItem.Contrato.OrdenCompra.OrdenesCompraDetalles[0].Material.nombre)</dt>
-                                            <dd>@Html.DisplayFor(modelItem => modelItem.Contrato.OrdenCompra.OrdenesCompraDetalles[0].Material.UnidadMedida.nombre)</dd>
-                                        </dl>
 
-                                        <div class="m-t-sm">
+                                var valorizacion = new Object();
 
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @Html.EditorFor(model => model.concepto)
-                                        @Html.ValidationMessageFor(model => model.concepto)
-                                        <p class="small">
-                                            Concepto
-                                        </p>
-                                    </td>
+                                //for (var i = 0; i < cells.length; i++) {
 
-                                    <td>
-                                        @Html.EditorFor(model => model.fechacierre)
-                                        @Html.ValidationMessageFor(model => model.fechacierre)
-                                        <p class="small">
-                                            Fecha de Cierre
-                                        </p>
-                                    </td>
-                                    <td width="75">
+                                valorizacion.contratoId = $("#contratoId").val();
+                                valorizacion.concepto = $("#concepto").val();
+                                valorizacion.estadoValorizacionId = 2;
+                                valorizacion.avanceMonto = 0;
+                                valorizacion.avanceMetrado = 0;
 
-                                        @*<input type="text" class="form-control" id="avanceMonto" value="@Html.DisplayFor(model => model.avanceMonto)">*@
+                                //usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion
 
-                                        @Html.EditorFor(model => model.avanceMonto)
-                                        @Html.ValidationMessageFor(model => model.avanceMonto)
-                                        <p class="small">
-                                            Avance Monto
-                                        </p>
-                                    </td>
-                                    <td>
-                                        @*<input type="text" class="form-control" id="avancePorc" value="@Html.DisplayFor(model => model.avancePorc)">*@
+                                if ($("#fechacierre").val() != "") {
+                                    var from = $("#fechacierre").val().split("/");
+                                    //var fechacierre = new Date(from[2], from[0] - 1, from[1]);
+                                    var fechacierre = new Date(from[2], from[1], from[0]);
+                                    valorizacion.fechacierre = fechacierre;
+                                }
+                                valorizacion.fechacierre = $("#fechacierre").val();
 
-                                        @Html.EditorFor(model => model.avancePorc)
-                                        @Html.ValidationMessageFor(model => model.avancePorc)
-                                        <p class="small">
-                                            Avance %
-                                        </p>
-                                    </td>
-                                    <td>
-                                        @*<input type="text" class="form-control" id="avanceMetrado" value="@Html.DisplayFor(model => model.avanceMetrado)">*@
+                                valorizacion.ValorizacionDetalles = Detalles;
 
-                                        @Html.EditorFor(model => model.avanceMetrado)
-                                        @Html.ValidationMessageFor(model => model.avanceMetrado)
-                                        <p class="small">
-                                            Avance Metrado
-                                        </p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                ValorizacionFinal = JSON.stringify({ 'valorizacion': valorizacion });
 
-                </div>
 
+                                $.ajax({
+                                    contentType: 'application/json; charset=utf-8',
+                                    type: 'POST',
+                                    url: '@Url.Action("CreateValorizacion")',
+                                    data: ValorizacionFinal,
+                                    success: function (data) {
+                                        window.location = '@Url.Action("Index/" + @Html.DisplayFor(model => model.contratoId))';
+                                    },
+                                    error: function (result) {
+                                        alert(result.statusText)
+                                        alert('No se pudo realizar la acción solicitada');
 
-                <div class="ibox-content">
+                                    }
+                                });
+                            });
 
-                    @*<button class="btn btn-primary pull-right"><i class="fa fa  fa-arrow-circle-o-right"></i> Enviar</button>*@
-                    @*<input value="Guardar!" class="btn btn-primary pull-right" id="BtnGuardar" />*@
-                    <input type="submit" value="Create" class="btn btn-default" />
-
-                    @*<button class="btn btn-white"> Guardar </button>*@
-
-                </div>
-            </div>
-
-        </div>
-        <div class="col-md-3">
-
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>Resumen de Avance de Valorizaciones</h5>
-                </div>
-                <div class="ibox-content">
-                    <span>
-                        Total
-                    </span>
-                    <h2 class="font-bold">
-                        @Model.Contrato.OrdenCompra.Moneda.simbolo @Model.Contrato.OrdenCompra.total
-                    </h2>
-
-
-
-                    <hr />
-                    <span class="text-muted small">
-                        Valorización  @Model.Contrato.TipoValorizacion.nombre
-                    </span>
-                    <br />
-                    <span class="text-muted small">
-                        Inicio: @Model.Contrato.fechaInicio
-                    </span>
-                    <hr />
-                    <span>
-                        Avance
-                    </span>
-                    <h3 class="font-bold">
-                        @Model.Contrato.OrdenCompra.Moneda.simbolo  @Model.Contrato.avanceMonto
-                    </h3>
-                    <hr />
-                    <span>
-                        Saldo
-                    </span>
-                    <h3 class="font-bold">
-                        @Model.Contrato.OrdenCompra.Moneda.simbolo  @Model.Contrato.saldoMonto
-                    </h3>
-                    <div class="m-t-sm">
-                        @*<div class="btn-group">
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa  fa-arrow-circle-o-right"></i> Enviar</a>
-                                <a href="#" class="btn btn-white btn-sm"> Cancel</a>
-                            </div>*@
-                    </div>
-                </div>
-
-
-            </div>
-
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>Resumen de Avance por Metrado</h5>
-                </div>
-                <div class="ibox-content">
-                    <span>
-                        Total
-                    </span>
-                    <h2 class="font-bold">
-                        @Model.Contrato.OrdenCompra.OrdenesCompraDetalles[0].cantidad @Model.Contrato.OrdenCompra.OrdenesCompraDetalles[0].Material.UnidadMedida.nombre
-                    </h2>
-                    <hr />
-                    <span class="text-muted small">
-                        Precio Unitario @Model.Contrato.OrdenCompra.Moneda.simbolo  @Model.Contrato.OrdenCompra.OrdenesCompraDetalles[0].precioUnitario
-                    </span>
-                    
-                    <hr />
-
-
-                    <span>
-                        Avance
-                    </span>
-                    <h3 class="font-bold">
-                        @Model.Contrato.OrdenCompra.Moneda.simbolo  @Model.Contrato.avanceMonto
-                    </h3>
-                    <hr />
-                   
-                </div>
-            </div>
-
-
-            <div class="ibox ">
-                <div class="ibox-content">
-                    <div class="tab-content">
-                        <strong>Totales</strong>
-
-                        <ul class="list-group clear-list">
-                            <li class="list-group-item first-item">
-                                <span class="pull-right"> <label class="control-label" id="lblAvanceMetrado">0.00</label> </span>
-                                Avance Metrado
-                            </li>
-                            <li class="list-group-item first-item">
-                                <span class="pull-right"><label class="control-label" id="lblAvanceMonto">0.00</label> </span>
-                                Avance Monto
-                            </li>
-                            <li class="list-group-item first-item">
-                                <span class="pull-right"> <label class="control-label" id="lblAvancePorc">0.00</label> </span>
-                                Avance %
-                            </li>
-
-
-                        </ul>
-
-                        <button type="button" class="btn btn-default btn-sm btn-block" id="BtnCalcular">
-                            <i class="fa fa-calculator"></i> Calcular
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>Contacto</h5>
-                </div>
-                <div class="ibox-content text-center">
-
-
-
-                    <h3><i class="fa fa-phone"></i> +51 3461989</h3>
-                    <span class="small">
-                        Por favor comuniquese con Contabilidad ante cualquier duda.
-                    </span>
-
-
-                </div>
-            </div>
-
-
-
-        </div>
-    </div>
-
-
-
-
-</div>
-}
-@section Scripts {
-    <script type="text/javascript">
-    $(document).ready(function () {
-
-
-        $("#BtnCalcular").click(function () {
-
-            
-
-            var avanceMetrado = 0;
-            var avanceMonto = 0;
-            var avancePorc = 0;
-            var precioUnitario =0;
-
-            avanceMetrado = $('#avanceMetrado').val();
-            avanceMonto = $('#avanceMonto').val();
-            avancePorc = $('#avancePorc').val();
-            precioUnitario = $('#Contrato_OrdenCompra_OrdenesCompraDetalles_0__precioUnitario').val();
-            cantidadTotal =  $('#Contrato_OrdenCompra_OrdenesCompraDetalles_0__cantidad').val();
-
-            if (avanceMetrado != 0)
-            {
-                avanceMonto = (avanceMetrado * precioUnitario).toFixed(2);
-                avancePorc = (avanceMetrado / cantidadTotal * 100).toFixed(2);
-            }
-            else if (avancePorc != 0)
-            {
-                avanceMetrado = cantidadTotal * avancePorc / 100;
-                avanceMonto = avanceMetrado * precioUnitario;
-            }
-
-            $('#lblAvanceMetrado').text(avanceMetrado);
-            $("#avanceMetrado").val(avanceMetrado);
-
-            $("#lblAvanceMonto").text(avanceMonto);
-            $("#avanceMonto").val(avanceMonto);
-
-            $("#lblAvancePorc").text(avancePorc + " %");
-            $("#avancePorc").val(avancePorc);
-
-
-        });
-
-
-        $("#BtnGuardar").click(function () {
-
-            var cells = [];
-
-            $('#tablaItems tr').each(function () {
-
-                    cells.push({
-
-                        valorizacionId: $(this).find("td").eq(0).html(),
-                        avancePorc: $(this).find("td:eq(4) input[type='text']").val()
-                    });
-            });
-
-            //alert(cells[0].avancePorc);
-            //return;
-            var Detalles = [];
-            var valorizacion = new Object();
-
-            //for (var i = 0; i < cells.length; i++) {
-
-                valorizacion.valorizacionId = cells[0].valorizacionId;
-                valorizacion.avancePorc = cells[0].avancePorc;
-                valorizacion.ordenServicioId = $("#ordenServicioId").val();
-                //alert(requerimientoDetalle.requerimientoDetalleId);
-            //}
-
-                alert(valorizacion.ordenServicioId);
-
-            ValorizacionFinal = JSON.stringify({ 'valorizacion': valorizacion });
-
-
-            $.ajax({
-                contentType: 'application/json; charset=utf-8',
-                type: 'POST',
-                url: '@Url.Action("SaveValorization")',
-                data: ValorizacionFinal,
-                success: function (data) {
-                    window.location = '@Url.Action("Index")';
-                },
-                error: function (result) {
-                    alert(result.statusText)
-                    alert('No se pudo realizar la acción solicitada');
-
+                        });
+                    </script>
                 }
-            });
-        });
-
-    });
-    </script>
-}
 

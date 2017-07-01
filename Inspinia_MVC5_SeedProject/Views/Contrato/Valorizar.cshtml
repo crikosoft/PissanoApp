@@ -244,7 +244,7 @@
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 type: 'POST',
-                url: '@Url.Action("SaveValorization")',
+                url: '@Url.Action("Create")',
                 data: ValorizacionFinal,
                 success: function (data) {
                     window.location = '@Url.Action("Index")';
