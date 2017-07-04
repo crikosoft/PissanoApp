@@ -13,6 +13,8 @@ namespace PissanoApp.Models
         public int materialId { get; set; }
         public virtual Material Material { get; set; }
         public DateTime fechaStock { get; set; }
-        public int cantidad { get; set; }
+        public double cantidad { get; set; }
+        public virtual List<Movimiento> Movimientos { get; set; }
+
     }
 }

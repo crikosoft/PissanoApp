@@ -1,0 +1,222 @@
+﻿@model PissanoApp.Models.Pago
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Pago de Ordenes</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>
+                <a href="~/OrdenCompra/IndexAccounting">Ordenes </a>
+            </li>
+            <li class="active">
+                <strong>Pagos</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ordenCompraId)
+        @Html.HiddenFor(model => model.pagoId)
+        
+
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        @*Payment method*@
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="panel-group payments-method" id="accordion">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="pull-right">
+                                        <i class="fa fa-cc-amex text-success"></i>
+                                        <i class="fa fa-cc-mastercard text-warning"></i>
+                                        <i class="fa fa-cc-discover text-danger"></i>
+                                    </div>
+                                    <h5 class="panel-title">
+                                        @*<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Credit Card</a>*@
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Ingrese datos de Pago</a>
+
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <h2>Resumen</h2>
+                                                <strong># Orden:</strong>: @Html.DisplayFor(model => model.OrdenCompra.numero) <br />
+                                                <strong>Sub Total:</strong>: <span class="text-navy">@Html.DisplayFor(model => model.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(model => model.OrdenCompra.subTotal)</span><br />
+                                                <strong>IGV:</strong>: <span class="text-navy">@Html.DisplayFor(model => model.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(model => model.OrdenCompra.igv)</span><br />
+                                                <strong>Total:</strong>: <span class="text-navy"> @Html.DisplayFor(model => model.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(model => model.OrdenCompra.total)</span><br />
+                                                <p>
+                                                    <strong>Proveedor:</strong>: <span class="text-warning">@Html.DisplayFor(model => model.OrdenCompra.Proveedor.razonSocial)</span><br />
+                                                </p>
+                                                <p class="m-t">
+                                                    <a href="~/OrdenCompra/Document/@Html.DisplayFor(model => model.ordenCompraId)" target="_blank" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> Ver Orden </a>
+                                                </p>
+
+                                            </div>
+                                            <div class="col-md-8">
+
+                                                <form role="form" id="payment-form">
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>TIPO DE DOCUMENTO</label>
+                                                                <div class="input-group">
+                                                                    @*@Html.DropDownList("tipoDocumentoId", (IEnumerable<SelectListItem>)ViewBag.tipoDocumentoId, new { @class = "form-control" })*@
+                                                                    @Html.DropDownList("tipoDocumentoId", String.Empty)
+                                                                    @Html.ValidationMessageFor(model => model.tipoDocumentoId)
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-8">
+                                                            <div class="form-group">
+                                                                <label>NÚMERO DOCUMENTO</label>
+                                                                <div class="input-group">
+                                                                    @*<input type="text" class="form-control" name="numero" id="numero" placeholder="Número de Documento" required />
+                                                                    <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>*@
+                                                                    @Html.EditorFor(model => model.numero)
+                                                                    @Html.ValidationMessageFor(model => model.numero)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>ESTADO ORDEN</label>
+                                                                <div class="input-group">
+                                                                    @*@Html.DropDownList("estadoOrdenId", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, new { @class = "form-control" })*@
+                                                                    @*@Html.DropDownListFor(x => x.estadoOrdenId, (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, new { @class = "form-control"})
+                                                                    @Html.ValidationMessageFor(model => model.estadoOrdenId)*@
+
+                                                                
+                                                                    @Html.DropDownList("estadoOrdenId", String.Empty)
+                                                                    @Html.ValidationMessageFor(model => model.estadoOrdenId)
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>TIPO DE DETRACCIÓN</label>
+                                                                <div class="input-group">
+                                                                    @*@Html.DropDownList("tipoDetraccionId", (IEnumerable<SelectListItem>)ViewBag.tipoDetraccionId, "Ninguno", new { @class = "form-control" })*@
+                                                                    @Html.DropDownList("tipoDetraccionId", String.Empty)
+                                                                    @Html.ValidationMessageFor(model => model.tipoDetraccionId)
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>FECHA PROGRAMADO DE PAGO</label>
+                                                                <div class="input-group">
+                                                                    @Html.EditorFor(model => model.fechaPagoProg)
+                                                                    @Html.ValidationMessageFor(model => model.fechaPagoProg)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="col-xs-6">
+                                                            <div class="form-group">
+                                                                <label>FECHA REAL DE PAGO</label>
+                                                                <div class="input-group">
+                                                                    @Html.EditorFor(model => model.fechaPagoReal)
+                                                                    @Html.ValidationMessageFor(model => model.fechaPagoReal)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="row">
+                                                            <div class="col-xs-7 col-md-7">
+                                                                <div class="form-group">
+                                                                    <label>EXPIRATION DATE</label>
+                                                                    <input type="text" class="form-control" name="Expiry" placeholder="MM / YY" required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-5 col-md-5 pull-right">
+                                                                <div class="form-group">
+                                                                    <label>CV CODE</label>
+                                                                    <input type="text" class="form-control" name="CVC" placeholder="CVC" required />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label>NAME OF CARD</label>
+                                                                    <input type="text" class="form-control" name="nameCard" placeholder="NAME AND SURNAME" />
+                                                                </div>
+                                                            </div>
+                                                        </div>*@
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <button class="btn btn-primary" type="submit">Guardar Pago!</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

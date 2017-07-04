@@ -90,8 +90,6 @@ namespace PissanoApp.Models
 
         public DbSet<IngresoDetalle> IngresoDetalles { get; set; }
 
-        public DbSet<DocumentoPago> DocumentoPagos { get; set; }
-
         public DbSet<Categoria> Categoria { get; set; }
 
         public DbSet<MaterialNivelStock> MaterialNivelStock { get; set; }
@@ -150,6 +148,14 @@ namespace PissanoApp.Models
         public DbSet<EstadoValorizacion> EstadosValorizacion { get; set; }
 
         public DbSet<ValorizacionDetalle> ValorizacionDetalle { get; set; }
+
+        //Pagos
+
+        public DbSet<TipoDetraccion> TipoDetracciones { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
+        public DbSet<TipoMovimiento> TipoMovimientos { get; set; }
+
+        public DbSet<Movimiento> Movimiento { get; set; }
     }
 
 

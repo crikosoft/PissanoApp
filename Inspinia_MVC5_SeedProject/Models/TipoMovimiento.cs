@@ -5,9 +5,9 @@ using System.Web;
 
 namespace PissanoApp.Models
 {
-    public class TipoDocumento
+    public class TipoMovimiento
     {
-        public int tipoDocumentoId { get; set; }
+        public int tipoMovimientoId { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
     }

@@ -1,11 +1,11 @@
-﻿@model IEnumerable<PissanoApp.Models.Material>
+﻿@model IEnumerable<PissanoApp.Models.Movimiento>
 
 @{
-    ViewBag.Title = "Inventory";
+    ViewBag.Title = "Movimiento";
 }
 
 
-<h2>Ordenes de Compras</h2>
+<h2>Ingresos y Salidas a Almacen</h2>
 
 
 
@@ -20,7 +20,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Todas las Ordenes de Compras. Use el Filtro de Búsqueda</h5>
+                    <h5>Todos los ingresos y salidas. Use el Filtro de Búsqueda</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -65,10 +65,10 @@
                                 <th>Unidad de Medida</th>
                                 <th>Familia</th>
                                 <th>Obra</th>
-                                <th>En Stock</th>
-                                <th>En Espera</th>
-                                <th>En Obra</th>
-                                <th></th>
+                                <th>Tipo de Movimiento</th>
+                                <th>Cantidad</th>
+                                <th>Fecha</th>
+
 
                             </tr>
                         </thead>
@@ -79,69 +79,34 @@
 
                                 <tr class="gradeX">
                                     <td hidden="hidden">
-                                        @Html.DisplayFor(modelItem => item.materialId)
+                                        @Html.DisplayFor(modelItem => item.movimientoId)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.nombre)
+                                        @Html.DisplayFor(modelItem => item.MaterialNivelStock.Material.nombre)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.codigo)
+                                        @Html.DisplayFor(modelItem => item.MaterialNivelStock.Material.codigo)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.UnidadMedida.nombre)
+                                        @Html.DisplayFor(modelItem => item.MaterialNivelStock.Material.UnidadMedida.nombre)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.MaterialPadre.nombre)
+                                        @Html.DisplayFor(modelItem => item.MaterialNivelStock.Material.MaterialPadre.nombre)
                                     </td>
-
                                     <td>
-                                        @if (item.MaterialNivelStocks.Count() > 0)
-                                        {
-                                            @Html.DisplayFor(modelItem => item.MaterialNivelStocks[0].Almacen.Obra.nombre)
-                                        }
-                                        else if (item.OrdenCompraDetalles.Count() > 0)
-                                        {
-                                            @Html.DisplayFor(modelItem => item.OrdenCompraDetalles[0].OrdenCompra.Obra.nombre)
-                                        }
+                                        @Html.DisplayFor(modelItem => item.MaterialNivelStock.Almacen.Obra.nombre)
                                     </td>
-
                                     <td>
-                                        @if (item.MaterialNivelStocks.Count() > 0)
-                                        {
-                                            var sum = item.MaterialNivelStocks.Sum(survey => survey.cantidad);
-
-                                            @Html.Label(sum.ToString());
-                                        }
-
-                                        else
-                                        {
-                                            @Html.Label("0");
-                                        }
-
+                                        @Html.DisplayFor(modelItem => item.TipoMovimientos.nombre)
                                     </td>
-
                                     <td>
-                                        @if (item.OrdenCompraDetalles.Count() > 0)
-                                        {
-                                            var sum2 = item.OrdenCompraDetalles.Sum(survey => survey.cantidad);
-
-                                            @Html.Label(sum2.ToString());
-                                        }
-
-                                        else
-                                        {
-                                            @Html.Label("0");
-                                        }
-
+                                        @Html.DisplayFor(modelItem => item.cantidad)
                                     </td>
-                                    <td>0</td>
-                                   
                                     <td>
-                                        @if (item.MaterialNivelStocks.Count>0)
-                                        { 
-                                        <a href="~/Movimiento/Create/@Html.DisplayFor(modelItem => item.MaterialNivelStocks[0].materialNivelStockId)" class="btn btn-success btn-sm"><i class="fa fa-building"></i> Crear Movimiento </a>
-                                        }
+                                        @Html.DisplayFor(modelItem => item.fechaCreacion)
                                     </td>
+
+                                    
 
                                 </tr>
                             }
@@ -156,10 +121,9 @@
                                 <th>Unidad de Medida</th>
                                 <th>Familia</th>
                                 <th>Obra</th>
-                                <th>En Stock</th>
-                                <th>En Espera</th>
-                                <th>En Obra</th>
-                                <th></th>
+                                <th>Tipo de Movimiento</th>
+                                <th>Cantidad</th>
+                                <th>Fecha</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -210,7 +174,8 @@
                         }
                     }
                 ],
-                "order": [[0, "desc"]]
+                "order": [[0, "desc"]],
+                "pageLength": 25
 
             });
 

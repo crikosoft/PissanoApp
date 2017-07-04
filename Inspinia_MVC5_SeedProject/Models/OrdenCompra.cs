@@ -75,5 +75,9 @@ namespace PissanoApp.Models
 
         public virtual List<Contrato> Contratos { get; set; }
 
+        public virtual List<Pago> Pagos { get; set; }
+
+        public virtual List<Ingreso> Ingresos { get; set; }
+
     }
 }

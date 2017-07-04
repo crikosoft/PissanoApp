@@ -1,0 +1,50 @@
+﻿@model PissanoApp.Models.MaterialNivelStock
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MaterialNivelStock</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Almacen.almacenId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Almacen.almacenId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Material.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Material.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaStock)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaStock)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cantidad)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.materialNivelStockId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

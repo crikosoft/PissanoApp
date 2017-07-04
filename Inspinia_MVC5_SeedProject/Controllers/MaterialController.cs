@@ -45,6 +45,7 @@ namespace PissanoApp.Controllers
         {
             var materiales = db.Materiales.Where(m => m.TipoMaterial.nombre == "Materiales").Include(m => m.MaterialPadre).Include(m => m.TipoMaterial).Include(m => m.UnidadMedida).Include(m => m.MaterialNivelStocks);
 //            var materiales = db.Materiales.Where(m => m.TipoMaterial.nombre == "Materiales").Include(m => m.MaterialPadre).Include(m => m.TipoMaterial).Include(m => m.UnidadMedida).Include(m => m.MaterialNivelStocks).Select(c => c.MaterialNivelStocks.Where(a => a.Almacen.Obra.nombre == "Barcelona"));
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
             return View(materiales.ToList());
 
         }

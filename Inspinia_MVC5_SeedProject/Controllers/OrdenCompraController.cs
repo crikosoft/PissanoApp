@@ -424,7 +424,10 @@ namespace PissanoApp.Controllers
             }
 
             var estadoList = new string[] { "Pendiente de Aprobación", "Aprobación 1", "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 1", "Rechazado Aprobación 2", "Rechazado Aprobación 3" };
-            
+
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(p => estadoList.Contains(p.nombre)), "nombre", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras.Where(p => obrasList.Contains(p.nombre)), "nombre", "nombre");
+
             var ordenes = db.Ordenes.Where(p => obrasList.Contains(p.Obra.nombre)).Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
             return View(ordenes.ToList());
         }
@@ -432,7 +435,13 @@ namespace PissanoApp.Controllers
         // GET: /OrdenCompra/Approve/5
         public ActionResult IndexApprove2()
         {
+           
+            
             var estadoList = new string[] { "Aprobación 1", "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 2", "Rechazado Aprobación 3" };
+
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(p => estadoList.Contains(p.nombre)), "nombre", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
+
             //var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
             //var ordenes = db.Ordenes.Where(p => p.estadoOrdenId==2).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
             var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
@@ -446,29 +455,41 @@ namespace PissanoApp.Controllers
             //var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
             //var ordenes = db.Ordenes.Where(p => p.estadoOrdenId == 3).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
             var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+
+
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(p => estadoList.Contains(p.nombre)), "nombre", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
+            
             return View(ordenes.ToList());
         }
 
         // GET: /OrdenCompra/IndexAcounting/
         public ActionResult IndexAccounting()
         {                        
-            var estadoList = new int[] { 4, 5, 6 };
+            var estadoList = new int[] { 4, 5, 6, 10, 11 };
             var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.estadoOrdenId)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
 
-            //var ordenes = db.Ordenes.Include(p => p.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
-            //var ordenes = db.Ordenes.Where(p => p.estadoOrdenId == 3).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "nombre", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
+
             return View(ordenes.ToList());
+
         }
 
         // GET: /OrdenCompra/IndexWarehouse/
         public ActionResult IndexWarehouse()
         {
-            var estadoList = new int[] { 4, 5, 6 };
+            
+            var estadoList = new int[] { 4, 5, 6};
+            var estadoListNombre = new string[] { "Aprobación 3", "Ingreso Parcial", "Ingreso Total" };
             var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.estadoOrdenId)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
-            //var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.estadoOrdenId));
 
-            //var ordenes = db.Ordenes.Include(p => p.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
-            //var ordenes = db.Ordenes.Where(p => p.estadoOrdenId == 3).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "nombre", "nombre");
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(p => estadoListNombre.Contains(p.nombre)), "nombre", "nombre");
+
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
+
             return View(ordenes.ToList());
         }
 
@@ -480,6 +501,20 @@ namespace PissanoApp.Controllers
            //var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
 
             ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "nombre", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
+
+            var ordenes = db.Ordenes;
+            return View(ordenes.ToList());
+        }
+
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult DetailedAnalysis()
+        {
+            // var estadoList = new string[] { "Aprobación 3", "Ingreso Total", "Ingreso Parcial" };
+            //var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "nombre", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
 
             var ordenes = db.Ordenes;
             return View(ordenes.ToList());
@@ -617,7 +652,7 @@ namespace PissanoApp.Controllers
                 {
                     if (item.ordenCompradetalleId == item2.ordenCompradetalleId)
                     {
-                        var cantidadIngresados = 0;
+                        var cantidadIngresados = 0.0;
 
                         cantidadIngresados = item2.IngresoDetalles.Sum(survey => survey.cantidad);
 
@@ -634,7 +669,7 @@ namespace PissanoApp.Controllers
                         var ingresoDetalle = new IngresoDetalle();
 
                         ingresoDetalle.Ingreso = ingreso;
-                        ingresoDetalle.cantidad = int.Parse(item.cantidad.ToString());
+                        ingresoDetalle.cantidad = double.Parse(item.cantidad.ToString());
                         ingresoDetalle.ordenCompradetalleId = item.ordenCompradetalleId;
                         ingresoDetalle.avance = 0;
 
@@ -643,7 +678,7 @@ namespace PissanoApp.Controllers
                         var materialNivelStock = new MaterialNivelStock();
 
                         materialNivelStock.almacenId = OrdenCompraOriginal.Obra.Almacenes[0].almacenId;
-                        materialNivelStock.cantidad = materialNivelStock.cantidad + int.Parse(item.cantidad.ToString());
+                        materialNivelStock.cantidad = materialNivelStock.cantidad + double.Parse(item.cantidad.ToString());
                         materialNivelStock.materialId = item2.materialId;
                         materialNivelStock.fechaStock = cstTime;
                         db.MaterialNivelStock.Add(materialNivelStock);
@@ -682,7 +717,7 @@ namespace PissanoApp.Controllers
             //ordenCompraEstado.comentario = ordenCompra.comentario;
 
 
-            ingreso.numeroGuia = "guia";
+            ingreso.numeroGuia = ordenCompra.comentario;
             ingreso.OrdenCompra = OrdenCompraOriginal;
             ingreso.ordenCompraId = OrdenCompraOriginal.ordenCompraId;
             ingreso.usuarioCreacion = User.Identity.Name;

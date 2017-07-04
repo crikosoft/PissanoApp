@@ -10,7 +10,7 @@ namespace PissanoApp.Models
         public int ingresoDetalleId { get; set; }
         public int ordenCompradetalleId { get; set; }
         public virtual OrdenCompraDetalle OrdenCompraDetalle { get; set; }
-        public int cantidad { get; set; }
+        public double cantidad { get; set; }
         public double avance { get; set; } //utilizado para ingreso de avance de servicios en %
         public virtual Ingreso Ingreso { get; set; }
     }

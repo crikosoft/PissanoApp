@@ -18,8 +18,6 @@ namespace PissanoApp.Models
 
         public virtual List<IngresoDetalle> IngresoDetalles { get; set; }
 
-        public virtual DocumentoPago DocumentoPago { get; set; }
-
 
         [Required()]
         public string usuarioCreacion { get; set; }

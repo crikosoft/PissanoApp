@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PissanoApp.Models.OrdenCompra>
 
 @{
-    ViewBag.Title = "Analytics";
+    ViewBag.Title = "DetailedAnalysis";
 }
 
 
@@ -51,7 +51,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="product_name">Proveedor</label>
-                                <input type="text" id="col6_filter" name="col6_filter" data-column="6" value="" placeholder="Proveedor" class="form-control column_filter">
+                                <input type="text" id="col5_filter" name="col5_filter" data-column="5" value="" placeholder="Proveedor" class="form-control column_filter">
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -59,10 +59,10 @@
                                 <label class="control-label" for="status">Estado</label>
                                 @Html.DropDownList("col1_filter", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, "Todos", new { @class = "form-control column_filter", @data_column = "1" })
                                 @*<select name="estadoOrdenId" id="col1_filter" data-column="1" class="form-control column_filter">
-                                    <option value="" selected>Todos</option>
-                                    <option value="Aprobación 3">Aprobación 3</option>
-                                    <option value="Aprobación 2">Aprobación 2</option>
-                                </select>*@
+                                        <option value="" selected>Todos</option>
+                                        <option value="Aprobación 3">Aprobación 3</option>
+                                        <option value="Aprobación 2">Aprobación 2</option>
+                                    </select>*@
                             </div>
                         </div>
                     </div>
@@ -79,12 +79,19 @@
                                 <th>OC</th>
                                 <th>Obra</th>
                                 <th>Fecha</th>
-                                <th>Prioridad</th>
                                 <th>Proveedor</th>
                                 <th>Tipo Compra</th>
                                 <th>Moneda</th>
                                 <th hidden="hidden">Total</th>
-                                <th>Total</th>
+                                <th>Total OC</th>
+                                <th>Material</th>
+                                <th>Partida</th>
+                                <th>Precio Unitario</th>
+                                <th>Cantidad</th>
+                                <th>Total Item</th>
+                                <th>Fecha Programada Pago</th>
+                                <th>Fecha Pago Real</th>
+                                <th>Detracción</th>
                                 <th></th>
 
 
@@ -94,37 +101,58 @@
 
                             @foreach (var item in Model)
                             {
-
-                                <tr class="gradeX">
+                                foreach (var item2 in item.OrdenesCompraDetalles)
+                                {
+                                    
+                                     <tr class="gradeX">
                                     <td hidden="hidden">@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
                                     @*<td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>*@
                                     <td class="client-status">
-                                        @if (item.EstadoOrden.nombre != "Aprobación 3")
-                                        { 
-                                        <button type="button" class="btn btn-warning btn-xs" >
-                                            @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                        </button>
+                                        @*@if (item.EstadoOrden.nombre != "Aprobación 3")
+                                        {
+                                            <button type="button" class="btn btn-warning btn-xs">
+                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+                                            </button>
                                         }
                                         else
-                                        { 
-                                        <button type="button" class="btn btn-success btn-xs" >
-                                            @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                        </button>                                        
-                                        }
+                                        {
+                                            <button type="button" class="btn btn-success btn-xs">
+                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+                                            </button>
+                                        }*@
+                                        @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.numero)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Requerimiento.Prioridad.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Requerimiento.TipoCompra.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Moneda.nombre)</td>
                                     <td hidden="hidden">@item.total</td>
                                     <td>@Html.DisplayFor(modelItem => item.total)</td>
+                                    <td>@Html.DisplayFor(modelItem => item2.Material.nombre)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Requerimiento.Detalles.Where(a => a.materialId == item2.materialId).FirstOrDefault().Partida.nombre) - @Html.DisplayFor(modelItem => item.Requerimiento.Detalles.Where(a => a.materialId == item2.materialId).FirstOrDefault().Partida.SubPresupuesto.nombre)</td>
+                                    <td>@Html.DisplayFor(modelItem => item2.precioUnitario)</td>
+                                    <td>@Html.DisplayFor(modelItem => item2.cantidad)</td>
+                                    <td>@Html.DisplayFor(modelItem => item2.precioTotal)</td>
+                                    @if (item.Pagos.Count > 0) { 
+                                        <td>@Html.DisplayFor(modelItem => item.Pagos[0].fechaPagoProg)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Pagos[0].fechaPagoReal)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Pagos[0].pagoDetraccion)</td> 
+                                    }
+                                    else
+                                    { 
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    }
                                     <td>
                                         <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>
                                 </tr>
+                                    
+                                }
+                               
                             }
 
 
@@ -132,17 +160,24 @@
                         <tfoot>
                             <tr>
 
-                                <th hidden="hidden" data-toggle="true" >Id</th>
+                                <th hidden="hidden" data-toggle="true">Id</th>
                                 <th>Estado</th>
                                 <th>OC</th>
                                 <th>Obra</th>
                                 <th>Fecha</th>
-                                <th>Prioridad</th>
                                 <th>Proveedor</th>
                                 <th>Tipo Compra</th>
                                 <th>Moneda</th>
                                 <th hidden="hidden">Total</th>
                                 <th>Total</th>
+                                <th>Material</th>
+                                <th>Partida</th>
+                                <th>Precio Unitario</th>
+                                <th>Cantidad</th>
+                                <th>Total Item</th>
+                                <th>Fecha Programada Pago</th>
+                                <th>Fecha Pago Real</th>
+                                <th>Detracción</th>
                                 <th></th>
                             </tr>
                         </tfoot>

@@ -32,6 +32,76 @@
     </div>
 
     <div class="row">
+
+        <div class="col-lg-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    @*Payment method*@
+                </div>
+                <div class="ibox-content">
+
+                    <div class="panel-group payments-method" id="accordion">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="pull-right">
+                                    <i class="fa fa-bus text-success"></i>
+
+                                </div>
+                                <h5 class="panel-title">
+                                    @*<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Credit Card</a>*@
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Ingrese datos de Documento</a>
+
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse in">
+                                <div class="panel-body">
+
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+
+                                            <form role="form" id="payment-form">
+                                                <div class="row">
+  
+                                                    <div class="col-xs-8">
+                                                        <div class="form-group">
+                                                            <label>NÚMERO GUÍA</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" name="numero" id="numero" placeholder="Número de Guía" required />
+                                                                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    
+    
+    <div class="row">
         <div class="col-lg-12">
 
             @* Copiar desde aqui para print*@
@@ -258,6 +328,19 @@
 
                 });
 
+                if ($("#numero").val() == "")
+                {
+                    alert("Ingrese Número de Guía");
+                    return;
+
+                }
+
+                if (cells.length == 0)
+                {
+                    alert("Marcar el item a Ingresar ");
+                    return;
+                }
+
                 //alert(cells[0].cantidad);
                 var Detalles = [];
 
@@ -277,6 +360,7 @@
 
                 ordenCompra.ordenCompraId = $("#ordenCompraId").val();
                 ordenCompra.OrdenesCompraDetalles = Detalles;
+                ordenCompra.comentario = $("#numero").val();
 
                 OrdenCompraFinal = JSON.stringify({ 'ordenCompra': ordenCompra });
 

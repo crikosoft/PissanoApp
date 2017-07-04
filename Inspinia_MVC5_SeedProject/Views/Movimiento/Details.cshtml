@@ -1,0 +1,98 @@
+﻿@model PissanoApp.Models.Movimiento
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Movimiento</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MaterialNivelStock.materialNivelStockId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaterialNivelStock.materialNivelStockId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Partida.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Partida.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoMovimientos.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoMovimientos.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioSolicitante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioSolicitante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaModificacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.movimientoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

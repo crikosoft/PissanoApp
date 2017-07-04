@@ -50,5 +50,9 @@ namespace PissanoApp.Models
 
         public virtual List<MaterialNivelStock> MaterialNivelStocks { get; set; }
 
+        public virtual List<Ingreso> Ingresos { get; set; }
+
+
+
     }
 }

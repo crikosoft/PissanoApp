@@ -171,7 +171,10 @@
                  new EstadoOrden { descripcion = "Ingreso Total", nombre = "Ingreso Total"},
                  new EstadoOrden { descripcion = "Rechazado Aprobación 1", nombre = "Rechazado Aprobación 1"},
                  new EstadoOrden { descripcion = "Rechazado Aprobación 2", nombre = "Rechazado Aprobación 2"},
-                 new EstadoOrden { descripcion = "Rechazado Aprobación 3", nombre = "Rechazado Aprobación 3"}
+                 new EstadoOrden { descripcion = "Rechazado Aprobación 3", nombre = "Rechazado Aprobación 3"},
+                 new EstadoOrden { descripcion = "Pendiente de Pago", nombre = "Pendiente de Pago"},
+                 new EstadoOrden { descripcion = "Pago Realizado", nombre = "Pago Realizado"}
+
 
             };
 
@@ -291,6 +294,44 @@
 
             estadoValorizacion.ForEach(s => context.EstadosValorizacion.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
+
+
+            var tipoDocumento = new List<TipoDocumento>
+            {
+                new TipoDocumento { nombre= "Factura de Compra", descripcion ="Factura de Compra"},
+                new TipoDocumento { nombre= "Boleta de Compra", descripcion="Boleta de Compra"}
+
+            };
+
+            tipoDocumento.ForEach(s => context.TipoDocumentos.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
+            var tipoDetraccion = new List<TipoDetraccion>
+            {
+                new TipoDetraccion { codigo= "8", tipoBienServicio="Madera (4%)", porcentaje=4},
+                new TipoDetraccion { codigo= "9", tipoBienServicio="Arena y Piedra (10%)", porcentaje=10},
+                new TipoDetraccion { codigo= "19", tipoBienServicio="Arrendamiento de Bienes (10%)", porcentaje=10},
+                new TipoDetraccion { codigo= "20", tipoBienServicio="Mantenimiento y Reparación de Bienes Muebles (10%)", porcentaje=10},
+                new TipoDetraccion { codigo= "22", tipoBienServicio="Otros Servicios Empresariales (10%)", porcentaje=10},
+                new TipoDetraccion { codigo= "25", tipoBienServicio="Fabricación de Bienes por Encargo (10%)", porcentaje=10},
+                new TipoDetraccion { codigo= "27", tipoBienServicio="Transporte de Carga (10%)", porcentaje=10},
+                new TipoDetraccion { codigo= "30", tipoBienServicio="Contrato de Construcción (4%)", porcentaje=4},
+                new TipoDetraccion { codigo= "37", tipoBienServicio="Demás Servicios Gravados con el IGV (10%)", porcentaje=10}
+            };
+
+            tipoDetraccion.ForEach(s => context.TipoDetracciones.AddOrUpdate(p => p.codigo, s));
+            context.SaveChanges();
+
+            var tipoMovimiento = new List<TipoMovimiento>
+            {
+                new TipoMovimiento { nombre= "Ingreso desde Obra", descripcion ="Ingreso desde Obra"},
+                new TipoMovimiento { nombre= "Salida hacia Obra", descripcion="Salida hacia Obra"}
+
+            };
+
+            tipoMovimiento.ForEach(s => context.TipoMovimientos.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
 
             //var materialpadres = new List<Material>
             //{

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<PissanoApp.Models.Pago>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoOrden.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrdenCompra.numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoDetraccion.codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoDocumento.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaPagoProg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaPagoReal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pagoMonto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pagoDetraccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.asientoContable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaContable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuarioCreacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuarioModificacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaModificacion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrdenCompra.numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoDetraccion.codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoDocumento.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaPagoProg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaPagoReal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pagoMonto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pagoDetraccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.asientoContable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaContable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuarioCreacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuarioModificacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaCreacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaModificacion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.pagoId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.pagoId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.pagoId })
+        </td>
+    </tr>
+}
+
+</table>

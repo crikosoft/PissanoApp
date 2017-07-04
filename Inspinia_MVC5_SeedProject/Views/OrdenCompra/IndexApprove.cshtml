@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<PissanoApp.Models.OrdenCompra>
 
 @{
-    ViewBag.Title = "IndexApprove";
+    ViewBag.Title = "IndexApprove1";
 }
 
 
-<h2>Ordenes de Compras y Servicios</h2>
+<h2>Aprobación 1</h2>
 
 
 
 @*<p>
 
-    <a href="@Url.Action("IndexApprove", "OrdenCompraViewModel")" class="btn btn-w-m btn-primary">Aprobar</a>
-</p>*@
+        <a href="@Url.Action("IndexApprove", "OrdenCompraViewModel")" class="btn btn-w-m btn-primary">Aprobar</a>
+    </p>*@
 
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -20,7 +20,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Ordenes de Compras y Servicios por Aprobar. Use el Filtro de Búsqueda</h5>
+                    <h5>Todas las Ordenes de Compras y Servicios. Use el Filtro de Búsqueda</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -28,29 +28,67 @@
 
                     </div>
                 </div>
+
+
                 <div class="ibox-content">
 
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Obra</label>
+                                @Html.DropDownList("col3_filter", (IEnumerable<SelectListItem>)ViewBag.obraId, "Todos", new { @class = "form-control column_filter", @data_column = "3" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="quantity">Orden</label>
+                                <input type="text" id="col2_filter" name="col2_filter" data-column="2" value="" placeholder="Orden" class="form-control column_filter">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="product_name">Proveedor</label>
+                                <input type="text" id="col5_filter" name="col5_filter" data-column="5" value="" placeholder="Proveedor" class="form-control column_filter">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Estado</label>
+                                @Html.DropDownList("col1_filter", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, "Todos", new { @class = "form-control column_filter", @data_column = "1" })
+                                @*<select name="estadoOrdenId" id="col1_filter" data-column="1" class="form-control column_filter">
+                                        <option value="" selected>Todos</option>
+                                        <option value="Aprobación 3">Aprobación 3</option>
+                                        <option value="Aprobación 2">Aprobación 2</option>
+                                    </select>*@
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @*<table class="footable table table-stripped toggle-arrow-tiny " data-page-size="10">*@
                     <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+
                         <thead>
                             <tr>
 
-                                <th data-toggle="true">Id</th>
+                                <th data-toggle="true" hidden="hidden">Id</th>
                                 <th>Estado</th>
                                 <th>OC</th>
                                 <th>Obra</th>
                                 <th>Fecha</th>
-                                <th>Prioridad</th>
                                 <th>Proveedor</th>
                                 <th>Tipo Compra</th>
-                                <th>Total</th>
+                                <th>Moneda</th>
+                                <th hidden="hidden">Total</th>
+                                <th>Total OC</th>
+
+                                <th></th>
                                 <th></th>
 
-                                
-                                @*<th data-hide="all">IGV</th>
-                                <th data-hide="all">Total</th>
-                                <th data-hide="all">Forma Pago</th>
-                                <th data-hide="all">Materiales</th>*@
-                                <th></th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -58,48 +96,52 @@
                             @foreach (var item in Model)
                             {
 
+
                                 <tr class="gradeX">
-                                    <td>@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
-                                    <td class="client-status"><span class="label label-warning"></span>
-                                        <button type="button" class="btn btn-warning btn-xs" data-container="body" data-toggle="popover" data-placement="right" data-content="@Html.DisplayFor(modelItem => item.OrdenCompraEstados.LastOrDefault().comentario)">
-                                            @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                        </button>
+                                    <td hidden="hidden">@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
+                                    @*<td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>*@
+                                    <td class="client-status">
+                                        @if (item.EstadoOrden.nombre == "Pendiente de Aprobación")
+                                        {
+                                            <button type="button" class="btn btn-danger btn-xs">
+                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+                                            </button>
+                                        }
+
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-default btn-xs">
+                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+                                            </button>
+                                        }
+
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.numero)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Requerimiento.Prioridad.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Requerimiento.TipoCompra.nombre)</td>
-
+                                    <td>@Html.DisplayFor(modelItem => item.Moneda.nombre)</td>
+                                    <td hidden="hidden">@item.total</td>
                                     <td>@Html.DisplayFor(modelItem => item.total)</td>
                                     <td>
                                         <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>
-
-                                    
-                                    @*<td>@Html.DisplayFor(modelItem => item.igv)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.total)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.FormaPago.nombre)</td>
-                                    <td>
-                                        @foreach (var itemDetalles in item.OrdenesCompraDetalles)
-                                        {
-                                            @Html.DisplayFor(modelItem => itemDetalles.Material.nombre)
-
-
-                                        }
-                                    </td>*@
                                     <td>
                                         @if (item.estadoOrdenId == 1)
                                         {
                                             <a href="~/OrdenCompra/Approve/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
                                         }
-                                    </td>
-                                    @*<td class="project-actions">
 
-                            <div class="checkbox i-checks"><label> <input type="checkbox" value="" > <i></i> Aprobar Orden </label></div>
-                        </td>*@
+
+                                    </td>
+
+
+
                                 </tr>
+
+
+
                             }
 
 
@@ -107,15 +149,17 @@
                         <tfoot>
                             <tr>
 
-                                <th data-toggle="true">Id</th>
+                                <th hidden="hidden" data-toggle="true">Id</th>
                                 <th>Estado</th>
                                 <th>OC</th>
                                 <th>Obra</th>
                                 <th>Fecha</th>
-                                <th>Prioridad</th>
                                 <th>Proveedor</th>
                                 <th>Tipo Compra</th>
+                                <th>Moneda</th>
+                                <th hidden="hidden">Total</th>
                                 <th>Total</th>
+
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -134,6 +178,7 @@
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/footableStyles")
     @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
 }
 
 @section Scripts {
@@ -142,6 +187,7 @@
     @Scripts.Render("~/plugins/jeditable")
     @Scripts.Render("~/plugins/footable")
     @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/chosen")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -166,7 +212,8 @@
                         }
                     }
                 ],
-                "order": [[0, "desc"]]
+                "order": [[0, "desc"]],
+                "pageLength": 25
 
             });
 
@@ -178,7 +225,39 @@
                 radioClass: 'iradio_square-green',
             });
 
+            // Eventos de filtros
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            $('select.column_filter').on('onchange click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            //Filtro de Chosen-select
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
         });
+
+        function filterColumn(i) {
+            $('.dataTables-example').DataTable().column(i).search(
+                $('#col' + i + '_filter').val()
+            ).draw();
+        }
 
     </script>
 }
+
+

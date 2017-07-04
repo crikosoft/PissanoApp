@@ -23,6 +23,8 @@ namespace PissanoApp.Models
         public virtual SubPresupuesto SubPresupuesto { get; set; }
         //public virtual ICollection<Titulo> Titulos { get; set; }
 
+        public virtual List<Movimiento> Movimientos { get; set; }
+
 
     }
 }
