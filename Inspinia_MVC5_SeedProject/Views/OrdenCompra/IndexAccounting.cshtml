@@ -140,7 +140,7 @@
                                         }
                                         
                                         <td>
-                                            @if (item.EstadoOrden.nombre != "Pago Total" )
+                                            @*@if (item.EstadoOrden.nombre != "Pago Total" )
                                             { 
                                                 var sum = item.Pagos.Sum(a => a.pagoMonto);
                                                 var diferencia = item.total - sum;
@@ -157,6 +157,19 @@
                                                 <a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a>                                                    
                                                     
                                                 }
+                                            }*@
+
+                                            @{  var sum2 = item.Pagos.Sum(a => a.pagoMonto);
+                                                var diferencia2 = item.total - sum2;
+
+                                                if (diferencia2 > 0)
+                                                {
+                                                    <a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a>
+                                                }
+                                                else 
+                                                {
+                                                    
+                                                }                                               
                                             }
                                            
                                         </td>

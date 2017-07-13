@@ -135,12 +135,23 @@
                                             <p>
                                                 <strong>Proveedor:</strong> <span class="text-warning">@Html.DisplayFor(model => model.OrdenCompra.Proveedor.razonSocial)</span><br />
                                             </p>
-                                            @{var sum = Model.OrdenCompra.Pagos.Sum(a => a.pagoMonto);
-                                            var diferencia = Model.OrdenCompra.total - sum;
+
+                                            @{
+                                                if (Model.OrdenCompra.Pagos.Count() > 0)
+                                                { 
+                                                    var sum = Model.OrdenCompra.Pagos.Sum(a => a.pagoMonto);
+                                                    var diferencia = Model.OrdenCompra.total - sum;
+                                                    <strong>Pendiente por Pagar:</strong> <span class="text-danger"> @Html.DisplayFor(model => model.OrdenCompra.Moneda.simbolo) @string.Format("{0:0.00}", diferencia)</span><br />
+                                                }
+                                                else
+                                                {
+                                                    <strong>Pendiente por Pagar:</strong> <span class="text-danger"> @Html.DisplayFor(model => model.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(model => model.OrdenCompra.total)</span><br />                                                    
+                                                    
+                                                }
                                             }
 
 
-                                            <strong>Pendiente por Pagar:</strong> <span class="text-danger"> @Html.DisplayFor(model => model.OrdenCompra.Moneda.simbolo) @string.Format("{0:0.00}", diferencia)</span><br />
+                                            
                                             <p class="m-t">
                                                 <a href="~/OrdenCompra/Document/@Html.DisplayFor(model => model.ordenCompraId)" target="_blank" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> Ver Orden </a>
                                             </p>
