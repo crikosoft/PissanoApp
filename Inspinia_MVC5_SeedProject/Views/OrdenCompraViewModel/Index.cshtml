@@ -39,6 +39,38 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                 </div>
                 <div class="ibox-content">
 
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Obra</label>
+                                @Html.DropDownList("col2_filter", (IEnumerable<SelectListItem>)ViewBag.obraId, "Todos", new { @class = "form-control column_filter", @data_column = "2" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="quantity">Orden</label>
+                                <input type="text" id="col1_filter" name="col1_filter" data-column="1" value="" placeholder="Orden" class="form-control column_filter">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="product_name">Proveedor</label>
+                                <input type="text" id="col6_filter" name="col6_filter" data-column="6" value="" placeholder="Proveedor" class="form-control column_filter">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Estado</label>
+                                @Html.DropDownList("col7_filter", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, "Todos", new { @class = "form-control column_filter", @data_column = "7" })
+
+                            </div>
+                        </div>
+                    </div>
+
+
                     <table class="table table-striped table-bordered table-hover dataTables-example" data-page-size="10" id="tableMaterial">
                         <thead>
                             <tr>
@@ -231,6 +263,7 @@ else if (Model.TipoCompra.nombre == "SubContratos")
 
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
 @Styles.Render("~/plugins/footableStyles")
+@Styles.Render("~/Content/plugins/chosen/chosenStyles")
 }
 
 @section Scripts {
@@ -238,6 +271,7 @@ else if (Model.TipoCompra.nombre == "SubContratos")
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/plugins/jeditable")
 @Scripts.Render("~/plugins/footable")
+@Scripts.Render("~/plugins/chosen")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -262,7 +296,7 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                         }
                     }
                 ],
-                "order": [[0, "desc"]],
+                "order": [[1, "desc"]],
                 "pageLength": 25
 
             });
@@ -270,7 +304,41 @@ else if (Model.TipoCompra.nombre == "SubContratos")
 
             $('.footable').footable();
 
+
+
+            // Eventos de filtros
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            $('select.column_filter').on('onchange click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            //Filtro de Chosen-select
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
         });
 
-    </script>
+        function filterColumn(i) {
+            $('.dataTables-example').DataTable().column(i).search(
+                $('#col' + i + '_filter').val()
+            ).draw();
+        }
+
+        </script>
 }
+
+

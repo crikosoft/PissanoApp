@@ -17,7 +17,12 @@ namespace PissanoApp.Controllers
         // GET: /Pago/
         public ActionResult Index()
         {
-            var pagos = db.Pagos.Include(p => p.EstadoOrden).Include(p => p.OrdenCompra).Include(p => p.TipoDetraccion).Include(p => p.TipoDocumento);
+
+            //var estadoList = new string[] { "Pendiente de Pago", "Pago Realizado" };
+            ViewBag.estadoPagoId = new SelectList(db.EstadosPago, "estadoPagoId", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
+
+            var pagos = db.Pagos.Include(p => p.EstadoPago).Include(p => p.OrdenCompra).Include(p => p.TipoDetraccion).Include(p => p.TipoDocumento);
             return View(pagos.ToList());
         }
 
@@ -52,14 +57,12 @@ namespace PissanoApp.Controllers
         public ActionResult Create(int? id)
         {
 
-            var estadoList = new string[] { "Pendiente de Pago", "Pago Realizado"};
-
             Pago Pago = new Pago();
             OrdenCompra OrdenCompra = db.Ordenes.Where(a => a.ordenCompraId == id).FirstOrDefault();
             Pago.ordenCompraId = OrdenCompra.ordenCompraId;
             Pago.OrdenCompra = OrdenCompra;
 
-            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(p => estadoList.Contains(p.nombre)), "estadoOrdenId", "nombre");
+            ViewBag.estadoPagoId = new SelectList(db.EstadosPago, "estadoPagoId", "nombre");
             ViewBag.ordenCompraId = new SelectList(db.Ordenes, "ordenCompraId", "numero");
             ViewBag.tipoDetraccionId = new SelectList(db.TipoDetracciones, "tipoDetraccionId", "tipoBienServicio");
             ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos, "tipoDocumentoId", "nombre");
@@ -72,7 +75,7 @@ namespace PissanoApp.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "pagoId,ordenCompraId,tipoDocumentoId,numero,fechaPagoProg,fechaPagoReal,tipoDetraccionId,estadoOrdenId")] Pago pago)
+        public ActionResult Create([Bind(Include = "pagoId,ordenCompraId,tipoDocumentoId,numero,fechaPagoProg,fechaPagoReal,tipoDetraccionId,estadoPagoId,pagoMonto,preguntaPagoTotal")] Pago pago)
         {
             if (ModelState.IsValid)
             {
@@ -87,15 +90,27 @@ namespace PissanoApp.Controllers
                 pago.usuarioCreacion = User.Identity.Name;
 
                 //Actualiza datos en Orden de Compra
+
+                var paramtext = "Pago Registrado";
+
+                if (pago.estadoPagoId == 1) //1: Pendiente de Pago
+                    paramtext = "Pago Registrado";
+                else if (pago.estadoPagoId == 2 && pago.preguntaPagoTotal==true) // && Pago Completo ==true // 2 Pago Realizado
+                    paramtext = "Pago Total";
+                else if (pago.estadoPagoId == 2 && pago.preguntaPagoTotal == false) // && PacoCompleto ==false // 2 Pago Realizado
+                    paramtext = "Pago Parcial";
+
+                var estadoOrden = db.EstadoOrdenes.Single(p => p.nombre == paramtext);
+
                 pago.OrdenCompra = ordenCompra;
-                pago.OrdenCompra.estadoOrdenId = pago.estadoOrdenId;
+                pago.OrdenCompra.estadoOrdenId = estadoOrden.estadoOrdenId;
                 pago.OrdenCompra.usuarioModificacion = User.Identity.Name;
                 pago.OrdenCompra.fechaModificacion = cstTime;
 
                 // Guarda en Tabla Estados
                 var ordenCompraEstado = new OrdenCompraEstadoOrden();
                 ordenCompraEstado.ordenCompraId = ordenCompra.ordenCompraId;
-                ordenCompraEstado.estadoOrdenId = pago.estadoOrdenId;
+                ordenCompraEstado.estadoOrdenId = estadoOrden.estadoOrdenId;
                 ordenCompraEstado.usuarioCreacion = User.Identity.Name;
                 ordenCompraEstado.fechaCreacion = cstTime;
                 pago.OrdenCompra.OrdenCompraEstados.Add(ordenCompraEstado);
@@ -104,15 +119,15 @@ namespace PissanoApp.Controllers
                  if (pago.tipoDetraccionId != null)
                  { 
                     TipoDetraccion tipoDetraccion = db.TipoDetracciones.Find(pago.tipoDetraccionId);
-                    pago.pagoDetraccion = tipoDetraccion.porcentaje * ordenCompra.total /100;
+                    pago.pagoDetraccion = tipoDetraccion.porcentaje * pago.pagoMonto /100;
                  }
 
                 db.Pagos.Add(pago);
                 db.SaveChanges();
-                return RedirectToAction("IndexAccounting", "OrdenCompra");
+                return RedirectToAction("Index", "Pago");
             }
 
-            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "estadoOrdenId", "nombre", pago.estadoOrdenId);
+            ViewBag.estadoPagoId = new SelectList(db.EstadosPago, "estadoPagoId", "nombre", pago.estadoPagoId);
             ViewBag.ordenCompraId = new SelectList(db.Ordenes, "ordenCompraId", "numero", pago.ordenCompraId);
             ViewBag.tipoDetraccionId = new SelectList(db.TipoDetracciones, "tipoDetraccionId", "tipoBienServicio", pago.tipoDetraccionId);
             ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos, "tipoDocumentoId", "nombre", pago.tipoDocumentoId);
@@ -133,13 +148,13 @@ namespace PissanoApp.Controllers
             }
 
 
-            var estadoList = new string[] { "Pendiente de Pago", "Pago Realizado" };
 
             OrdenCompra OrdenCompra = db.Ordenes.Where(a => a.ordenCompraId == pago.pagoId).FirstOrDefault();
             //Pago.ordenCompraId = OrdenCompra.ordenCompraId;
             //Pago.OrdenCompra = OrdenCompra;
 
-            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(p => estadoList.Contains(p.nombre)), "estadoOrdenId", "nombre", pago.estadoOrdenId);
+            ViewBag.estadoPagoId = new SelectList(db.EstadosPago, "estadoPagoId", "nombre", pago.estadoPagoId);
+
             ViewBag.ordenCompraId = new SelectList(db.Ordenes, "ordenCompraId", "numero", pago.ordenCompraId);
             ViewBag.tipoDetraccionId = new SelectList(db.TipoDetracciones, "tipoDetraccionId", "tipoBienServicio", pago.tipoDetraccionId);
             ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos, "tipoDocumentoId", "nombre", pago.tipoDocumentoId);
@@ -155,7 +170,7 @@ namespace PissanoApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 //        public ActionResult Edit([Bind(Include="pagoId,ordenCompraId,tipoDocumentoId,numero,fechaPagoProg,fechaPagoReal,estadoOrdenId,pagoMonto,tipoDetraccionId,pagoDetraccion,asientoContable,fechaContable,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion")] Pago pago)
-        public ActionResult Edit([Bind(Include = "pagoId,ordenCompraId,tipoDocumentoId,numero,fechaPagoProg,fechaPagoReal,tipoDetraccionId,estadoOrdenId")] Pago pago)
+        public ActionResult Edit([Bind(Include = "pagoId,ordenCompraId,tipoDocumentoId,numero,fechaPagoProg,fechaPagoReal,tipoDetraccionId,estadoPagoId,pagoMonto,preguntaPagoTotal")] Pago pago)
         {
             if (ModelState.IsValid)
             {
@@ -171,15 +186,28 @@ namespace PissanoApp.Controllers
 
 
                 //Actualiza datos en Orden de Compra
+
+                var paramtext = "Pendiente de Pago";
+               
+                if (pago.estadoPagoId == 1) //1: Pendiente de Pago
+                    paramtext = "Pago Registrado";
+                else if (pago.estadoPagoId == 2 && pago.preguntaPagoTotal == true) // && Pago Completo ==true // 2 Pago Realizado
+                    paramtext = "Pago Total";
+                else if (pago.estadoPagoId == 2 && pago.preguntaPagoTotal == false) // && PacoCompleto ==false // 2 Pago Realizado
+                    paramtext = "Pago Parcial";
+
+                var estadoOrden = db.EstadoOrdenes.Single(p => p.nombre == paramtext);
+
+
                 pago.OrdenCompra = ordenCompra;
-                pago.OrdenCompra.estadoOrdenId = pago.estadoOrdenId;
+                pago.OrdenCompra.estadoOrdenId = estadoOrden.estadoOrdenId;
                 pago.OrdenCompra.usuarioModificacion = User.Identity.Name;
                 pago.OrdenCompra.fechaModificacion = cstTime;
 
                 // Guarda en Tabla Estados
                 var ordenCompraEstado = new OrdenCompraEstadoOrden();
                 ordenCompraEstado.ordenCompraId = ordenCompra.ordenCompraId;
-                ordenCompraEstado.estadoOrdenId = pago.estadoOrdenId;
+                ordenCompraEstado.estadoOrdenId = estadoOrden.estadoOrdenId;
                 ordenCompraEstado.usuarioCreacion = User.Identity.Name;
                 ordenCompraEstado.fechaCreacion = cstTime;
                 pago.OrdenCompra.OrdenCompraEstados.Add(ordenCompraEstado);
@@ -188,7 +216,7 @@ namespace PissanoApp.Controllers
                 if (pago.tipoDetraccionId != null)
                 {
                     TipoDetraccion tipoDetraccion = db.TipoDetracciones.Find(pago.tipoDetraccionId);
-                    pago.pagoDetraccion = tipoDetraccion.porcentaje * ordenCompra.total / 100;
+                    pago.pagoDetraccion = tipoDetraccion.porcentaje * pago.pagoMonto / 100;
                 }
 
                 db.Entry(pago).State = EntityState.Modified;
@@ -196,9 +224,9 @@ namespace PissanoApp.Controllers
                 db.Entry(pago).Property(x => x.usuarioCreacion).IsModified = false;
 
                 db.SaveChanges();
-                return RedirectToAction("IndexAccounting", "OrdenCompra");
+                return RedirectToAction("Index", "Pago");
             }
-            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "estadoOrdenId", "nombre", pago.estadoOrdenId);
+            ViewBag.estadoPagoId = new SelectList(db.EstadosPago, "estadoPagoId", "nombre", pago.estadoPagoId);
             ViewBag.ordenCompraId = new SelectList(db.Ordenes, "ordenCompraId", "numero", pago.ordenCompraId);
             ViewBag.tipoDetraccionId = new SelectList(db.TipoDetracciones, "tipoDetraccionId", "tipoBienServicio", pago.tipoDetraccionId);
             ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos, "tipoDocumentoId", "nombre", pago.tipoDocumentoId);

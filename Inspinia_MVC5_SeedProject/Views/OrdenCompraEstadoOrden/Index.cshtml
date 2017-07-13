@@ -1,20 +1,10 @@
-﻿@model IEnumerable<PissanoApp.Models.Material>
+﻿@model IEnumerable<PissanoApp.Models.OrdenCompraEstadoOrden>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Materiales</h2>
-
-@*<p>
-    @Html.ActionLink("Crear Nuevo", "Create")
-</p>*@
-
-<p>
-
-    @*<a href="@Url.Action("Index", "RequerimientoViewModel")" class="btn btn-w-m btn-primary">Nuevo</a>*@
-    <a href="~/Material/Create/" class="btn btn-w-m btn-primary"> Crear Nuevo </a>
-</p>
+<h2>Seguimientos de Ordenes</h2>
 
 
 
@@ -23,7 +13,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Materiales. Use el Filtro de Búsqueda</h5>
+                    <h5>Seguimientos de Ordenes. Use el Filtro de Búsqueda</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -38,17 +28,8 @@
 
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label class="control-label" for="status">Tipo de Material</label>
-                                @Html.DropDownList("col2_filter", (IEnumerable<SelectListItem>)ViewBag.tipoMaterialId, "Todos", new { @class = "form-control column_filter", @data_column = "2" })
-
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label class="control-label" for="status">Familia</label>
-                                @Html.DropDownList("col4_filter", (IEnumerable<SelectListItem>)ViewBag.materialPadreId, "Todos", new { @class = "form-control column_filter", @data_column = "4" })
-
+                                <label class="control-label" for="quantity">Orden</label>
+                                <input type="text" id="col1_filter" name="col1_filter" data-column="1" value="" placeholder="Orden" class="form-control column_filter">
                             </div>
                         </div>
                     </div>
@@ -59,27 +40,24 @@
 
                             <tr>
                                 <th>
-                                    Nombre de Material
-                                    @*@Html.DisplayNameFor(model => model.MaterialPadre.nombre)*@
+                                    Id
                                 </th>
                                 <th>
-                                    Código
-                                    @*@Html.DisplayNameFor(model => model.codigo)*@
+                                    Número Orden
                                 </th>
                                 <th>
-                                    Tipo de Material
-                                    @*@Html.DisplayNameFor(model => model.TipoMaterial.nombre)*@
-                                </th>
-                                <th>
-                                    Unidad de Medida
-                                    @*@Html.DisplayNameFor(model => model.UnidadMedida.nombre)*@
-                                </th>
-                                <th>
-                                    Familia
-                                    @*@Html.DisplayNameFor(model => model.nombre)*@
+                                    Estado
                                 </th>
 
-                                <th></th>
+                                <th>
+                                    Comentario
+                                </th>
+                                <th>
+                                    Usuario Creación
+                                </th>
+                                <th>
+                                    Fecha Creación
+                                </th>
                             </tr>
 
                         </thead>
@@ -90,26 +68,25 @@
                             {
                                 <tr class="gradeX">
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.nombre)
+                                        @Html.DisplayFor(modelItem => item.ordenCompraEstadoOrdenId)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.codigo)
+                                        @Html.DisplayFor(modelItem => item.OrdenCompra.numero)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.TipoMaterial.nombre)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.UnidadMedida.nombre)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.MaterialPadre.nombre)
+                                        @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
                                     </td>
 
                                     <td>
-                                        @Html.ActionLink("Editar", "Edit", new { id = item.materialId}, new { @class = "btn btn-white btn-sm" })  |
-                                        @Html.ActionLink("Detalles", "Details", new { id = item.materialId }, new { @class = "btn btn-primary btn-sm" }) |
-                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.materialId }, new { @class = "btn btn-white btn-sm" })
+                                        @Html.DisplayFor(modelItem => item.comentario)
                                     </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.usuarioCreacion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechaCreacion)
+                                    </td>
+
                                 </tr>
                             }
                         </tbody>
@@ -117,34 +94,30 @@
                         <tfoot>
                             <tr>
                                 <th>
-                                    Nombre de Material
-                                    @*@Html.DisplayNameFor(model => model.MaterialPadre.nombre)*@
+                                    Id
                                 </th>
                                 <th>
-                                    Código
-                                    @*@Html.DisplayNameFor(model => model.codigo)*@
+                                    Número Orden
                                 </th>
                                 <th>
-                                    Tipo de Material
-                                    @*@Html.DisplayNameFor(model => model.TipoMaterial.nombre)*@
-                                </th>
-                                <th>
-                                    Unidad de Medida
-                                    @*@Html.DisplayNameFor(model => model.UnidadMedida.nombre)*@
-                                </th>
-                                <th>
-                                    Familia
-                                    @*@Html.DisplayNameFor(model => model.nombre)*@
+                                    Estado
                                 </th>
 
-                                <th></th>
-
+                                <th>
+                                    Comentario
+                                </th>
+                                <th>
+                                    Usuario Creación
+                                </th>
+                                <th>
+                                    Fecha Creación
+                                </th>
                             </tr>
                         </tfoot>
                     </table>
 
 
-                    
+
 
                 </div>
             </div>
@@ -162,14 +135,14 @@
 @section Styles {
 
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
-@Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
 }
 
 @section Scripts {
 
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/plugins/jeditable")
-@Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/chosen")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -236,7 +209,13 @@
             ).draw();
         }
 
-        </script>
-        }
+    </script>
+}
+
+
+
+
+
+
 
 

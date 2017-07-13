@@ -37,6 +37,8 @@ namespace PissanoApp.Controllers
 
             var OrdenCompraViewModels = new OrdenCompraViewModel(formasPago.ToList(), proveedores.ToList(), requerimiento, ordenesCompra.ToList(), monedas.ToList(), tipoCompra);
 
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "nombre", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
 
             return View(OrdenCompraViewModels);
         }
@@ -193,6 +195,18 @@ namespace PissanoApp.Controllers
 
                 parametro.ultimoNumero = parametro.ultimoNumero + 1;
 
+
+                // Grabar Estado de Orden Compra
+                var ordenCompraEstado = new OrdenCompraEstadoOrden();
+                var estado = db.EstadoOrdenes.Where(p => p.nombre == "Pendiente de Aprobación").SingleOrDefault(); ;
+
+                ordenCompraEstado.ordenCompraId = ordenCompra.ordenCompraId;
+                ordenCompraEstado.estadoOrdenId = ordenCompra.estadoOrdenId;
+                ordenCompraEstado.usuarioCreacion = User.Identity.Name;
+                ordenCompraEstado.fechaCreacion = cstTime;
+                db.OrdenCompraEstadoOrden.Add(ordenCompraEstado);
+
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -304,7 +318,14 @@ namespace PissanoApp.Controllers
 
 
                 // 4. Agrega Estado - Orden Compras
+                var ordenCompraEstado = new OrdenCompraEstadoOrden();
+                var estado = db.EstadoOrdenes.Where(p => p.nombre == "Pendiente de Aprobación").SingleOrDefault(); ;
 
+                ordenCompraEstado.ordenCompraId = ordenCompra.ordenCompraId;
+                ordenCompraEstado.estadoOrdenId = ordenCompra.estadoOrdenId;
+                ordenCompraEstado.usuarioCreacion = User.Identity.Name;
+                ordenCompraEstado.fechaCreacion = cstTime;
+                db.OrdenCompraEstadoOrden.Add(ordenCompraEstado);
 
 
                 // 6. Actualiza Requerimiento

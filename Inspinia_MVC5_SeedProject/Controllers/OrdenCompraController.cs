@@ -423,7 +423,7 @@ namespace PissanoApp.Controllers
                 obrasList = new string[] { "San Borja Norte" };
             }
 
-            var estadoList = new string[] { "Pendiente de Aprobación", "Aprobación 1", "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 1", "Rechazado Aprobación 2", "Rechazado Aprobación 3" };
+            var estadoList = new string[] { "Pendiente de Aprobación", "Aprobación 1", "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 1", "Rechazado Aprobación 2", "Rechazado Aprobación 3", "Pago Registrado", "Pago Parcial", "Pago Total", "Ingreso Parcial", "Ingreso Total" };
 
             ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(p => estadoList.Contains(p.nombre)), "nombre", "nombre");
             ViewBag.obraId = new SelectList(db.Obras.Where(p => obrasList.Contains(p.nombre)), "nombre", "nombre");
@@ -435,9 +435,9 @@ namespace PissanoApp.Controllers
         // GET: /OrdenCompra/Approve/5
         public ActionResult IndexApprove2()
         {
-           
-            
-            var estadoList = new string[] { "Aprobación 1", "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 2", "Rechazado Aprobación 3" };
+
+
+            var estadoList = new string[] { "Aprobación 1", "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 2", "Rechazado Aprobación 3", "Pago Registrado", "Pago Parcial", "Pago Total", "Ingreso Parcial", "Ingreso Total" };
 
             ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(p => estadoList.Contains(p.nombre)), "nombre", "nombre");
             ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
@@ -451,7 +451,7 @@ namespace PissanoApp.Controllers
         // GET: /OrdenCompra/Approve/5
         public ActionResult IndexApprove3()
         {
-            var estadoList = new string[] { "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 3" };
+            var estadoList = new string[] { "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 3", "Pago Registrado", "Pago Parcial", "Pago Total", "Ingreso Parcial", "Ingreso Total" };
             //var ordenes = db.Ordenes.Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
             //var ordenes = db.Ordenes.Where(p => p.estadoOrdenId == 3).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
             var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
@@ -466,11 +466,12 @@ namespace PissanoApp.Controllers
         // GET: /OrdenCompra/IndexAcounting/
         public ActionResult IndexAccounting()
         {                        
-            var estadoList = new int[] { 4, 5, 6, 10, 11 };
-            var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.estadoOrdenId)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            //var estadoList = new int[] { 4, 5, 6, 10, 11, 12 };
+            var estadoList = new string[] { "Aprobación 3", "Ingreso Parcial", "Ingreso Total", "Pago Registrado", "Pago Parcial", "Pago Total" };
+            var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.EstadoOrden.nombre)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
 
 
-            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "nombre", "nombre");
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(o => estadoList.Contains(o.nombre)), "nombre", "nombre");
             ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
 
             return View(ordenes.ToList());
@@ -481,9 +482,9 @@ namespace PissanoApp.Controllers
         public ActionResult IndexWarehouse()
         {
             
-            var estadoList = new int[] { 4, 5, 6};
+           
             var estadoListNombre = new string[] { "Aprobación 3", "Ingreso Parcial", "Ingreso Total" };
-            var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.estadoOrdenId)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            var ordenes = db.Ordenes.Where(o => estadoListNombre.Contains(o.EstadoOrden.nombre)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
 
             ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "nombre", "nombre");
             ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes.Where(p => estadoListNombre.Contains(p.nombre)), "nombre", "nombre");
@@ -535,12 +536,28 @@ namespace PissanoApp.Controllers
                 return HttpNotFound();
             }
 
-            orderCompra.estadoOrdenId = 2;
-                db.SaveChanges();
-                return RedirectToAction("IndexApprove");
-            //}
-            //ViewBag.obraId = new SelectList(db.Obras, "id", "direccion", ordencompra.ordenCompraId);
-            return View(ordencompra);
+            DateTime timeUtc = DateTime.UtcNow;
+            TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+            // Grabar Estado de Orden Compra
+            var ordenCompraEstado = new OrdenCompraEstadoOrden();
+            var estado = db.EstadoOrdenes.Where(p => p.nombre == "Aprobación 1").SingleOrDefault(); ;
+
+            ordenCompraEstado.ordenCompraId = ordencompra.ordenCompraId;
+            ordenCompraEstado.estadoOrdenId = estado.estadoOrdenId;
+            ordenCompraEstado.usuarioCreacion = User.Identity.Name;
+            ordenCompraEstado.fechaCreacion = cstTime;
+
+            // Actualiza datos de Orden
+            orderCompra.estadoOrdenId = estado.estadoOrdenId;
+            orderCompra.usuarioModificacion = User.Identity.Name;
+            orderCompra.fechaModificacion = cstTime;
+
+            db.OrdenCompraEstadoOrden.Add(ordenCompraEstado);
+            db.SaveChanges();
+            return RedirectToAction("IndexApprove");
+
         }
 
 
@@ -559,12 +576,27 @@ namespace PissanoApp.Controllers
                 return HttpNotFound();
             }
 
-            orderCompra.estadoOrdenId = 3;
+            DateTime timeUtc = DateTime.UtcNow;
+            TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+            // Grabar Estado de Orden Compra
+            var ordenCompraEstado = new OrdenCompraEstadoOrden();
+            var estado = db.EstadoOrdenes.Where(p => p.nombre == "Aprobación 2").SingleOrDefault(); ;
+
+            ordenCompraEstado.ordenCompraId = ordencompra.ordenCompraId;
+            ordenCompraEstado.estadoOrdenId = estado.estadoOrdenId;
+            ordenCompraEstado.usuarioCreacion = User.Identity.Name;
+            ordenCompraEstado.fechaCreacion = cstTime;
+
+            // Actualiza datos de Orden
+            orderCompra.estadoOrdenId = estado.estadoOrdenId;
+            orderCompra.usuarioModificacion = User.Identity.Name;
+            orderCompra.fechaModificacion = cstTime;
+
+            db.OrdenCompraEstadoOrden.Add(ordenCompraEstado);
             db.SaveChanges();
             return RedirectToAction("IndexApprove2");
-            //}
-            //ViewBag.obraId = new SelectList(db.Obras, "id", "direccion", ordencompra.ordenCompraId);
-            return View(ordencompra);
         }
 
 
@@ -582,12 +614,27 @@ namespace PissanoApp.Controllers
                 return HttpNotFound();
             }
 
-            orderCompra.estadoOrdenId = 4;
+            DateTime timeUtc = DateTime.UtcNow;
+            TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+            DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+            // Grabar Estado de Orden Compra
+            var ordenCompraEstado = new OrdenCompraEstadoOrden();
+            var estado = db.EstadoOrdenes.Where(p => p.nombre == "Aprobación 3").SingleOrDefault(); ;
+
+            ordenCompraEstado.ordenCompraId = ordencompra.ordenCompraId;
+            ordenCompraEstado.estadoOrdenId = estado.estadoOrdenId;
+            ordenCompraEstado.usuarioCreacion = User.Identity.Name;
+            ordenCompraEstado.fechaCreacion = cstTime;
+
+            // Actualiza datos de Orden
+            orderCompra.estadoOrdenId = estado.estadoOrdenId;
+            orderCompra.usuarioModificacion = User.Identity.Name;
+            orderCompra.fechaModificacion = cstTime;
+
+            db.OrdenCompraEstadoOrden.Add(ordenCompraEstado);
             db.SaveChanges();
             return RedirectToAction("IndexApprove3");
-            //}
-            //ViewBag.obraId = new SelectList(db.Obras, "id", "direccion", ordencompra.ordenCompraId);
-            return View(ordencompra);
         }
 
         // GET: /OrdenCompra/Approve/5

@@ -41,6 +41,9 @@ namespace PissanoApp.Controllers
             var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList(), tipoCompra, partidas.ToList(), subPresupuestos.ToList());
 
 
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoRequerimiento, "nombre", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
+
             return View(RequerimientoViewModels);
         }
 

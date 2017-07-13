@@ -26,7 +26,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.codigo, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.codigo)
+                @*@Html.EditorFor(model => model.codigo)*@
+                <input type="text" class="form-control" id="textoCodigo" disabled value="Código generado por el sistema">
+                <input type="hidden" class="form-control" id="codigo" name="codigo" value="0">
+
                 @Html.ValidationMessageFor(model => model.codigo)
             </div>
         </div>
@@ -56,7 +59,7 @@
         <div class="form-group">
             @*@Html.LabelFor(model => model.materialPadreId, "materialPadreId", new { @class = "control-label col-md-2" })*@
             <div class="control-label col-md-2">
-                Material Padre
+                Material Padre o Familia
             </div>
             <div class="col-md-10">
                 @*@Html.DropDownList("materialPadreId", String.Empty)*@

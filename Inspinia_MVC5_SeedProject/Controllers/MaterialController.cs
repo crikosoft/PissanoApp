@@ -20,7 +20,8 @@ namespace PissanoApp.Controllers
         public ActionResult Index()
         {
             var materiales = db.Materiales.Include(m => m.MaterialPadre).Include(m => m.TipoMaterial).Include(m => m.UnidadMedida);
-             
+            ViewBag.tipoMaterialId = new SelectList(db.TipoMateriales, "nombre", "nombre");
+            ViewBag.materialPadreId = new SelectList(db.Materiales.Where(a => a.materialPadreId == null),"nombre","nombre");
             
             return View(materiales.ToList());
         }
@@ -88,12 +89,56 @@ namespace PissanoApp.Controllers
                 TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
                 DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
 
+                // Registrar Familia
+
+                if (material.materialPadreId == null)
+                {
+
+                    var paramtext = "FAM-MATERIAL";
+
+                    if (material.tipoMaterialId == 1) //1: Materiales, 2: Sibcontratos
+                    {
+                        paramtext = "FAM-MATERIAL";
+                    }
+                    else if (material.tipoMaterialId == 2)
+                    {
+                        paramtext = "FAM-SUBCONTR";
+                    }
+
+                    var parametro = db.Parametro.Single(p => p.nombre == paramtext);
+
+                    string ceros = new String('0', 8 - (parametro.ultimoNumero + 1).ToString().Length -1);
+                    if (material.tipoMaterialId == 1) //1: Materiales, 2: Sibcontratos
+                    {
+                        material.codigo = "2" + ceros + (parametro.ultimoNumero + 1).ToString();
+                    }
+                    else if (material.tipoMaterialId == 2)
+                    {
+                        material.codigo = "5" + ceros + (parametro.ultimoNumero + 1).ToString();
+                    }
+
+                    parametro.ultimoNumero = parametro.ultimoNumero + 1;
+
+                    //Fin registrar familia
+                }
+                else {
+
+                    var materialeshijos = db.Materiales.Where(p => p.materialPadreId == material.materialPadreId);
+
+                    var materialpadre = db.Materiales.Find(material.materialPadreId);
+                    string ceros = new String('0', 4 - (materialeshijos.Count()+1).ToString().Length);
+                    material.codigo = materialpadre.codigo + "-" + ceros + (materialeshijos.Count() + 1).ToString();
+
+                }
+
+
+
                 material.fechaCreacion = cstTime;
                 material.usuarioCreacion = User.Identity.Name;
                 material.fechaModificacion = cstTime;
 
-
                 db.Materiales.Add(material);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -136,12 +181,74 @@ namespace PissanoApp.Controllers
                 TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
                 DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
 
-                material.fechaCreacion = cstTime;
-                material.usuarioCreacion = User.Identity.Name;
+
+                //material.fechaCreacion = cstTime;
+                //material.usuarioCreacion = User.Identity.Name;
                 material.fechaModificacion = cstTime;
                 material.usuarioModificacion = User.Identity.Name;
 
+
+                var materialoriginal = db.Materiales.AsNoTracking().Where( a=> a.materialId==material.materialId).FirstOrDefault();
+
+                if (materialoriginal.materialPadreId != material.materialPadreId)
+                { 
+                // Logica de reenumeración
+
+                    if (material.materialPadreId == null)
+                    {
+
+                        var paramtext = "FAM-MATERIAL";
+
+                        if (material.tipoMaterialId == 1) //1: Materiales, 2: Sibcontratos
+                        {
+                            paramtext = "FAM-MATERIAL";
+                        }
+                        else if (material.tipoMaterialId == 2)
+                        {
+                            paramtext = "FAM-SUBCONTR";
+                        }
+
+                        var parametro = db.Parametro.Single(p => p.nombre == paramtext);
+
+                        string ceros = new String('0', 8 - (parametro.ultimoNumero + 1).ToString().Length-1);
+                        if (material.tipoMaterialId == 1) //1: Materiales, 2: Sibcontratos
+                        {
+                            material.codigo = "2" + ceros + (parametro.ultimoNumero + 1).ToString();
+                        }
+                        else if (material.tipoMaterialId == 2)
+                        {
+                            material.codigo = "5" + ceros + (parametro.ultimoNumero + 1).ToString();
+                        }
+
+                        parametro.ultimoNumero = parametro.ultimoNumero + 1;
+
+                        //Fin registrar familia
+                    }
+                    else
+                    {
+                        // Aplica cuando 
+                        // Si Cambio es de Familia a Material && la familia no tiene hijos.
+                        // Si Cambio es de Material a Material 
+                        if (materialoriginal.materialPadreId != null || (materialoriginal.materialPadreId == null && db.Materiales.Where(a => a.materialPadreId == materialoriginal.materialId).Count() == 0))
+                        {
+                            var materialeshijos = db.Materiales.Where(p => p.materialPadreId == material.materialPadreId);
+
+                            var materialpadre = db.Materiales.Find(material.materialPadreId);
+                            string ceros = new String('0', 4 - (materialeshijos.Count() + 1).ToString().Length);
+                            material.codigo = materialpadre.codigo + "-" + ceros + (materialeshijos.Count() + 1).ToString();
+
+                        }
+                        else
+                        {
+                            material.materialPadreId = materialoriginal.materialPadreId;
+                        }
+                    }
+                }
+
                 db.Entry(material).State = EntityState.Modified;
+
+                db.Entry(material).Property(x => x.fechaCreacion).IsModified = false;
+                db.Entry(material).Property(x => x.usuarioCreacion).IsModified = false;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

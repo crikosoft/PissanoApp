@@ -24,6 +24,7 @@ namespace PissanoApp.Models
         public string usuarioCreacion { get; set; }
 
         [Required()]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime fechaCreacion { get; set; }
     }
 }

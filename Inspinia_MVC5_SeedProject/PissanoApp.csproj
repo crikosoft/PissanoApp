@@ -186,6 +186,7 @@
     <Compile Include="Controllers\MovimientoController.cs" />
     <Compile Include="Controllers\ObraController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
+    <Compile Include="Controllers\OrdenCompraEstadoOrdenController.cs" />
     <Compile Include="Controllers\OrdenCompraViewModelController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
@@ -210,15 +211,16 @@
     <Compile Include="Migrations\201707031552515_db-create.Designer.cs">
       <DependentUpon>201707031552515_db-create.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707031556222_db-update.cs" />
-    <Compile Include="Migrations\201707031556222_db-update.Designer.cs">
-      <DependentUpon>201707031556222_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201707121419250_db-update.cs" />
+    <Compile Include="Migrations\201707121419250_db-update.Designer.cs">
+      <DependentUpon>201707121419250_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\Almacen.cs" />
     <Compile Include="Models\Archivo.cs" />
+    <Compile Include="Models\EstadoPago.cs" />
     <Compile Include="Models\Movimiento.cs" />
     <Compile Include="Models\TipoDetraccion.cs" />
     <Compile Include="Models\EstadoValorizacion.cs" />
@@ -1077,6 +1079,7 @@
     <Content Include="Views\MaterialNivelStock\Details.cshtml" />
     <Content Include="Views\MaterialNivelStock\Edit.cshtml" />
     <Content Include="Views\MaterialNivelStock\Index.cshtml" />
+    <Content Include="Views\OrdenCompraEstadoOrden\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1091,8 +1094,8 @@
     <EmbeddedResource Include="Migrations\201707031552515_db-create.resx">
       <DependentUpon>201707031552515_db-create.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707031556222_db-update.resx">
-      <DependentUpon>201707031556222_db-update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707121419250_db-update.resx">
+      <DependentUpon>201707121419250_db-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

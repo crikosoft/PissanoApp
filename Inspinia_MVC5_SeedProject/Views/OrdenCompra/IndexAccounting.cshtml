@@ -84,10 +84,9 @@
                                 <th>Moneda</th>
                                 <th hidden="hidden">Total</th>
                                 <th>Total OC</th>
-                                <th>Fecha Programada Pago</th>
-                                <th>Fecha Pago Real</th>
-                                <th>Detracción</th>
-                                <th>Nro Documento</th>
+                                <th>Nro Pagos</th>
+                                <th>Avance Pagos</th>
+                                <th>Pendiente Pagos</th>
                                 <th></th>
                                 <th></th>
 
@@ -104,30 +103,10 @@
                                         <td hidden="hidden">@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
                                         @*<td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>*@
                                         <td class="client-status">
-                                            @if (item.EstadoOrden.nombre == "Ingreso Total")
-                                                {
-                                                    <button type="button" class="btn btn-danger btn-xs">
-                                                        @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                                    </button>
-                                                }
-                                                else if (item.EstadoOrden.nombre == "Pendiente de Pago")
-                                                {
-                                                    <button type="button" class="btn btn-warning btn-xs">
-                                                        @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                                    </button>
-                                                }
-                                                else if (item.EstadoOrden.nombre == "Pago Realizado")
-                                                {
-                                                    <button type="button" class="btn btn-primary btn-xs">
-                                                        @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                                    </button>
-                                                }
-                                                else
-                                                { 
-                                                    <button type="button" class="btn btn-default btn-xs">
-                                                        @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                                    </button>
-                                                }
+                                      
+                                            <button type="button" class="btn btn-default btn-xs">
+                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+                                            </button>
                                            
                                         </td>
                                         <td>@Html.DisplayFor(modelItem => item.numero)</td>
@@ -139,30 +118,47 @@
                                         <td hidden="hidden">@item.total</td>
                                         <td>@Html.DisplayFor(modelItem => item.total)</td>
       
+
+
                                         @if (item.Pagos.Count > 0)
                                         {
-                                            <td>@Html.DisplayFor(modelItem => item.Pagos[0].fechaPagoProg)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Pagos[0].fechaPagoReal)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Pagos[0].pagoDetraccion)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Pagos[0].numero)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Pagos.Count)</td>
+                                   
+                                            var sum =item.Pagos.Sum(a => a.pagoMonto);
+                                            var diferencia = item.total - sum;
+
+                                           
+                                            <td>@string.Format("{0:0.00}", sum)</td>
+                                            <td>@string.Format("{0:0.00}", diferencia)</td>
+
                                         }
                                         else
                                         {
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
                                         }
                                         
                                         <td>
-                                            @if (item.Pagos.Count()==0)
+                                            @if (item.EstadoOrden.nombre != "Pago Total" )
                                             { 
-                                                <a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Realizar Pago </a>
+                                                var sum = item.Pagos.Sum(a => a.pagoMonto);
+                                                var diferencia = item.total - sum;
+
+                                                if (item.EstadoOrden.nombre == "Pago Registrado" && diferencia >0)
+                                                { 
+                                                <a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a>
+                                                }
+                                                else if (item.EstadoOrden.nombre == "Pago Registrado" && diferencia == 0) 
+                                                { 
+                                                }
+                                                else
+                                                {
+                                                <a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a>                                                    
+                                                    
+                                                }
                                             }
-                                            else
-                                            {
-                                                <a href="~/Pago/Edit/@Html.DisplayFor(modelItem => item.Pagos[0].pagoId)" class="btn btn-success btn-sm"><i class="fa fa-money"></i> Editar Pago </a>
-                                            }
+                                           
                                         </td>
                                         <td>
                                             <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
@@ -187,11 +183,10 @@
                                 <th>Tipo Compra</th>
                                 <th>Moneda</th>
                                 <th hidden="hidden">Total</th>
-                                <th>Total</th>
-                                <th>Fecha Programada Pago</th>
-                                <th>Fecha Pago Real</th>
-                                <th>Detracción</th>
-                                <th>Nro Documento</th>
+                                <th>Total OC</th>
+                                <th>Nro Pagos</th>
+                                <th>Avance Pagos</th>
+                                <th>Pendiente Pagos</th>
                                 <th></th>
                                 <th></th>
                             </tr>

@@ -137,6 +137,13 @@
 
                 <ul class="nav nav-second-level collapse">
                     <li>
+                        <a href="@Url.Action("Index", "Pago")">Pagos<span class="label label-primary pull-right">Nuevo</span></a>
+                    </li>
+
+                </ul>
+
+                <ul class="nav nav-second-level collapse">
+                    <li>
                         <a href="@Url.Action("IndexAccounting", "OrdenCompra")">Ordenes de Compra<span class="label label-primary pull-right">Nuevo</span></a>
                     </li>
 
@@ -175,7 +182,7 @@
             {
 
             <li class="@Html.IsSelected(controller: "")">
-                <a href="#"><i class="fa fa-list"></i><span class="nav-label" data-i18n="nav.empresa">Análisis</span><span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-table"></i><span class="nav-label" data-i18n="nav.empresa">Análisis</span><span class="fa arrow"></span></a>
                 @*<ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
                     <li class="@Html.IsSelected(action: "Pago")"><a href="@Url.Action("ProductsList", "Ecommerce")">Ingreso Factura<span class="label label-info pull-right">Protot</span></a></li>
                 </ul>*@
@@ -190,7 +197,28 @@
                 </ul>
             </li>
    
-            }                         
+            }
+
+           if (User.IsInRole("Administrador") || User.IsInRole("Analista") || User.IsInRole("Ingeniero Residente"))
+            {
+
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-warning"></i><span class="nav-label" data-i18n="nav.empresa">Tracking</span><span class="fa arrow"></span></a>
+                @*<ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Pago")"><a href="@Url.Action("ProductsList", "Ecommerce")">Ingreso Factura<span class="label label-info pull-right">Protot</span></a></li>
+                </ul>*@
+
+                <ul class="nav nav-second-level collapse">
+                    <li>
+                        <a href="@Url.Action("Index", "OrdenCompraEstadoOrden")">Orden de Compra<span class="label label-primary pull-right">Nuevo</span></a>
+                    </li>
+                    @*<li>
+                        <a href="@Url.Action("DetailedAnalysis", "Home")">Requerimiento<span class="label label-primary pull-right">Nuevo</span></a>
+                    </li>*@
+                </ul>
+            </li>
+   
+            }                   
 
 
 }
