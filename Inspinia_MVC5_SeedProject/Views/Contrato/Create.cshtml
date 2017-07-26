@@ -191,12 +191,21 @@
                     </div>
                 </div>*@
 
+                    <div class="col-sm-12">
+                        <div class="form-group">
 
+                            <label class="control-label" for="order_id">Detalle Amortización</label>
+                            @*<input type="text" class="form-control" tabindex="3" id="detalleAmortizacion"> <span class="help-block m-b-none">Agregue la forma de Amortización</span>*@
+                            @Html.TextBoxFor(model => model.detalleAmortizacion, new { @class = "form-control" })
+                        </div>
+                    </div>
                 <div class="col-sm-12">
                     <div class="form-group">
 
                         <label class="control-label" for="order_id" >Comentario</label>
-                        <input type="text" class="form-control" tabindex="3" id="comentario"> <span class="help-block m-b-none">Agregue algún comentario a considerar en el Contrato</span>
+                        @*<input type="text" class="form-control" tabindex="3" id="comentario"> <span class="help-block m-b-none">Agregue algún comentario a considerar en el Contrato</span>*@
+                        @Html.TextBoxFor(model => model.comentario, new { @class = "form-control" })
+
 
                     </div>
                 </div>

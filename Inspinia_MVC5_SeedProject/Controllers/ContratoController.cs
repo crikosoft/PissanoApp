@@ -55,7 +55,7 @@ namespace PissanoApp.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="contratoId,ordenCompraId,materialId,metrado,adelanto,adelantoPorc,fondoGarantia,fondoGarantiaPorc,tipoValorizacionId,fechaInicio,duracion,avance,avancePorc,saldo,saldoPorc,numeroPagos,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion")] Contrato contrato)
+        public ActionResult Create([Bind(Include = "contratoId,ordenCompraId,materialId,metrado,adelanto,adelantoPorc,fondoGarantia,fondoGarantiaPorc,tipoValorizacionId,fechaInicio,duracion,avance,avancePorc,saldo,saldoPorc,numeroPagos,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion,comentario,detalleAmortizacion")] Contrato contrato)
         {
             if (ModelState.IsValid)
             {
@@ -73,9 +73,25 @@ namespace PissanoApp.Controllers
                 contrato.avanceMonto = 0;
                 contrato.adelanto = (contrato.adelantoPorc * orden.total)/100;
                 contrato.fondoGarantia = (contrato.fondoGarantiaPorc * orden.total)/100;
+                
+                db.Contrato.Add(contrato);
 
-                if (contrato.adelanto !=0)
+                if (contrato.adelanto != 0)
                 {
+                    var estado = db.EstadoAdelanto.Where(p => p.nombre == "Pendiente de Aprobación").SingleOrDefault();
+
+                    Adelanto adelanto = new Adelanto();
+                    adelanto.Contrato = contrato;
+                    adelanto.descripcion = "1er Adelanto";
+                    adelanto.adelantoMonto = contrato.adelanto;
+
+                    adelanto.fechaCreacion = cstTime;
+                    adelanto.usuarioCreacion = User.Identity.Name;
+                    adelanto.fechaModificacion = cstTime;
+
+                    adelanto.estadoAdelantoId = estado.estadoAdelantoId;
+                    db.Adelanto.Add(adelanto);
+
                     //contrato.adelanto = contrato.adelantoPorc * contrato.OrdenCompra.total / 100;
 
                     //Valorizacion valorizacion = new Valorizacion();
@@ -87,9 +103,8 @@ namespace PissanoApp.Controllers
                     //valorizacion.fechaCreacion = cstTime;
                     //valorizacion.usuarioCreacion = User.Identity.Name;
                     //valorizacion.fechaModificacion = cstTime;
-                    //db.Valorizacion.Add(valorizacion);
+                   
                 }
-                db.Contrato.Add(contrato);
                 
                 db.SaveChanges();
                 return RedirectToAction("Index");

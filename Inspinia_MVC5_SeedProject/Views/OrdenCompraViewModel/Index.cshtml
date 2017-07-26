@@ -75,7 +75,7 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                         <thead>
                             <tr>
                                 <th hidden>Id</th>
-                                <th>Orden Compra</th>
+                                <th>Orden</th>
                                 <th>Obra</th>
                                 <th>Fecha</th>
                                 <th>Prioridad</th>
@@ -85,7 +85,7 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                                 @*<th>Total</th>*@
                                 <th>Estado</th>
                                 <th></th>
-                                <th>Cotizaciones y Contratos</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
    
@@ -98,8 +98,10 @@ else if (Model.TipoCompra.nombre == "SubContratos")
 
                                 <tr class="gradeX">
                                     <td hidden>@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
-                                    <td class="project-actions">
+                                    <td >
                                         <span class="label label-primary">@Html.DisplayFor(modelItem => item.numero)</span>
+                                        
+
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
@@ -134,8 +136,11 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                                     <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>
 
                                     }
-                                    <td class="project-actions">
-                                        <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                    <td >
+                                        <div class="btn-group">
+                                            <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
+                                            <a href="~/OrdenCompra/Tracking/@Html.DisplayFor(modelItem => item.ordenCompraId)" data-toggle="modal" data-target="#myModalTracking" class="btn btn-white btn-sm" id="linkTracking"><i class="fa fa-binoculars"></i>  </a>
+                                        </div>
                                     </td>
                                     <td>
 
@@ -185,7 +190,7 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                                 @*<th>Total</th>*@
                                 <th>Estado</th>
                                 <th></th>
-                                <th>Cotizaciones y Contratos</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
 
@@ -259,6 +264,22 @@ else if (Model.TipoCompra.nombre == "SubContratos")
 
 </div>
 
+<div class="modal inmodal" id="myModalTracking" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+
+            <div class="modal-content">
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar!</button>
+        </div>
+
+    </div>
+</div> 
+
 @section Styles {
 
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
@@ -328,6 +349,18 @@ else if (Model.TipoCompra.nombre == "SubContratos")
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
             }
+
+            //Tracking Modal
+
+            $("a[data-target=#myModalTracking]").click(function (ev) {
+                ev.preventDefault();
+                var target = $(this).attr("href");
+
+                // load the url and show modal on success
+                $("#myModalTracking .modal-body").load(target, function () {
+                    $("#myModalTracking").modal("show");
+                });
+            });
 
 
         });

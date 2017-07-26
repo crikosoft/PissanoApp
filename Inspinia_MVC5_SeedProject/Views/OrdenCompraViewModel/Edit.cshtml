@@ -26,26 +26,21 @@
 
 
 <div class="form-horizontal">
-    <h4>Crear Orden de Compra</h4>
-    <hr />
+    @*<h4>Crear Orden de Compra</h4>
+    <hr />*@
     @Html.ValidationSummary(true)
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            @*<input type="submit" value="Create" class="btn btn-default" id="BtnGuardar" />*@
-
-        </div>
-    </div>
-
+    @Html.HiddenFor(model => model.Requerimiento.requerimientoId, new { id = "requerimientoId" })
 
     <div class="row">
         <div class="col-xs-12">
-            <input value="Guardar!" class="btn btn-primary" id="BtnGuardar" />
+            @*<input value="Guardar!" class="btn btn-primary" id="BtnGuardar" />*@
+            <button class="ladda-button ladda-button-demo btn btn-primary btn-lg" id="BtnGuardar"><i class="fa fa-save"></i> Guardar!</button>
         </div>
     </div>
 
 
-    <input type="text" class="form-control" tabindex="3" id="requerimientoId" value="@Html.DisplayFor(model => model.Requerimiento.requerimientoId)">
+    @*<input type="text" class="form-control" tabindex="3" id="requerimientoId" value="@Html.DisplayFor(model => model.Requerimiento.requerimientoId)">*@
 
 
 
@@ -408,6 +403,7 @@
     @Styles.Render("~/plugins/select2Styles")
     @Styles.Render("~/plugins/touchSpinStyles")
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+@Styles.Render("~/plugins/laddaStyles")
 }
 
 @section Scripts {
@@ -427,6 +423,7 @@
     @Scripts.Render("~/plugins/touchSpin")
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/plugins/jeditable")
+@Scripts.Render("~/plugins/ladda")
 
     <script type="text/javascript">
     $(document).ready(function () {
@@ -567,7 +564,7 @@
                     window.location = '@Url.Action("Index/" + @Html.DisplayFor(model => model.TipoCompra.tipoCompraId))';
                 },
                 error: function (result) {
-
+                    l.ladda('stop');
                     alert('No se pudo insertar. Revise que toda la información esté seleccionada');
 
                 }
@@ -618,6 +615,19 @@
             $("#lblIgv").text(igv.toFixed(2));
             $("#lblTotal").text(total.toFixed(2));
 
+        });
+
+
+        //Procesar botón hasta que termine el proceso
+        var l = $('.ladda-button-demo').ladda();
+        l.click(function () {
+            // Start loading
+            l.ladda('start');
+            // Do something in backend and then stop ladda
+            // setTimeout() is only for demo purpose
+
+            context: $(this)
+            //l.ladda('stop');
         });
 
 

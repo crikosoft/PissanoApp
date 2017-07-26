@@ -36,8 +36,11 @@ namespace PissanoApp.Models
 
         public DateTime? fechaModificacion { get; set; }
 
-        public List<ValorizacionDetalle> ValorizacionDetalles { get; set; }
+        public virtual List<ValorizacionDetalle> ValorizacionDetalles { get; set; }
 
+        public virtual List<Descuento> Descuentos { get; set; }
+
+        public virtual List<FondoGarantia> FondosGarantia { get; set; }
 
     }
 }

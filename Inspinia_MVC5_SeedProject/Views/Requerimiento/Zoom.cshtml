@@ -1,0 +1,114 @@
+﻿@model PissanoApp.Models.Requerimiento
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Zoom</title>
+</head>
+<body>
+    <div> 
+
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                @* Copiar desde aqui para print*@
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="ibox-content p-xl">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                @*<h5>From:</h5>*@
+                                <address>
+
+                                    <strong>@Html.DisplayFor(model => model.Obra.nombre)</strong><br>
+                                    Tipo de Compra: @Html.DisplayFor(model => model.TipoCompra.nombre)<br>
+                                    Prioridad: @Html.DisplayFor(model => model.Prioridad.nombre)<br>
+                                    Plazo de Atención (días): @Html.DisplayFor(model => model.Prioridad.plazoDias)<br>
+
+                                </address>
+                                <span><strong>Fecha Emisión:</strong> @Html.DisplayFor(model => model.fechaCreacion)</span><br />
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <h4>No. de Requerimiento</h4>
+                                <h4 class="text-navy">@Html.DisplayFor(model => model.requerimientoId)</h4>
+
+                            </div>
+
+                        </div>
+                        @* Se borró bloque de código con respecto a Documento OC *@
+
+                        <div class="table-responsive m-t">
+                            <table class="table invoice-table">
+                                <thead>
+                                    <tr>
+                                        <th>Lista de Items</th>
+                                        <th>Cantidad</th>
+                                        <th>UND.</th>
+                                        <th>Estado Req.</th>
+                                        <th>OC</th>
+                                        <th>Estado OC</th>
+                                        <th>Partida</th>
+                                        <th>SubPresupuesto</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    @*<tr>
+                                        <td>
+                                            <div><strong>Admin Theme with psd project layouts</strong></div>
+                                            <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+                                        </td>
+                                        <td>1</td>
+                                        <td>$26.00</td>
+                                        <td>$5.98</td>
+                                        <td>$31,98</td>
+                                    </tr>*@
+
+
+                                    @foreach (var item in Model.Detalles)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div><strong>@Html.DisplayFor(modelItem => item.Material.nombre)</strong></div>
+                                                <small>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</small>
+                                            </td>
+                                            <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.EstadoRequerimientoDetalle.nombre)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.OrdenCompra.numero)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Partida.nombre)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Partida.SubPresupuesto.nombre)</td>
+                                        </tr>
+                                    }
+
+
+
+
+                                </tbody>
+                            </table>
+                        </div><!-- /table-responsive -->
+
+
+                        <div class="well m-t">
+                            <strong>Comentario</strong>
+                            @Html.DisplayFor(model => model.comentario)
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>

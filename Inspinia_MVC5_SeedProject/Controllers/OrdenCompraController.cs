@@ -481,9 +481,9 @@ namespace PissanoApp.Controllers
         // GET: /OrdenCompra/IndexWarehouse/
         public ActionResult IndexWarehouse()
         {
-            
-           
-            var estadoListNombre = new string[] { "Aprobación 3", "Ingreso Parcial", "Ingreso Total" };
+
+
+            var estadoListNombre = new string[] { "Aprobación 3", "Ingreso Parcial", "Ingreso Total", "Pago Registrado", "Pago Parcial", "Pago Total" };
             var ordenes = db.Ordenes.Where(o => estadoListNombre.Contains(o.EstadoOrden.nombre)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
 
             ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "nombre", "nombre");
@@ -866,6 +866,22 @@ namespace PissanoApp.Controllers
                 }
             }
             return Json(new { Message = "Archivo(s) guardados" });
+        }
+
+
+        // GET: /Requerimiento/Details/5
+        public ActionResult Tracking(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrdenCompra ordenCompra = db.Ordenes.Find(id);
+            if (ordenCompra == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ordenCompra);
         }
 
         //[HttpPost]

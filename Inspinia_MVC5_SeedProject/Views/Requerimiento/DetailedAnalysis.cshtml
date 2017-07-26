@@ -1,11 +1,11 @@
-﻿@model IEnumerable<PissanoApp.Models.OrdenCompra>
+﻿@model IEnumerable<PissanoApp.Models.Requerimiento>
 
 @{
-    ViewBag.Title = "IndexApprove1";
+    ViewBag.Title = "DetailedAnalysis";
 }
 
 
-<h2>Aprobación 1</h2>
+<h2>Ordenes de Compras y Servicios</h2>
 
 
 
@@ -20,7 +20,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Todas las Ordenes de Compras y Servicios. Use el Filtro de Búsqueda</h5>
+                    <h5>Todas los Requerimientos de Materiales y Subcontratos. Use el Filtro de Búsqueda</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -38,13 +38,13 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="status">Obra</label>
-                                @Html.DropDownList("col3_filter", (IEnumerable<SelectListItem>)ViewBag.obraId, "Todos", new { @class = "form-control column_filter", @data_column = "3" })
+                                @Html.DropDownList("col1_filter", (IEnumerable<SelectListItem>)ViewBag.obraId, "Todos", new { @class = "form-control column_filter", @data_column = "1" })
 
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label class="control-label" for="quantity">Orden</label>
+                                <label class="control-label" for="quantity">Material</label>
                                 <input type="text" id="col2_filter" name="col2_filter" data-column="2" value="" placeholder="Orden" class="form-control column_filter">
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="status">Estado</label>
-                                @Html.DropDownList("col1_filter", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, "Todos", new { @class = "form-control column_filter", @data_column = "1" })
+                                @Html.DropDownList("col8_filter", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, "Todos", new { @class = "form-control column_filter", @data_column = "8" })
                                 @*<select name="estadoOrdenId" id="col1_filter" data-column="1" class="form-control column_filter">
                                         <option value="" selected>Todos</option>
                                         <option value="Aprobación 3">Aprobación 3</option>
@@ -73,21 +73,20 @@
 
                         <thead>
                             <tr>
-
-                                <th data-toggle="true" hidden="hidden">Id</th>
-                                <th>Estado</th>
-                                <th>OC</th>
+                                <th>Requerimiento</th>
                                 <th>Obra</th>
+                                <th>Material</th>
+                                <th>Partida</th>
                                 <th>Fecha</th>
                                 <th>Proveedor</th>
                                 <th>Tipo Compra</th>
+                                <th>OC</th>
+                                <th>Estado</th>
                                 <th>Moneda</th>
-                                <th hidden="hidden">Total</th>
-                                <th>Total OC</th>
-
+                                <th>Precio Unitario</th>
+                                <th>Cantidad</th>
+                                <th>Total Item</th>
                                 <th></th>
-                                <th></th>
-
 
                             </tr>
                         </thead>
@@ -95,57 +94,32 @@
 
                             @foreach (var item in Model)
                             {
+                                foreach (var item2 in item.Detalles)
+                                {
 
+                                    <tr class="gradeX">
+                                        <td>@Html.DisplayFor(modelItem => item.requerimientoId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item2.Material.nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item2.Partida.nombre) - @Html.DisplayFor(modelItem => item2.Partida.SubPresupuesto.nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
+                                        <td>@Html.DisplayFor(modelItem => item2.OrdenCompra.Proveedor.razonSocial)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.TipoCompra.nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item2.OrdenCompra.numero)</td>
+                                        <td class="client-status">
+                                            @Html.DisplayFor(modelItem => item2.OrdenCompra.EstadoOrden.nombre)
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item2.OrdenCompra.Moneda.nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item2.OrdenCompra.OrdenesCompraDetalles.Where(a => a.materialId == item2.materialId).FirstOrDefault().precioUnitario)</td>
+                                        <td>@Html.DisplayFor(modelItem => item2.OrdenCompra.OrdenesCompraDetalles.Where(a => a.materialId == item2.materialId).FirstOrDefault().cantidad)</td>
+                                        <td>@Html.DisplayFor(modelItem => item2.OrdenCompra.OrdenesCompraDetalles.Where(a => a.materialId == item2.materialId).FirstOrDefault().precioTotal)</td>
+                                         
+                                        <td>
+                                            <a href="~/Requerimiento/Document/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                        </td>
+                                    </tr>
 
-                                <tr class="gradeX">
-                                    <td hidden="hidden">@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
-                                    @*<td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>*@
-                                    <td class="client-status">
-                                        @if (item.EstadoOrden.nombre == "Pendiente de Aprobación")
-                                        {
-                                            <button type="button" class="btn btn-danger btn-xs">
-                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                            </button>
-                                        }
-
-                                        else
-                                        {
-                                            <button type="button" class="btn btn-default btn-xs">
-                                                @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
-                                            </button>
-                                        }
-
-                                    </td>
-                                    <td>@Html.DisplayFor(modelItem => item.numero)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Requerimiento.TipoCompra.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Moneda.nombre)</td>
-                                    <td hidden="hidden">@item.total</td>
-                                    <td>@Html.DisplayFor(modelItem => item.total)</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
-                                            <a href="~/OrdenCompra/Tracking/@Html.DisplayFor(modelItem => item.ordenCompraId)" data-toggle="modal" data-target="#myModalTracking" class="btn btn-white btn-sm" id="linkTracking"><i class="fa fa-binoculars"></i>  </a>
-                                        </div>
-                                    </td>
-
-
-                                    <td>
-                                        @if (item.estadoOrdenId == 1)
-                                        {
-                                            <a href="~/OrdenCompra/Approve/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
-                                        }
-
-
-                                    </td>
-
-
-
-                                </tr>
-
-
+                                }
 
                             }
 
@@ -153,19 +127,19 @@
                         </tbody>
                         <tfoot>
                             <tr>
-
-                                <th hidden="hidden" data-toggle="true">Id</th>
-                                <th>Estado</th>
-                                <th>OC</th>
+                                <th>Requerimiento</th>
                                 <th>Obra</th>
+                                <th>Material</th>
+                                <th>Partida</th>
                                 <th>Fecha</th>
                                 <th>Proveedor</th>
                                 <th>Tipo Compra</th>
+                                <th>OC</th>
+                                <th>Estado</th>
                                 <th>Moneda</th>
-                                <th hidden="hidden">Total</th>
-                                <th>Total</th>
-
-                                <th></th>
+                                <th>Precio Unitario</th>
+                                <th>Cantidad</th>
+                                <th>Total Item</th>
                                 <th></th>
                             </tr>
                         </tfoot>
@@ -177,24 +151,6 @@
     </div>
 
 </div>
-
-<div class="modal inmodal" id="myModalTracking" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-body">
-
-            <div class="modal-content">
-
-            </div>
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar!</button>
-        </div>
-
-    </div>
-</div>
-
-
 
 @section Styles {
 
@@ -270,19 +226,6 @@
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
             }
-
-            //Tracking Modal
-
-            $("a[data-target=#myModalTracking]").click(function (ev) {
-                ev.preventDefault();
-                var target = $(this).attr("href");
-
-                // load the url and show modal on success
-                $("#myModalTracking .modal-body").load(target, function () {
-                    $("#myModalTracking").modal("show");
-                });
-            });
-
 
 
         });

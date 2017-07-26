@@ -60,7 +60,8 @@
                         <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
                             <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/1", "RequerimientoViewModel")">Requerimiento  Material<span class="label label-warning pull-right">Act.</span></a></li>
                             <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/2", "RequerimientoViewModel")">Requerimiento SubContrato<span class="label label-warning pull-right">Act.</span></a></li>
-                    
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("DetailedAnalysis", "Requerimiento")">Resumen General<span class="label label-primary pull-right">Nuevo</span></a></li>
+
                         </ul>
                     </li>    
             }
@@ -80,8 +81,8 @@
                         <a href="@Url.Action("Index", "OrdenCompraViewModel/Index/2")">Orden de Servicio<span class="label label-primary pull-right">Nuevo</span></a>
                     </li>*@
 
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/1", "OrdenCompraViewModel")">Orden de Compra<span class="label label-warning pull-right">Upd.</span></a></li>
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/2", "OrdenCompraViewModel")">Orden de Servicio<span class="label label-warning pull-right">Upd.</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/1", "OrdenCompraViewModel")">Orden de Compra<span class="label label-warning pull-right">Act.</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/2", "OrdenCompraViewModel")">Orden de Servicio<span class="label label-warning pull-right">Act.</span></a></li>
                     <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Contrato")">Contratos<span class="label label-primary pull-right">Nuevo</span></a></li>
 
                     
@@ -178,7 +179,7 @@
     
             }
 
-           if (User.IsInRole("Administrador") || User.IsInRole("Analista"))
+           if (User.IsInRole("Administrador") || User.IsInRole("Analista") ||  User.IsInRole("Ingeniero Residente"))
             {
 
             <li class="@Html.IsSelected(controller: "")">

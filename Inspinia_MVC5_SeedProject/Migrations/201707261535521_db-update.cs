@@ -7,12 +7,12 @@ namespace PissanoApp.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.Pagoes", "preguntaPagoTotal", c => c.Boolean(nullable: false));
+            AddColumn("dbo.Contratoes", "detalleAmortizacion", c => c.String());
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Pagoes", "preguntaPagoTotal");
+            DropColumn("dbo.Contratoes", "detalleAmortizacion");
         }
     }
 }

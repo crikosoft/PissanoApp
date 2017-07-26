@@ -158,6 +158,18 @@ namespace PissanoApp.Models
         public DbSet<Movimiento> Movimiento { get; set; }
 
         public DbSet<EstadoPago> EstadosPago { get; set; }
+
+        public DbSet<TipoDescuento> TiposDescuento { get; set; }
+
+        public DbSet<Descuento> Descuento { get; set; }
+
+        public DbSet<Adelanto> Adelanto { get; set; }
+
+        public DbSet<EstadoAdelanto> EstadoAdelanto { get; set; }
+
+        public DbSet<FondoGarantia> FondosGarantia { get; set; }
+
+        public DbSet<EstadoFondoGarantia> EstadosFondoGarantia { get; set; }
     }
 
 

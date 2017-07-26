@@ -97,6 +97,7 @@
                         <thead>
                             <tr>
                                 <th>Lista de Items</th>
+                                <th>Partida</th>
                                 <th>Cantidad</th>
                                 <th>UND.</th>
                                 <th>Precio Unitario</th>
@@ -124,6 +125,9 @@
                                     <td>
                                         <div><strong>@Html.DisplayFor(modelItem => item.Material.nombre)</strong></div>
                                         <small>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</small>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OrdenCompra.Requerimiento.Detalles.Where(a => a.materialId == item.materialId).FirstOrDefault().Partida.nombre) - @Html.DisplayFor(modelItem => item.OrdenCompra.Requerimiento.Detalles.Where(a => a.materialId == item.materialId).FirstOrDefault().Partida.SubPresupuesto.nombre)
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</td>
@@ -168,7 +172,8 @@
                 <div class="text-left">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <input value="Desaprobar!" class="btn btn-danger" id="BtnDesaprobarModal" data-toggle="modal" data-target="#myModalDesaprobar" />
+                            @*<input value="Desaprobar!" class="btn btn-danger" id="BtnDesaprobarModal" data-toggle="modal" data-target="#myModalDesaprobar" />*@
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalDesaprobar"><i class="fa fa-thumbs-down"></i> Desaprobar!</button>
 
                         </div>
                     </div>
@@ -176,7 +181,8 @@
                 <div class="text-right">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <input type="submit" value="Aprobar!" class="btn btn-primary" />
+                            @*<input type="submit" value="Aprobar!" class="btn btn-primary" />*@
+                            <button type="submit" class="btn btn-primary" id="BtnAprobar" ><i class="fa fa-thumbs-up"></i> Aprobar!</button>
 
                         </div>
                     </div>
@@ -207,7 +213,7 @@
                         </p>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-dismiss="modal" id="BtnDesaprobar">Desaprobar!</button>
+                          <button type="button" class="ladda-button ladda-button-demo btn btn btn-danger" data-dismiss="modal" id="BtnDesaprobar">Desaprobar!</button>
                       </div>
                   </div>
               </div>
@@ -219,8 +225,13 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.ordenCompraId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+@section Styles {
+    @Styles.Render("~/plugins/laddaStyles")
+}
 
 @section Scripts {
+
+@Scripts.Render("~/plugins/ladda")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -245,11 +256,23 @@
                         window.location = '@Url.Action("IndexApprove")';
                     },
                     error: function (result) {
-                        alert(result.statusText)
+                        //alert(result.statusText)
+                        l.ladda('stop');
                         alert('No se pudo realizar la acción solicitada');
 
                     }
                 });
+            });
+
+            var l = $('.ladda-button-demo').ladda();
+            l.click(function () {
+                // Start loading
+                l.ladda('start');
+                // Do something in backend and then stop ladda
+                // setTimeout() is only for demo purpose
+
+                context: $(this)
+                //l.ladda('stop');
             });
 
 

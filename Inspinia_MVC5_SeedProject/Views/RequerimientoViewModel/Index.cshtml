@@ -74,6 +74,7 @@
                                 <th>Estado</th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
 
                             </tr>
                         </thead>
@@ -124,8 +125,14 @@
                                             <td class="client-status"><span class="label label-primary">@Html.DisplayFor(modelItem => item.OrdenCompras[0].EstadoOrden.nombre)</span></td>
                                             }*@
                                     }
-                                    <td class="project-actions">
-                                        <a href="~/Requerimiento/Document/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                    <td>
+                                        <a href="~/Requerimiento/Document/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a> 
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="~/Requerimiento/Tracking/@Html.DisplayFor(modelItem => item.requerimientoId)" data-toggle="modal" data-target="#myModalTracking" class="btn btn-white btn-sm" id="linkTracking"><i class="fa fa-binoculars"></i>  </a>
+                                            <a href="~/Requerimiento/Zoom/@Html.DisplayFor(modelItem => item.requerimientoId)" data-toggle="modal" data-target="#myModalZoom" class="btn btn-white btn-sm" id="linkZoom"><i class="fa fa-search-plus"></i>  </a>
+                                        </div>
                                     </td>
 
                                         <td>
@@ -139,7 +146,7 @@
                                                                                                      @*@Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })*@
                                                 }
                                                 
-                                            @if (item.EstadoRequerimiento.nombre == "Pendiente Aprobación")
+                                            @if (item.EstadoRequerimiento.nombre != "Con OC parcial" && item.EstadoRequerimiento.nombre != "Con OC total" && item.EstadoRequerimiento.nombre != "Anulado")
                                             {
                                                 <a href="~/Requerimiento/Cancel/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-danger btn-sm"> Anular </a>
                                                 @*@Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })*@
@@ -166,6 +173,7 @@
                                 <th>Estado</th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
      
 
                             </tr>
@@ -178,6 +186,38 @@
     </div>
 
 </div>
+
+<div class="modal inmodal" id="myModalTracking" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+            <div class="modal-body">
+
+                <div class="modal-content">
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar!</button>
+            </div>
+
+    </div>
+</div> 
+
+<div class="modal inmodal" id="myModalZoom" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-body modal-lg">
+
+            <div class="modal-content">
+
+            </div>
+
+        </div>
+        <div class="modal-footer modal-lg">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar!</button>
+        </div>
+
+    </div>
+</div> 
 
 @section Styles {
   
@@ -243,6 +283,28 @@
         for (var selector in config) {
             $(selector).chosen(config[selector]);
         }
+
+        //Tracking Modal
+
+        $("a[data-target=#myModalTracking]").click(function (ev) {
+            ev.preventDefault();
+            var target = $(this).attr("href");
+
+            // load the url and show modal on success
+            $("#myModalTracking .modal-body").load(target, function () {
+                $("#myModalTracking").modal("show");
+            });
+        });
+
+        $("a[data-target=#myModalZoom]").click(function (ev) {
+            ev.preventDefault();
+            var target = $(this).attr("href");
+
+            // load the url and show modal on success
+            $("#myModalZoom .modal-body").load(target, function () {
+                $("#myModalZoom").modal("show");
+            });
+        });
 
 
     });

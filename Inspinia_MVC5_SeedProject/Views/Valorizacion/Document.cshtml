@@ -1,0 +1,360 @@
+﻿@model PissanoApp.Models.Valorizacion
+
+@{
+    ViewBag.Title = "Document";
+}
+
+
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-8">
+        <h2>Documento de Valorización</h2>
+        <ol class="breadcrumb">
+            @*<li>
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li>
+                    Other Pages
+                </li>
+                <li class="active">
+                    <strong>Invoice</strong>
+                </li>*@
+        </ol>
+    </div>
+    <div class="col-lg-4">
+        <div class="title-action">
+            @*<a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Editar </a>
+                <a href="#" class="btn btn-white"><i class="fa fa-check "></i> Guardar </a>*@
+            @*<a href="~/Requerimiento/DocumentPrint/@Html.DisplayFor(model => model.requerimientoId)" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir </a>*@
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+        @* Copiar desde aqui para print*@
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox-content p-xl">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @*<h5>From:</h5>*@
+                        <address>
+
+                            <strong>@Html.DisplayFor(model => model.concepto)</strong><br>
+                            SubContratista: @Html.DisplayFor(model => model.Contrato.OrdenCompra.Proveedor.razonSocial)<br>
+                            RUC: @Html.DisplayFor(model => model.Contrato.OrdenCompra.Proveedor.ruc) <br>
+                            Fecha Valorización: @Html.DisplayFor(model => model.fechaCreacion) <br>
+                            Lugar: @Html.DisplayFor(model => model.Contrato.OrdenCompra.Obra.direccion) <br>
+                            
+                        </address>
+                        <span><strong>Fecha Cierre:</strong> @Html.DisplayFor(model => model.fechacierre) <br></span><br />
+                    </div>
+                    @*<div class="col-sm-6 text-right">
+                        <h4>No. de Requerimiento</h4>
+                        <h4 class="text-navy">@Html.DisplayFor(model => model.requerimientoId)</h4>
+
+                    </div>*@
+
+                </div>
+                @* Se borró bloque de código con respecto a Documento OC *@
+
+                <div class="table-responsive m-t">
+                    <table class="table invoice-table">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>UND.</th>
+                                <th>Metrado</th>
+                                <th>P.U.</th>
+                                <th>Parcial</th>
+
+                                <th>Avance Anterior</th>
+                                <th>Total Anterior</th>
+
+                                <th>Avance Actual</th>
+                                <th>Total Actual</th>
+
+                                <th>Avance Acum</th>
+                                <th>Total Acum</th>
+                                <th>% Avance</th>
+                                <th>Saldo</th>
+                                <th>% Pendiente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{var moneda = Model.Contrato.OrdenCompra.Moneda.simbolo;}
+
+                            @foreach (var item in Model.ValorizacionDetalles)
+                            {
+                                <tr>
+                                    <td>
+                                        <div><strong>@Html.DisplayFor(modelItem => item.OrdenCompraDetalle.Material.nombre)</strong></div>
+                                        <small>@Html.DisplayFor(modelItem => item.OrdenCompraDetalle.Material.UnidadMedida.nombre)</small>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompraDetalle.Material.UnidadMedida.nombre)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompraDetalle.cantidad)</td>
+                                    <td>@moneda @Html.DisplayFor(modelItem => item.OrdenCompraDetalle.precioUnitario)</td>
+                                    <td>@moneda @Html.DisplayFor(modelItem => item.OrdenCompraDetalle.precioTotal)</td>
+
+                                    
+                                    @{var avanceAnteriorMetrado = 0.0;
+                                      var avanceAnteriorMonto = 0.0;
+                                      var avanceTotalMetrado = 0.0;
+                                      var avanceTotalMonto = 0.0;
+
+                                        }
+                                    
+                                    @foreach (var item2 in item.Valorizacion.Contrato.Valorizaciones.Where(a => a.valorizacionId < item.valorizacionId))
+                                    {
+                                        foreach (var item3 in item2.ValorizacionDetalles)
+                                        {
+                                            if (item3.ordenCompradetalleId == item.ordenCompradetalleId)
+                                            { 
+                                            avanceAnteriorMetrado = avanceAnteriorMetrado + item3.avanceMetrado;
+                                            avanceAnteriorMonto = avanceAnteriorMonto + item3.avanceMonto;
+                                            }
+                                            }
+                                    }
+
+                                    <td> @string.Format("{0:0,0.00}", avanceAnteriorMetrado)</td>
+                                    <td> @moneda @string.Format("{0:0,0.00}", avanceAnteriorMonto)</td>
+
+                                   
+                                    <td>@Html.DisplayFor(modelItem => item.avanceMetrado)</td>
+                                    <td>@moneda @Html.DisplayFor(modelItem => item.avanceMonto)</td>
+                                                 
+                                    @*acumulado*@              
+                                    
+                                    @foreach (var item2 in item.Valorizacion.Contrato.Valorizaciones.Where(a => a.valorizacionId <= item.valorizacionId))
+                                    {
+                                        foreach (var item3 in item2.ValorizacionDetalles)
+                                        {
+                                            if (item3.ordenCompradetalleId == item.ordenCompradetalleId)
+                                            {
+                                                avanceTotalMetrado = avanceTotalMetrado + item3.avanceMetrado;
+                                                avanceTotalMonto = avanceTotalMonto + item3.avanceMonto;
+                                            }
+                                        }
+                                    }
+
+
+                                    <td> @string.Format("{0:0,0.00}", avanceTotalMetrado)</td>
+                                    <td> @moneda @string.Format("{0:0,0.00}", avanceTotalMonto)</td>
+
+                                    @*@avancePorc = avanceTotalMonto/ @item.OrdenCompraDetalle.precioTotal * 100;*@
+                                    @*@avancePorc = avancePorc + 100.00;*@
+
+
+                                    <td> @string.Format("{0:0,0.00}",  @avanceTotalMonto/ @item.OrdenCompraDetalle.precioTotal * 100) %</td>
+                                    <td>@moneda @string.Format("{0:0,0.00}", @item.OrdenCompraDetalle.precioTotal - @avanceTotalMonto) </td>
+                                    <td> @string.Format("{0:0,0.00}", (@item.OrdenCompraDetalle.precioTotal - @avanceTotalMonto)/@item.OrdenCompraDetalle.precioTotal *100) %</td>
+
+
+                                </tr>
+                            }
+
+                            <tr>
+                                <td>SUB TOTAL</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>@moneda @Html.DisplayFor(model => model.Contrato.OrdenCompra.subTotal)</td>
+
+                                <td></td>
+
+                                @{var montoTotalAvance = 0.0;
+                                foreach (var item in Model.Contrato.Valorizaciones.Where(a => a.valorizacionId < Model.valorizacionId))
+                                {
+                                    foreach (var item2 in item.ValorizacionDetalles)
+                                    {
+                                        montoTotalAvance = montoTotalAvance + item2.avanceMonto;
+                                    }
+                                }
+
+                                }
+                                <td>@moneda @string.Format("{0:0,0.00}", montoTotalAvance)</td>
+
+
+                                <td></td>
+                                @{var montoTotal = 0.0;
+                                  foreach (var item in Model.Contrato.Valorizaciones.Where(a => a.valorizacionId == Model.valorizacionId))
+                                        {
+                                            foreach (var item2 in item.ValorizacionDetalles)
+                                            {
+                                                montoTotal = montoTotal + item2.avanceMonto;
+                                            } 
+                                        }
+                                      
+                                      } 
+                                <td>@moneda @string.Format("{0:0,0.00}", montoTotal)</td>
+                                
+                                <td></td>
+                                @{var montoTotalAcumulado = 0.0;
+                                foreach (var item in Model.Contrato.Valorizaciones.Where(a => a.valorizacionId <= Model.valorizacionId))
+                                {
+                                    foreach (var item2 in item.ValorizacionDetalles)
+                                    {
+                                        montoTotalAcumulado = montoTotalAcumulado + item2.avanceMonto;
+                                    }
+                                }
+
+                                }
+                                <td>@moneda @string.Format("{0:0,0.00}", montoTotalAcumulado)</td>
+                                
+                                <td></td>
+                                <td>@moneda @string.Format("{0:0,0.00}", Model.Contrato.OrdenCompra.subTotal - montoTotalAcumulado)</td>
+                            </tr>
+
+                            <tr>
+                                <td>IGV</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>@moneda @Html.DisplayFor(model => model.Contrato.OrdenCompra.igv)</td>
+
+                                <td></td>
+                                <td>@moneda @string.Format("{0:0,0.00}", montoTotalAvance * 0.18)</td>
+
+                                <td></td>
+
+                                <td>@moneda @string.Format("{0:0,0.00}", montoTotal * 0.18)</td>
+
+                                <td></td>
+                                <td>@moneda @string.Format("{0:0,0.00}", montoTotalAcumulado * 0.18)</td>
+
+                                <td></td>
+                                <td>@moneda @string.Format("{0:0,0.00}", (Model.Contrato.OrdenCompra.subTotal - montoTotalAcumulado) * 0.18)</td>
+                            </tr>
+
+                            <tr>
+                                <td>TOTAL</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>@moneda @Html.DisplayFor(model => model.Contrato.OrdenCompra.total)</td>
+
+                                <td></td>
+                                <td>@moneda @string.Format("{0:0,0.00}", montoTotalAvance * 1.18)</td>
+
+                                <td></td>
+
+                                <td>@moneda @string.Format("{0:0,0.00}", montoTotal * 1.18)</td>
+
+                                <td></td>
+                                <td>@moneda @string.Format("{0:0,0.00}", montoTotalAcumulado * 1.18)</td>
+
+                                <td></td>
+                                <td>@moneda @string.Format("{0:0,0.00}", (Model.Contrato.OrdenCompra.subTotal - montoTotalAcumulado) * 1.18)</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div><!-- /table-responsive -->
+
+                <br />
+                
+                @*Tabla Adelantos*@
+                <div class="table-responsive m-t">
+                    @foreach (var item in Model.Contrato.Adelantos)
+                    {
+                        <table class="table invoice-table">
+                            <thead>
+                                <tr>
+                                    <th>Adelanto</th>
+                                    <th>MONTO.</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.descripcion)</td>
+                                    <td>@moneda @Html.DisplayFor(modelItem => item.adelantoMonto)</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                    }
+            </div><!-- /table-responsive -->
+
+                @*Tabla Descuentos*@
+                <div class="table-responsive m-t">
+                    @foreach (var item in Model.Descuentos)
+                    {
+                        <table class="table invoice-table">
+                            <thead>
+                                <tr>
+                                    <th>Descuento</th>
+                                    <th>MONTO.</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.TipoDescuento.nombre)</td>
+                                    <td>@moneda @Html.DisplayFor(modelItem => item.descuentoMonto)</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    }
+
+                </div><!-- /table-responsive -->
+
+                @*Tabla FondoGarantia*@
+                <div class="table-responsive m-t">
+                    @foreach (var item in Model.Contrato.Valorizaciones)
+                    {
+                        foreach(var item2 in item.FondosGarantia)
+                        {
+                            if (item2.valorizacionId <= Model.valorizacionId)
+                            {                         
+                                <table class="table invoice-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fondo Garantía</th>
+                                        <th>MONTO.</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item2.descripcion)</td>
+                                        <td>@moneda @Html.DisplayFor(modelItem => item2.fondoMonto)</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            }
+                        }
+
+                    }
+
+                </div><!-- /table-responsive -->
+
+
+                @*<div class="well m-t">
+                   
+                </div>*@
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@* Copiar hasta aqui para print*@
+
+
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.requerimientoId }) |*@
+    @*@Html.ActionLink("Back to List", "Index")*@
+    @*<a href="~/RequerimientoViewModel/Index/1"> Volver atrás </a>*@
+</p>

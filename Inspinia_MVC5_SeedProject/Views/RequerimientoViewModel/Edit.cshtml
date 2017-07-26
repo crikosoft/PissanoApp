@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Modificar Requerimiento</h2>
 
 @using (Html.BeginForm())
 {
@@ -18,13 +18,13 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Requerimiento de Compra</h2>
+            @*<h2>Requerimiento de Compra</h2>*@
             <ol class="breadcrumb">
                 <li>
                     @Html.ActionLink("Lista", "Index")
                 </li>
                 <li class="active">
-                    <strong>Creación de Requerimiento</strong>
+                    <strong>Edición de Requerimiento</strong>
                 </li>
             </ol>
         </div>
@@ -36,8 +36,8 @@
 
 
     <div class="form-horizontal">
-        <h4>Crear Requerimiento de Compra</h4>
-        <hr />
+        @*<h4>Crear Requerimiento de Compra</h4>
+        <hr />*@
         @Html.ValidationSummary(true)
 
         @*<div class="form-group">
@@ -50,7 +50,9 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <input value="Guardar!" class="btn btn-primary" id="BtnGuardar" />
+                @*<input value="Guardar!" class="btn btn-primary" id="BtnGuardar" />*@
+                <button class="ladda-button ladda-button-demo btn btn-primary btn-lg" id="BtnGuardar"><i class="fa fa-save"></i> Guardar!</button>
+
             </div>
         </div>
 
@@ -439,6 +441,7 @@
     @Styles.Render("~/plugins/select2Styles")
     @Styles.Render("~/plugins/touchSpinStyles")
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+@Styles.Render("~/plugins/laddaStyles")
 }
 
 @section Scripts {
@@ -458,6 +461,7 @@
     @Scripts.Render("~/plugins/touchSpin")
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/plugins/jeditable")
+@Scripts.Render("~/plugins/ladda")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -802,6 +806,7 @@
                     error: function (result) {
                         //window.location = Url.Action("Index/" + Html.DisplayFor(model => model.TipoCompra.tipoCompraId))';
                         alert('No se pudo insertar. Revise que toda la información esté seleccionada');
+                        $('.ladda-button-demo').ladda().ladda('stop');
                         //alert(result.statusText);
                         //alert("hola");
                     }
@@ -812,6 +817,18 @@
             });
 
 
+
+            //Procesar botón hasta que termine el proceso
+            var l = $('.ladda-button-demo').ladda();
+            l.click(function () {
+                // Start loading
+                l.ladda('start');
+                // Do something in backend and then stop ladda
+                // setTimeout() is only for demo purpose
+
+                context: $(this)
+                //l.ladda('stop');
+            });
 
 
         });

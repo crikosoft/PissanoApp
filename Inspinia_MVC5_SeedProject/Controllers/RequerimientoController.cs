@@ -38,7 +38,12 @@ namespace PissanoApp.Controllers
                 obrasList = new string[] { "San Borja Norte" };
             }
 
-            var requerimientos = db.Requerimientos.Where(p => obrasList.Contains(p.Obra.nombre)).Include(r => r.Obra).Include(r => r.Prioridad);
+
+            var estadoList = new string[] { "Pendiente Aprobación", "Con OC parcial", "Con OC total", "Aprobado Total", "Con OC parcial", "Aprobado Parcial", "Rechazado Parcial" };
+
+
+
+            var requerimientos = db.Requerimientos.Where(p => estadoList.Contains(p.EstadoRequerimiento.nombre)).Where(p => obrasList.Contains(p.Obra.nombre)).Include(r => r.Obra).Include(r => r.Prioridad);
             return View(requerimientos.ToList());
         }
 
@@ -510,6 +515,50 @@ namespace PissanoApp.Controllers
                 );
             }
             return RedirectToAction("Index");
+        }
+
+
+        // GET: /Requerimiento/Details/5
+        public ActionResult Tracking(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Requerimiento requerimiento = db.Requerimientos.Find(id);
+            if (requerimiento == null)
+            {
+                return HttpNotFound();
+            }
+            return View(requerimiento);
+        }
+
+        // GET: /Requerimiento/Details/5
+        public ActionResult Zoom(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Requerimiento requerimiento = db.Requerimientos.Find(id);
+            if (requerimiento == null)
+            {
+                return HttpNotFound();
+            }
+            return View(requerimiento);
+        }
+
+        // GET: /OrdenCompra/Approve/5
+        public ActionResult DetailedAnalysis()
+        {
+            // var estadoList = new string[] { "Aprobación 3", "Ingreso Total", "Ingreso Parcial" };
+            //var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoOrdenes, "nombre", "nombre");
+            ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
+
+            var requerimientos = db.Requerimientos;
+            return View(requerimientos.ToList());
         }
     }
 }

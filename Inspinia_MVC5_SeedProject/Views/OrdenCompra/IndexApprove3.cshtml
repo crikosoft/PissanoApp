@@ -125,7 +125,10 @@
                                     <td hidden="hidden">@item.total</td>
                                     <td>@Html.DisplayFor(modelItem => item.total)</td>
                                     <td>
-                                        <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                        <div class="btn-group">
+                                            <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
+                                            <a href="~/OrdenCompra/Tracking/@Html.DisplayFor(modelItem => item.ordenCompraId)" data-toggle="modal" data-target="#myModalTracking" class="btn btn-white btn-sm" id="linkTracking"><i class="fa fa-binoculars"></i>  </a>
+                                        </div>
                                     </td>
                                     <td>
                                         @if (item.estadoOrdenId == 3)
@@ -171,6 +174,22 @@
         </div>
     </div>
 
+</div>
+
+<div class="modal inmodal" id="myModalTracking" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+
+            <div class="modal-content">
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar!</button>
+        </div>
+
+    </div>
 </div>
 
 @section Styles {
@@ -247,6 +266,18 @@
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
             }
+
+            //Tracking Modal
+
+            $("a[data-target=#myModalTracking]").click(function (ev) {
+                ev.preventDefault();
+                var target = $(this).attr("href");
+
+                // load the url and show modal on success
+                $("#myModalTracking .modal-body").load(target, function () {
+                    $("#myModalTracking").modal("show");
+                });
+            });
 
 
         });

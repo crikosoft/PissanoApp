@@ -1,0 +1,62 @@
+﻿@model PissanoApp.Models.OrdenCompra
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Tracking</title>
+</head>
+<body>
+    <div>
+        <div class="row">
+            <div class="col-lg-6">
+                @*<div class="ibox float-e-margins">
+                    <div class="ibox-title">*@
+                <h5>Tracking de Ordenes</h5>
+
+            </div>
+            <div class="ibox-content">
+                <table class="table table-hover no-margins">
+                    <thead>
+                        <tr>
+                            <th>Documento</th>
+                            <th>Estado</th>
+                            <th>Comentario</th>
+                            <th>Fecha</th>
+                            <th>Usuario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+ 
+                        @foreach (var item in Model.OrdenCompraEstados)
+                        {
+                            <tr>
+                                <td><small>Orden:  @Html.DisplayFor(modelItem => item.OrdenCompra.numero)</small></td>
+                                <td class="text-navy"><small>@Html.DisplayFor(modelItem => item.EstadoOrden.nombre)</small></td>
+                                <td><small>@Html.DisplayFor(modelItem => item.comentario)</small></td>
+                                <td><i class="fa fa-clock-o"></i> @Html.DisplayFor(modelItem => item.fechaCreacion)</td>
+                                <td> <i class="fa fa-user"></i> @Html.DisplayFor(modelItem => item.usuarioCreacion)</td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+            @*</div>
+                </div>*@
+        </div>
+
+
+    </div>
+</body>
+</html>
+
+

@@ -22,15 +22,14 @@ namespace PissanoApp.Controllers
         public ActionResult Index(int? id)
         {
             var obras = db.Obras;
-
-           
-
             var materiales = db.Materiales;
-
             var prioridades = db.Prioridad;
 
+            var estadoList = new string[] { "Pendiente Aprobación", "Con OC parcial", "Con OC total", "Aprobado Total", "Aprobación Rechazada", "Aprobado Parcial", "Rechazado Parcial" };
+
+
             //var requerimientos = db.Requerimientos.OrderByDescending(p => p.requerimientoId);
-            var requerimientos = db.Requerimientos.Where(p => p.tipoCompraId == id).OrderByDescending(p => p.requerimientoId);
+            var requerimientos = db.Requerimientos.Where(p => estadoList.Contains(p.EstadoRequerimiento.nombre)).Where(p => p.tipoCompraId == id).OrderByDescending(p => p.requerimientoId);
 
             var tipoCompra = db.TipoCompra.Find(id);
 
@@ -41,7 +40,7 @@ namespace PissanoApp.Controllers
             var RequerimientoViewModels = new RequerimientoViewModel(obras.ToList(), materiales.ToList(), prioridades.ToList(), requerimientos.ToList(), tipoCompra, partidas.ToList(), subPresupuestos.ToList());
 
 
-            ViewBag.estadoOrdenId = new SelectList(db.EstadoRequerimiento, "nombre", "nombre");
+            ViewBag.estadoOrdenId = new SelectList(db.EstadoRequerimiento.Where(p=> estadoList.Contains(p.nombre)), "nombre", "nombre");
             ViewBag.obraId = new SelectList(db.Obras, "nombre", "nombre");
 
             return View(RequerimientoViewModels);

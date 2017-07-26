@@ -288,7 +288,9 @@
                 new EstadoValorizacion { nombre= "Aprobación 2", descripcion="Aprobación 2" },
                 new EstadoValorizacion { nombre= "Aprobación 3", descripcion="Aprobación 3" },
                 new EstadoValorizacion { nombre= "Rechazado", descripcion="Rechazado" },
-                new EstadoValorizacion { nombre= "Pagado", descripcion="Pagado" }
+                new EstadoValorizacion { nombre= "Pagado", descripcion="Pagado" },
+                new EstadoValorizacion { nombre= "Anulado", descripcion="Anulado" }
+
 
             };
 
@@ -332,6 +334,40 @@
             tipoMovimiento.ForEach(s => context.TipoMovimientos.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
 
+            var tipoDescuento = new List<TipoDescuento>
+            {
+                new TipoDescuento { nombre= "Adelanto", descripcion ="Adelanto"},
+                new TipoDescuento { nombre= "Fondo de Garantia", descripcion="Fondo de Garantia"}
+
+            };
+
+            tipoDescuento.ForEach(s => context.TiposDescuento.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
+
+            var estadoAdelanto = new List<EstadoAdelanto>
+            {
+                new EstadoAdelanto { nombre= "Pendiente de Aprobación", descripcion="Pendiente de Aprobación" },
+                new EstadoAdelanto { nombre= "Aprobación 1", descripcion="Aprobación 1" },
+                new EstadoAdelanto { nombre= "Aprobación 2", descripcion="Aprobación 2" },
+                new EstadoAdelanto { nombre= "Aprobación 3", descripcion="Aprobación 3" },
+                new EstadoAdelanto { nombre= "Pagado", descripcion="Pagado" },
+                new EstadoAdelanto { nombre= "Rechazado", descripcion="Rechazado" },
+                new EstadoAdelanto { nombre= "Anulado", descripcion="Anulado" }
+            };
+
+            estadoAdelanto.ForEach(s => context.EstadoAdelanto.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
+
+            var estadoFondoGarantia = new List<EstadoFondoGarantia>
+            {
+                new EstadoFondoGarantia { nombre= "Registrado" },
+                new EstadoFondoGarantia { nombre= "Pagado" },
+
+            };
+
+            estadoFondoGarantia.ForEach(s => context.EstadosFondoGarantia.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
 
             //var materialpadres = new List<Material>
             //{

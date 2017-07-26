@@ -116,11 +116,23 @@
 
 
                     @* botones de Aprobación *@
+
+                    <div class="text-left">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                
+                                @*<input value="Desaprobar!" class="btn btn-danger" id="BtnDesaprobar" />*@
+                                <button class="ladda-button ladda-button-demo btn btn btn-danger" id="BtnDesaprobar"><i class="fa fa-thumbs-down"></i> Desaprobar!</button>
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="text-right">
-                        <div class="form-group">
-                            @*<input type="submit" value="Aprobar!" class="btn btn-primary" />*@
-                            <input value="Aprobar!" class="btn btn-primary" id="BtnAprobar" />
-                            <input value="Desaprobar!" class="btn btn-danger" id="BtnDesaprobar" />
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @*<input value="Aprobar!" class="ladda-button ladda-button-demo btn btn-primary" id="BtnAprobar" />*@
+                                <button class="ladda-button ladda-button-demo btn btn-primary" id="BtnAprobar"><i class="fa fa-thumbs-up"></i> Aprobar!</button>
+                            </div>
                         </div>
                     </div>
 
@@ -150,10 +162,12 @@
 
 @section Styles {
     @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+@Styles.Render("~/plugins/laddaStyles")
 }
 
 @section Scripts {
     @Scripts.Render("~/plugins/iCheck")
+@Scripts.Render("~/plugins/ladda")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -181,6 +195,10 @@
                 });
 
 
+                if (cells.length == 0) {
+                    alert("Seleccione al menos un Item");
+                    return;
+                }
 
                     var Detalles = [];
 
@@ -238,7 +256,11 @@
 
                 });
 
-
+                if (cells.length == 0)
+                {
+                    alert("Seleccione al menos un Item");
+                    return;
+                }
 
                 var Detalles = [];
 
@@ -276,7 +298,25 @@
                     }
                 });
             });
+
+            var l = $( '.ladda-button-demo' ).ladda();
+            l.click(function() {
+                // Start loading
+                l.ladda( 'start' );
+                // Do something in backend and then stop ladda
+                // setTimeout() is only for demo purpose
+
+                context: $(this)
+                //l.ladda('stop');
+                //setTimeout(function(){
+                //    l.ladda('stop');
+                //},4000)
+            });
+
         });
+
+
+
 
     </script>
 }

@@ -43,6 +43,7 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,6 +70,9 @@
                                         <a href="~/Valorizacion/Index/@Html.DisplayFor(modelItem => item.contratoId)" class="btn btn-white btn-sm"><i class="fa fa-money"></i> Valorizaciones </a>
                                     </td>
                                     <td>
+                                        <a href="~/Adelanto/IndexContrato/@Html.DisplayFor(modelItem => item.contratoId)" class="btn btn-white btn-sm"><i class="fa fa-money"></i> Adelantos </a>
+                                    </td>
+                                    <td>
                                         @Html.ActionLink("Edit", "Edit", new { id = item.contratoId }) |
                                         @Html.ActionLink("Details", "Details", new { id = item.contratoId }) |
                                         @Html.ActionLink("Delete", "Delete", new { id = item.contratoId })
@@ -88,6 +92,7 @@
                                 <th>Proveedor</th>
                                 <th>Avance</th>
                                 <th>Total</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>

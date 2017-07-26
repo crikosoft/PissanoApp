@@ -293,6 +293,8 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
                                                         <button class="btn btn-primary" type="submit">Guardar Pago!</button>
+                                                        @*<button class="ladda-button ladda-button-demo btn btn-primary btn-lg" id="BtnGuardar"><i class="fa fa-save"></i> Guardar!</button>*@
+
                                                     </div>
                                                 </div>
                                             </form>
@@ -330,7 +332,7 @@
 @section Styles {
 
     @Styles.Render("~/plugins/switcheryStyles")
-
+@Styles.Render("~/plugins/laddaStyles")
 }
 
 
@@ -338,6 +340,7 @@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/plugins/validate")
 @Scripts.Render("~/plugins/switchery")
+@Scripts.Render("~/plugins/ladda")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -369,6 +372,25 @@
 
             var elem = document.querySelector('.js-switch');
             var switchery = new Switchery(elem, { color: '#1AB394' });
+
+
+            //Procesar botón hasta que termine el proceso
+            var l = $('.ladda-button-demo').ladda();
+            var form = $('payment-form')[0];
+
+            l.click(function () {
+
+                //if ($("form").validate())
+                //{
+                    // Start loading
+                    l.ladda('start');
+                    // Do something in backend and then stop ladda
+                    // setTimeout() is only for demo purpose
+               
+                    $("form").submit();
+                //}
+                //l.ladda('stop');
+            });
 
         });
     </script>

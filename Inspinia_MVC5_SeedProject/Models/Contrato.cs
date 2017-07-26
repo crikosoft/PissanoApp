@@ -60,6 +60,7 @@ namespace PissanoApp.Models
 
         public virtual TipoValorizacion TipoValorizacion { get; set; }
         public virtual List<Valorizacion> Valorizaciones { get; set; }
+        public virtual List<Adelanto> Adelantos { get; set; }
 
         public string usuarioCreacion { get; set; }
 
@@ -68,6 +69,8 @@ namespace PissanoApp.Models
         public DateTime? fechaCreacion { get; set; }
 
         public DateTime? fechaModificacion { get; set; }
+
+        public string detalleAmortizacion { get; set; }
 
     }
 }

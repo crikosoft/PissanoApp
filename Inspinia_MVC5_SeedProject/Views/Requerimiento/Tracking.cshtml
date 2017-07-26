@@ -1,0 +1,113 @@
+﻿@model PissanoApp.Models.Requerimiento
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Tracking</title>
+</head>
+<body>
+    <div> 
+        <div class="row">
+            <div class="col-lg-6">
+                @*<div class="ibox float-e-margins">
+                    <div class="ibox-title">*@
+                        <h5>Tracking de Requerimiento</h5>
+
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                                <tr>
+                                    <th>Documento</th>
+                                    <th>Estado</th>
+                                    <th>Comentario</th>
+                                    <th>Fecha</th>
+                                    <th>Usuario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.RequerimientosEstadoRequerimiento)
+                                {
+                                    <tr>
+                                        <td><small>Requerimiento:  @Html.DisplayFor(modelItem => item.requerimientoId)</small></td>
+                                        <td class="text-navy"><small>@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</small></td>
+                                        <td><small> </small></td>
+                                        <td><i class="fa fa-clock-o"></i> @Html.DisplayFor(modelItem => item.fechaCreacion)</td>
+                                        <td><i class="fa fa-user"></i> @Html.DisplayFor(modelItem => item.usuarioCreacion)</td>
+                                    </tr>
+                                }
+
+                                @foreach (var item in Model.OrdenCompras)
+                                {
+                                    foreach (var item2 in item.OrdenCompraEstados)
+                                    {
+                                        <tr>
+                                            <td><small>Orden:  @Html.DisplayFor(modelItem => item2.OrdenCompra.numero)</small></td>
+                                            <td class="text-navy"><small>@Html.DisplayFor(modelItem => item2.EstadoOrden.nombre)</small></td>
+                                            <td><small>@Html.DisplayFor(modelItem => item2.comentario)</small></td>
+                                            <td><i class="fa fa-clock-o"></i> @Html.DisplayFor(modelItem => item2.fechaCreacion)</td>
+                                            <td> <i class="fa fa-user"></i> @Html.DisplayFor(modelItem => item2.usuarioCreacion)</td>
+                                        </tr>
+                                    }
+
+
+                                }
+
+                                @*<tr>
+                                    <td><small>Pending...</small></td>
+                                    <td><i class="fa fa-clock-o"></i> 11:20pm</td>
+                                    <td>Samantha</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="label label-warning">Canceled</span> </td>
+                                    <td><i class="fa fa-clock-o"></i> 10:40am</td>
+                                    <td>Monica</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 66% </td>
+                                </tr>
+                                <tr>
+                                    <td><small>Pending...</small> </td>
+                                    <td><i class="fa fa-clock-o"></i> 01:30pm</td>
+                                    <td>John</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 54% </td>
+                                </tr>
+                                <tr>
+                                    <td><small>Pending...</small> </td>
+                                    <td><i class="fa fa-clock-o"></i> 02:20pm</td>
+                                    <td>Agnes</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 12% </td>
+                                </tr>
+                                <tr>
+                                    <td><small>Pending...</small> </td>
+                                    <td><i class="fa fa-clock-o"></i> 09:40pm</td>
+                                    <td>Janet</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 22% </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="label label-primary">Completed</span> </td>
+                                    <td><i class="fa fa-clock-o"></i> 04:10am</td>
+                                    <td>Amelia</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 66% </td>
+                                </tr>
+                                <tr>
+                                    <td><small>Pending...</small> </td>
+                                    <td><i class="fa fa-clock-o"></i> 12:08am</td>
+                                    <td>Damian</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 23% </td>
+                                </tr>*@
+                            </tbody>
+                        </table>
+                    </div>
+                @*</div>
+            </div>*@
+        </div>
+
+
+    </div>
+</body>
+</html>

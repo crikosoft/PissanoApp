@@ -20,7 +20,7 @@ namespace PissanoApp.Controllers
             ViewBag.contratoId = id;
             var contrato = db.Contrato.Find(id);
             ViewBag.numero = contrato.OrdenCompra.numero;
-            var valorizacion = db.Valorizacion.Where(a => a.contratoId == id).Include(v => v.Contrato).Include(v => v.EstadoValorizacion);
+            var valorizacion = db.Valorizacion.Where(a => a.contratoId == id).Include(v => v.Contrato).Include(v => v.EstadoValorizacion).Include(v => v.ValorizacionDetalles);
             return View(valorizacion.ToList());
         }
 
@@ -83,6 +83,7 @@ namespace PissanoApp.Controllers
                 valorizacion.fechaCreacion = cstTime;
                 valorizacion.usuarioCreacion = User.Identity.Name;
                 valorizacion.fechaModificacion = cstTime;
+
 
 
                 db.Entry(contrato).State = EntityState.Modified;
@@ -203,10 +204,45 @@ namespace PissanoApp.Controllers
                     db.ValorizacionDetalle.Add(item);
 
                 }
+
                 valorizacion.avanceMonto = totalAvanceMonto;
 
+                //Adelanto
+                foreach (var item in valorizacion.Descuentos)
+                {
+                    item.valorizacionId = valorizacion.valorizacionId;
+                    item.usuarioCreacion = User.Identity.Name;
+                    item.usuarioModificacion = User.Identity.Name;
+                    item.fechaCreacion = cstTime;
+                    item.fechaModificacion = cstTime;
+                    db.Descuento.Add(item);
 
-                var contrato = db.Contrato.Where(p => p.contratoId == valorizacion.contratoId).Single();
+                }
+
+                //Fondo de Garantia
+                Contrato contrato = db.Contrato.Find(valorizacion.contratoId);
+                if (contrato.fondoGarantia != 0)
+                {
+                    var estadoFondo = db.EstadosFondoGarantia.Where(p => p.nombre == "Registrado").SingleOrDefault();
+
+                    FondoGarantia fondoGarantia = new FondoGarantia();
+                    fondoGarantia.Valorizacion = valorizacion;
+                    fondoGarantia.descripcion = "Fondo Garantia Valorización";
+                    fondoGarantia.fondoMonto = contrato.fondoGarantiaPorc * valorizacion.avanceMonto / 100;
+
+                    fondoGarantia.fechaCreacion = cstTime;
+                    fondoGarantia.usuarioCreacion = User.Identity.Name;
+                    fondoGarantia.fechaModificacion = cstTime;
+
+                    fondoGarantia.estadoFondoGarantiaId = estadoFondo.estadoFondoGarantiaId;
+                    db.FondosGarantia.Add(fondoGarantia);
+
+                }
+
+
+
+
+                //var contrato = db.Contrato.Where(p => p.contratoId == valorizacion.contratoId).Single();
 
                 contrato.avanceMonto = contrato.avanceMonto + valorizacion.avanceMonto;
                 contrato.saldoMonto = contrato.saldoMonto - valorizacion.avanceMonto;
@@ -219,6 +255,21 @@ namespace PissanoApp.Controllers
             }
 
             return View();
+        }
+
+        // GET: /Valorizacion/Document/5
+        public ActionResult Document(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Valorizacion valorizacion = db.Valorizacion.Find(id);
+            if (valorizacion == null)
+            {
+                return HttpNotFound();
+            }
+            return View(valorizacion);
         }
 
 
