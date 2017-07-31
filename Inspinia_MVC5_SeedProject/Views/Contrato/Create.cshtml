@@ -59,7 +59,16 @@
 
                                 </div>*@
                             <label class="control-label" for="order_id">Servicio</label>
-                            <input type="text" disabled class="form-control" tabindex="3" id="servicio" value="@Html.DisplayFor(model => model.OrdenCompra.OrdenesCompraDetalles[0].Material.nombre)">
+                            @*<input type="text" disabled class="form-control" tabindex="3" id="servicio" value="@Html.DisplayFor(model => model.OrdenCompra.OrdenesCompraDetalles[0].Material.nombre)">*@
+
+                            @{var servicios = "";
+                            foreach (var item in Model.OrdenCompra.OrdenesCompraDetalles)
+                            {
+                                servicios = servicios + " - " + item.Material.nombre;
+                            }
+                            }
+
+                            <input type="text" disabled class="form-control" tabindex="3" id="servicio" value="@servicios">
 
                         </div>
                     </div>

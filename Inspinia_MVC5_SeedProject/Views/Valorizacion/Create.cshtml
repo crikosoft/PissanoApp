@@ -629,7 +629,7 @@
 
                                     $('#lblAvanceMonto').text(total.toFixed(2));
                                     $('#lblAvanceMontoIGV').text((total * 1.18).toFixed(2));
-                                    $('#lblAvancePorc').text(total.toFixed(2) / $("#Contrato_OrdenCompra_subTotal").val() * 100);
+                                    $('#lblAvancePorc').text((total.toFixed(2) / $("#Contrato_OrdenCompra_subTotal").val() * 100).toFixed(2));
 
                                 }
 
@@ -639,7 +639,7 @@
                                     }
                                     $('#lblAvanceMonto').text(total.toFixed(2));
                                     $('#lblAvanceMontoIGV').text((total * 1.18).toFixed(2));
-                                    $('#lblAvancePorc').text(total.toFixed(2) / $("#Contrato_OrdenCompra_subTotal").val() * 100);
+                                    $('#lblAvancePorc').text((total.toFixed(2) / $("#Contrato_OrdenCompra_subTotal").val() * 100).toFixed(2));
                                 }
                                 else if ($('input[type=radio][name=radioInline]:checked').val() == 'valPorc') {
                                     for (var i = 0; i < cells.length; i++) {
@@ -706,6 +706,10 @@
                                     //var fechacierre = new Date(from[2], from[0] - 1, from[1]);
                                     var fechacierre = new Date(from[2], from[1], from[0]);
                                     valorizacion.fechacierre = fechacierre;
+                                }
+                                else {
+                                    alert("Ingrese la fecha de cierre!");
+                                    return;
                                 }
                                 valorizacion.fechacierre = $("#fechacierre").val();
 

@@ -1060,7 +1060,6 @@
     <Content Include="Views\OrdenCompra\Analytics.cshtml" />
     <Content Include="Views\Contrato\Delete.cshtml" />
     <Content Include="Views\Contrato\Details.cshtml" />
-    <Content Include="Views\Contrato\Edit.cshtml" />
     <Content Include="Views\Contrato\Index.cshtml" />
     <Content Include="Views\Contrato\Create.cshtml" />
     <Content Include="Views\Contrato\Valorizar.cshtml" />
@@ -1098,6 +1097,8 @@
     <Content Include="Views\Adelanto\Edit.cshtml" />
     <Content Include="Views\Adelanto\Index.cshtml" />
     <Content Include="Views\Adelanto\IndexContrato.cshtml" />
+    <Content Include="Views\Valorizacion\DocumentPrint.cshtml" />
+    <Content Include="Views\Contrato\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -111,6 +111,7 @@ namespace PissanoApp.Controllers
             }
             ViewBag.contratoId = new SelectList(db.Contrato, "contratoId", "comentario", valorizacion.contratoId);
             ViewBag.estadoValorizacionId = new SelectList(db.EstadosValorizacion, "estadoValorizacionId", "nombre", valorizacion.estadoValorizacionId);
+
             return View(valorizacion);
         }
 
@@ -208,15 +209,18 @@ namespace PissanoApp.Controllers
                 valorizacion.avanceMonto = totalAvanceMonto;
 
                 //Adelanto
-                foreach (var item in valorizacion.Descuentos)
-                {
-                    item.valorizacionId = valorizacion.valorizacionId;
-                    item.usuarioCreacion = User.Identity.Name;
-                    item.usuarioModificacion = User.Identity.Name;
-                    item.fechaCreacion = cstTime;
-                    item.fechaModificacion = cstTime;
-                    db.Descuento.Add(item);
+                if (valorizacion.Descuentos != null)
+                { 
+                    foreach (var item in valorizacion.Descuentos)
+                    {
+                        item.valorizacionId = valorizacion.valorizacionId;
+                        item.usuarioCreacion = User.Identity.Name;
+                        item.usuarioModificacion = User.Identity.Name;
+                        item.fechaCreacion = cstTime;
+                        item.fechaModificacion = cstTime;
+                        db.Descuento.Add(item);
 
+                    }
                 }
 
                 //Fondo de Garantia
@@ -257,6 +261,125 @@ namespace PissanoApp.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        public ActionResult EditValorizacion(Valorizacion valorizacion)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+            if (ModelState.IsValid)
+            {
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                Valorizacion valorizacionOriginal = db.Valorizacion.Find(valorizacion.valorizacionId);
+
+                valorizacionOriginal.usuarioModificacion = User.Identity.Name;
+                valorizacionOriginal.fechaModificacion = cstTime;
+                valorizacionOriginal.concepto = valorizacion.concepto;
+                valorizacionOriginal.fechacierre = valorizacion.fechacierre;
+
+                //Eliminar Valorizacion Detalles en caso tenga alguno
+                foreach (var item in valorizacionOriginal.ValorizacionDetalles.ToList())
+                {
+                    var det = item;
+                    db.ValorizacionDetalle.Remove(det);
+                }
+                db.SaveChanges();
+
+
+                var totalAvanceMonto = 0.0;
+
+                foreach (var item in valorizacion.ValorizacionDetalles)
+                {
+                    item.valorizacionId = valorizacion.valorizacionId;
+                    item.Valorizacion = valorizacionOriginal;
+                    totalAvanceMonto = totalAvanceMonto + item.avanceMonto;
+                    item.usuarioCreacion = User.Identity.Name;
+                    item.usuarioModificacion = User.Identity.Name;
+                    item.fechaCreacion = cstTime;
+                    item.fechaModificacion = cstTime;
+                    db.ValorizacionDetalle.Add(item);
+
+                }
+
+                valorizacion.avanceMonto = totalAvanceMonto;
+
+
+                //Eliminar Descuento por Adelantos en caso tenga alguno
+                foreach (var item in valorizacionOriginal.Descuentos.ToList())
+                {
+                    var desc = item;
+                    db.Descuento.Remove(desc);
+                }
+                db.SaveChanges();
+                //Descuento por Adelanto
+                if (valorizacion.Descuentos != null)
+                {
+                    foreach (var item in valorizacion.Descuentos)
+                    {
+                        item.valorizacionId = valorizacion.valorizacionId;
+                        item.Valorizacion = valorizacionOriginal;
+                        item.usuarioCreacion = User.Identity.Name;
+                        item.usuarioModificacion = User.Identity.Name;
+                        item.fechaCreacion = cstTime;
+                        item.fechaModificacion = cstTime;
+                        db.Descuento.Add(item);
+
+                    }
+                }
+
+                //Eliminar Descuento por Adelantos en caso tenga alguno
+                foreach (var item in valorizacionOriginal.FondosGarantia.ToList())
+                {
+                    //var fond = item;
+                    db.FondosGarantia.Remove(item);
+                }
+                db.SaveChanges();
+
+                //Fondo de Garantia
+                Contrato contrato = db.Contrato.Find(valorizacion.contratoId);
+                if (contrato.fondoGarantia != 0)
+                {
+                    var estadoFondo = db.EstadosFondoGarantia.Where(p => p.nombre == "Registrado").SingleOrDefault();
+
+                    FondoGarantia fondoGarantia = new FondoGarantia();
+                    fondoGarantia.valorizacionId = valorizacionOriginal.valorizacionId;
+                    fondoGarantia.Valorizacion = valorizacionOriginal;
+
+                    fondoGarantia.descripcion = "Fondo Garantia Valorización";
+                    fondoGarantia.fondoMonto = contrato.fondoGarantiaPorc * valorizacion.avanceMonto / 100;
+
+                    fondoGarantia.fechaCreacion = cstTime;
+                    fondoGarantia.usuarioCreacion = User.Identity.Name;
+                    fondoGarantia.fechaModificacion = cstTime;
+
+                    fondoGarantia.estadoFondoGarantiaId = estadoFondo.estadoFondoGarantiaId;
+                    db.FondosGarantia.Add(fondoGarantia);
+
+                }
+
+
+                //db.SaveChanges();
+
+
+                //contrato.avanceMonto = contrato.avanceMonto + valorizacion.avanceMonto;
+                //contrato.saldoMonto = contrato.saldoMonto - valorizacion.avanceMonto;
+                //contrato.usuarioModificacion = User.Identity.Name; ;
+                //contrato.fechaModificacion = cstTime;
+
+
+                db.SaveChanges();
+                return RedirectToAction("Index/" + contrato.contratoId);
+            }
+
+            return View();
+        }
+
+
+
         // GET: /Valorizacion/Document/5
         public ActionResult Document(int? id)
         {
@@ -272,7 +395,20 @@ namespace PissanoApp.Controllers
             return View(valorizacion);
         }
 
-
+        // GET: /Valorizacion/Document/5
+        public ActionResult DocumentPrint(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Valorizacion valorizacion = db.Valorizacion.Find(id);
+            if (valorizacion == null)
+            {
+                return HttpNotFound();
+            }
+            return View(valorizacion);
+        }
         //[HttpPost]
         ////[ValidateAntiForgeryToken]
         //public ActionResult Create2(Valorizacion valorizacion)

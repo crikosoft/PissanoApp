@@ -429,6 +429,10 @@ namespace PissanoApp.Controllers
             ViewBag.obraId = new SelectList(db.Obras.Where(p => obrasList.Contains(p.nombre)), "nombre", "nombre");
 
             var ordenes = db.Ordenes.Where(p => obrasList.Contains(p.Obra.nombre)).Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
+            //var ordenes = db.Ordenes.Where(p =>  p.Contratos[0].Valorizaciones.LastOrDefault().estadoValorizacionId ==2);
+
+//            .Where(p => p.nombre == "Aprobación 2").SingleOrDefault()
+
             return View(ordenes.ToList());
         }
 

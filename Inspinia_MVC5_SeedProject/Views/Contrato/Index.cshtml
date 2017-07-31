@@ -73,9 +73,12 @@
                                         <a href="~/Adelanto/IndexContrato/@Html.DisplayFor(modelItem => item.contratoId)" class="btn btn-white btn-sm"><i class="fa fa-money"></i> Adelantos </a>
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.contratoId }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.contratoId }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.contratoId })
+                                        @if (item.Valorizaciones.Count() == 0)
+                                        { 
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.contratoId }, new { @class = "btn btn-white btn-sm" }) 
+                                            @*@Html.ActionLink("Details", "Details", new { id = item.contratoId }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.contratoId })*@
+                                        }
                                     </td>
                                   
                                 </tr>

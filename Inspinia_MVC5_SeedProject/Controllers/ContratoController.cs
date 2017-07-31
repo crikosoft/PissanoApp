@@ -69,11 +69,16 @@ namespace PissanoApp.Controllers
                 contrato.fechaModificacion = cstTime;
                 OrdenCompra orden = db.Ordenes.Find(contrato.ordenCompraId);
                 contrato.OrdenCompra = orden;
-                contrato.saldoMonto = orden.total;
-                contrato.avanceMonto = 0;
                 contrato.adelanto = (contrato.adelantoPorc * orden.total)/100;
                 contrato.fondoGarantia = (contrato.fondoGarantiaPorc * orden.total)/100;
-                
+                contrato.avanceMonto = 0;
+                contrato.saldoMonto = 0;
+                contrato.avanceMetrado = 0;
+                contrato.saldoMetrado = 0;
+                contrato.avancePorc = 0;
+                contrato.saldoPorc = 0; 
+
+
                 db.Contrato.Add(contrato);
 
                 if (contrato.adelanto != 0)
@@ -127,7 +132,10 @@ namespace PissanoApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ordenCompraId = new SelectList(db.Ordenes, "ordenCompraId", "numero", contrato.ordenCompraId);
+            OrdenCompra orden = db.Ordenes.Find(contrato.ordenCompraId);
+            contrato.ordenCompraId = orden.ordenCompraId;
+            contrato.OrdenCompra = orden;
+            //ViewBag.ordenCompraId = orden.ordenCompraId;
             ViewBag.tipoValorizacionId = new SelectList(db.TipoValorizacion, "tipoValorizacionId", "nombre", contrato.tipoValorizacionId);
             return View(contrato);
         }
@@ -137,11 +145,62 @@ namespace PissanoApp.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="contratoId,ordenCompraId,materialId,metrado,adelanto,adelantoPorc,fondoGarantia,fondoGarantiaPorc,tipoValorizacionId,fechaInicio,duracion,avance,avancePorc,saldo,saldoPorc,numeroPagos,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion")] Contrato contrato)
+
+        public ActionResult Edit([Bind(Include = "contratoId,ordenCompraId,materialId,metrado,adelantoPorc,fondoGarantiaPorc,tipoValorizacionId,fechaInicio,duracion,numeroPagos,comentario,detalleAmortizacion")] Contrato contrato)
         {
             if (ModelState.IsValid)
             {
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                OrdenCompra orden = db.Ordenes.Find(contrato.ordenCompraId);
+                contrato.adelanto = (contrato.adelantoPorc * orden.total) / 100;
+                contrato.fondoGarantia = (contrato.fondoGarantiaPorc * orden.total) / 100;
+
+                contrato.avanceMonto = 0;
+                contrato.saldoMonto = 0;
+                contrato.avanceMetrado = 0;
+                contrato.saldoMetrado = 0;
+                contrato.avancePorc = 0;
+                contrato.saldoPorc = 0;
+
+                contrato.usuarioModificacion = User.Identity.Name;
+                contrato.fechaModificacion = cstTime;
+
+                //Eliminar Adelanto en caso tenga alguno
+                Adelanto adelantoRemove = db.Adelanto.Where(a => a.contratoId == contrato.contratoId).FirstOrDefault();
+                if (adelantoRemove != null)
+                {
+                    db.Adelanto.Remove(adelantoRemove);
+                    db.SaveChanges();
+                }
+
+                if (contrato.adelanto != 0)
+                {
+
+                    var estado = db.EstadoAdelanto.Where(p => p.nombre == "Pendiente de Aprobación").SingleOrDefault();
+
+                    Adelanto adelanto = new Adelanto();
+                    adelanto.Contrato = contrato;
+                    adelanto.descripcion = "1er Adelanto";
+                    adelanto.adelantoMonto = contrato.adelanto;
+
+                    adelanto.fechaCreacion = cstTime;
+                    adelanto.usuarioCreacion = User.Identity.Name;
+                    adelanto.fechaModificacion = cstTime;
+
+                    adelanto.estadoAdelantoId = estado.estadoAdelantoId;
+                    db.Adelanto.Add(adelanto);
+
+                }
+
+
                 db.Entry(contrato).State = EntityState.Modified;
+                db.Entry(contrato).Property(x => x.fechaCreacion).IsModified = false;
+                db.Entry(contrato).Property(x => x.usuarioCreacion).IsModified = false;
+                db.Entry(contrato).Property(x => x.ordenCompraId).IsModified = false;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

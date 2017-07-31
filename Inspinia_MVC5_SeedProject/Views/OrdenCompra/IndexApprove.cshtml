@@ -145,9 +145,155 @@
 
                                 </tr>
 
-
-
                             }
+
+
+                            @*********Ingreso de Valorización*********@
+
+                            @foreach (var item in Model)
+                            {
+                                foreach (var item2 in item.Contratos)
+                                {
+
+                                    foreach (var item3 in item2.Valorizaciones.Where(a => a.EstadoValorizacion.nombre == "Pendiente de Aprobación"))
+                                    { 
+                                        
+                                    <tr class="gradeX">
+                                        <td hidden="hidden">@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
+                                        @*<td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>*@
+                                        <td class="client-status">
+                                            @if (item3.EstadoValorizacion.nombre == "Pendiente de Aprobación")
+                                            {
+                                                <button type="button" class="btn btn-danger btn-xs">
+                                                    @Html.DisplayFor(modelItem => item3.EstadoValorizacion.nombre) 
+                                                </button>
+                                            }
+
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-default btn-xs">
+                                                    @Html.DisplayFor(modelItem => item3.EstadoValorizacion.nombre)
+                                                </button>
+                                            }
+
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.numero)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
+                                        <td>@Html.DisplayFor(modelItem => item3.fechaCreacion)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
+                                        <td>Valorización</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Moneda.nombre)</td>
+                                        <td hidden="hidden">@item.total</td>
+                                        <td>
+                                            @{  double? avanceMonto = 0.0;
+                                                double? descuentoAdelantoMonto = 0.0;
+                                                double? descuentoFondoMonto = 0.0;
+                                                double? montoTotal = 0.0;
+
+                                               avanceMonto = item3.avanceMonto;
+                                               if (item3.Descuentos.Where(a => a.TipoDescuento.nombre =="Adelanto").Count() >0)
+                                               {
+                                                //descuentoMonto = (double)(item3.Descuentos.Where(a => a.TipoDescuento.nombre =="Adelanto").FirstOrDefault().descuentoMonto);
+                                                   descuentoAdelantoMonto = (item3.Descuentos.Where(a => a.TipoDescuento.nombre =="Adelanto").FirstOrDefault().descuentoMonto);
+                                               }
+                                               if (item3.FondosGarantia.Count() >0)
+                                               {
+                                                //descuentoMonto = (double)(item3.Descuentos.Where(a => a.TipoDescuento.nombre =="Adelanto").FirstOrDefault().descuentoMonto);
+                                                   descuentoFondoMonto = (item3.FondosGarantia.FirstOrDefault().fondoMonto);
+                                               }                                               
+                                                montoTotal = avanceMonto - descuentoAdelantoMonto - descuentoFondoMonto;
+                                            }
+                                            @string.Format("{0:0,0.00}", @montoTotal*1.18) 
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="~/Valorizacion/Document/@Html.DisplayFor(modelItem => item3.valorizacionId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
+                                                @*<a href="~/OrdenCompra/Tracking/@Html.DisplayFor(modelItem => item.ordenCompraId)" data-toggle="modal" data-target="#myModalTracking" class="btn btn-white btn-sm" id="linkTracking"><i class="fa fa-binoculars"></i>  </a>*@
+                                            </div>
+                                        </td>
+
+
+                                        <td>
+                                            @if (item.estadoOrdenId == 1)
+                                            {
+                                                <a href="~/OrdenCompra/Approve/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
+                                            }
+
+
+                                        </td>
+
+
+
+                                    </tr>
+
+                                    }
+                                }
+                            }
+
+                            @*********Ingreso de Adelantos*********@
+
+
+                            @foreach (var item in Model)
+                            {
+                                foreach (var item2 in item.Contratos)
+                                {
+
+                                    foreach (var item3 in item2.Adelantos.Where(a => a.EstadoAdelanto.nombre == "Pendiente de Aprobación"))
+                                    {
+
+                                        <tr class="gradeX">
+                                            <td hidden="hidden">@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
+                                            @*<td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>*@
+                                            <td class="client-status">
+                                                @if (item3.EstadoAdelanto.nombre == "Pendiente de Aprobación")
+                                                {
+                                                    <button type="button" class="btn btn-danger btn-xs">
+                                                        @Html.DisplayFor(modelItem => item3.EstadoAdelanto.nombre)
+                                                    </button>
+                                                }
+
+                                                else
+                                                {
+                                                    <button type="button" class="btn btn-default btn-xs">
+                                                        @Html.DisplayFor(modelItem => item3.EstadoAdelanto.nombre)
+                                                    </button>
+                                                }
+
+                                            </td>
+                                            <td>@Html.DisplayFor(modelItem => item.numero)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
+                                            <td>@Html.DisplayFor(modelItem => item3.fechaCreacion)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
+                                            <td>Adelanto</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Moneda.nombre)</td>
+                                            <td hidden="hidden">@item.total</td>
+                                            <td>@Html.DisplayFor(modelItem => item3.adelantoMonto)</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
+                                                    <a href="~/OrdenCompra/Tracking/@Html.DisplayFor(modelItem => item.ordenCompraId)" data-toggle="modal" data-target="#myModalTracking" class="btn btn-white btn-sm" id="linkTracking"><i class="fa fa-binoculars"></i>  </a>
+                                                </div>
+                                            </td>
+
+
+                                            <td>
+                                                @if (item.estadoOrdenId == 1)
+                                                {
+                                                    <a href="~/OrdenCompra/Approve/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Aprobar </a>
+                                                }
+
+
+                                            </td>
+
+
+
+                                        </tr>
+
+                                    }
+                                }
+                            }
+
+
 
 
                         </tbody>
