@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PissanoApp.Models.CuentaBancaria>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+
+    <a href="~/CuentaBancaria/Create/" class="btn btn-primary btn-sm"> Crear Nuevo </a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Razón Social
+        </th>
+        <th>
+            Banco
+        </th>
+        <th>
+            Moneda
+        </th>
+
+        <th>
+            Número de Cuenta
+        </th>
+        <th>
+           ¿Cuenta Default?
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proveedor.razonSocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Banco.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Moneda.nombre)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.numeroCuenta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cuentaDefault)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.cuentaBancariaId }, new { @class = "btn btn-white btn-sm" }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.cuentaBancariaId }, new { @class = "btn btn-primary btn-sm" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.cuentaBancariaId }, new { @class = "btn btn-white btn-sm" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,58 @@
+﻿@model PissanoApp.Models.CuentaBancaria
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CuentaBancaria</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Banco.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banco.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Moneda.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Moneda.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.razonSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numeroCuenta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numeroCuenta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cuentaDefault)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cuentaDefault)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.cuentaBancariaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

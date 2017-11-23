@@ -44,13 +44,6 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.avanceMonto)
                                 </th>
-
-                                <th>
-                                    @Html.DisplayNameFor(model => model.avanceMetrado)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.avancePorc)
-                                </th>
                                 <th>
                                     Imprimir
                                 </th>
@@ -87,14 +80,10 @@
                                                 @Html.DisplayFor(modelItem => item.fechacierre)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.avanceMonto)
+                                                
+                                                @item.avanceMonto
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.avanceMetrado)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.avancePorc)
-                                            </td>
+
 
                                             <td class="project-actions">
                                                 <a href="~/Valorizacion/Document/@Html.DisplayFor(modelItem => item.valorizacionId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
@@ -150,9 +139,7 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.avanceMonto)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.avancePorc)
-                                </th>
+
                                 <th>
                                     Imprimir
                                 </th>
@@ -169,6 +156,7 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.fechaCreacion)
                                 </th>
+
                                 <th></th>
                             </tr>
                         </tfoot>

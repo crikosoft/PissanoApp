@@ -26,7 +26,7 @@
 
 <div class="form-horizontal">
     @*<h4>Crear Orden de Compra</h4>
-    <hr />*@
+        <hr />*@
     @Html.ValidationSummary(true)
 
 
@@ -42,7 +42,7 @@
     </div>
 
 
-    
+
 
     <div class="ibox float-e-margins">
         <div class="ibox-title">
@@ -60,7 +60,7 @@
                         @*<label class="font-noraml col-sm-2 control-label">Proveedor</label>*@
                         @*<div class="input-group col-sm-10">
 
-                    </div>*@
+                            </div>*@
 
                         <label class="control-label" for="order_id">Proveedor</label>
                         <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:350px;" tabindex="1" id="proveedor">
@@ -77,21 +77,21 @@
                 </div>
                 <div class="col-sm-4">
                     @*<div class="form-group">
-                    <label class="font-noraml col-sm-2 control-label">Form de Pago</label>
-                    <div class="input-group col-sm-10">
-                        <select data-placeholder="Seleccione la Prioridad..." class="chosen-select" style="width:350px;" tabindex="2" id="formaPago">
-                            <option value="">Seleccione</option>
+                            <label class="font-noraml col-sm-2 control-label">Form de Pago</label>
+                            <div class="input-group col-sm-10">
+                                <select data-placeholder="Seleccione la Prioridad..." class="chosen-select" style="width:350px;" tabindex="2" id="formaPago">
+                                    <option value="">Seleccione</option>
 
-                            @foreach (var item in Model.FormasPago)
-                            {
-                                <option value=@Html.DisplayFor(modelItem => item.formaPagoId)>
-                                    @Html.DisplayFor(modelItem => item.nombre)
-                                </option>
-                            }
+                                    @foreach (var item in Model.FormasPago)
+                                    {
+                                        <option value=@Html.DisplayFor(modelItem => item.formaPagoId)>
+                                            @Html.DisplayFor(modelItem => item.nombre)
+                                        </option>
+                                    }
 
-                        </select>
-                    </div>
-                </div>*@
+                                </select>
+                            </div>
+                        </div>*@
 
                     <label class="control-label" for="order_id">Form de Pago</label>
                     <select data-placeholder="Elija la Obra..." class="chosen-select" style="width:350px;" tabindex="1" id="formaPago">
@@ -125,29 +125,29 @@
                 </div>
             </div>
 
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group" id="data_1">
-                            <label class="control-label" for="order_id">Fecha</label>
-                            <div class="input-group date">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" id="fechacreacion">
-                                <span class="help-block m-b-none">Solo en caso de Orden de Compra Antigua</span>
-                            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group" id="data_1">
+                        <label class="control-label" for="order_id">Fecha</label>
+                        <div class="input-group date">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" id="fechacreacion">
+                            <span class="help-block m-b-none">Solo en caso de Orden de Compra Antigua</span>
                         </div>
                     </div>
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            @*<label class="font-noraml col-sm-2 control-label">Comentario</label>
-                    <div class="col-sm-10">
-
-                    </div>*@
-                            <label class="control-label" for="order_id">Comentario</label>
-                            <input type="text" class="form-control" tabindex="3" id="comentario"> <span class="help-block m-b-none">Agregue algún comentario a considerar durante la Orden de Compra</span>
-
-                        </div>
-                    </div>
-                
                 </div>
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        @*<label class="font-noraml col-sm-2 control-label">Comentario</label>
+                            <div class="col-sm-10">
+
+                            </div>*@
+                        <label class="control-label" for="order_id">Comentario</label>
+                        <input type="text" class="form-control" tabindex="3" id="comentario"> <span class="help-block m-b-none">Agregue algún comentario a considerar durante la Orden de Compra</span>
+
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -186,11 +186,11 @@
                                     <tr class="gradeX">
                                         <td>@Html.DisplayFor(modelItem => item.Material.materialId)</td>
                                         <td hidden="hidden">@Html.DisplayFor(modelItem => item.Material.codigo)</td>
-                                        
+
                                         <td><a data-toggle="tab" href="#contact-@Html.DisplayFor(modelItem => item.Material.materialId)" class="client-link">@Html.DisplayFor(modelItem => item.Material.nombre)</a></td>
                                         <td>@Html.DisplayFor(modelItem => item.Material.UnidadMedida.nombre)</td>
                                         <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
-                                        <td><input type="text" class="form-control" id="precio" > </td>
+                                        <td><input type="text" class="form-control" id="precio"> </td>
                                         <td hidden="hidden">@Html.DisplayFor(modelItem => item.requerimientoDetalleId)</td>
                                     </tr>
                                 }
@@ -242,10 +242,10 @@
                             <button type="button" class="btn btn-default btn-sm btn-block" id="BtnCalcular">
                                 <i class="fa fa-calculator"></i> Calcular
                             </button>
-                            </div>
                         </div>
-
                     </div>
+
+                </div>
 
                 <div class="ibox ">
                     <div class="ibox-content">
@@ -257,13 +257,13 @@
                                 <div id="contact-@Html.DisplayFor(modelItem => item.Material.materialId)" class="tab-pane">
                                     <div class="row m-b-lg">
                                         @*<div class="col-lg-4 text-center">
-                                    <h2>Nicki Smith</h2>
+                                                <h2>Nicki Smith</h2>
 
-                                    <div class="m-b-sm">
-                                        <img alt="image" class="img-circle" src="~/Images/a2.jpg"
-                                             style="width: 62px">
-                                    </div>
-                                </div>*@
+                                                <div class="m-b-sm">
+                                                    <img alt="image" class="img-circle" src="~/Images/a2.jpg"
+                                                         style="width: 62px">
+                                                </div>
+                                            </div>*@
                                         <div class="col-lg-12">
                                             <h3>
                                                 <strong>
@@ -374,14 +374,14 @@
                     </div>
                 </div>
 
-             </div>
+            </div>
 
         </div>
 
     </div>
 
 
-   
+
 
 
 </div>
@@ -413,7 +413,7 @@
     @Styles.Render("~/plugins/select2Styles")
     @Styles.Render("~/plugins/touchSpinStyles")
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
-@Styles.Render("~/plugins/laddaStyles")
+    @Styles.Render("~/plugins/laddaStyles")
 }
 
 @section Scripts {
@@ -433,7 +433,7 @@
     @Scripts.Render("~/plugins/touchSpin")
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/plugins/jeditable")
-@Scripts.Render("~/plugins/ladda")
+    @Scripts.Render("~/plugins/ladda")
 
     <script type="text/javascript">
     $(document).ready(function () {
@@ -591,7 +591,7 @@
                 error: function (result) {
                     $('.ladda-button-demo').ladda().ladda('stop');
                     alert('No se pudo insertar. Revise que toda la información esté seleccionada');
-                    
+
                 }
 
 

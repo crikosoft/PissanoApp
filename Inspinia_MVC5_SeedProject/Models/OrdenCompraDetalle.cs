@@ -14,7 +14,7 @@ namespace PissanoApp.Models
         public int ordenCompraId { get; set; }
         public virtual OrdenCompra OrdenCompra { get; set; }
 
-        [Required()]              
+        [Required()]
         public int materialId { get; set; }
         public virtual Material Material { get; set; }
         [Required()]

@@ -178,7 +178,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 @*<input type="submit" value="Aprobar!" class="btn btn-primary" />*@
-                                <button type="submit" class="btn btn-primary" id="BtnAprobar"><i class="fa fa-thumbs-up"></i> Aprobar!</button>
+                                @*<button type="submit" class="btn btn-primary" id="BtnAprobar"><i class="fa fa-thumbs-up"></i> Aprobar!</button>*@
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAprobar"><i class="fa fa-thumbs-up"></i> Aprobar!</button>
 
                             </div>
                         </div>
@@ -206,7 +207,7 @@
                       <div class="modal-body">
                               <p>
                                  
-                                  <textarea rows="3" class="form-control" id="comentario"></textarea> <span class="help-block m-b-none">Agregue algún comentario o motivo a considerar durante la revisión de la Orden de Compra</span>
+                                  <textarea rows="3" class="form-control" id="comentarioDesaprobar"></textarea> <span class="help-block m-b-none">Agregue algún comentario o motivo a considerar durante la revisión de la Orden de Compra</span>
 
                         </p>
                       </div>
@@ -218,6 +219,27 @@
                   </div>
               </div>
           </div> 
+    
+          <div class="modal inmodal" id="myModalAprobar" tabindex="-1" role="dialog" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content animated fadeIn">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <h4 class="modal-title">Aprobando Orden de Compra</h4>
+                      </div>
+                      <div class="modal-body">
+                              <p>
+                                 
+                                  <textarea rows="3" class="form-control" id="comentarioAprobar"></textarea> <span class="help-block m-b-none">Agregue algún comentario considerar durante las siguientes etapas de Aprobación</span>
+
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="ladda-button ladda-button-demo btn btn btn-primary" data-dismiss="modal" id="BtnAprobar">Aprobar!</button>
+                      </div>
+                  </div>
+              </div>
+          </div>  
  
 }
 
@@ -242,7 +264,7 @@
                 var ordenCompra = new Object();
 
                 ordenCompra.ordenCompraId = $("#ordenCompraId").val();
-                ordenCompra.comentario = $("#comentario").val();;
+                ordenCompra.comentario = $("#comentarioDesaprobar").val();;
 
                 OrdenCompraFinal = JSON.stringify({ 'ordenCompra': ordenCompra });
 
@@ -251,6 +273,34 @@
                     contentType: 'application/json; charset=utf-8',
                     type: 'POST',
                     url: '@Url.Action("Disapprove2")',
+                    data: OrdenCompraFinal,
+                    success: function (data) {
+                        window.location = '@Url.Action("IndexApprove2")';
+                    },
+                    error: function (result) {
+                        //alert(result.statusText)
+                        l.ladda('stop');
+                        alert('No se pudo realizar la acción solicitada');
+
+                    }
+                });
+            });
+
+
+            $("#BtnAprobar").click(function () {
+
+                var ordenCompra = new Object();
+
+                ordenCompra.ordenCompraId = $("#ordenCompraId").val();
+                ordenCompra.comentario = $("#comentarioAprobar").val();;
+
+                OrdenCompraFinal = JSON.stringify({ 'ordenCompra': ordenCompra });
+
+
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: 'POST',
+                    url: '@Url.Action("Approve2")',
                     data: OrdenCompraFinal,
                     success: function (data) {
                         window.location = '@Url.Action("IndexApprove2")';

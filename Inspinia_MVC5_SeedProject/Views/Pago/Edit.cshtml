@@ -132,6 +132,16 @@
                                                     <div class="row">
                                                         <div class="col-xs-4">
                                                             <div class="form-group">
+                                                                <label>FECHA DOCUMENTO DE PAGO</label>
+                                                                <div class="input-group">
+                                                                    @Html.EditorFor(model => model.fechaFactura)
+                                                                    @Html.ValidationMessageFor(model => model.fechaFactura)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
                                                                 <label>ESTADO PAGO</label>
                                                                 <div class="input-group">
                                                                     @*@Html.DropDownList("estadoOrdenId", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, new { @class = "form-control" })*@
@@ -159,6 +169,8 @@
                                                             </div>
                                                         </div>
 
+                                                    </div>
+                                                    <div class="row">
                                                         <div class="col-xs-4">
                                                             <div class="form-group">
                                                                 <label>FECHA PROGRAMADO DE PAGO</label>
@@ -170,10 +182,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                    </div>
-                                                    <div class="row">
-
                                                         <div class="col-xs-4">
                                                             <div class="form-group">
                                                                 <label>FECHA REAL DE PAGO</label>

@@ -122,7 +122,7 @@
                                     <td hidden="hidden">@item.total</td>
                                     <td>@Html.DisplayFor(modelItem => item.total)</td>
                                     <td>
-                                        <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                        <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" target="_blank" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>
                                 </tr>
                             }
@@ -195,7 +195,8 @@
                     }
                 ],
                 "order": [[0, "desc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                "scrollX": true
 
             });
 

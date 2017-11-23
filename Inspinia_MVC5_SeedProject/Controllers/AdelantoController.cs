@@ -79,10 +79,22 @@ namespace PissanoApp.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="adelantoId,contratoId,descripcion,adelantoMonto,adelantoPorc,estadoAdelantoId,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion")] Adelanto adelanto)
+        public ActionResult Create([Bind(Include="adelantoId,contratoId,descripcion,adelantoMonto")] Adelanto adelanto)
         {
             if (ModelState.IsValid)
             {
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                var estado = db.EstadoAdelanto.Where(p => p.nombre == "Pendiente de Aprobación").SingleOrDefault(); ;
+
+                adelanto.estadoAdelantoId = estado.estadoAdelantoId;
+                adelanto.fechaCreacion = cstTime;
+                adelanto.usuarioCreacion = User.Identity.Name;
+                adelanto.fechaModificacion = cstTime;
+
                 db.Adelanto.Add(adelanto);
                 db.SaveChanges();
                 return RedirectToAction("IndexContrato/" + adelanto.contratoId, "Adelanto");
@@ -118,14 +130,29 @@ namespace PissanoApp.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="adelantoId,contratoId,descripcion,adelantoMonto,adelantoPorc,estadoAdelantoId,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion")] Adelanto adelanto)
+        public ActionResult Edit([Bind(Include="adelantoId,contratoId,descripcion,adelantoMonto")] Adelanto adelanto)
         {
             if (ModelState.IsValid)
             {
+
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                adelanto.fechaModificacion = cstTime;
+                adelanto.usuarioModificacion = User.Identity.Name;
+
                 db.Entry(adelanto).State = EntityState.Modified;
+                db.Entry(adelanto).Property(x => x.fechaCreacion).IsModified = false;
+                db.Entry(adelanto).Property(x => x.usuarioCreacion).IsModified = false;
+                db.Entry(adelanto).Property(x => x.estadoAdelantoId).IsModified = false;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+
             ViewBag.contratoId = new SelectList(db.Contrato, "contratoId", "comentario", adelanto.contratoId);
             ViewBag.estadoAdelantoId = new SelectList(db.EstadoAdelanto, "estadoAdelantoId", "nombre", adelanto.estadoAdelantoId);
             return View(adelanto);

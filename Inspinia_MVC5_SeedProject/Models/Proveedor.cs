@@ -52,5 +52,6 @@ namespace PissanoApp.Models
 
         public DateTime fechaModificacion { get; set; }
 
+        public virtual List<CuentaBancaria> CuentasBancarias { get; set; }
     }
 }

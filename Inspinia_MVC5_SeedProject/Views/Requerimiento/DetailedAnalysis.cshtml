@@ -38,34 +38,40 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="status">Obra</label>
-                                @Html.DropDownList("col1_filter", (IEnumerable<SelectListItem>)ViewBag.obraId, "Todos", new { @class = "form-control column_filter", @data_column = "1" })
+                                @Html.DropDownList("col2_filter", (IEnumerable<SelectListItem>)ViewBag.obraId, "Todos", new { @class = "form-control column_filter", @data_column = "2" })
 
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <div class="form-group">
-                                <label class="control-label" for="quantity">Material</label>
-                                <input type="text" id="col2_filter" name="col2_filter" data-column="2" value="" placeholder="Orden" class="form-control column_filter">
+                                <label class="control-label" for="quantity">Requerimiento</label>
+                                <input type="text" id="col0_filter" name="col3_filter" data-column="0" value="" placeholder="Requerimiento" class="form-control column_filter">
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label class="control-label" for="product_name">Proveedor</label>
-                                <input type="text" id="col5_filter" name="col5_filter" data-column="5" value="" placeholder="Proveedor" class="form-control column_filter">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="quantity">Material</label>
+                                    <input type="text" id="col3_filter" name="col3_filter" data-column="3" value="" placeholder="Material" class="form-control column_filter">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="product_name">Proveedor</label>
+                                    <input type="text" id="col6_filter" name="col6_filter" data-column="6" value="" placeholder="Proveedor" class="form-control column_filter">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="status">Estado OC</label>
+                                    @Html.DropDownList("col9_filter", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, "Todos", new { @class = "form-control column_filter", @data_column = "9" })
+                                    @*<select name="estadoOrdenId" id="col1_filter" data-column="1" class="form-control column_filter">
+                        <option value="" selected>Todos</option>
+                        <option value="Aprobación 3">Aprobación 3</option>
+                        <option value="Aprobación 2">Aprobación 2</option>
+                    </select>*@
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label class="control-label" for="status">Estado</label>
-                                @Html.DropDownList("col8_filter", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, "Todos", new { @class = "form-control column_filter", @data_column = "8" })
-                                @*<select name="estadoOrdenId" id="col1_filter" data-column="1" class="form-control column_filter">
-                                        <option value="" selected>Todos</option>
-                                        <option value="Aprobación 3">Aprobación 3</option>
-                                        <option value="Aprobación 2">Aprobación 2</option>
-                                    </select>*@
-                            </div>
-                        </div>
-                    </div>
 
 
                     @*<table class="footable table table-stripped toggle-arrow-tiny " data-page-size="10">*@
@@ -74,6 +80,7 @@
                         <thead>
                             <tr>
                                 <th>Requerimiento</th>
+                                <th>Estado Req.</th>
                                 <th>Obra</th>
                                 <th>Material</th>
                                 <th>Partida</th>
@@ -81,7 +88,7 @@
                                 <th>Proveedor</th>
                                 <th>Tipo Compra</th>
                                 <th>OC</th>
-                                <th>Estado</th>
+                                <th>Estado OC</th>
                                 <th>Moneda</th>
                                 <th>Precio Unitario</th>
                                 <th>Cantidad</th>
@@ -99,6 +106,7 @@
 
                                     <tr class="gradeX">
                                         <td>@Html.DisplayFor(modelItem => item.requerimientoId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.EstadoRequerimiento.nombre)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
                                         <td>@Html.DisplayFor(modelItem => item2.Material.nombre)</td>
                                         <td>@Html.DisplayFor(modelItem => item2.Partida.nombre) - @Html.DisplayFor(modelItem => item2.Partida.SubPresupuesto.nombre)</td>
@@ -115,7 +123,7 @@
                                         <td>@Html.DisplayFor(modelItem => item2.OrdenCompra.OrdenesCompraDetalles.Where(a => a.materialId == item2.materialId).FirstOrDefault().precioTotal)</td>
                                          
                                         <td>
-                                            <a href="~/Requerimiento/Document/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                            <a href="~/Requerimiento/Document/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> </a>
                                         </td>
                                     </tr>
 
@@ -128,6 +136,7 @@
                         <tfoot>
                             <tr>
                                 <th>Requerimiento</th>
+                                <th>Estado Req.</th>
                                 <th>Obra</th>
                                 <th>Material</th>
                                 <th>Partida</th>
@@ -135,7 +144,7 @@
                                 <th>Proveedor</th>
                                 <th>Tipo Compra</th>
                                 <th>OC</th>
-                                <th>Estado</th>
+                                <th>Estado OC</th>
                                 <th>Moneda</th>
                                 <th>Precio Unitario</th>
                                 <th>Cantidad</th>

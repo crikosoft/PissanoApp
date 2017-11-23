@@ -154,15 +154,17 @@
 
                                     <td>
                                         @*@if (item.estadoOrdenId == 4 || item.estadoOrdenId == 5 || item.estadoOrdenId == 5 || item.estadoOrdenId == 5)*@
-                                        @if (item.estadoOrdenId != 6)
-{
+                                        @*@if (item.estadoOrdenId != 6)*@
+
+                                        @if (item.OrdenCompraEstados.Where(a => a.EstadoOrden.nombre == "Ingreso Total").Count() == 0)
+                                        {
                                             <a href="~/OrdenCompra/EnterWarehouse/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Ingresar </a>
                                         }
 
                                     </td>
 
                                     <td>
-                                        <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                        <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" target="_blank" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>
 
                                 </tr>
@@ -240,7 +242,8 @@
                     }
                 ],
                 "order": [[0, "desc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                "scrollX": true
 
             });
 

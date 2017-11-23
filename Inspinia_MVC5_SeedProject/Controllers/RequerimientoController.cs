@@ -28,16 +28,19 @@ namespace PissanoApp.Controllers
         public ActionResult IndexApprove()
         {
             //var requerimientos = db.Requerimientos;
-            var obrasList = new string[] { "Barcelona", "San Borja Norte" };
+            var obrasList = new string[] { "Barcelona", "San Borja Norte", "SAN BORJA NORTE 717", "Boulevard 286" };
             if (User.Identity.Name == "david.moreano")
             {
                 obrasList = new string[] { "Barcelona" };
             }
             else if (User.Identity.Name == "jorge.bernardo")
             {
-                obrasList = new string[] { "San Borja Norte" };
+                obrasList = new string[] { "San Borja Norte", "SAN BORJA NORTE 717" };
             }
-
+            else if (User.Identity.Name == "marco.timoteo")
+            {
+                obrasList = new string[] { "Boulevard 286" };
+            }
 
             var estadoList = new string[] { "Pendiente Aprobación", "Con OC parcial", "Con OC total", "Aprobado Total", "Con OC parcial", "Aprobado Parcial", "Rechazado Parcial" };
 

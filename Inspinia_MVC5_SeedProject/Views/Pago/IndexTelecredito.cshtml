@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<PissanoApp.Models.Pago>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "IndexTelecrédito";
 }
 
 
-<h2>Pagos de Ordenes de Compras y Servicios</h2>
+<h2>Generar Archivo de Pagos para Telecrédito</h2>
 
- 
 
-<p>
+
+@*<p>
 
         <a href="@Url.Action("IndexAccounting", "OrdenCompra")" class="btn btn-w-m btn-primary">Crear Nuevo</a>
-    </p>
+    </p>*@
 
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -38,46 +38,58 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="status">Obra</label>
-                                @Html.DropDownList("col3_filter", (IEnumerable<SelectListItem>)ViewBag.obraId, "Todos", new { @class = "form-control column_filter", @data_column = "3" })
+                                @Html.DropDownList("col4_filter", (IEnumerable<SelectListItem>)ViewBag.obraId, "Todos", new { @class = "form-control column_filter", @data_column = "4" })
 
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="quantity">Orden</label>
-                                <input type="text" id="col2_filter" name="col2_filter" data-column="2" value="" placeholder="Orden" class="form-control column_filter">
+                                <input type="text" id="col3_filter" name="col3_filter" data-column="2" value="" placeholder="Orden" class="form-control column_filter">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="product_name">Proveedor</label>
-                                <input type="text" id="col5_filter" name="col5_filter" data-column="5" value="" placeholder="Proveedor" class="form-control column_filter">
+                                <input type="text" id="col6_filter" name="col6_filter" data-column="5" value="" placeholder="Proveedor" class="form-control column_filter">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label class="control-label" for="status">Estado</label>
-                                @Html.DropDownList("col1_filter", (IEnumerable<SelectListItem>)ViewBag.estadoPagoId, "Todos", new { @class = "form-control column_filter", @data_column = "1" })
+                                <label class="control-label" for="product_name">Moneda Cuenta</label>
+                                <select name="monedaId" id="col7_filter" data-column="7" class="form-control column_filter">
+                                    <option value="" selected>Todos</option>
+                                    <option value="Soles">Soles</option>
+                                    <option value="Dolares">Dolares</option>
+                                </select>
                             </div>
                         </div>
+
                     </div>
-
-
+                    <div class="row">
+                        <div class="text-right">
+                            @*<div class="form-group">*@
+                            <button class="ladda-button ladda-button-demo btn btn-success" id="BtnGenerar"><i class="fa fa-money"></i> Generar Archivo Telecrédito!</button>
+                            @*</div>*@
+                        </div>
+                    </div>
                     @*<table class="footable table table-stripped toggle-arrow-tiny " data-page-size="10">*@
-                    <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+                    <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10" id="tablaItems">
 
                         <thead>
                             <tr>
-
-                                <th>Id</th>
                                 <th></th>
+                                <th data-toggle="true">Id</th>
                                 <th>Estado</th>
                                 <th>OC</th>
+                                <th>Moneda OC</th>
+                                <th>Número Cuenta</th>
+                                <th>Banco Cuenta</th>
+                                <th>Moneda Cuenta</th>
                                 <th>Obra</th>
-                                <th>Fecha</th>
                                 <th>Proveedor</th>
                                 <th>Forma Pago</th>
-                                <th>Moneda</th>
+
                                 <th hidden="hidden">Total</th>
                                 <th>Total OC</th>
                                 <th>Fecha Programada Pago</th>
@@ -85,11 +97,7 @@
                                 <th>Pago</th>
                                 <th>Detracción</th>
                                 <th>Nro Documento</th>
-                                <th>Fecha Documento</th>
-                                
                                 <th></th>
-                                
-
                             </tr>
                         </thead>
                         <tbody>
@@ -98,31 +106,30 @@
                             {
 
 
-                                <tr class="gradeX">
-                                    <td >
-                                        @Html.DisplayFor(modelItem => item.pagoId)</td>
+                                <tr>
+
                                     <td>
-                                        <a href="~/Pago/Edit/@Html.DisplayFor(modelItem => item.pagoId)" class="btn btn-success btn-sm"><i class="fa fa-money"></i> Editar Pago </a>
+@if (item.EstadoPago.nombre != "Pago Archivo Telecredito" && item.OrdenCompra.Proveedor.CuentasBancarias.Where(a => a.cuentaDefault == true).Count() > 0)
+                                        {
+                                        <input type="checkbox" class="i-checks" id=@Html.DisplayFor(modelItem => item.pagoId) name="input[]">
+}                                
+    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.pagoId)
                                     </td>
+
                                     @*<td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>*@
                                     <td class="client-status">
 
                                         @if (item.EstadoPago.nombre == "Pendiente de Pago")
                                         {
-                                            
                                             <span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoPago.nombre) </span>
                                             @*<button type="button" class="btn btn-danger btn-xs">
                                                 @Html.DisplayFor(modelItem => item.EstadoPago.nombre)
                                             </button>*@
                                         }
                                         else if (item.EstadoPago.nombre == "Pago Archivo Telecredito")
-                                        {
-                                            <span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoPago.nombre) </span>
-                                            @*<button type="button" class="btn btn-primary btn-xs">
-                                                @Html.DisplayFor(modelItem => item.EstadoPago.nombre)
-                                            </button>*@
-                                        }
-                                        else if (item.EstadoPago.nombre == "Pago Realizado")
                                         {
                                             <span class="label label-primary">@Html.DisplayFor(modelItem => item.EstadoPago.nombre) </span>
                                             @*<button type="button" class="btn btn-primary btn-xs">
@@ -131,49 +138,77 @@
                                         }
 
                                         @*@if (item.OrdenCompra.EstadoOrden.nombre == "Ingreso Total")
-                                        {
-                                            <button type="button" class="btn btn-danger btn-xs">
-                                                @Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)
-                                            </button>
-                                        }
-                                        else if (item.OrdenCompra.EstadoOrden.nombre == "Pendiente de Pago")
-                                        {
-                                            <button type="button" class="btn btn-warning btn-xs">
-                                                @Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)
-                                            </button>
-                                        }
-                                        else if (item.OrdenCompra.EstadoOrden.nombre == "Pago Realizado")
-                                        {
-                                            <button type="button" class="btn btn-primary btn-xs">
-                                                @Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)
-                                            </button>
-                                        }
-                                        else
-                                        {
-                                            <button type="button" class="btn btn-default btn-xs">
-                                                @Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)
-                                            </button>
-                                        }*@
+                                            {
+                                                <button type="button" class="btn btn-danger btn-xs">
+                                                    @Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)
+                                                </button>
+                                            }
+                                            else if (item.OrdenCompra.EstadoOrden.nombre == "Pendiente de Pago")
+                                            {
+                                                <button type="button" class="btn btn-warning btn-xs">
+                                                    @Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)
+                                                </button>
+                                            }
+                                            else if (item.OrdenCompra.EstadoOrden.nombre == "Pago Realizado")
+                                            {
+                                                <button type="button" class="btn btn-primary btn-xs">
+                                                    @Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-default btn-xs">
+                                                    @Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)
+                                                </button>
+                                            }*@
 
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.numero)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.nombre)</td>
+                                    @{var cuenta = "";
+                                      var banco = "";
+                                      var moneda = "";
+
+                                    if (item.OrdenCompra.Proveedor.CuentasBancarias.Where(a => a.cuentaDefault == true).Count() > 0)
+                                    {
+                                        cuenta = item.OrdenCompra.Proveedor.CuentasBancarias.Where(a => a.cuentaDefault == true).FirstOrDefault().numeroCuenta;
+                                        banco = item.OrdenCompra.Proveedor.CuentasBancarias.Where(a => a.cuentaDefault == true).FirstOrDefault().Banco.nombre;
+                                        moneda = item.OrdenCompra.Proveedor.CuentasBancarias.Where(a => a.cuentaDefault == true).FirstOrDefault().Moneda.nombre;
+                                    }
+                                    else
+                                    {
+                                        cuenta = item.OrdenCompra.Proveedor.numeroCuenta;
+                                    }
+                                    }
+                                   
+                                    <td>@cuenta</td>
+                                    @{ if (banco == "")
+                                         {
+                                            <td><a href="~/CuentaBancaria/Create/" target="_blank">Crear Cuenta</a></td>
+                                         }
+                                       else
+                                       {
+                                           <td>@banco</td>
+                                       }
+
+                                       }
+                                        
+                                    
+                                    <td>@moneda</td>
+                                    
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Obra.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Proveedor.razonSocial)</td>
                                     @*<td>@Html.DisplayFor(modelItem => item.OrdenCompra.Requerimiento.TipoCompra.nombre)</td>*@
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.FormaPago.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.nombre)</td>
+
                                     <td hidden="hidden">@item.OrdenCompra.total</td>
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.total)</td>
-                     
+
                                     <td>@Html.DisplayFor(modelItem => item.fechaPagoProg)</td>
                                     <td>@Html.DisplayFor(modelItem => item.fechaPagoReal)</td>
                                     <td>@Html.DisplayFor(modelItem => item.pagoMonto)</td>
                                     <td>@Html.DisplayFor(modelItem => item.pagoDetraccion)</td>
                                     <td>@Html.DisplayFor(modelItem => item.numero)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.fechaFactura)</td>
-                                   
-
 
                                     <td>
                                         @*<a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i>OC </a>*@
@@ -191,16 +226,18 @@
                         </tbody>
                         <tfoot>
                             <tr>
-
-                                <th>Id</th>
                                 <th></th>
+                                <th data-toggle="true">Id</th>
                                 <th>Estado</th>
                                 <th>OC</th>
+                                <th>Moneda OC</th>
+                                <th>Número Cuenta</th>
+                                <th>Banco Cuenta</th>
+                                <th>Moneda Cuenta</th>
                                 <th>Obra</th>
-                                <th>Fecha</th>
                                 <th>Proveedor</th>
                                 <th>Forma Pago</th>
-                                <th>Moneda</th>
+
                                 <th hidden="hidden">Total</th>
                                 <th>Total OC</th>
                                 <th>Fecha Programada Pago</th>
@@ -208,11 +245,12 @@
                                 <th>Pago</th>
                                 <th>Detracción</th>
                                 <th>Nro Documento</th>
-                                <th>Fecha Documento</th>
                                 <th></th>
                             </tr>
                         </tfoot>
                     </table>
+
+
 
                 </div>
             </div>
@@ -235,7 +273,7 @@
         </div>
 
     </div>
-</div> 
+</div>
 
 @section Styles {
 
@@ -276,14 +314,15 @@
                         }
                     }
                 ],
-                "order": [[0, "desc"]],
-                "pageLength": 25,
-                "scrollX": true
+                "order": [[1, "desc"]],
+                "pageLength": 25
 
             });
 
 
             $('.footable').footable();
+
+
 
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
@@ -323,6 +362,71 @@
                 // load the url and show modal on success
                 $("#myModalTracking .modal-body").load(target, function () {
                     $("#myModalTracking").modal("show");
+                });
+            });
+
+
+
+            $("#BtnGenerar").click(function () {
+
+                var cells = [];
+
+                $('#tablaItems tr').each(function () {
+                    if ($(this).find("td:eq(0) input[type='checkbox']").is(":checked")) {
+                        cells.push({
+
+                            pagoId: $(this).find("td:eq(0) input[type='checkbox']").attr("id")
+
+                        });
+                    }
+
+
+                });
+
+
+                if (cells.length == 0) {
+                    alert("Seleccione al menos un Item");
+                    return;
+                }
+
+                var Pagos = [];
+
+                for (var i = 0; i < cells.length; i++) {
+                    var pago = new Object();
+
+                    pago.pagoId = cells[i].pagoId;
+                    Pagos.push(pago);
+
+                    //alert(requerimientoDetalle.requerimientoDetalleId);
+                    //alert(pedido.pedidoId);
+
+
+                }
+
+                //return;
+
+
+                //var requerimiento = new Object();
+
+                //requerimiento.requerimientoId = $("#requerimientoId").val();
+                //requerimiento.Detalles = Detalles;
+
+                PagosFinal = JSON.stringify({ 'pagos': Pagos });
+
+
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: 'POST',
+                    url: '@Url.Action("GenerarTelecredito")',
+                    data: PagosFinal,
+                    success: function (data) {
+                        window.location = '@Url.Action("IndexTelecredito")';
+                    },
+                    error: function (result) {
+                        alert(result.statusText)
+                        alert('No se pudo realizar la acción solicitada');
+
+                    }
                 });
             });
 

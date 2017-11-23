@@ -84,6 +84,7 @@
                                 <th>Moneda</th>
                                 <th hidden="hidden">Total</th>
                                 <th>Total OC</th>
+                                <th>Cod.Material</th>
                                 <th>Material</th>
                                 <th>Partida</th>
                                 <th>Precio Unitario</th>
@@ -130,6 +131,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.Moneda.nombre)</td>
                                     <td hidden="hidden">@item.total</td>
                                     <td>@Html.DisplayFor(modelItem => item.total)</td>
+                                    <td>@Html.DisplayFor(modelItem => item2.Material.codigo)</td>
                                     <td>@Html.DisplayFor(modelItem => item2.Material.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Requerimiento.Detalles.Where(a => a.materialId == item2.materialId).FirstOrDefault().Partida.nombre) - @Html.DisplayFor(modelItem => item.Requerimiento.Detalles.Where(a => a.materialId == item2.materialId).FirstOrDefault().Partida.SubPresupuesto.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item2.precioUnitario)</td>
@@ -147,7 +149,7 @@
                                         <td></td>
                                     }
                                     <td>
-                                        <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                        <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" target="_blank" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>
                                 </tr>
                                     
@@ -170,6 +172,7 @@
                                 <th>Moneda</th>
                                 <th hidden="hidden">Total</th>
                                 <th>Total</th>
+                                <th>Cod.Material</th>
                                 <th>Material</th>
                                 <th>Partida</th>
                                 <th>Precio Unitario</th>
@@ -230,7 +233,9 @@
                     }
                 ],
                 "order": [[0, "desc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                scrollY: '85vh',
+                "scrollX": true
 
             });
 

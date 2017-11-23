@@ -7,18 +7,18 @@
 
 
 @*@if (Model.TipoCompra.nombre == "Materiales")
-{
-    <h2>Ordenes de Compra</h2>
-}
-else if (Model.TipoCompra.nombre == "SubContratos")
-{
-    <h2>Ordenes de Servicio</h2>
-}*@
+    {
+        <h2>Ordenes de Compra</h2>
+    }
+    else if (Model.TipoCompra.nombre == "SubContratos")
+    {
+        <h2>Ordenes de Servicio</h2>
+    }*@
 <h2>Ordenes</h2>
 
 
 <p>
-    
+
     @*<a href="@Url.Action("Index", "RequerimientoViewModel")" class="btn btn-w-m btn-primary">Nuevo</a>*@
     <a href="~/Requerimiento/IndexOC/" class="btn btn-w-m btn-primary"> Nueva Orden </a>
 </p>
@@ -86,9 +86,11 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                                 <th>Estado</th>
                                 <th></th>
                                 <th></th>
+                                <th>Creado por</th>
                                 <th></th>
                                 <th></th>
-   
+                                <th>Materiales</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -98,9 +100,9 @@ else if (Model.TipoCompra.nombre == "SubContratos")
 
                                 <tr class="gradeX">
                                     <td hidden>@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
-                                    <td >
+                                    <td>
                                         <span class="label label-primary">@Html.DisplayFor(modelItem => item.numero)</span>
-                                        
+
 
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
@@ -122,7 +124,7 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                                     else if (item.estadoOrdenId == 7 || item.estadoOrdenId == 8 || item.estadoOrdenId == 9)
                                     {
                                         <td class="client-status">
-                                    @*<span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span>*@
+                                            @*<span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span>*@
 
                                             <button type="button" class="btn btn-danger btn-xs" data-container="body" data-toggle="popover" data-placement="left" data-content="@Html.DisplayFor(modelItem => item.OrdenCompraEstados.LastOrDefault().comentario)">
                                                 @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
@@ -130,47 +132,71 @@ else if (Model.TipoCompra.nombre == "SubContratos")
 
                                         </td>
 
-                                    }                                    
+                                    }
                                     else
                                     {
-                                    <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>
+                                        <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>
 
                                     }
-                                    <td >
+                                    <td>
                                         <div class="btn-group">
                                             <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
                                             <a href="~/OrdenCompra/Tracking/@Html.DisplayFor(modelItem => item.ordenCompraId)" data-toggle="modal" data-target="#myModalTracking" class="btn btn-white btn-sm" id="linkTracking"><i class="fa fa-binoculars"></i>  </a>
                                         </div>
                                     </td>
                                     <td>
-
-                                            <a href="~/OrdenCompra/FileUpload/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-files-o"></i> Archivos</a>                                        
-
-                                    </td>
-
-                                    <td>
-                                        @if (item.Contratos.Count() ==0 )
-                                        { 
-                                        <a href="~/Contrato/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"> Contrato </a>
+                                        @if (item.Archivos.Count() == 0)
+                                        {
+                                            <a href="~/OrdenCompra/FileUpload/@Html.DisplayFor(modelItem => item.ordenCompraId)" target="_blank" class="btn btn-white btn-sm"><i class="fa fa-files-o"></i></a>
                                         }
                                         else
-                                        { 
-                                        <a href="~/Contrato/Edit/@Html.DisplayFor(modelItem => item.Contratos[0].contratoId)" class="btn btn-white btn-sm"> <i class="fa fa-edit"></i> Contrato </a>
+                                        {
+                                            <a href="~/OrdenCompra/FileUpload/@Html.DisplayFor(modelItem => item.ordenCompraId)" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-files-o"></i></a>
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.usuarioCreacion)</td>
+                                    <td>
+                                        @if (item.Contratos.Count() == 0)
+                                        {
+                                            <a href="~/Contrato/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"> Contrato </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="~/Contrato/Edit/@Html.DisplayFor(modelItem => item.Contratos[0].contratoId)" class="btn btn-white btn-sm"> <i class="fa fa-edit"></i> Contrato </a>
                                         }
                                     </td>
 
                                     <td>
                                         @*@Html.ActionLink("Editar", "Edit", new { id = item.ordenCompraId }) |
-                                        @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |
-                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })*@
-                                        @if (item.EstadoOrden.nombre == "Pendiente de Aprobación" || item.estadoOrdenId == 7 || item.estadoOrdenId == 8 || item.estadoOrdenId == 9)
-                                        { 
+                                            @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })*@
+                                        @if (item.EstadoOrden.nombre == "Pendiente de Aprobación" || item.estadoOrdenId == 2 || item.estadoOrdenId == 3 || item.estadoOrdenId == 7 || item.estadoOrdenId == 8 || item.estadoOrdenId == 9)
+                                        {
                                             @Html.ActionLink("Editar", "Edit", new { id = item.ordenCompraId }, new { @class = "btn btn-white btn-sm" })
                                         }
-                                      </td>
+                                    </td>
+                                    @{var materiales = "";
+                                    var longitud = 0;
+
+                                    foreach (var item2 in item.OrdenesCompraDetalles)
+                                    {
+                                        if (item2.Material.nombre.Length >= 5)
+                                        {
+                                            longitud = (item2.Material.nombre.Length - (item2.Material.nombre.Length - 5));
+                                        }
+                                        else
+                                        {
+                                            longitud = (item2.Material.nombre.Length);
+                                        }
+                                        materiales = materiales + item2.Material.nombre.Substring(0, longitud) + "..., ";
+
+                                    }
+                                    }
+                                    <td>@materiales </td>
+
                                     @*<td class="project-actions">
-                                        <a href="/RequerimientoViewModel/Create/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Aprobar Orden Compra </a>
-                                    </td>*@
+                                            <a href="/RequerimientoViewModel/Create/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Aprobar Orden Compra </a>
+                                        </td>*@
                                 </tr>
                             }
 
@@ -191,8 +217,10 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                                 <th>Estado</th>
                                 <th></th>
                                 <th></th>
+                                <th>Creado por</th>
                                 <th></th>
                                 <th></th>
+                                <th>Materiales</th>
 
                             </tr>
                         </tfoot>
@@ -200,62 +228,62 @@ else if (Model.TipoCompra.nombre == "SubContratos")
 
 
                     @*<table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
-                        <thead>
-                            <tr>
+                            <thead>
+                                <tr>
 
-                                <th data-toggle="true">Id</th>
-                                <th>Obra</th>
-                                <th>Fecha</th>
-                                <th data-hide="all">Prioridad</th>
-                                <th data-hide="all">Razón Social (días)</th>
-                                <th data-hide="all">Forma Pago</th>
-                                <th data-hide="all">Total</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                                    <th data-toggle="true">Id</th>
+                                    <th>Obra</th>
+                                    <th>Fecha</th>
+                                    <th data-hide="all">Prioridad</th>
+                                    <th data-hide="all">Razón Social (días)</th>
+                                    <th data-hide="all">Forma Pago</th>
+                                    <th data-hide="all">Total</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                @foreach (var item in Model.Ordenes)
-                                {
+                                    @foreach (var item in Model.Ordenes)
+                                    {
 
-                                    <tr class="gradeX">
-                                        <td>@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.fecha)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Requerimiento.Prioridad.nombre)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.FormaPago.nombre)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.total)</td>
-                                        @if (item.estadoOrdenId == 1)
-                                        {
-                                            <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>
-                                        }
-                                        else
-                                        {
-                                            <td class="client-status"><span class="label label-primary">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) x</span></td>
+                                        <tr class="gradeX">
+                                            <td>@Html.DisplayFor(modelItem => item.ordenCompraId)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Obra.nombre)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.fecha)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Requerimiento.Prioridad.nombre)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.FormaPago.nombre)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.total)</td>
+                                            @if (item.estadoOrdenId == 1)
+                                            {
+                                                <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="client-status"><span class="label label-primary">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) x</span></td>
 
-                                        }
-                                        <td>
-                                            @Html.ActionLink("Editar", "Edit", new { id = item.requerimientoId }) |
-                                            @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |
-                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })
-                                        </td>
-                                        <td class="project-actions">
-                                            <a href="/RequerimientoViewModel/Create/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Aprobar Orden Compra </a>
-                                        </td>
-                                    </tr>
-                                }                            
+                                            }
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.requerimientoId }) |
+                                                @Html.ActionLink("Detalles", "Details", new { id = item.requerimientoId }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.requerimientoId })
+                                            </td>
+                                            <td class="project-actions">
+                                                <a href="/RequerimientoViewModel/Create/@Html.DisplayFor(modelItem => item.requerimientoId)" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Aprobar Orden Compra </a>
+                                            </td>
+                                        </tr>
+                                    }
 
-    
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="5">
-                                    <ul class="pagination pull-right"></ul>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>*@
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right"></ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>*@
 
                 </div>
             </div>
@@ -278,21 +306,21 @@ else if (Model.TipoCompra.nombre == "SubContratos")
         </div>
 
     </div>
-</div> 
+</div>
 
 @section Styles {
 
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
-@Styles.Render("~/plugins/footableStyles")
-@Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
 }
 
 @section Scripts {
 
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/plugins/jeditable")
-@Scripts.Render("~/plugins/footable")
-@Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/chosen")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -318,7 +346,9 @@ else if (Model.TipoCompra.nombre == "SubContratos")
                     }
                 ],
                 "order": [[1, "desc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                scrollY: '85vh',
+                "scrollX": true
 
             });
 
@@ -371,7 +401,5 @@ else if (Model.TipoCompra.nombre == "SubContratos")
             ).draw();
         }
 
-        </script>
+    </script>
 }
-
-

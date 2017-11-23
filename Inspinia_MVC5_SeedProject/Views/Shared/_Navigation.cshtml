@@ -30,16 +30,17 @@
 @if (Request.IsAuthenticated)
 {
 
-            if (User.IsInRole("Administrador") || User.IsInRole("Logística") || User.IsInRole("Ingeniero de Campo") || User.IsInRole("Ingeniero Residente"))
+    if (User.IsInRole("Administrador") || User.IsInRole("Logística") || User.IsInRole("Ingeniero de Campo") || User.IsInRole("Ingeniero Residente") || User.IsInRole("Área Técnica"))
             { 
 
                     <li class="@Html.IsSelected(controller: "")">
                         <a href="#"><i class="fa fa-desktop"></i><span class="nav-label" data-i18n="nav.empresa">Mantenimiento</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
-                            @if (!User.IsInRole("Logística") && !User.IsInRole("Ingeniero de Campo") && !User.IsInRole("Ingeniero Residente"))
+                            @if (!User.IsInRole("Logística") && !User.IsInRole("Ingeniero de Campo") && !User.IsInRole("Ingeniero Residente") && !User.IsInRole("Área Técnica"))
                             {
                             <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Empresa")">Empresas</a></li>
                             <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Obra")">Obras</a></li>
+                            <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Register", "Account")">Usuarios</a></li>
                             }
 
                             <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Proveedor")">Proveedores</a></li>
@@ -51,9 +52,9 @@
                         </ul>
                     </li>
             }
-            
-    
-          if (User.IsInRole("Administrador") || User.IsInRole("Ingeniero de Campo") || User.IsInRole("Ingeniero Residente") || User.IsInRole("Logística") )
+
+
+    if (User.IsInRole("Administrador") || User.IsInRole("Ingeniero de Campo") || User.IsInRole("Ingeniero Residente") || User.IsInRole("Área Técnica") || User.IsInRole("Logística"))
             {    
                     <li class="@Html.IsSelected(controller: "")">
                         <a href="#"><i class="fa fa-building"></i><span class="nav-label" data-i18n="nav.empresa">Requerimientos</span><span class="fa arrow"></span></a>
@@ -66,7 +67,7 @@
                     </li>    
             }
 
-         if (User.IsInRole("Administrador") || User.IsInRole("Logística"))
+            if (User.IsInRole("Administrador") || User.IsInRole("Logística"))
             {   
     
             <li class="@Html.IsSelected(controller: "")">
@@ -82,13 +83,16 @@
                     </li>*@
 
                     <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/1", "OrdenCompraViewModel")">Orden de Compra<span class="label label-warning pull-right">Act.</span></a></li>
+
                     <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/2", "OrdenCompraViewModel")">Orden de Servicio<span class="label label-warning pull-right">Act.</span></a></li>
-                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Contrato")">Contratos<span class="label label-primary pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Contrato")">Valorizaciones<span class="label label-primary pull-right">Nuevo</span></a></li>
 
                     
                 </ul>
             </li>
             }
+            
+
 
 
          if (User.IsInRole("Administrador") || User.IsInRole("Gerente General") || User.IsInRole("Jefatura de Proyecto") || User.IsInRole("Ingeniero Residente"))
@@ -124,8 +128,23 @@
                     }
                 </ul>
             </li>
-        }        
+            }
 
+
+         if (User.IsInRole("Administrador") || User.IsInRole("Ingeniero Residente") || User.IsInRole("Área Técnica"))
+            {   
+    
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-building-o"></i><span class="nav-label" data-i18n="nav.empresa">Valorizaciones</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index/2", "OrdenCompraViewModel")">Orden de Servicio<span class="label label-warning pull-right">Act.</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Contrato")">Valorizaciones<span class="label label-primary pull-right">Nuevo</span></a></li>
+
+                    
+                </ul>
+            </li>
+            }         
 
             if (User.IsInRole("Administrador") || User.IsInRole("Contabilidad"))
             {
@@ -143,11 +162,21 @@
 
                 </ul>
 
+
                 <ul class="nav nav-second-level collapse">
                     <li>
                         <a href="@Url.Action("IndexAccounting", "OrdenCompra")">Ordenes de Compra<span class="label label-primary pull-right">Nuevo</span></a>
                     </li>
 
+                </ul>
+
+                <ul class="nav nav-second-level collapse">
+                    <li>
+                        <a href="@Url.Action("IndexTelecredito", "Pago")">Telecrédito<span class="label label-primary pull-right">Nuevo</span></a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "ArchivoTelecredito")">Archivos Telecrédito<span class="label label-primary pull-right">Nuevo</span></a>
+                    </li>
                 </ul>
             </li>
    
@@ -179,7 +208,7 @@
     
             }
 
-           if (User.IsInRole("Administrador") || User.IsInRole("Analista") ||  User.IsInRole("Ingeniero Residente"))
+           if (User.IsInRole("Administrador") || User.IsInRole("Analista") || User.IsInRole("Ingeniero Residente") || User.IsInRole("Área Técnica") || User.IsInRole("Almacén"))
             {
 
             <li class="@Html.IsSelected(controller: "")">
@@ -200,7 +229,7 @@
    
             }
 
-           if (User.IsInRole("Administrador") || User.IsInRole("Analista") || User.IsInRole("Ingeniero Residente"))
+           if (User.IsInRole("Administrador") || User.IsInRole("Analista") || User.IsInRole("Ingeniero Residente") || User.IsInRole("Área Técnica") || User.IsInRole("Almacén"))
             {
 
             <li class="@Html.IsSelected(controller: "")">

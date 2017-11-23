@@ -24,6 +24,7 @@
     <div class="row">
         <div class="col-xs-12">
             <input value="Guardar!" class="btn btn-primary" id="BtnGuardar" />
+            @*<button type="button" class="ladda-button ladda-button-demo btn btn btn-primary" data-dismiss="modal" id="BtnGuardar">Guardar!</button>*@
         </div>
     </div>
 
@@ -238,151 +239,44 @@
                         <h5>Descuentos</h5>
                     </div>
                     <div class="ibox-content">
-                        <label class="control-label" for="concepto">Descuento por Adelanto</label>
+                        <label class="control-label" for="concepto">Descuento por Adelanto (sin IGV)</label>
                         <input type="text" class="form-control" id="descuentoAdelanto" >
                     </div>
                 </div>
 
-                <div class="ibox">
-                    <div class="ibox-title">
-                        @*<span class="pull-right">(<strong>@Model.Contrato.Valorizaciones.Count()</strong>) items</span>*@
-                        <h5>Valorizaciones: Avance a la fecha</h5>
-                    </div>
-
-
-                    <div class="ibox-content">
-
-
-                        <div class="table-responsive">
-                            <table class="table shoping-cart-table" id="tablaItemsAvance">
-
-                                <tbody>
-
-                                    @foreach (var item in Model.Contrato.Valorizaciones.OrderByDescending(a => a.fechacierre))
-                {
-
-                                        <tr>
-                                            <td hidden="hidden">@Html.DisplayFor(modelItem => item.valorizacionId)</td>
-                                            <td width="90">
-                                                <div class="cart-product-imitation">
-                                                </div>
-                                            </td>
-                                            <td class="desc">
-                                                @*<h3>
-                                            <a href="#" class="text-navy">
-                                                @Html.DisplayFor(modelItem => item.Contrato.OrdenCompra.numero)
-                                            </a>
-                                        </h3>
-                                        <p class="small">
-                                            Servicio
-                                        </p>*@
-                                                @foreach (var item2 in Model.Contrato.OrdenCompra.OrdenesCompraDetalles)
-                            {
-                                                    <h3 class="text-navy">@Html.DisplayFor(modelItem => item2.Material.nombre)</h3>
-                                                    <dl class="small m-b-none">
-
-                                                        <dt class="text-navy"></dt>
-                                                        <dd>@Html.DisplayFor(modelItem => item2.Material.UnidadMedida.nombre)</dd>
-
-                                                    </dl>
-                            }
-                                                <div class="m-t-sm">
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h3>
-                                                    @Html.DisplayFor(modelItem => item.concepto)
-                                                </h3>
-                                                <p class="small">
-                                                    Concepto
-                                                </p>
-                                            </td>
-                                            <td width="50">
-                                                @Html.DisplayFor(modelItem => item.fechacierre)
-                                                <p class="small">
-                                                    Fecha de Cierre
-                                                </p>
-                                            </td>
-                                            <td width="100">
-                                                <h4>
-                                                    @*<input type="text" disabled class="form-control" id="avance" value="@Html.DisplayFor(modelItem => item.avance)">*@
-                                                    @Model.Contrato.OrdenCompra.Moneda.simbolo @Html.DisplayFor(modelItem => item.avanceMonto)
-                                                </h4>
-                                                <p class="small">
-                                                    Avance Monto
-                                                </p>
-                                            </td>
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.avancePorc) %
-                                                <p class="small">
-                                                    Avance %
-                                                </p>
-                                            </td>
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.avanceMetrado)
-                                                <p class="small">
-                                                    Avance Metrado
-                                                </p>
-                                            </td>
-
-
-
-                                            <td>
-
-                                                @Html.DisplayFor(modelItem => item.EstadoValorizacion.nombre)
-
-                                            </td>
-                                        </tr>
-
-                }
-
-
-                                </tbody>
-                            </table>
-                        </div>
-
-
-
-                    </div>
-
 
                 </div>
 
-
-
-                </div>
-
-
+            @*Resumen de Valorizaciones*@
             <div class="col-md-3">
-
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>Resumen de Avance de Valorizaciones</h5>
                     </div>
                     <div class="ibox-content">
                         <span>
-                            Monto Total (inc. igv)
+                            Monto Total (sin igv)
                         </span>
                         <h2 class="font-bold">
-                           @Model.Contrato.OrdenCompra.Moneda.simbolo @Html.DisplayFor(a => a.Contrato.OrdenCompra.total) 
+                           @Model.Contrato.OrdenCompra.Moneda.simbolo @Html.DisplayFor(a => a.Contrato.OrdenCompra.subTotal) 
                         </h2>
 
                         <hr />
                         <span>
-                            Avance Monto Total (inc. igv)
+                            Avance Monto Total (sin igv)
                         </span>
                         <h3 class="font-bold">
-                            @Model.Contrato.OrdenCompra.Moneda.simbolo  @Html.DisplayFor(a => a.Contrato.avanceMonto) 
+                            @Model.Contrato.OrdenCompra.Moneda.simbolo  @Model.Contrato.Valorizaciones.Sum(a => a.avanceMonto)
                         </h3>
                         <hr />
                         <span>
-                            Saldo Monto (inc. igv)
+                            Saldo Monto (sin igv)
                         </span>
                         <h3 class="font-bold">
-                            @Model.Contrato.OrdenCompra.Moneda.simbolo  @Html.DisplayFor(a => a.Contrato.saldoMonto) 
+                            @{var saldo = 0.0;
+                              saldo = Model.Contrato.OrdenCompra.subTotal - Model.Contrato.Valorizaciones.Sum(a => a.avanceMonto);
+                              }
+                            @Model.Contrato.OrdenCompra.Moneda.simbolo  @saldo
                         </h3>
 
                         <hr />
@@ -394,12 +288,7 @@
                             Inicio: @Model.Contrato.fechaInicio
                         </span>
                         
-
                         <div class="m-t-sm">
-                            @*<div class="btn-group">
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa  fa-arrow-circle-o-right"></i> Enviar</a>
-                                    <a href="#" class="btn btn-white btn-sm"> Cancel</a>
-                                </div>*@
                         </div>
                     </div>
 
@@ -413,18 +302,18 @@
                     </div>
                     <div class="ibox-content">
                         <span>
-                            Adelanto (inc. igv)  @Html.DisplayFor(a => a.Contrato.adelantoPorc)  %
+                            Adelanto (sin igv)  @Html.DisplayFor(a => a.Contrato.adelantoPorc)  %
                         </span>
                         <h3 class="font-bold">
-                            @Model.Contrato.OrdenCompra.Moneda.simbolo @Html.DisplayFor(a => a.Contrato.adelanto)
+                            @Model.Contrato.OrdenCompra.Moneda.simbolo @Model.Contrato.Adelantos.Sum(a => a.adelantoMonto)
                         </h3>
 
                         <hr />
                         <span>
-                            Fondo de Garantía(inc. igv)   @Html.DisplayFor(a => a.Contrato.fondoGarantiaPorc)  %
+                            Fondo de Garantía(sin igv)   @Html.DisplayFor(a => a.Contrato.fondoGarantiaPorc)  %
                         </span>
                         <h3 class="font-bold">
-                            @Model.Contrato.OrdenCompra.Moneda.simbolo  @Html.DisplayFor(a => a.Contrato.fondoGarantia)
+                            @Model.Contrato.OrdenCompra.Moneda.simbolo @Model.Contrato.Valorizaciones.Sum(a => a.Descuentos.Sum(b=> b.descuentoMonto))
                         </h3>
                         
                     </div>
@@ -501,6 +390,7 @@
                 </div>
 
             </div>
+
         </div>
 
 
@@ -526,6 +416,7 @@
     @Styles.Render("~/plugins/select2Styles")
     @Styles.Render("~/plugins/touchSpinStyles")
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+@Styles.Render("~/plugins/laddaStyles")
 }
 
 @section Scripts {
@@ -546,6 +437,7 @@
 @Scripts.Render("~/plugins/touchSpin")
 @Scripts.Render("~/plugins/dataTables")
 @Scripts.Render("~/plugins/jeditable")
+@Scripts.Render("~/plugins/ladda")
 
                     <script type="text/javascript">
                         $(document).ready(function () {
@@ -665,7 +557,8 @@
 
                                         ordenDetalleId: $(this).find("td").eq(0).html(),
                                         avanceMetrado: $(this).find("td:eq(5) input[type='text']").val(),
-                                        avanceMonto:  $(this).find("td").eq(4).html() * $(this).find("td:eq(5) input[type='text']").val(),
+                                        //avanceMonto: $(this).find("td").eq(4).html() * $(this).find("td:eq(5) input[type='text']").val(),
+                                        avanceMonto: $(this).find("td:eq(6) input[type='text']").val(),
                                         avancePorc: 0
 
                                     });
@@ -716,18 +609,22 @@
                                 //Descuento
 
                                 var Descuentos = [];
-                                for (var i = 0; i < 1; i++) {
-                                    var descuento = new Object();
-
+                                var descuento = new Object();
+                                if ($("#descuentoAdelanto").val() > 0 && $("#descuentoAdelanto").val() != null)
+                                {
                                     descuento.descuentoMonto = $("#descuentoAdelanto").val();
                                     descuento.tipoDescuentoId = 1;
                                     Descuentos.push(descuento);
+                                    valorizacion.Descuentos = Descuentos;
                                 }
+                                //for (var i = 0; i < 1; i++) {
+
+                                //}
 
                                 
 
                                 valorizacion.ValorizacionDetalles = Detalles;
-                                valorizacion.Descuentos = Descuentos;
+                               
 
                                 ValorizacionFinal = JSON.stringify({ 'valorizacion': valorizacion });
 
@@ -741,7 +638,8 @@
                                         window.location = '@Url.Action("Index/" + @Html.DisplayFor(model => model.contratoId))';
                                     },
                                     error: function (result) {
-                                        alert(result.statusText)
+                                        //alert(result.statusText)
+                                        l.ladda('stop');
                                         alert('No se pudo realizar la acción solicitada');
 
                                     }
@@ -774,6 +672,18 @@
                                         $(this).find("td:eq(7) input[type='text']").prop("disabled", false);
                                     });
                                 }
+                            });
+
+
+                            var l = $('.ladda-button-demo').ladda();
+                            l.click(function () {
+                                // Start loading
+                                l.ladda('start');
+                                // Do something in backend and then stop ladda
+                                // setTimeout() is only for demo purpose
+
+                                context: $(this)
+                                //l.ladda('stop');
                             });
 
                         });

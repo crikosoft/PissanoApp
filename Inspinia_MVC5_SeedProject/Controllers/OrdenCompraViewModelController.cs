@@ -12,7 +12,7 @@ namespace PissanoApp.Controllers
     {
 
         private PissanoContext db = new PissanoContext();
-        
+
         // GET: /OrdenCompraViewModel/
 
         public ActionResult Index(int? id)
@@ -22,12 +22,12 @@ namespace PissanoApp.Controllers
             var proveedores = db.Proveedores;
 
 
-//            var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == 11);
-//            var requerimiento = db.Requerimientos.First();
+            //            var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == 11);
+            //            var requerimiento = db.Requerimientos.First();
 
-             Requerimiento req = new Requerimiento();
+            Requerimiento req = new Requerimiento();
 
-             var requerimiento = req;
+            var requerimiento = req;
 
             var ordenesCompra = db.Ordenes.Where(p => p.Requerimiento.tipoCompraId == id);
 
@@ -91,7 +91,7 @@ namespace PissanoApp.Controllers
 
             return View(OrdenCompraViewModels);
 
-        
+
         }
 
         [HttpPost]
@@ -103,7 +103,7 @@ namespace PissanoApp.Controllers
             {
                 ordenCompra.Requerimiento = db.Requerimientos.Single(p => p.requerimientoId == ordenCompra.requerimientoId);
                 //ordenCompra.numero = "OC-" + ordenCompra.Requerimiento.requerimientoId.ToString() + "-"+ ordenCompra.OrdenesCompraDetalles[0].materialId;
-                
+
                 //Traer datos de parametros
                 var paramtext = "OC";
 
@@ -125,7 +125,8 @@ namespace PissanoApp.Controllers
                 {
                     ordenCompra.numero = "OC-" + ceros + (parametro.ultimoNumero + 1).ToString() + "-" + ordenCompra.Requerimiento.Obra.identificador;
                 }
-                else {
+                else
+                {
                     ordenCompra.numero = "OS-" + ceros + (parametro.ultimoNumero + 1).ToString() + "-" + ordenCompra.Requerimiento.Obra.identificador;
                 }
 
@@ -136,7 +137,7 @@ namespace PissanoApp.Controllers
                 //Si es nuevo, no antiguo
                 if (ordenCompra.fechaCreacion == DateTime.MinValue)
                     ordenCompra.fechaCreacion = cstTime;
-                
+
                 ordenCompra.usuarioCreacion = User.Identity.Name;
                 ordenCompra.fechaModificacion = cstTime;
                 //ordenCompra.igv = 10;
@@ -166,31 +167,31 @@ namespace PissanoApp.Controllers
                             item.ordenCompraId = ordenCompra.ordenCompraId;
                         }
 
-                    }  
+                    }
                 }
                 // Fin Actualiza estado Requerimientos
 
-                
+
 
                 ordenCompra.adelanto = 1;
                 ordenCompra.obraId = ordenCompra.Requerimiento.obraId;
 
                 db.Ordenes.Add(ordenCompra);
                 //db.SaveChanges();
-                
-                var total=0.0;
+
+                var total = 0.0;
 
                 foreach (var item in ordenCompra.OrdenesCompraDetalles)
                 {
                     item.ordenCompraId = ordenCompra.ordenCompraId;
-                    item.estadoOrdenDetalleId = 1; 
+                    item.estadoOrdenDetalleId = 1;
                     item.precioTotal = item.cantidad * item.precioUnitario;
                     total = total + item.cantidad * item.precioUnitario;
                     db.OrdenDetalles.Add(item);
 
                 }
                 ordenCompra.subTotal = total;
-                ordenCompra.igv = total*0.18;
+                ordenCompra.igv = total * 0.18;
                 ordenCompra.total = total + total * 0.18;
 
                 parametro.ultimoNumero = parametro.ultimoNumero + 1;
@@ -204,6 +205,7 @@ namespace PissanoApp.Controllers
                 ordenCompraEstado.estadoOrdenId = ordenCompra.estadoOrdenId;
                 ordenCompraEstado.usuarioCreacion = User.Identity.Name;
                 ordenCompraEstado.fechaCreacion = cstTime;
+                ordenCompraEstado.comentario = ordenCompra.comentario;
                 db.OrdenCompraEstadoOrden.Add(ordenCompraEstado);
 
 
@@ -228,7 +230,7 @@ namespace PissanoApp.Controllers
             var requerimiento = db.Requerimientos.Single(p => p.requerimientoId == ordenesCompra.requerimientoId);
 
             var estadosRequerimientoDetalle = new string[] { "Aprobado", "Con OC" };
-        
+
             //var ordenes = db.Ordenes.Where(p => estadoList.Contains(p.EstadoOrden.nombre)).Include(o => o.EstadoOrden).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
 
 
@@ -275,7 +277,7 @@ namespace PissanoApp.Controllers
 
                 var estadoReqDetalleOC = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Con OC").SingleOrDefault();
                 var estadoReqDetalleApr = db.EstadoRequerimientoDetalle.Where(p => p.nombre == "Aprobado").SingleOrDefault();
-                var estadoReqDetalleList = new string[] { "Con OC", "Aprobación 1", "Aprobado"};
+                var estadoReqDetalleList = new string[] { "Con OC", "Aprobación 1", "Aprobado" };
 
                 // 1. Elimina Orden Compra Detalles
 
@@ -325,6 +327,7 @@ namespace PissanoApp.Controllers
                 ordenCompraEstado.estadoOrdenId = ordenCompra.estadoOrdenId;
                 ordenCompraEstado.usuarioCreacion = User.Identity.Name;
                 ordenCompraEstado.fechaCreacion = cstTime;
+                ordenCompraEstado.comentario = ordenCompra.comentario;
                 db.OrdenCompraEstadoOrden.Add(ordenCompraEstado);
 
 
@@ -370,11 +373,11 @@ namespace PissanoApp.Controllers
                 return RedirectToAction("Index");
 
 
-                
+
             }
 
             return View();
         }
 
-	}
+    }
 }

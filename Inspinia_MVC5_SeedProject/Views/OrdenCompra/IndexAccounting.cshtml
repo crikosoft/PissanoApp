@@ -124,12 +124,24 @@
                                         {
                                             <td>@Html.DisplayFor(modelItem => item.Pagos.Count)</td>
                                    
-                                            var sum =item.Pagos.Sum(a => a.pagoMonto);
-                                            var diferencia = item.total - sum;
+                                            decimal sum =(decimal)item.Pagos.Sum(a => a.pagoMonto);
+                                            decimal diferencia = (decimal)(item.total) - sum;
 
                                            
                                             <td>@string.Format("{0:0.00}", sum)</td>
                                             <td>@string.Format("{0:0.00}", diferencia)</td>
+                                            
+                                            //diferencia = Math.Round(diferencia, 2);
+
+                                            if (Math.Round(diferencia, 2) > 0)
+                                            { 
+                                            <td><a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a></td>
+                                                
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
 
                                         }
                                         else
@@ -137,32 +149,17 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td><a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a></td>
                                         }
                                         
-                                        <td>
-                                            @*@if (item.EstadoOrden.nombre != "Pago Total" )
-                                            { 
-                                                var sum = item.Pagos.Sum(a => a.pagoMonto);
-                                                var diferencia = item.total - sum;
-
-                                                if (item.EstadoOrden.nombre == "Pago Registrado" && diferencia >0)
-                                                { 
-                                                <a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a>
-                                                }
-                                                else if (item.EstadoOrden.nombre == "Pago Registrado" && diferencia == 0) 
-                                                { 
-                                                }
-                                                else
-                                                {
-                                                <a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a>                                                    
-                                                    
-                                                }
-                                            }*@
+                                        @*<td>
+                                            
 
                                             @{  var sum2 = item.Pagos.Sum(a => a.pagoMonto);
                                                 var diferencia2 = item.total - sum2;
 
-                                                if (diferencia2 > 0)
+                                                //if (diferencia2 > 0)
+                                                if (diferencia2 > 0.0)
                                                 {
                                                     <a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a>
                                                 }
@@ -172,9 +169,11 @@
                                                 }                                               
                                             }
                                            
-                                        </td>
+                                        </td>*@
                                         <td>
-                                            <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
+                                            @*<a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>*@
+                                            <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" target="_blank" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
+                                            <a href="~/OrdenCompra/Tracking/@Html.DisplayFor(modelItem => item.ordenCompraId)" data-toggle="modal" data-target="#myModalTracking" class="btn btn-white btn-sm" id="linkTracking"><i class="fa fa-binoculars"></i>  </a>
                                         </td>
                                     </tr>
 
@@ -212,6 +211,22 @@
     </div>
 
 </div>
+
+<div class="modal inmodal" id="myModalTracking" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+
+            <div class="modal-content">
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar!</button>
+        </div>
+
+    </div>
+</div> 
 
 @section Styles {
 
@@ -253,7 +268,8 @@
                     }
                 ],
                 "order": [[0, "desc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                "scrollX": true
 
             });
 
@@ -287,6 +303,18 @@
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
             }
+
+            //Tracking Modal
+
+            $("a[data-target=#myModalTracking]").click(function (ev) {
+                ev.preventDefault();
+                var target = $(this).attr("href");
+
+                // load the url and show modal on success
+                $("#myModalTracking .modal-body").load(target, function () {
+                    $("#myModalTracking").modal("show");
+                });
+            });
 
 
         });

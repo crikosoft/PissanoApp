@@ -69,8 +69,25 @@ namespace PissanoApp.Controllers
                 contrato.fechaModificacion = cstTime;
                 OrdenCompra orden = db.Ordenes.Find(contrato.ordenCompraId);
                 contrato.OrdenCompra = orden;
-                contrato.adelanto = (contrato.adelantoPorc * orden.total)/100;
-                contrato.fondoGarantia = (contrato.fondoGarantiaPorc * orden.total)/100;
+                if (contrato.adelantoPorc != 0 && contrato.adelantoPorc != null)
+                { 
+                    contrato.adelanto = (contrato.adelantoPorc * orden.subTotal)/100;
+                }
+                else
+                {
+                    contrato.adelanto = 0;
+                }
+
+                if (contrato.fondoGarantiaPorc != 0 && contrato.fondoGarantiaPorc != null)
+                {
+                    contrato.fondoGarantia = (contrato.fondoGarantiaPorc * orden.subTotal) / 100;
+                }
+                else
+                {
+                    contrato.fondoGarantia = 0;
+                }
+
+                //contrato.fondoGarantia = (contrato.fondoGarantiaPorc * orden.total)/100;
                 contrato.avanceMonto = 0;
                 contrato.saldoMonto = 0;
                 contrato.avanceMetrado = 0;
@@ -80,8 +97,7 @@ namespace PissanoApp.Controllers
 
 
                 db.Contrato.Add(contrato);
-
-                if (contrato.adelanto != 0)
+                if (contrato.adelanto != 0 && contrato.adelanto != null)
                 {
                     var estado = db.EstadoAdelanto.Where(p => p.nombre == "Pendiente de Aprobación").SingleOrDefault();
 
@@ -155,8 +171,8 @@ namespace PissanoApp.Controllers
                 DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
 
                 OrdenCompra orden = db.Ordenes.Find(contrato.ordenCompraId);
-                contrato.adelanto = (contrato.adelantoPorc * orden.total) / 100;
-                contrato.fondoGarantia = (contrato.fondoGarantiaPorc * orden.total) / 100;
+                contrato.adelanto = (contrato.adelantoPorc * orden.subTotal) / 100;
+                contrato.fondoGarantia = (contrato.fondoGarantiaPorc * orden.subTotal) / 100;
 
                 contrato.avanceMonto = 0;
                 contrato.saldoMonto = 0;
@@ -176,7 +192,7 @@ namespace PissanoApp.Controllers
                     db.SaveChanges();
                 }
 
-                if (contrato.adelanto != 0)
+                if (contrato.adelanto != 0 && contrato.adelanto != null)
                 {
 
                     var estado = db.EstadoAdelanto.Where(p => p.nombre == "Pendiente de Aprobación").SingleOrDefault();

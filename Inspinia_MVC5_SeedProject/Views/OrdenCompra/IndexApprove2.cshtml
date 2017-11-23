@@ -84,8 +84,8 @@
                                 <th>Moneda</th>
                                 <th hidden="hidden">Total</th>
                                 <th>Total OC</th>
-                                
                                 <th></th>
+                                <th>Creado por</th>
                                 <th></th>
 
 
@@ -126,10 +126,20 @@
                                     <td>@Html.DisplayFor(modelItem => item.total)</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
+                                            <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" target="_blank" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
                                             <a href="~/OrdenCompra/Tracking/@Html.DisplayFor(modelItem => item.ordenCompraId)" data-toggle="modal" data-target="#myModalTracking" class="btn btn-white btn-sm" id="linkTracking"><i class="fa fa-binoculars"></i>  </a>
+                                            @if (item.Archivos.Count() == 0)
+                                            {
+                                                <a href="~/OrdenCompra/FileUpload/@Html.DisplayFor(modelItem => item.ordenCompraId)" target="_blank" class="btn btn-white btn-sm"><i class="fa fa-files-o"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="~/OrdenCompra/FileUpload/@Html.DisplayFor(modelItem => item.ordenCompraId)" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-files-o"></i></a>
+                                            }
+                                        
                                         </div>
                                     </td>
+                                    <td>@Html.DisplayFor(modelItem => item.usuarioCreacion)</td>
                                     <td>
                                         @if (item.estadoOrdenId == 2)
                                         {
@@ -162,8 +172,8 @@
                                 <th>Moneda</th>
                                 <th hidden="hidden">Total</th>
                                 <th>Total</th>
-
                                 <th></th>
+                                <th>Creado por</th>
                                 <th></th>
                             </tr>
                         </tfoot>
@@ -232,7 +242,8 @@
                     }
                 ],
                 "order": [[0, "desc"]],
-                "pageLength": 25
+                "pageLength": 50,
+                "scrollX": true
 
             });
 

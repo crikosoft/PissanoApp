@@ -39,7 +39,8 @@
                                 <th>Fecha Inicio</th>
                                 <th>Proveedor</th>
                                 <th>Avance</th>
-                                <th>Total</th>
+                                <th>Total (sin IGV)</th>
+                                <th>Total (inc IGV)</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -60,9 +61,14 @@
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Obra.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.fechaInicio)</td>
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Proveedor.razonSocial)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.avanceMonto)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.OrdenCompra.total)</td>
 
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @item.Valorizaciones.Sum(a => a.avanceMonto)</td>
+
+                                   
+                                    
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.OrdenCompra.subTotal)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.OrdenCompra.total)</td>
                                     <td>
                                         <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.ordenCompraId)" class="btn btn-white btn-sm"><i class="fa fa-print"></i> Imprimir </a>
                                     </td>

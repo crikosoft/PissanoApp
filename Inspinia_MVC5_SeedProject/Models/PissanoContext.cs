@@ -170,6 +170,13 @@ namespace PissanoApp.Models
         public DbSet<FondoGarantia> FondosGarantia { get; set; }
 
         public DbSet<EstadoFondoGarantia> EstadosFondoGarantia { get; set; }
+
+        public DbSet<ArchivoTelecredito> ArchivosTelecredito { get; set; }
+
+        public DbSet<Banco> Banco { get; set; }
+
+        public DbSet<CuentaBancaria> CuentaBancaria { get; set; }
+        
     }
 
 

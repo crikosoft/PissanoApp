@@ -245,13 +245,10 @@ namespace PissanoApp.Controllers
 
 
 
-
-                //var contrato = db.Contrato.Where(p => p.contratoId == valorizacion.contratoId).Single();
-
-                contrato.avanceMonto = contrato.avanceMonto + valorizacion.avanceMonto;
-                contrato.saldoMonto = contrato.saldoMonto - valorizacion.avanceMonto;
-                contrato.usuarioModificacion = User.Identity.Name; ;
-                contrato.fechaModificacion = cstTime;
+                //contrato.avanceMonto = contrato.avanceMonto + valorizacion.avanceMonto;
+                //contrato.saldoMonto = contrato.saldoMonto - valorizacion.avanceMonto;
+                //contrato.usuarioModificacion = User.Identity.Name; ;
+                //contrato.fechaModificacion = cstTime;
 
 
                 db.SaveChanges();
@@ -305,7 +302,7 @@ namespace PissanoApp.Controllers
 
                 }
 
-                valorizacion.avanceMonto = totalAvanceMonto;
+                valorizacionOriginal.avanceMonto = totalAvanceMonto;
 
 
                 //Eliminar Descuento por Adelantos en caso tenga alguno
@@ -350,7 +347,7 @@ namespace PissanoApp.Controllers
                     fondoGarantia.Valorizacion = valorizacionOriginal;
 
                     fondoGarantia.descripcion = "Fondo Garantia Valorización";
-                    fondoGarantia.fondoMonto = contrato.fondoGarantiaPorc * valorizacion.avanceMonto / 100;
+                    fondoGarantia.fondoMonto = contrato.fondoGarantiaPorc * totalAvanceMonto / 100;
 
                     fondoGarantia.fechaCreacion = cstTime;
                     fondoGarantia.usuarioCreacion = User.Identity.Name;

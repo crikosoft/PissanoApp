@@ -70,6 +70,7 @@
                                 <th>Estado Req.</th>
                                 <th>OC</th>
                                 <th>Estado OC</th>
+                                <th>Cantidad OC</th>
                                 <th>Partida</th>
                                 <th>SubPresupuesto</th>
                             </tr>
@@ -101,6 +102,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.EstadoRequerimientoDetalle.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.numero)</td>
                                     <td>@Html.DisplayFor(modelItem => item.OrdenCompra.EstadoOrden.nombre)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.OrdenesCompraDetalles.Where(a => a.materialId == item.materialId).FirstOrDefault().cantidad)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Partida.nombre)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Partida.SubPresupuesto.nombre)</td>
                                 </tr>

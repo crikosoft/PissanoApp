@@ -413,14 +413,22 @@ namespace PissanoApp.Controllers
         public ActionResult IndexApprove()
         {
 
-            var obrasList = new string[] { "Barcelona", "San Borja Norte" };
+            var obrasList = new string[] { "Barcelona", "San Borja Norte", "SAN BORJA NORTE 717", "Boulevard 286" };
             if (User.Identity.Name == "david.moreano")
             {
                 obrasList = new string[] { "Barcelona" };
             }
             else if (User.Identity.Name == "jorge.bernardo")
             {
-                obrasList = new string[] { "San Borja Norte" };
+                obrasList = new string[] { "San Borja Norte", "SAN BORJA NORTE 717" };
+            }
+            else if (User.Identity.Name == "nancy.tejeda")
+            {
+                obrasList = new string[] { "San Borja Norte"};
+            }
+            else if (User.Identity.Name == "marco.timoteo")
+            {
+                obrasList = new string[] { "Boulevard 286" };
             }
 
             var estadoList = new string[] { "Pendiente de Aprobación", "Aprobación 1", "Aprobación 2", "Aprobación 3", "Rechazado Aprobación 1", "Rechazado Aprobación 2", "Rechazado Aprobación 3", "Pago Registrado", "Pago Parcial", "Pago Total", "Ingreso Parcial", "Ingreso Total" };
@@ -471,7 +479,7 @@ namespace PissanoApp.Controllers
         public ActionResult IndexAccounting()
         {                        
             //var estadoList = new int[] { 4, 5, 6, 10, 11, 12 };
-            var estadoList = new string[] { "Aprobación 3", "Ingreso Parcial", "Ingreso Total", "Pago Registrado", "Pago Parcial", "Pago Total" };
+            var estadoList = new string[] { "Aprobación 3", "Ingreso Parcial", "Ingreso Total", "Pago Registrado", "Pago Parcial", "Pago Total", "Aprobación 2" };
             var ordenes = db.Ordenes.Where(o => estadoList.Contains(o.EstadoOrden.nombre)).Include(o => o.FormaPago).Include(o => o.Moneda).Include(o => o.Obra).Include(o => o.Proveedor).Include(o => o.Requerimiento);
 
 
@@ -526,7 +534,7 @@ namespace PissanoApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Approve([Bind(Include="ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)
         {
             //if (ModelState.IsValid)
@@ -552,6 +560,7 @@ namespace PissanoApp.Controllers
             ordenCompraEstado.estadoOrdenId = estado.estadoOrdenId;
             ordenCompraEstado.usuarioCreacion = User.Identity.Name;
             ordenCompraEstado.fechaCreacion = cstTime;
+            ordenCompraEstado.comentario = ordencompra.comentario;
 
             // Actualiza datos de Orden
             orderCompra.estadoOrdenId = estado.estadoOrdenId;
@@ -567,7 +576,7 @@ namespace PissanoApp.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Approve2([Bind(Include = "ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)
         {
             //if (ModelState.IsValid)
@@ -592,6 +601,8 @@ namespace PissanoApp.Controllers
             ordenCompraEstado.estadoOrdenId = estado.estadoOrdenId;
             ordenCompraEstado.usuarioCreacion = User.Identity.Name;
             ordenCompraEstado.fechaCreacion = cstTime;
+            ordenCompraEstado.comentario = ordencompra.comentario;
+
 
             // Actualiza datos de Orden
             orderCompra.estadoOrdenId = estado.estadoOrdenId;
@@ -605,7 +616,7 @@ namespace PissanoApp.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Approve3([Bind(Include = "ordenCompraId,numero,fecha,proveedorId,incluyeIgv,igv,total,obraId,estadoOrdenId,requerimientoId,comentario,adelanto,formaPagoId,monedaId")] OrdenCompra ordencompra)
         {
             //if (ModelState.IsValid)
@@ -630,6 +641,7 @@ namespace PissanoApp.Controllers
             ordenCompraEstado.estadoOrdenId = estado.estadoOrdenId;
             ordenCompraEstado.usuarioCreacion = User.Identity.Name;
             ordenCompraEstado.fechaCreacion = cstTime;
+            ordenCompraEstado.comentario = ordencompra.comentario;
 
             // Actualiza datos de Orden
             orderCompra.estadoOrdenId = estado.estadoOrdenId;

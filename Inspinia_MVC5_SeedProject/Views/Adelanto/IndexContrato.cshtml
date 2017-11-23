@@ -1,86 +1,221 @@
 ﻿@model IEnumerable<PissanoApp.Models.Adelanto>
 
 @{
-    ViewBag.Title = "IndexContrato";
+    ViewBag.Title = "Index";
 }
 
-<h2>IndexContrato</h2>
-
-
-
+<h2>Adelantos</h2>
 @{ var contratoId = ViewBag.contratoId;}
 <p>
     @*@Html.ActionLink("Create New", "Create/" + contratoId)*@
     <a href="~/Adelanto/Create/@ViewBag.contratoId" class="btn btn-w-m btn-primary"> Nuevo</a>
 
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Contrato.comentario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EstadoAdelanto.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.adelantoMonto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.adelantoPorc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.usuarioCreacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.usuarioModificacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaCreacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaModificacion)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contrato.comentario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EstadoAdelanto.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.adelantoMonto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.adelantoPorc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.usuarioCreacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.usuarioModificacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaCreacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaModificacion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.adelantoId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.adelantoId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.adelantoId })
-        </td>
-    </tr>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Adelantos. Use el Filtro de Búsqueda</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+
+
+
+
+                    <table class="table table-striped table-bordered table-hover dataTables-example" data-page-size="10" id="tableMaterial">
+                        <thead>
+
+                            <tr>
+                                <th>
+                                    Descripción
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Monto
+                                </th>
+                                <th>
+                                    % de Adelanto
+                                </th>
+                                <th>
+                                    Usuario Creación
+                                </th>
+                                <th>
+                                    Fecha Creación
+                                </th>
+
+                                <th></th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr class="gradeX">
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.descripcion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EstadoAdelanto.nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.adelantoMonto)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.adelantoPorc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.usuarioCreacion)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechaCreacion)
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.adelantoId }, new { @class = "btn btn-white btn-sm" })  |
+                                        @Html.ActionLink("Detalles", "Details", new { id = item.adelantoId }, new { @class = "btn btn-primary btn-sm" }) |
+                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.adelantoId }, new { @class = "btn btn-white btn-sm" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    Descripción
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Monto
+                                </th>
+                                <th>
+                                    % de Adelanto
+                                </th>
+                                <th>
+                                    Usuario Creación
+                                </th>
+                                <th>
+                                    Fecha Creación
+                                </th>
+
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
 }
 
-</table>
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+    @Scripts.Render("~/plugins/chosen")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+
+                "order": [[0, "desc"]],
+                "pageLength": 25
+
+
+            });
+
+
+            // Eventos de filtros
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            $('select.column_filter').on('onchange click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            //Filtro de Chosen-select
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+        });
+
+        function filterColumn(i) {
+            $('.dataTables-example').DataTable().column(i).search(
+                $('#col' + i + '_filter').val()
+            ).draw();
+        }
+
+    </script>
+}
+
+
